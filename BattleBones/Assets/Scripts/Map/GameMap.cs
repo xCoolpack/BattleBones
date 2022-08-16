@@ -16,13 +16,35 @@ public class GameMap : MonoBehaviour
     {
         foreach (Field field in FindObjectsOfType<Field>())
         {
-            fieldGrid[field.GetCoordinates()] = field;
+            fieldGrid[field.coordinates] = field;
         }
+
+        // tests
+        Debug.Log("Neighbours for 0, 0");
+
+        GetNeighboursOf(new Vector2Int(0, 0)).ForEach(x => Debug.Log(x.coordinates));
+
+        Debug.Log("Neighbours for 0, -1");
+
+        GetNeighboursOf(new Vector2Int(0, -1)).ForEach(x => Debug.Log(x.coordinates));
     }
 
     public Field GetFieldAt(Vector2Int fieldCoordinates)
     {
         fieldGrid.TryGetValue(fieldCoordinates, out Field result);
         return result;
+    }
+
+    public List<Field> GetNeighboursOf(Vector2Int coordinates)
+    {
+        if (!fieldGrid.ContainsKey(coordinates))
+            return new();
+        else 
+            return fieldGrid[coordinates].GetNeighbours();
+    }
+
+    public List<Field> GetNeighboursOf(Field field)
+    {
+        return GetNeighboursOf(field.coordinates);
     }
 }

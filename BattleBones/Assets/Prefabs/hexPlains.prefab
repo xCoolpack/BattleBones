@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coordinates: {x: 0, y: 0}
+  type: {fileID: 11400000, guid: 11533d5a5df294946b038668cf267977, type: 2}
   seeenBy: []
   building: {fileID: 0}
   unit: {fileID: 0}

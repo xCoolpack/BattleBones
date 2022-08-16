@@ -7,10 +7,10 @@ public class Field : MonoBehaviour
     public static float xOffset = 2.56f, yOffset = 1.93f;
 
     // Coordinates
-    [SerializeField] private Vector2Int coordinates;
+    public Vector2Int coordinates;
 
     // References
-    public FieldType type { get; set; }
+    public FieldType type;
     public List<Object> seeenBy; //temp - replace Object with Player
     public Object building; //temp - replace Object with Building
     public Object unit; //temp - replace Object with Unit
@@ -27,14 +27,48 @@ public class Field : MonoBehaviour
         return new Vector2Int(x, y);
     }
 
-    public Vector2Int GetCoordinates()
-    {
-        return coordinates;
-    } 
-
     public List<Field> GetNeighbours()
     {
-        return null;
+        List<Field> neighbours = new();
+        Dictionary<Vector2Int, Field> fieldGrid = GetComponentInParent<GameMap>().fieldGrid;
+
+        foreach (Vector2Int direction in Direction.GetDirectionList(coordinates.y))
+        {
+            if (fieldGrid.ContainsKey(coordinates + direction))
+            {
+                neighbours.Add(fieldGrid[coordinates + direction]);
+            }
+        }
+
+        return neighbours;
     } 
+}
+
+public static class Direction
+{
+    public static List<Vector2Int> offsetEven = new()
+    {
+        new Vector2Int(-1, 1), //NL
+        new Vector2Int(0, 1), //NR
+        new Vector2Int(1, 0), //E
+        new Vector2Int(0, -1), //SR
+        new Vector2Int(-1, -1), //SL
+        new Vector2Int(-1, 0), //W
+    };
+
+    public static List<Vector2Int> offsetOdd = new()
+    {
+        new Vector2Int(0, 1), //NL
+        new Vector2Int(1, 1), //NR
+        new Vector2Int(1, 0), //E
+        new Vector2Int(1, -1), //SR
+        new Vector2Int(0, -1), //SL
+        new Vector2Int(-1, 0), //W
+    };
+
+    public static List<Vector2Int> GetDirectionList(int y)
+    {
+        return y % 2 == 0 ? offsetEven : offsetOdd;
+    }
 }
 
