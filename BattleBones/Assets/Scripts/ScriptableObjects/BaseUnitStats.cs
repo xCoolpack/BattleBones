@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New UnitStats", menuName = "UnitStats")]
-public class UnitStats : ScriptableObject
+[CreateAssetMenu(fileName = "New BaseUnitStats", menuName = "BaseUnitStats")]
+public class BaseUnitStats : ScriptableObject
 {
     public string unitName;
     public float baseHealth;

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Field : MonoBehaviour
 {
+    // Graphical Offset
     public static float xOffset = 2.56f, yOffset = 1.93f;
 
     // Coordinates
@@ -12,14 +13,19 @@ public class Field : MonoBehaviour
     // References
     public FieldType type;
     public List<Object> seeenBy; //temp - replace Object with Player
-    public Object building; //temp - replace Object with Building
-    public Object unit; //temp - replace Object with Unit
+    public GameObject building; //temp - replace Object with Building
+    public Unit unit; 
 
     private void Awake()
     {
         coordinates = ConvertPositionToCoordinates(transform.position);
     }
 
+    /// <summary>
+    /// Methods converting transform position to coordinates
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
     private Vector2Int ConvertPositionToCoordinates(Vector2 position)
     {
         int x = Mathf.CeilToInt((float)System.Math.Round(position.x, 2) / xOffset);
@@ -27,6 +33,10 @@ public class Field : MonoBehaviour
         return new Vector2Int(x, y);
     }
 
+    /// <summary>
+    /// Methods returning list of neighbours of field
+    /// </summary>
+    /// <returns></returns>
     public List<Field> GetNeighbours()
     {
         List<Field> neighbours = new();
