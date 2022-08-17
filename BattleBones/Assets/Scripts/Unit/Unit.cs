@@ -1,22 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
     // Max Stats
-    public float maxHealth;
-    public float maxDamage;
-    public float maxDefense;
-    public float maxMovementPoints;
+    public int maxHealth;
+    public int maxDamage;
+    public int maxDefense;
+    public int maxMovementPoints;
 
     // Current Stats
-    public float currentHealth;
-    public float currentDamage;
-    public float currentDefense;
-    public float currentMovementPoints;
-    public float attackRange;
-    public float sightRange;
+    public int currentHealth;
+    public int currentDamage;
+    public int currentDefense;
+    public int currentMovementPoints;
+    public int attackRange;
+    public int sightRange;
 
     // References
     public BaseUnitStats baseUnitStats;

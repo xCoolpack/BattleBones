@@ -1,16 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 [System.Serializable]
 public struct ResourceCost
 {
-    public float goldCost;
-    public float woodCost;
-    public float stoneCost;
-    public float doggiumCost;
+    public int goldCost;
+    public int woodCost;
+    public int stoneCost;
+    public int doggiumCost;
 
-    public ResourceCost(float goldCost, float woodCost, float stoneCost, float doggiumCost)
+    public ResourceCost(int goldCost, int woodCost, int stoneCost, int doggiumCost)
     {
         this.goldCost = goldCost;
         this.woodCost = woodCost;

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +11,7 @@ public class Field : MonoBehaviour
 
     // References
     public FieldType type;
-    public List<Object> seeenBy; //temp - replace Object with Player
+    public List<Object> seenBy; //temp - replace Object with Player
     public GameObject building; //temp - replace Object with Building
     public Unit unit; 
 
@@ -31,6 +30,16 @@ public class Field : MonoBehaviour
         int x = Mathf.CeilToInt((float)System.Math.Round(position.x, 2) / xOffset);
         int y = Mathf.CeilToInt((float)System.Math.Round(position.y, 2) / yOffset);
         return new Vector2Int(x, y);
+    }
+
+    public bool IsObstacle()
+    {
+        return type.isObstacle;
+    }
+
+    public int GetMovementPointsCost()
+    {
+        return type.movementPointsCost;
     }
 
     /// <summary>

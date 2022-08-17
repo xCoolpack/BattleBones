@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameMap : MonoBehaviour
@@ -71,5 +71,25 @@ public class GameMap : MonoBehaviour
     public List<Field> GetNeighboursOf(Field field)
     {
         return GetNeighboursOf(field.coordinates);
+    }
+
+    /// <summary>
+    /// Methods returning list of neighbours' coordinates of field at given coordinates
+    /// </summary>
+    /// <param name="coordinates"></param>
+    /// <returns></returns>
+    public List<Vector2Int> GetNeighboursCoordOf(Vector2Int coordinates)
+    {
+        return GetNeighboursOf(coordinates).Select(x => x.coordinates).ToList();
+    }
+
+    /// <summary>
+    /// Methods returning list of neighbours' coordinates of given field
+    /// </summary>
+    /// <param name="field"></param>
+    /// <returns></returns>
+    public List<Vector2Int> GetNeighboursCoordOf(Field field)
+    {
+        return GetNeighboursCoordOf(field.coordinates);
     }
 }

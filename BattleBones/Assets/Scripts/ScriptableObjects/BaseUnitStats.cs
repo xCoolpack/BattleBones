@@ -1,17 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New BaseUnitStats", menuName = "BaseUnitStats")]
 public class BaseUnitStats : ScriptableObject
 {
     public string unitName;
-    public float baseHealth;
-    public float baseDamage;
-    public float baseDefense;
-    public float baseMovementPoints;
-    public float baseAttackRange;
-    public float baseSightRange;
+    public int baseHealth;
+    public int baseDamage;
+    public int baseDefense;
+    public int baseMovementPoints;
+    public int baseAttackRange;
+    public int baseSightRange;
 
     public ResourceCost baseCost;
 }
