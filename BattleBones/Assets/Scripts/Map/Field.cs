@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Field : MonoBehaviour
 {
+    //IMPORTANT
+    //LEAVE MARK AS FIRST CHILD IN FIELD GAMEOBJECT PLS
+
     // Graphical Offset
     public static float xOffset = 2.56f, yOffset = 1.93f;
 
@@ -35,6 +38,11 @@ public class Field : MonoBehaviour
     public bool IsObstacle()
     {
         return type.isObstacle;
+    }
+
+    public bool HasUnit()
+    {
+        return unit != null ? true : false;
     }
 
     public int GetMovementPointsCost()

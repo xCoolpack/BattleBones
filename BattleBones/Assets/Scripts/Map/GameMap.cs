@@ -35,7 +35,7 @@ public class GameMap : MonoBehaviour
     {
         foreach (Field field in FindObjectsOfType<Field>())
         {
-            fieldGrid[field.coordinates] = field;
+            fieldGrid.Add(field.coordinates, field);
         }
     }
 
