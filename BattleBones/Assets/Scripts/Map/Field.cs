@@ -23,6 +23,14 @@ public class Field : MonoBehaviour
         coordinates = ConvertPositionToCoordinates(transform.position);
     }
 
+    private void OnMouseDown()
+    {
+        // Temporary for testing
+        Debug.Log("Clicked on "+coordinates);
+        GameObject.Find("TestUnit").GetComponent<Unit>().Move(this);
+        
+    }
+
     /// <summary>
     /// Methods converting transform position to coordinates
     /// </summary>

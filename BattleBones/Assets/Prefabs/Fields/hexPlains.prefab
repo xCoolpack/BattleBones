@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7260510673771770686}
   - component: {fileID: 8311842731964039379}
   - component: {fileID: 3764779854966243199}
+  - component: {fileID: 8604764855413229025}
   m_Layer: 0
   m_Name: hexPlains
   m_TagString: Untagged
@@ -100,9 +101,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coordinates: {x: 0, y: 0}
   type: {fileID: 11400000, guid: 11533d5a5df294946b038668cf267977, type: 2}
-  seeenBy: []
+  seenBy: []
   building: {fileID: 0}
   unit: {fileID: 0}
+--- !u!61 &8604764855413229025
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3226305129641127651}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.009898782, y: 1.327573}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 2.56, y: 3.84}
+    newSize: {x: 2.56, y: 3.84}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.104658, y: 1.9424369}
+  m_EdgeRadius: 0
 --- !u!1 &5968823622321495562
 GameObject:
   m_ObjectHideFlags: 0
