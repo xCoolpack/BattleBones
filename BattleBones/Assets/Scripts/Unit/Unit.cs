@@ -26,6 +26,7 @@ public class Unit : MonoBehaviour
     public Movement movement;
 
     public Dictionary<Field, Field> moveableFields;
+    public Dictionary<Field, int> moveableFieldsCost;
 
     private void Awake()
     {
@@ -38,14 +39,17 @@ public class Unit : MonoBehaviour
     private void Update()
     {
         // Test necessary
-        if (Input.GetKeyDown("r"))
+        if (Input.GetKeyDown("r")) 
+        {
+            Debug.Log("clicked r");
             currentMovementPoints = maxMovementPoints;
+        }
 
     }
 
     private void OnMouseDown()
     {
-        moveableFields = GetMoveableFields(field, GameObject.Find("GameMap").GetComponent<GameMap>());
+        SetMoveableFields();
         DisplayMoveableFields();
         // debug
         // int counter = 0;
@@ -79,7 +83,12 @@ public class Unit : MonoBehaviour
         sightRange = baseUnitStats.baseSightRange;
     }
 
-    private Dictionary<Field, Field> GetMoveableFields(Field startingField, GameMap gameMap) 
+    private void SetMoveableFields()
+    {
+        (moveableFields, moveableFieldsCost) = GetMoveableFields(field, GameObject.Find("GameMap").GetComponent<GameMap>());
+    }
+
+    private (Dictionary<Field, Field>, Dictionary<Field, int>) GetMoveableFields(Field startingField, GameMap gameMap) 
     {
         Dictionary<Field, Field> visitedFields = new();
         Queue<Field> fieldsToVisit = new();
@@ -98,7 +107,7 @@ public class Unit : MonoBehaviour
             {
                 if (movement.CanMove(field))
                 {
-                    sumCost = costOfFields[currentField] + movement.GetMovementPointsCostForUnit(field);;
+                    sumCost = costOfFields[currentField] + movement.GetMovementPointsCostForUnit(field);
 
                     if (sumCost <= currentMovementPoints)
                     {
@@ -121,8 +130,9 @@ public class Unit : MonoBehaviour
         }
 
         visitedFields.Remove(startingField);
+        costOfFields.Remove(startingField);
 
-        return visitedFields;
+        return (visitedFields, costOfFields);
     }
 
     private void DisplayMoveableFields() 
@@ -146,31 +156,36 @@ public class Unit : MonoBehaviour
         if (moveableFields.ContainsKey(targetField))
         {
             Debug.Log("Moving to" + targetField.coordinates);
-            List<Field> movementPath = GeneratePath(this.field, targetField);
+            (List<Field> movementPath, int movementPointsCost) = GeneratePathWithCost(this.field, targetField);
             this.field.unit = null;
             this.field = targetField;
             targetField.unit = this;
+            currentMovementPoints -= movementPointsCost;
             MoveGraphicModel(movementPath);
+
+            if (currentMovementPoints > 0)
+                SetMoveableFields();
+
             return true;
         }
         else 
             return false;
     }
 
-    private List<Field> GeneratePath(Field startingfield, Field targetField)
+    private (List<Field>, int) GeneratePathWithCost(Field startingfield, Field targetField)
     {
-        List<Field> movementPath = new ();
+        List<Field> movementPath = new ();    
         Field currentField = targetField;
         movementPath.Add(currentField);
-        while (currentField != startingfield)
+        while (moveableFields[currentField] != startingfield)
         {
             currentField = moveableFields[currentField];
             movementPath.Add(currentField);
         }
 
-        //Debug.Log("after whil loop");
+        //Debug.Log("after while loop");
         movementPath.Reverse();
-        return movementPath.Skip(1).ToList();
+        return (movementPath, moveableFieldsCost[targetField]);
     }
 
     // Not working as intended, only the last field is set as parent
@@ -182,7 +197,7 @@ public class Unit : MonoBehaviour
             Debug.Log(field.coordinates);
             //temporary solution, find better later (clipping colliders - selecting field instead of unit)
             this.transform.SetParent(field.transform, false); 
-            System.Threading.Thread.Sleep(1000);  
+            //System.Threading.Thread.Sleep(1000);  
         }
     }
 
