@@ -99,11 +99,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9cdf06719594d4e80bb26220ea40fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coordinates: {x: 0, y: 0}
-  type: {fileID: 11400000, guid: 11533d5a5df294946b038668cf267977, type: 2}
-  seenBy: []
-  building: {fileID: 0}
-  unit: {fileID: 0}
+  Coordinates: {x: 0, y: 0}
+  Type: {fileID: 11400000, guid: 11533d5a5df294946b038668cf267977, type: 2}
+  SeenBy: []
+  Building: {fileID: 0}
+  Unit: {fileID: 0}
 --- !u!61 &8604764855413229025
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 433d66bf2d8e9134193be299a4bebb31, type: 3}
   m_Name: Test
   m_EditorClassIdentifier: 
-  unitName: 
-  baseHealth: 10
-  baseDamage: 10
-  baseDefense: 5
-  baseMovementPoints: 5
-  baseAttackRange: 1
-  baseSightRange: 2
-  baseCost:
-    goldCost: 0
-    woodCost: 0
-    stoneCost: 0
-    doggiumCost: 0
+  UnitName: 
+  BaseHealth: 0
+  BaseDamage: 0
+  BaseDefense: 0
+  BaseMovementPoints: 5
+  BaseAttackRange: 0
+  BaseSightRange: 0
+  BaseCost:
+    GoldCost: 0
+    WoodCost: 0
+    StoneCost: 0
+    DoggiumCost: 0

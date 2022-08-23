@@ -1057,7 +1057,7 @@ MonoBehaviour:
   CurrentMovementPoints: 0
   AttackRange: 0
   SightRange: 0
-  BaseUnitStats: {fileID: 0}
+  BaseUnitStats: {fileID: 11400000, guid: d7c7fd20f5e886b4aa0f7804782d1c84, type: 2}
   Player: {fileID: 0}
   Field: {fileID: 565521625}
   Movement: {fileID: 0}
