@@ -7,26 +7,26 @@ public class Field : MonoBehaviour
     //LEAVE MARK AS FIRST CHILD IN FIELD GAMEOBJECT PLS
 
     // Graphical Offset
-    public static float xOffset = 2.56f, yOffset = 1.93f;
+    public static float XOffset = 2.56f, YOffset = 1.93f;
 
     // Coordinates
-    public Vector2Int coordinates;
+    public Vector2Int Coordinates;
 
     // References
-    public FieldType type;
-    public List<Object> seenBy; //temp - replace Object with Player
-    public GameObject building; //temp - replace Object with Building
-    public Unit unit; 
+    public FieldType Type;
+    public List<Object> SeenBy; //temp - replace Object with Player
+    public GameObject Building; //temp - replace Object with Building
+    public Unit Unit; 
 
     private void Awake()
     {
-        coordinates = ConvertPositionToCoordinates(transform.position);
+        Coordinates = ConvertPositionToCoordinates(transform.position);
     }
 
     private void OnMouseDown()
     {
         // Temporary for testing
-        Debug.Log("Clicked on "+coordinates);
+        Debug.Log("Clicked on "+Coordinates);
         GameObject.Find("TestUnit").GetComponent<Unit>().Move(this);
         
     }
@@ -38,24 +38,24 @@ public class Field : MonoBehaviour
     /// <returns></returns>
     private Vector2Int ConvertPositionToCoordinates(Vector2 position)
     {
-        int x = Mathf.CeilToInt((float)System.Math.Round(position.x, 2) / xOffset);
-        int y = Mathf.CeilToInt((float)System.Math.Round(position.y, 2) / yOffset);
+        var x = Mathf.CeilToInt((float)System.Math.Round(position.x, 2) / XOffset);
+        var y = Mathf.CeilToInt((float)System.Math.Round(position.y, 2) / YOffset);
         return new Vector2Int(x, y);
     }
 
     public bool IsObstacle()
     {
-        return type.isObstacle;
+        return Type.IsObstacle;
     }
 
     public bool HasUnit()
     {
-        return unit != null ? true : false;
+        return Unit != null;
     }
 
     public int GetMovementPointsCost()
     {
-        return type.movementPointsCost;
+        return Type.MovementPointsCost;
     }
 
     /// <summary>
@@ -65,13 +65,13 @@ public class Field : MonoBehaviour
     public List<Field> GetNeighbours()
     {
         List<Field> neighbours = new();
-        Dictionary<Vector2Int, Field> fieldGrid = GetComponentInParent<GameMap>().fieldGrid;
+        Dictionary<Vector2Int, Field> fieldGrid = GetComponentInParent<GameMap>().FieldGrid;
 
-        foreach (Vector2Int direction in Direction.GetDirectionList(coordinates.y))
+        foreach (var direction in Direction.GetDirectionList(Coordinates.y))
         {
-            if (fieldGrid.ContainsKey(coordinates + direction))
+            if (fieldGrid.ContainsKey(Coordinates + direction))
             {
-                neighbours.Add(fieldGrid[coordinates + direction]);
+                neighbours.Add(fieldGrid[Coordinates + direction]);
             }
         }
 
@@ -81,7 +81,7 @@ public class Field : MonoBehaviour
 
 public static class Direction
 {
-    public static List<Vector2Int> offsetEven = new()
+    public static List<Vector2Int> OffsetEven = new()
     {
         new Vector2Int(-1, 1), //NL
         new Vector2Int(0, 1), //NR
@@ -91,7 +91,7 @@ public static class Direction
         new Vector2Int(-1, 0), //W
     };
 
-    public static List<Vector2Int> offsetOdd = new()
+    public static List<Vector2Int> OffsetOdd = new()
     {
         new Vector2Int(0, 1), //NL
         new Vector2Int(1, 1), //NR
@@ -103,7 +103,7 @@ public static class Direction
 
     public static List<Vector2Int> GetDirectionList(int y)
     {
-        return y % 2 == 0 ? offsetEven : offsetOdd;
+        return y % 2 == 0 ? OffsetEven : OffsetOdd;
     }
 }
 

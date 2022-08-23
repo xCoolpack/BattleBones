@@ -5,13 +5,13 @@ using UnityEngine;
 public class GameMap : MonoBehaviour
 {
     // Grid size
-    public int width, height;
+    public int Width, Height;
     // Grid
-    public Dictionary<Vector2Int, Field> fieldGrid;
+    public Dictionary<Vector2Int, Field> FieldGrid;
 
     private void Awake()
     {
-        fieldGrid = new();
+        FieldGrid = new Dictionary<Vector2Int, Field>();
     }
 
     private void Start()
@@ -33,9 +33,9 @@ public class GameMap : MonoBehaviour
     /// </summary>
     private void PopulateGrid()
     {
-        foreach (Field field in FindObjectsOfType<Field>())
+        foreach (var field in FindObjectsOfType<Field>())
         {
-            fieldGrid.Add(field.coordinates, field);
+            FieldGrid.Add(field.Coordinates, field);
         }
     }
 
@@ -46,7 +46,7 @@ public class GameMap : MonoBehaviour
     /// <returns></returns>
     public Field GetFieldAt(Vector2Int fieldCoordinates)
     {
-        fieldGrid.TryGetValue(fieldCoordinates, out Field result);
+        FieldGrid.TryGetValue(fieldCoordinates, out Field result);
         return result;
     }
 
@@ -57,10 +57,10 @@ public class GameMap : MonoBehaviour
     /// <returns></returns>
     public List<Field> GetNeighboursOf(Vector2Int coordinates)
     {
-        if (!fieldGrid.ContainsKey(coordinates))
-            return new();
-        else 
-            return fieldGrid[coordinates].GetNeighbours();
+        if (!FieldGrid.ContainsKey(coordinates))
+            return new List<Field>();
+
+        return FieldGrid[coordinates].GetNeighbours();
     }
 
     /// <summary>
@@ -70,7 +70,7 @@ public class GameMap : MonoBehaviour
     /// <returns></returns>
     public List<Field> GetNeighboursOf(Field field)
     {
-        return GetNeighboursOf(field.coordinates);
+        return GetNeighboursOf(field.Coordinates);
     }
 
     /// <summary>
@@ -80,7 +80,7 @@ public class GameMap : MonoBehaviour
     /// <returns></returns>
     public List<Vector2Int> GetNeighboursCoordOf(Vector2Int coordinates)
     {
-        return GetNeighboursOf(coordinates).Select(x => x.coordinates).ToList();
+        return GetNeighboursOf(coordinates).Select(x => x.Coordinates).ToList();
     }
 
     /// <summary>
@@ -90,6 +90,6 @@ public class GameMap : MonoBehaviour
     /// <returns></returns>
     public List<Vector2Int> GetNeighboursCoordOf(Field field)
     {
-        return GetNeighboursCoordOf(field.coordinates);
+        return GetNeighboursCoordOf(field.Coordinates);
     }
 }

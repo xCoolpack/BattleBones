@@ -6,34 +6,34 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     // Max Stats
-    public int maxHealth;
-    public int maxDamage;
-    public int maxDefense;
-    public int maxMovementPoints;
+    public int MaxHealth;
+    public int MaxDamage;
+    public int MaxDefense;
+    public int MaxMovementPoints;
 
     // Current Stats
-    public int currentHealth;
-    public int currentDamage;
-    public int currentDefense;
-    public int currentMovementPoints;
-    public int attackRange;
-    public int sightRange;
+    public int CurrentHealth;
+    public int CurrentDamage;
+    public int CurrentDefense;
+    public int CurrentMovementPoints;
+    public int AttackRange;
+    public int SightRange;
 
     // References
-    public BaseUnitStats baseUnitStats;
-    public GameObject player;
-    public Field field;
-    public Movement movement;
+    public BaseUnitStats BaseUnitStats;
+    public GameObject Player;
+    public Field Field;
+    public Movement Movement;
 
-    public Dictionary<Field, Field> moveableFields;
-    public Dictionary<Field, int> moveableFieldsCost;
+    public Dictionary<Field, Field> MoveableFields;
+    public Dictionary<Field, int> MoveableFieldsCost;
 
     private void Awake()
     {
         SetStats();
 
         // Temp
-        movement = GetComponent<Movement>();
+        Movement = GetComponent<Movement>();
     }
 
     private void Update()
@@ -42,7 +42,7 @@ public class Unit : MonoBehaviour
         if (Input.GetKeyDown("r")) 
         {
             Debug.Log("clicked r");
-            currentMovementPoints = maxMovementPoints;
+            CurrentMovementPoints = MaxMovementPoints;
         }
 
     }
@@ -71,21 +71,21 @@ public class Unit : MonoBehaviour
     /// </summary>
     private void SetStats()
     {
-        maxHealth = baseUnitStats.baseHealth;
-        currentHealth = baseUnitStats.baseHealth;
-        maxDamage = baseUnitStats.baseDamage;
-        currentDamage = baseUnitStats.baseDamage;
-        maxDefense = baseUnitStats.baseDefense;
-        currentDefense = baseUnitStats.baseDefense;
-        maxMovementPoints = baseUnitStats.baseMovementPoints;
-        currentMovementPoints = baseUnitStats.baseMovementPoints;
-        attackRange = baseUnitStats.baseAttackRange;
-        sightRange = baseUnitStats.baseSightRange;
+        MaxHealth = BaseUnitStats.BaseHealth;
+        CurrentHealth = BaseUnitStats.BaseHealth;
+        MaxDamage = BaseUnitStats.BaseDamage;
+        CurrentDamage = BaseUnitStats.BaseDamage;
+        MaxDefense = BaseUnitStats.BaseDefense;
+        CurrentDefense = BaseUnitStats.BaseDefense;
+        MaxMovementPoints = BaseUnitStats.BaseMovementPoints;
+        CurrentMovementPoints = BaseUnitStats.BaseMovementPoints;
+        AttackRange = BaseUnitStats.BaseAttackRange;
+        SightRange = BaseUnitStats.BaseSightRange;
     }
 
     private void SetMoveableFields()
     {
-        (moveableFields, moveableFieldsCost) = GetMoveableFields(field, GameObject.Find("GameMap").GetComponent<GameMap>());
+        (MoveableFields, MoveableFieldsCost) = GetMoveableFields(Field, GameObject.Find("GameMap").GetComponent<GameMap>());
     }
 
     private (Dictionary<Field, Field>, Dictionary<Field, int>) GetMoveableFields(Field startingField, GameMap gameMap) 
@@ -93,7 +93,7 @@ public class Unit : MonoBehaviour
         Dictionary<Field, Field> visitedFields = new();
         Queue<Field> fieldsToVisit = new();
         Dictionary<Field, int> costOfFields = new();
-        int sumCost = 0;
+        var sumCost = 0;
 
         fieldsToVisit.Enqueue(startingField);
         costOfFields.Add(startingField, sumCost);
@@ -103,13 +103,13 @@ public class Unit : MonoBehaviour
         {
             Field currentField = fieldsToVisit.Dequeue();
 
-            foreach (Field field in gameMap.GetNeighboursOf(currentField))
+            foreach (var field in gameMap.GetNeighboursOf(currentField))
             {
-                if (movement.CanMove(field))
+                if (Movement.CanMove(field))
                 {
-                    sumCost = costOfFields[currentField] + movement.GetMovementPointsCostForUnit(field);
+                    sumCost = costOfFields[currentField] + Movement.GetMovementPointsCostForUnit(field);
 
-                    if (sumCost <= currentMovementPoints)
+                    if (sumCost <= CurrentMovementPoints)
                     {
                         if(!visitedFields.ContainsKey(field))
                         {
@@ -137,7 +137,7 @@ public class Unit : MonoBehaviour
 
     private void DisplayMoveableFields() 
     {
-        foreach (Field field in moveableFields.Keys)
+        foreach (var field in MoveableFields.Keys)
         {
             field.transform.Find("Mark").gameObject.SetActive(true);
         }
@@ -145,7 +145,7 @@ public class Unit : MonoBehaviour
 
     private void HideMoveableFields() 
     {
-        foreach (Field field in moveableFields.Keys)
+        foreach (var field in MoveableFields.Keys)
         {
             field.transform.Find("Mark").gameObject.SetActive(false);
         }
@@ -153,17 +153,17 @@ public class Unit : MonoBehaviour
 
     public bool Move(Field targetField) 
     {
-        if (moveableFields.ContainsKey(targetField))
+        if (MoveableFields.ContainsKey(targetField))
         {
-            Debug.Log("Moving to" + targetField.coordinates);
-            (List<Field> movementPath, int movementPointsCost) = GeneratePathWithCost(this.field, targetField);
-            this.field.unit = null;
-            this.field = targetField;
-            targetField.unit = this;
-            currentMovementPoints -= movementPointsCost;
+            Debug.Log("Moving to" + targetField.Coordinates);
+            (List<Field> movementPath, int movementPointsCost) = GeneratePathWithCost(this.Field, targetField);
+            this.Field.Unit = null;
+            this.Field = targetField;
+            targetField.Unit = this;
+            CurrentMovementPoints -= movementPointsCost;
             MoveGraphicModel(movementPath);
 
-            if (currentMovementPoints > 0)
+            if (CurrentMovementPoints > 0)
                 SetMoveableFields();
 
             return true;
@@ -172,20 +172,20 @@ public class Unit : MonoBehaviour
             return false;
     }
 
-    private (List<Field>, int) GeneratePathWithCost(Field startingfield, Field targetField)
+    private (List<Field>, int) GeneratePathWithCost(Field startingField, Field targetField)
     {
         List<Field> movementPath = new ();    
         Field currentField = targetField;
         movementPath.Add(currentField);
-        while (moveableFields[currentField] != startingfield)
+        while (MoveableFields[currentField] != startingField)
         {
-            currentField = moveableFields[currentField];
+            currentField = MoveableFields[currentField];
             movementPath.Add(currentField);
         }
 
         //Debug.Log("after while loop");
         movementPath.Reverse();
-        return (movementPath, moveableFieldsCost[targetField]);
+        return (movementPath, MoveableFieldsCost[targetField]);
     }
 
     // Not working as intended, only the last field is set as parent
@@ -194,7 +194,7 @@ public class Unit : MonoBehaviour
     {
         foreach (Field field in movementPath) 
         {
-            Debug.Log(field.coordinates);
+            Debug.Log(field.Coordinates);
             //temporary solution, find better later (clipping colliders - selecting field instead of unit)
             this.transform.SetParent(field.transform, false); 
             //System.Threading.Thread.Sleep(1000);  

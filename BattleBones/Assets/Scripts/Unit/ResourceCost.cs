@@ -1,16 +1,16 @@
 [System.Serializable]
 public struct ResourceCost
 {
-    public int goldCost;
-    public int woodCost;
-    public int stoneCost;
-    public int doggiumCost;
+    public int GoldCost;
+    public int WoodCost;
+    public int StoneCost;
+    public int DoggiumCost;
 
     public ResourceCost(int goldCost, int woodCost, int stoneCost, int doggiumCost)
     {
-        this.goldCost = goldCost;
-        this.woodCost = woodCost;
-        this.stoneCost = stoneCost;
-        this.doggiumCost = doggiumCost;
+        this.GoldCost = goldCost;
+        this.WoodCost = woodCost;
+        this.StoneCost = stoneCost;
+        this.DoggiumCost = doggiumCost;
     }
 }

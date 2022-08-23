@@ -1,0 +1,26 @@
+Zwierzaki chodzą na 4 łapach
+
+Jednostki psie:
+-pies bez broni (bazowy)
+-pies scout - czapka scouta
+-pies obrońca - zbroja
+-pies z kuszą - kusza na plecach
+-pies latający - najlepiej lata kręcąc swoim ogonem, ewentualnie śmigło na placach
+-pies taran - taran przyczepiony do boku psa
+-psia katapulta - katapulta koło której stoi pies
+
+Jednostki kocie:
+-kot bez broni (bazowy)
+-kot scout - czapka scouta
+-kot obrońca - zbroja
+-kot z kuszą - kusza na plecach
+-kot latający - najlepiej lata kręcąc swoim ogonem, ewentualnie śmigło na placach
+-kot górołaz - sprzęt do chodzenia po górach 
+
+Animacje (wystarczy kilka klatek +-4):
+-chodzenie
+-umieranie
+-otrzymywanie obrażeń (bez umierania)
+-atakowanie
+-latanie (dla latających)
+-idle (stan spoczynku)

@@ -138,6 +138,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5801692695271579817, guid: f6ae945f094939f429dc15fd7142f95a, type: 3}
   m_PrefabInstance: {fileID: 682506630}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &412005499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 412005500}
+  m_Layer: 0
+  m_Name: Player1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &412005500
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412005499}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 875089795}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &427005261 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7260510673771770686, guid: ae63b689d470ce9459171d737d633d8a, type: 3}
@@ -362,6 +393,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6ae945f094939f429dc15fd7142f95a, type: 3}
+--- !u!1 &875089794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 875089795}
+  m_Layer: 0
+  m_Name: TurnHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &875089795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875089794}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.05836107, y: -0.10733411, z: -0.013479548}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 412005500}
+  - {fileID: 945539458}
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &920103226
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -424,6 +488,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7260510673771770686, guid: ae63b689d470ce9459171d737d633d8a, type: 3}
   m_PrefabInstance: {fileID: 920103226}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &945539457
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 945539458}
+  m_Layer: 0
+  m_Name: Player2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &945539458
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 945539457}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 875089795}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &977383724
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -952,20 +1047,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e03ddfaeff9c4014aa445430b67e3d7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
-  maxDamage: 0
-  maxDefense: 0
-  maxMovementPoints: 0
-  currentHealth: 0
-  currentDamage: 0
-  currentDefense: 0
-  currentMovementPoints: 0
-  attackRange: 0
-  sightRange: 0
-  baseUnitStats: {fileID: 11400000, guid: d7c7fd20f5e886b4aa0f7804782d1c84, type: 2}
-  player: {fileID: 0}
-  field: {fileID: 565521625}
-  movement: {fileID: 0}
+  MaxHealth: 0
+  MaxDamage: 0
+  MaxDefense: 0
+  MaxMovementPoints: 0
+  CurrentHealth: 0
+  CurrentDamage: 0
+  CurrentDefense: 0
+  CurrentMovementPoints: 0
+  AttackRange: 0
+  SightRange: 0
+  BaseUnitStats: {fileID: 0}
+  Player: {fileID: 0}
+  Field: {fileID: 565521625}
+  Movement: {fileID: 0}
 --- !u!212 &1719227506
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1221,8 +1316,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 085a3565d53ae634aab8bb8afa02fce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
+  Width: 0
+  Height: 0
 --- !u!4 &1844313408
 Transform:
   m_ObjectHideFlags: 0
