@@ -15,4 +15,13 @@ public class PlayerTurnHandler : MonoBehaviour
     {
         
     }
+
+    public void StartOfTurn(){
+
+    }
+
+    public void EndOfTurn(){
+
+    }
+    
 }
