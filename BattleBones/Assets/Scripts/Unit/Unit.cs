@@ -24,9 +24,9 @@ public class Unit : MonoBehaviour
     public GameObject Player;
     public Field Field;
     public Movement Movement;
+    public GameMap GameMap;
 
-    public Dictionary<Field, Field> MoveableFields;
-    public Dictionary<Field, int> MoveableFieldsCost;
+    public  List<Field> MoveableFields;
 
     private void Awake()
     {
@@ -34,6 +34,7 @@ public class Unit : MonoBehaviour
 
         // Temp
         Movement = GetComponent<Movement>();
+        GameMap = GameObject.Find("GameMap").GetComponent<GameMap>();
     }
 
     private void Update()
@@ -85,10 +86,10 @@ public class Unit : MonoBehaviour
 
     private void SetMoveableFields()
     {
-        (MoveableFields, MoveableFieldsCost) = GetMoveableFields(Field, GameObject.Find("GameMap").GetComponent<GameMap>());
+        MoveableFields = GetMoveableFields(Field, GameMap);
     }
 
-    private (Dictionary<Field, Field>, Dictionary<Field, int>) GetMoveableFields(Field startingField, GameMap gameMap) 
+    private List<Field> GetMoveableFields(Field startingField, GameMap gameMap) 
     {
         Dictionary<Field, Field> visitedFields = new();
         Queue<Field> fieldsToVisit = new();
@@ -130,14 +131,13 @@ public class Unit : MonoBehaviour
         }
 
         visitedFields.Remove(startingField);
-        costOfFields.Remove(startingField);
 
-        return (visitedFields, costOfFields);
+        return visitedFields.Keys.ToList();
     }
 
     private void DisplayMoveableFields() 
     {
-        foreach (var field in MoveableFields.Keys)
+        foreach (var field in MoveableFields)
         {
             field.transform.Find("Mark").gameObject.SetActive(true);
         }
@@ -145,7 +145,7 @@ public class Unit : MonoBehaviour
 
     private void HideMoveableFields() 
     {
-        foreach (var field in MoveableFields.Keys)
+        foreach (var field in MoveableFields)
         {
             field.transform.Find("Mark").gameObject.SetActive(false);
         }
@@ -153,50 +153,52 @@ public class Unit : MonoBehaviour
 
     public bool Move(Field targetField) 
     {
-        if (MoveableFields.ContainsKey(targetField))
-        {
-            Debug.Log("Moving to" + targetField.Coordinates);
-            (List<Field> movementPath, int movementPointsCost) = GeneratePathWithCost(this.Field, targetField);
-            this.Field.Unit = null;
-            this.Field = targetField;
-            targetField.Unit = this;
-            CurrentMovementPoints -= movementPointsCost;
-            MoveGraphicModel(movementPath);
+        return true;
 
-            if (CurrentMovementPoints > 0)
-                SetMoveableFields();
+        //if (MoveableFields.Contains(targetField))
+        //{
+        //    Debug.Log("Moving to" + targetField.Coordinates);
+        //    (List<Field> movementPath, int movementPointsCost) = GeneratePathWithCost(this.Field, targetField);
+        //    this.Field.Unit = null;
+        //    this.Field = targetField;
+        //    targetField.Unit = this;
+        //    CurrentMovementPoints -= movementPointsCost;
+        //    MoveGraphicModel(movementPath);
 
-            return true;
-        }
-        else 
-            return false;
+        //    if (CurrentMovementPoints > 0)
+        //        SetMoveableFields();
+
+        //    return true;
+        //}
+        //else 
+        //    return false;
     }
 
-    private (List<Field>, int) GeneratePathWithCost(Field startingField, Field targetField)
-    {
-        List<Field> movementPath = new ();    
-        Field currentField = targetField;
-        movementPath.Add(currentField);
-        while (MoveableFields[currentField] != startingField)
-        {
-            currentField = MoveableFields[currentField];
-            movementPath.Add(currentField);
-        }
+    //private (List<Field>, int) GeneratePathWithCost(Field startingField, Field targetField)
+    //{
+    //    List<Field> movementPath = new ();    
+    //    Field currentField = targetField;
+    //    movementPath.Add(currentField);
+    //    while (MoveableFields[currentField] != startingField)
+    //    {
+    //        currentField = MoveableFields[currentField];
+    //        movementPath.Add(currentField);
+    //    }
 
-        //Debug.Log("after while loop");
-        movementPath.Reverse();
-        return (movementPath, MoveableFieldsCost[targetField]);
-    }
+    //    //Debug.Log("after while loop");
+    //    movementPath.Reverse();
+    //    return (movementPath, MoveableFieldsCost[targetField]);
+    //}
 
     // Not working as intended, only the last field is set as parent
     // comeback later
     private void MoveGraphicModel(List<Field> movementPath)
     {
-        foreach (Field field in movementPath) 
+        foreach (Field field in movementPath)
         {
             Debug.Log(field.Coordinates);
             //temporary solution, find better later (clipping colliders - selecting field instead of unit)
-            this.transform.SetParent(field.transform, false); 
+            this.transform.SetParent(field.transform, false);
             //System.Threading.Thread.Sleep(1000);  
         }
     }
