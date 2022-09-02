@@ -28,6 +28,9 @@ public class Unit : MonoBehaviour
 
     public  List<Field> MoveableFields;
 
+    // Heuristic for A*
+    public delegate int Heuristic(Field startingField, Field targetField);
+
     private void Awake()
     {
         SetStats();
@@ -86,25 +89,25 @@ public class Unit : MonoBehaviour
 
     private void SetMoveableFields()
     {
-        MoveableFields = GetMoveableFields(Field, GameMap);
+        MoveableFields = GetMoveableFields(Field);
     }
 
-    private List<Field> GetMoveableFields(Field startingField, GameMap gameMap) 
+    private List<Field> GetMoveableFields(Field startingField) 
     {
         Dictionary<Field, Field> visitedFields = new();
         Queue<Field> fieldsToVisit = new();
         Dictionary<Field, int> costOfFields = new();
-        var sumCost = 0;
+        int sumCost = 0;
 
         fieldsToVisit.Enqueue(startingField);
-        costOfFields.Add(startingField, sumCost);
-        visitedFields.Add(startingField, null);
+        costOfFields[startingField] = sumCost;
+        visitedFields[startingField] = null;
 
         while (fieldsToVisit.Count > 0) 
         {
             Field currentField = fieldsToVisit.Dequeue();
 
-            foreach (var field in gameMap.GetNeighboursOf(currentField))
+            foreach (var field in currentField.GetNeighbors())
             {
                 if (Movement.CanMove(field))
                 {
@@ -115,8 +118,8 @@ public class Unit : MonoBehaviour
                         if(!visitedFields.ContainsKey(field))
                         {
                             fieldsToVisit.Enqueue(field);
-                            costOfFields.Add(field, sumCost);
-                            visitedFields.Add(field, currentField);
+                            costOfFields[field] = sumCost;
+                            visitedFields[field] = currentField;
                         }
                         else if(visitedFields.ContainsKey(field) && costOfFields[field] > sumCost)
                         {
@@ -151,8 +154,120 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public bool Move(Field targetField) 
+    /// <summary>
+    /// Methods calculating distance beetwen Fields coordinates
+    /// </summary>
+    /// <param name="startingField"></param>
+    /// <param name="targetField"></param>
+    /// <returns></returns>
+    public int GetDistance(Field startingField, Field targetField)
     {
+        // TO DO
+        return 0;
+    } 
+
+    /// <summary>
+    /// A* graph search for fields
+    /// </summary>
+    /// <param name="startingField"></param>
+    /// <param name="targetField"></param>
+    /// <param name="heuristic"></param>
+    /// <returns></returns>
+    public Dictionary<Field, Field> AStarSearch(Field startingField, Field targetField, Heuristic heuristic)
+    {
+        Dictionary<Field, Field> visitedFields = new();
+        IntPriorityQueue<Field> fieldsToVisit = new();
+        Dictionary<Field, int> costOfFields = new();
+        int sumCost = 0;
+
+        fieldsToVisit.Enqueue(startingField, sumCost);
+        costOfFields[startingField] = sumCost;
+        visitedFields[startingField] = null;
+
+        while (fieldsToVisit.Count > 0)
+        {
+            (Field currentField, _) = fieldsToVisit.Dequeue();
+
+            if (targetField == currentField)
+                break;
+
+            foreach (var field in currentField.GetNeighbors())
+            {
+                if (Movement.CanMove(field))
+                {
+                    sumCost = costOfFields[currentField] + Movement.GetMovementPointsCostForUnit(field);
+
+                    if (!visitedFields.ContainsKey(field) || costOfFields[field] > sumCost)
+                    {
+                        costOfFields[field] = sumCost;
+                        int priority = sumCost + heuristic(field, targetField);
+                        fieldsToVisit.Enqueue(field, priority);
+                        visitedFields[field] = currentField;
+                    }
+                }
+            }
+        }
+
+        return visitedFields;
+    }
+
+    /// <summary>
+    /// Generating path to target field
+    /// </summary>
+    /// <param name="graph"></param>
+    /// <param name="startingField"></param>
+    /// <param name="targetField"></param>
+    /// <returns></returns>
+    private List<Field> GeneratePathTo(Dictionary<Field, Field> graph, Field startingField, Field targetField)
+    {
+        List<Field> movementPath = new();
+        Field currentField = targetField;
+        movementPath.Add(currentField);
+        while (graph[currentField] != startingField)
+        {
+            currentField = graph[currentField];
+            movementPath.Add(currentField);
+        }
+
+        //Debug.Log("after while loop");
+        movementPath.Reverse();
+        return movementPath;
+    }
+
+
+    /// <summary>
+    /// Move method for unit 
+    /// </summary>
+    /// <param name="targetField"></param>
+    /// <returns></returns>
+    public bool Move(Field targetField)
+    {
+        Dictionary<Field, Field> graph = AStarSearch(Field, targetField, GetDistance);
+        List<Field> movementPath = GeneratePathTo(graph, Field, targetField);
+        List<Field> accessibleMovementPath = new List<Field>();
+        int movementPointCost = 0;
+        int nextMovementPointCost = 0;
+
+        foreach (var field in movementPath)
+        {
+            nextMovementPointCost += Movement.GetMovementPointsCostForUnit(field);
+            Debug.Log(nextMovementPointCost);
+            if (CurrentMovementPoints < nextMovementPointCost)
+                break;
+
+            accessibleMovementPath.Add(field);
+            Debug.Log(field);
+            movementPointCost = nextMovementPointCost;
+        }
+
+        foreach (Field field in accessibleMovementPath)
+        {
+            Debug.Log(field.Coordinates);
+        }
+
+        CurrentMovementPoints -= movementPointCost;
+        MoveGraphicModel(accessibleMovementPath);
+
         return true;
 
         //if (MoveableFields.Contains(targetField))
@@ -174,21 +289,7 @@ public class Unit : MonoBehaviour
         //    return false;
     }
 
-    //private (List<Field>, int) GeneratePathWithCost(Field startingField, Field targetField)
-    //{
-    //    List<Field> movementPath = new ();    
-    //    Field currentField = targetField;
-    //    movementPath.Add(currentField);
-    //    while (MoveableFields[currentField] != startingField)
-    //    {
-    //        currentField = MoveableFields[currentField];
-    //        movementPath.Add(currentField);
-    //    }
-
-    //    //Debug.Log("after while loop");
-    //    movementPath.Reverse();
-    //    return (movementPath, MoveableFieldsCost[targetField]);
-    //}
+    
 
     // Not working as intended, only the last field is set as parent
     // comeback later

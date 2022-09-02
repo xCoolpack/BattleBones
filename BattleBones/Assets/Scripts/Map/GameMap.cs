@@ -51,45 +51,45 @@ public class GameMap : MonoBehaviour
     }
 
     /// <summary>
-    /// Methods returning list of neighbours of field at given coordinates
+    /// Methods returning list of neighbors of field at given coordinates
     /// </summary>
     /// <param name="coordinates"></param>
     /// <returns></returns>
-    public List<Field> GetNeighboursOf(Vector2Int coordinates)
+    public List<Field> GetNeighborsOf(Vector2Int coordinates)
     {
         if (!FieldGrid.ContainsKey(coordinates))
             return new List<Field>();
 
-        return FieldGrid[coordinates].GetNeighbours();
+        return FieldGrid[coordinates].GetNeighbors();
     }
 
     /// <summary>
-    /// Methods returning list of neighbours of given field
+    /// Methods returning list of neighbors of given field
     /// </summary>
     /// <param name="field"></param>
     /// <returns></returns>
-    public List<Field> GetNeighboursOf(Field field)
+    public List<Field> GetNeighborsOf(Field field)
     {
-        return GetNeighboursOf(field.Coordinates);
+        return GetNeighborsOf(field.Coordinates);
     }
 
     /// <summary>
-    /// Methods returning list of neighbours' coordinates of field at given coordinates
+    /// Methods returning list of neighbors' coordinates of field at given coordinates
     /// </summary>
     /// <param name="coordinates"></param>
     /// <returns></returns>
-    public List<Vector2Int> GetNeighboursCoordOf(Vector2Int coordinates)
+    public List<Vector2Int> GetNeighborsCoordOf(Vector2Int coordinates)
     {
-        return GetNeighboursOf(coordinates).Select(x => x.Coordinates).ToList();
+        return GetNeighborsOf(coordinates).Select(x => x.Coordinates).ToList();
     }
 
     /// <summary>
-    /// Methods returning list of neighbours' coordinates of given field
+    /// Methods returning list of neighbors' coordinates of given field
     /// </summary>
     /// <param name="field"></param>
     /// <returns></returns>
-    public List<Vector2Int> GetNeighboursCoordOf(Field field)
+    public List<Vector2Int> GetNeighborsCoordOf(Field field)
     {
-        return GetNeighboursCoordOf(field.Coordinates);
+        return GetNeighborsCoordOf(field.Coordinates);
     }
 }

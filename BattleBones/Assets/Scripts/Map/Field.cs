@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Field : MonoBehaviour
@@ -16,11 +17,17 @@ public class Field : MonoBehaviour
     public FieldType Type;
     public List<Object> SeenBy; //temp - replace Object with Player
     public GameObject Building; //temp - replace Object with Building
-    public Unit Unit; 
+    public Unit Unit;
+    public Dictionary<Vector2Int, Field> FieldGrid;
 
     private void Awake()
     {
         Coordinates = ConvertPositionToCoordinates(transform.position);
+    }
+
+    private void Start()
+    {
+        FieldGrid = GetComponentInParent<GameMap>().FieldGrid;
     }
 
     private void OnMouseDown()
@@ -59,24 +66,28 @@ public class Field : MonoBehaviour
     }
 
     /// <summary>
-    /// Methods returning list of neighbours of field
+    /// Methods returning list of neighbors of field
     /// </summary>
     /// <returns></returns>
-    public List<Field> GetNeighbours()
+    public List<Field> GetNeighbors()
     {
-        List<Field> neighbours = new();
-        Dictionary<Vector2Int, Field> fieldGrid = GetComponentInParent<GameMap>().FieldGrid;
+        List<Field> neighbors = new();
 
         foreach (var direction in Direction.GetDirectionList(Coordinates.y))
         {
-            if (fieldGrid.ContainsKey(Coordinates + direction))
+            if (FieldGrid.ContainsKey(Coordinates + direction))
             {
-                neighbours.Add(fieldGrid[Coordinates + direction]);
+                neighbors.Add(FieldGrid[Coordinates + direction]);
             }
         }
 
-        return neighbours;
-    } 
+        return neighbors;
+    }
+
+    public override string ToString()
+    {
+        return $"{Type.FieldName} ({Coordinates.x}, {Coordinates.y})";
+    }
 }
 
 public static class Direction

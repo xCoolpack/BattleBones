@@ -2,12 +2,12 @@ using System.Collections.Generic;
 
 public class IntPriorityQueue<T>
 {
-    private List<(T element, int priority)> _queue;
+    private readonly List<(T element, int priority)> _queue;
     public int Count { get { return _queue.Count; } }
 
     public IntPriorityQueue()
     {
-        _queue = new ();
+        _queue = new List<(T element, int priority)>();
     }
 
     public void Enqueue(T element, int priority)
