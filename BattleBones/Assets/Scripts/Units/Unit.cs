@@ -115,13 +115,13 @@ public class Unit : MonoBehaviour
 
                     if (sumCost <= CurrentMovementPoints)
                     {
-                        if(!visitedFields.ContainsKey(field))
+                        if (!visitedFields.ContainsKey(field))
                         {
                             fieldsToVisit.Enqueue(field);
                             costOfFields[field] = sumCost;
                             visitedFields[field] = currentField;
                         }
-                        else if(visitedFields.ContainsKey(field) && costOfFields[field] > sumCost)
+                        else if (visitedFields.ContainsKey(field) && costOfFields[field] > sumCost)
                         {
                             costOfFields[field] = sumCost;
                             visitedFields[field] = currentField;
@@ -218,7 +218,7 @@ public class Unit : MonoBehaviour
     /// <param name="startingField"></param>
     /// <param name="targetField"></param>
     /// <returns></returns>
-    private List<Field> GeneratePathTo(Dictionary<Field, Field> graph, Field startingField, Field targetField)
+    private static List<Field> GeneratePathTo(Dictionary<Field, Field> graph, Field startingField, Field targetField)
     {
         List<Field> movementPath = new();
         Field currentField = targetField;
@@ -260,7 +260,7 @@ public class Unit : MonoBehaviour
             movementPointCost = nextMovementPointCost;
         }
 
-        foreach (Field field in accessibleMovementPath)
+        foreach (var field in accessibleMovementPath)
         {
             Debug.Log(field.Coordinates);
         }

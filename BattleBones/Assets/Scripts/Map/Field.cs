@@ -16,7 +16,7 @@ public class Field : MonoBehaviour
     // References
     public FieldType Type;
     public List<Object> SeenBy; //temp - replace Object with Player
-    public GameObject Building; //temp - replace Object with Building
+    public Building Building; //temp - replace Object with Building
     public Unit Unit;
     public Dictionary<Vector2Int, Field> FieldGrid;
 

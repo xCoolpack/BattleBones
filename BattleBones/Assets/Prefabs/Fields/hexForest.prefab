@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5801692695271579817}
   - component: {fileID: 5536509540290845529}
   - component: {fileID: -5705379979245829049}
+  - component: {fileID: 9002846834787914327}
   m_Layer: 0
   m_Name: hexForest
   m_TagString: Untagged
@@ -103,6 +104,32 @@ MonoBehaviour:
   SeenBy: []
   Building: {fileID: 0}
   Unit: {fileID: 0}
+--- !u!61 &9002846834787914327
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65629987104253305}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.08812952, y: 1.387553}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 2.56, y: 3.84}
+    newSize: {x: 2.56, y: 3.84}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.619956, y: 1.790997}
+  m_EdgeRadius: 0
 --- !u!1 &6793545371861804760
 GameObject:
   m_ObjectHideFlags: 0
