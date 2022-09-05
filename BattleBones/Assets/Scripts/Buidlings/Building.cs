@@ -1,5 +1,14 @@
 using UnityEngine;
 
+public enum BuildingState
+{
+    Fine,
+    UnderConstruction,
+    Plundered,
+    BeingDestroyed,
+} 
+
+
 public class Building : MonoBehaviour
 {
     // Max stats
@@ -17,6 +26,7 @@ public class Building : MonoBehaviour
     public BaseBuildingStats BaseBuildingStats;
     public Player Player;
     public Field Field;
+    public BuildingState BuildingState;
 
     private void Awake()
     {

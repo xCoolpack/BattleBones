@@ -94,48 +94,7 @@ public class Unit : MonoBehaviour
 
     private List<Field> GetMoveableFields(Field startingField) 
     {
-        Dictionary<Field, Field> visitedFields = new();
-        Queue<Field> fieldsToVisit = new();
-        Dictionary<Field, int> costOfFields = new();
-        int sumCost = 0;
-
-        fieldsToVisit.Enqueue(startingField);
-        costOfFields[startingField] = sumCost;
-        visitedFields[startingField] = null;
-
-        while (fieldsToVisit.Count > 0) 
-        {
-            Field currentField = fieldsToVisit.Dequeue();
-
-            foreach (var field in currentField.GetNeighbors())
-            {
-                if (Movement.CanMove(field))
-                {
-                    sumCost = costOfFields[currentField] + Movement.GetMovementPointsCostForUnit(field);
-
-                    if (sumCost <= CurrentMovementPoints)
-                    {
-                        if (!visitedFields.ContainsKey(field))
-                        {
-                            fieldsToVisit.Enqueue(field);
-                            costOfFields[field] = sumCost;
-                            visitedFields[field] = currentField;
-                        }
-                        else if (visitedFields.ContainsKey(field) && costOfFields[field] > sumCost)
-                        {
-                            costOfFields[field] = sumCost;
-                            visitedFields[field] = currentField;
-                        }                       
-                    }
-                }
-                
-            }
-            
-        }
-
-        visitedFields.Remove(startingField);
-
-        return visitedFields.Keys.ToList();
+        return GraphSearch.BreadthFirstSearch(startingField, CurrentMovementPoints, Movement.CanMove, Movement.GetMovementPointsCostForUnit);
     }
 
     private void DisplayMoveableFields() 
@@ -265,6 +224,9 @@ public class Unit : MonoBehaviour
             Debug.Log(field.Coordinates);
         }
 
+        Field.Unit = null;
+        Field = targetField;
+        targetField.Unit = this;
         CurrentMovementPoints -= movementPointCost;
         MoveGraphicModel(accessibleMovementPath);
 
