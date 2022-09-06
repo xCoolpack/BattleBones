@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -54,20 +52,16 @@ public class Unit : MonoBehaviour
     private void OnMouseDown()
     {
         SetMoveableFields();
-        DisplayMoveableFields();
-        // debug
-        // int counter = 0;
-        // foreach(var x in moveableFields.Keys) 
-        // {
-        //     Debug.Log(counter + " - " + x.coordinates);
-        //     counter++;
-        // }
-        
+        Debug.Log("hey");
+        GetVisibleFields().ForEach(Debug.Log);
+        DisplayVisibleFields();
+        //DisplayMoveableFields();
     }
 
-    private void OnMouseUp() 
+    private void OnMouseUp()
     {
-        HideMoveableFields();
+        HideVisibleFields();
+        //HideMoveableFields();
     }
 
     /// <summary>
@@ -87,14 +81,36 @@ public class Unit : MonoBehaviour
         SightRange = BaseUnitStats.BaseSightRange;
     }
 
-    private void SetMoveableFields()
+    private List<Field> GetVisibleFields() 
     {
-        MoveableFields = GetMoveableFields(Field);
+        return GraphSearch.BreadthFirstSearch(Field, SightRange, 
+            (currentField, startingField) => currentField.IsVisibleFor(startingField), _ => 1);
+    }
+    private void DisplayVisibleFields()
+    {
+        foreach (var field in GetVisibleFields())
+        {
+            field.transform.Find("Mark").gameObject.SetActive(true);
+        }
     }
 
-    private List<Field> GetMoveableFields(Field startingField) 
+    private void HideVisibleFields()
     {
-        return GraphSearch.BreadthFirstSearch(startingField, CurrentMovementPoints, Movement.CanMove, Movement.GetMovementPointsCostForUnit);
+        foreach (var field in GetVisibleFields())
+        {
+            field.transform.Find("Mark").gameObject.SetActive(false);
+        }
+    }
+
+    private void SetMoveableFields()
+    {
+        MoveableFields = GetMoveableFields();
+    }
+
+    private List<Field> GetMoveableFields() 
+    {
+       return GraphSearch.BreadthFirstSearch(Field, CurrentMovementPoints,
+            (currentField, startingField) => Movement.CanMove(currentField), Movement.GetMovementPointsCostForUnit);
     }
 
     private void DisplayMoveableFields() 

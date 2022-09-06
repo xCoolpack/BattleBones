@@ -15,4 +15,4 @@ MonoBehaviour:
   FieldName: Forest
   MovementPointsCost: 5
   IsObstacle: 0
-  IsBlockSight: 1
+  IsBlockingSight: 1

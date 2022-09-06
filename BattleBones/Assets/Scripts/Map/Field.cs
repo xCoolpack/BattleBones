@@ -12,34 +12,35 @@ public class Field : MonoBehaviour
 
     // Coordinates
     public Vector2Int Coordinates;
+    public Vector3Int ThreeAxisCoordinates;
 
     // References
     public FieldType Type;
     public List<Object> SeenBy; //temp - replace Object with Player
     public Building Building; //temp - replace Object with Building
     public Unit Unit;
-    public Dictionary<Vector2Int, Field> FieldGrid;
+    public GameMap GameMap;
 
     private void Awake()
     {
         Coordinates = ConvertPositionToCoordinates(transform.position);
+        ThreeAxisCoordinates = CoordinatesConverter.To3Axis(Coordinates);
     }
 
     private void Start()
     {
-        FieldGrid = GetComponentInParent<GameMap>().FieldGrid;
+        GameMap = GetComponentInParent<GameMap>();
     }
 
     private void OnMouseDown()
     {
         // Temporary for testing
-        Debug.Log("Clicked on "+Coordinates);
-        GameObject.Find("TestUnit").GetComponent<Unit>().Move(this);
-        
+        //GameObject.Find("TestUnit").GetComponent<Unit>().Move(this);
+        Debug.Log(IsVisibleFor(GameObject.Find("TestUnit").GetComponent<Unit>().Field));
     }
 
     /// <summary>
-    /// Methods converting transform position to coordinates
+    /// Method converting transform position to coordinates
     /// </summary>
     /// <param name="position"></param>
     /// <returns></returns>
@@ -53,6 +54,10 @@ public class Field : MonoBehaviour
     public bool IsObstacle()
     {
         return Type.IsObstacle;
+    }
+    public bool IsBlockingSight()
+    {
+        return Type.IsBlockingSight;
     }
 
     public bool HasUnit()
@@ -75,13 +80,47 @@ public class Field : MonoBehaviour
 
         foreach (var direction in Direction.GetDirectionList(Coordinates.y))
         {
-            if (FieldGrid.ContainsKey(Coordinates + direction))
+            if (GameMap.FieldGrid.ContainsKey(Coordinates + direction))
             {
-                neighbors.Add(FieldGrid[Coordinates + direction]);
+                neighbors.Add(GameMap.FieldGrid[Coordinates + direction]);
             }
         }
 
         return neighbors;
+    }
+
+    public bool IsVisibleFor(Field field)
+    {
+        int x = System.Math.Sign(ThreeAxisCoordinates.x - field.ThreeAxisCoordinates.x) * -1;
+        int y = System.Math.Sign(ThreeAxisCoordinates.y - field.ThreeAxisCoordinates.y) * -1;
+        int z = System.Math.Sign(ThreeAxisCoordinates.z - field.ThreeAxisCoordinates.z) * -1;
+
+        //Debug.Log($"x:{x}, y:{y}, z:{z}");
+
+        if (x + y == 0 && x + z == 0)
+        {
+            
+            return !GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, 0)).IsBlockingSight()
+                   && !GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, 0, z)).IsBlockingSight();
+        }
+        else if (y + x == 0 && y + z == 0)
+        {
+            return !GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(0, y, z)).IsBlockingSight()
+                   && !GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, 0)).IsBlockingSight();
+        }
+        else if (z + x == 0 && z + y == 0)
+        {
+            //Debug.Log(new Vector3Int(x, 0, z)+ " - " + new Vector3Int(0, y, z));
+            return !GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, 0, z)).IsBlockingSight()
+                   && !GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(0, y, z)).IsBlockingSight();
+        }
+        else if (x == 0 || y == 0 || z == 0)
+        {
+            //Debug.Log(new Vector3Int(x, y, z));
+            return !GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, z)).IsBlockingSight();
+        }
+
+        return false;
     }
 
     public override string ToString()

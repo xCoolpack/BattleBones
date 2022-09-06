@@ -15,4 +15,4 @@ MonoBehaviour:
   FieldName: Mountains
   MovementPointsCost: 0
   IsObstacle: 1
-  IsBlockSight: 0
+  IsBlockingSight: 1

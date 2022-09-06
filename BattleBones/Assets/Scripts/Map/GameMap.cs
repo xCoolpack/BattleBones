@@ -40,13 +40,24 @@ public class GameMap : MonoBehaviour
     }
 
     /// <summary>
-    /// Methods returning field at given coordinates
+    /// Methods returning field at given 2 axis coordinates
     /// </summary>
     /// <param name="fieldCoordinates"></param>
     /// <returns></returns>
     public Field GetFieldAt(Vector2Int fieldCoordinates)
     {
         FieldGrid.TryGetValue(fieldCoordinates, out Field result);
+        return result;
+    }
+
+    /// <summary>
+    /// Methods returning field at given 3 axis coordinates
+    /// </summary>
+    /// <param name="fieldCoordinates"></param>
+    /// <returns></returns>
+    public Field GetFieldAt(Vector3Int fieldCoordinates)
+    {
+        FieldGrid.TryGetValue(CoordinatesConverter.To2Axis(fieldCoordinates), out Field result);
         return result;
     }
 

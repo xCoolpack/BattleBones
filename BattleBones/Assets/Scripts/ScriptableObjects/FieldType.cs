@@ -6,5 +6,5 @@ public class FieldType : ScriptableObject
     public string FieldName;
     public int MovementPointsCost;
     public bool IsObstacle;
-    public bool IsBlockSight;
+    public bool IsBlockingSight;
 }

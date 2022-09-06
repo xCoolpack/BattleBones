@@ -18,7 +18,7 @@ MonoBehaviour:
   BaseDefense: 0
   BaseMovementPoints: 5
   BaseAttackRange: 0
-  BaseSightRange: 0
+  BaseSightRange: 2
   BaseCost:
     GoldCost: 0
     WoodCost: 0

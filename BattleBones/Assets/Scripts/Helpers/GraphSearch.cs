@@ -1,12 +1,12 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using static UnityEngine.ParticleSystem;
+using UnityEngine;
 
 public static class GraphSearch
 {
     public delegate int Cost(Field field);
-    public delegate bool CanDoAction(Field field);
+    public delegate bool CanDoAction(Field currentField, Field startingField);
 
     /// <summary>
     /// Breadth first search for field grid
@@ -33,8 +33,11 @@ public static class GraphSearch
 
             foreach (var field in currentField.GetNeighbors())
             {
-                if (canDoAction(field))
+                Debug.Log(field.Coordinates);
+                Debug.Log(canDoAction(field, startingField));
+                if (canDoAction(field, startingField))
                 {
+                    Debug.Log(cost(field));
                     sumCost = costOfFields[currentField] + cost(field);
 
                     if (sumCost <= range)
