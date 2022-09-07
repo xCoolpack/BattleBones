@@ -219,7 +219,7 @@ public class Unit : MonoBehaviour
     {
         Dictionary<Field, Field> graph = AStarSearch(Field, targetField, GetDistance);
         List<Field> movementPath = GeneratePathTo(graph, Field, targetField);
-        List<Field> accessibleMovementPath = new List<Field>();
+        var accessibleMovementPath = new List<Field>();
         int movementPointCost = 0;
         int nextMovementPointCost = 0;
 

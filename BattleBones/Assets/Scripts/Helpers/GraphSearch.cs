@@ -33,11 +33,11 @@ public static class GraphSearch
 
             foreach (var field in currentField.GetNeighbors())
             {
-                Debug.Log(field.Coordinates);
-                Debug.Log(canDoAction(field, startingField));
+                //Debug.Log(field.Coordinates);
+                //Debug.Log(canDoAction(field, startingField));
                 if (canDoAction(field, startingField))
                 {
-                    Debug.Log(cost(field));
+                    //Debug.Log(cost(field));
                     sumCost = costOfFields[currentField] + cost(field);
 
                     if (sumCost <= range)

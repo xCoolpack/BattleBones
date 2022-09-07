@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int GoldAmount;
+    public int WoodAmount;
+    public int StoneAmount;
+    public int DoggiumAmount;
+    public int BoneAmount;
 
-    // Update is called once per frame
-    void Update()
+    public int GoldIncome;
+    public int WoodIncome;
+    public int StoneIncome;
+    public int DoggiumIncome;
+    public int BoneIncome;
+
+    public void GenerateIncome()
     {
-        
+        GoldAmount += GoldIncome;
+        WoodAmount += WoodIncome;
+        StoneAmount += StoneIncome;
+        DoggiumAmount += DoggiumIncome;
+        BoneAmount += BoneIncome;
     }
 }

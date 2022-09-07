@@ -36,7 +36,21 @@ public class Field : MonoBehaviour
     {
         // Temporary for testing
         //GameObject.Find("TestUnit").GetComponent<Unit>().Move(this);
-        Debug.Log(IsVisibleFor(GameObject.Find("TestUnit").GetComponent<Unit>().Field));
+        //Debug.Log(IsVisibleFor(GameObject.Find("TestUnit").GetComponent<Unit>().Field));
+        //EventHandler eventHandler = GameObject.Find("GlobalEventHandler").GetComponent<EventHandler>();
+
+        //GameEvent gameEvent = new GameEvent(1, () =>
+        //{
+        //    var unitO = GameObject.Find("TestUnit");
+        //    if (unitO is null)
+        //    {
+        //        Debug.Log("Is null!");
+        //        return;
+        //    }
+        //    var unit = unitO.GetComponent<Unit>();
+        //    unit.Move(this);
+        //});
+        //eventHandler.AddStartTurnEvent(gameEvent);
     }
 
     /// <summary>

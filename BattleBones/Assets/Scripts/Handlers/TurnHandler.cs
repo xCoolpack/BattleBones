@@ -30,6 +30,7 @@ public class TurnHandler : MonoBehaviour
         Players[_playerIndex].PlayerEventHandler.TurnEnd();
         NextPlayer();
         Players[_playerIndex].PlayerEventHandler.TurnStart();
+        Players[_playerIndex].ResourceManager.GenerateIncome();
         PlayerTurnText.text = "Turn: " + Players[_playerIndex].name;
     }
 
