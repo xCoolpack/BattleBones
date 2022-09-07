@@ -7,11 +7,11 @@ public class TurnHandler : MonoBehaviour
 {
     public int TurnCounter;
     public Player CurrentPlayer { get; private set; }
-
     private int _playerIndex;
     public List<Player> Players;
-
-    public TextMeshProUGUI TurnText;
+    public TextMeshProUGUI PlayerTurnText;
+    public TextMeshProUGUI TurnCountText;
+    public EventHandler GlobalEventHandler;
 
     // Start is called before the first frame update
     void Start()
@@ -27,11 +27,10 @@ public class TurnHandler : MonoBehaviour
     }
 
     public void NextTurn(){
-        Players[_playerIndex].PlayerTurnHandler.EndOfTurn();
-        TurnCounter++;
+        Players[_playerIndex].PlayerEventHandler.TurnEnd();
         NextPlayer();
-        Players[_playerIndex].PlayerTurnHandler.StartOfTurn();
-        TurnText.text = "Turn: " + Players[_playerIndex].name;
+        Players[_playerIndex].PlayerEventHandler.TurnStart();
+        PlayerTurnText.text = "Turn: " + Players[_playerIndex].name;
     }
 
     private void NextPlayer()
@@ -42,7 +41,12 @@ public class TurnHandler : MonoBehaviour
         }
         else
         {
+            // End of global turn
             _playerIndex = 0;
+            TurnCounter++;
+            GlobalEventHandler.TurnEnd();
+            GlobalEventHandler.TurnStart();
+            TurnCountText.text = $"Turn {TurnCounter}";
         }
 
         CurrentPlayer = Players[_playerIndex];

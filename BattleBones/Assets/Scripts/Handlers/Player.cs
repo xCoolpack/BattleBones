@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public string Faction;
     public ResourceManager ResourceManager;
     public MissionHandler MissionHandler;
-    public PlayerTurnHandler PlayerTurnHandler;
+    public EventHandler PlayerEventHandler;
     public List<Unit> UnlockedUnits;
 
     // Start is called before the first frame update
