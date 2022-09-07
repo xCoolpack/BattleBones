@@ -96,8 +96,11 @@ public class Field : MonoBehaviour
         int z = System.Math.Sign(ThreeAxisCoordinates.z - field.ThreeAxisCoordinates.z) * -1;
 
         //Debug.Log($"x:{x}, y:{y}, z:{z}");
-
-        if (x + y == 0 && x + z == 0)
+        if (x == 0 && y == 0 && z == 0)
+        {
+            return true;
+        }
+        else if (x + y == 0 && x + z == 0)
         {
             
             return !GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, 0)).IsBlockingSight()
