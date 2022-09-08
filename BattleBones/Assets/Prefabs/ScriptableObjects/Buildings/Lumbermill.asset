@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Lumbermill
   m_EditorClassIdentifier: 
   BuildingName: Lumbermill
-  BaseHealth: 0
+  BaseHealth: 1
   BaseDefense: 0
-  BaseSightRange: 0
+  BaseSightRange: 2
   BaseCost:
-    GoldCost: 0
-    WoodCost: 0
-    StoneCost: 0
-    DoggiumCost: 0
+    Gold: 0
+    Wood: 0
+    Stone: 0
+    Doggium: 0
+    Bone: 0
