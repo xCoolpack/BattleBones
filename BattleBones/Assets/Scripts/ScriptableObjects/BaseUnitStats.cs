@@ -11,5 +11,5 @@ public class BaseUnitStats : ScriptableObject
     public int BaseAttackRange;
     public int BaseSightRange;
 
-    public ResourceCost BaseCost;
+    public Resources BaseCost;
 }

@@ -1,11 +1,12 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum BuildingState
 {
-    Fine,
     UnderConstruction,
+    Fine,
     Plundered,
-    BeingDestroyed,
+    UnderRepair,
 } 
 
 
@@ -51,4 +52,42 @@ public class Building : MonoBehaviour
         SightRange = BaseBuildingStats.BaseSightRange;
     }
 
+    public bool IsEnemy(Player player)
+    {
+        return Player != player;
+    }
+
+    public void BeginConstruction(Player player, Field field)
+    {
+        Player = player;
+        Field = field;
+        field.Building = this;
+        BuildingState = BuildingState.UnderConstruction;
+        Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, Construct));
+    }
+    public virtual void Construct()
+    {
+        BuildingState = BuildingState.Fine;
+    }
+
+    public virtual void Plunder()
+    {
+        BuildingState = BuildingState.Plundered;
+    }
+
+    public void BeginRepair()
+    {
+        BuildingState = BuildingState.UnderRepair;
+        Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, Repair));
+    }
+
+    public virtual void Repair()
+    {
+        BuildingState = BuildingState.Fine;
+    }
+
+    public virtual void Destroy()
+    {
+        Field.Building = null;
+    }
 }

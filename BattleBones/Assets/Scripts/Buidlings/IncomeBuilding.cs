@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class IncomeBuilding : Building
 {
-    // Start is called before the first frame update
-    void Start()
+    public Resources ResourcesIncome;
+
+    public override void Construct()
     {
-        
+        base.Construct();
+        Player.ResourceManager.ResourcesIncome += ResourcesIncome;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Plunder()
     {
-        
+        base.Plunder();
+        Player.ResourceManager.ResourcesIncome -= ResourcesIncome;
+    }
+
+    public override void Destroy()
+    {
+        Player.ResourceManager.ResourcesIncome -= ResourcesIncome;
+        base.Destroy();
     }
 }

@@ -8,5 +8,5 @@ public class BaseBuildingStats : ScriptableObject
     public int BaseDefense;
     public int BaseSightRange;
 
-    public ResourceCost BaseCost;
+    public Resources BaseCost;
 }

@@ -16,8 +16,8 @@ public class Field : MonoBehaviour
 
     // References
     public FieldType Type;
-    public List<Object> SeenBy; //temp - replace Object with Player
-    public Building Building; //temp - replace Object with Building
+    public List<Player> SeenBy; 
+    public Building Building; 
     public Unit Unit;
     public GameMap GameMap;
 
@@ -35,7 +35,7 @@ public class Field : MonoBehaviour
     private void OnMouseDown()
     {
         // Temporary for testing
-        //GameObject.Find("TestUnit").GetComponent<Unit>().Move(this);
+        GameObject.Find("TestUnit").GetComponent<Unit>().Move(this);
         //Debug.Log(IsVisibleFor(GameObject.Find("TestUnit").GetComponent<Unit>().Field));
         //EventHandler eventHandler = GameObject.Find("GlobalEventHandler").GetComponent<EventHandler>();
 

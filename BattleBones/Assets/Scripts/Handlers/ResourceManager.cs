@@ -1,27 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mono.Cecil;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
-    public int GoldAmount;
-    public int WoodAmount;
-    public int StoneAmount;
-    public int DoggiumAmount;
-    public int BoneAmount;
+    public Resources ResourcesAmount;
 
-    public int GoldIncome;
-    public int WoodIncome;
-    public int StoneIncome;
-    public int DoggiumIncome;
-    public int BoneIncome;
-
+    public Resources ResourcesIncome;
+    
     public void GenerateIncome()
     {
-        GoldAmount += GoldIncome;
-        WoodAmount += WoodIncome;
-        StoneAmount += StoneIncome;
-        DoggiumAmount += DoggiumIncome;
-        BoneAmount += BoneIncome;
+        ResourcesAmount += ResourcesIncome;
     }
 }
+

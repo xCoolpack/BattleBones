@@ -19,7 +19,7 @@ public class Unit : MonoBehaviour
 
     // References
     public BaseUnitStats BaseUnitStats;
-    public GameObject Player;
+    public Player Player;
     public Field Field;
     public Movement Movement;
     public GameMap GameMap;
@@ -79,6 +79,11 @@ public class Unit : MonoBehaviour
         CurrentMovementPoints = BaseUnitStats.BaseMovementPoints;
         AttackRange = BaseUnitStats.BaseAttackRange;
         SightRange = BaseUnitStats.BaseSightRange;
+    }
+
+    public bool IsEnemy(Player player)
+    {
+        return Player != player;
     }
 
     private List<Field> GetVisibleFields() 
@@ -217,6 +222,8 @@ public class Unit : MonoBehaviour
     /// <returns></returns>
     public bool Move(Field targetField)
     {
+        if (targetField == Field)
+            return false;
         Dictionary<Field, Field> graph = AStarSearch(Field, targetField, GetDistance);
         List<Field> movementPath = GeneratePathTo(graph, Field, targetField);
         var accessibleMovementPath = new List<Field>();
