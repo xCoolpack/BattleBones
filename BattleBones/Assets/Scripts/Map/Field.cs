@@ -128,8 +128,8 @@ public class Field : MonoBehaviour
         else if (z + x == 0 && z + y == 0)
         {
             //Debug.Log(new Vector3Int(x, 0, z)+ " - " + new Vector3Int(0, y, z));
-            return !GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, 0, z)).IsBlockingSight()
-                   && !GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(0, y, z)).IsBlockingSight();
+            return (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, 0, z))?.IsBlockingSight() ?? false)
+                   && (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(0, y, z))?.IsBlockingSight() ?? false);
         }
         else if (x == 0 || y == 0 || z == 0)
         {

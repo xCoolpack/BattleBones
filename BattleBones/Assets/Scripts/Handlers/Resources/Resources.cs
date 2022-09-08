@@ -23,7 +23,7 @@ public struct Resources
 
     public static Resources operator +(Resources a, Resources b)
     {
-        return new Resources(a.Gold + b.Gold, a.Wood + b.Wood, a.Stone + b.Stone, a.Doggium + b.Doggium, a.Bone + b.Bone);
+        return new(a.Gold + b.Gold, a.Wood + b.Wood, a.Stone + b.Stone, a.Doggium + b.Doggium, a.Bone + b.Bone);
     }
 
     public static Resources operator -(Resources a, Resources b)
