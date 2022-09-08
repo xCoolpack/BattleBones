@@ -117,24 +117,25 @@ public class Field : MonoBehaviour
         else if (x + y == 0 && x + z == 0)
         {
             
-            return !GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, 0)).IsBlockingSight()
-                   && !GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, 0, z)).IsBlockingSight();
+            return (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, 0))?.IsBlockingSight() ?? true)
+                   && (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, 0, z))?.IsBlockingSight() ?? true);
         }
         else if (y + x == 0 && y + z == 0)
         {
-            return !GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(0, y, z)).IsBlockingSight()
-                   && !GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, 0)).IsBlockingSight();
+            return (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(0, y, z))?.IsBlockingSight() ?? true)
+                   && (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, 0))?.IsBlockingSight() ?? true);
         }
         else if (z + x == 0 && z + y == 0)
         {
             //Debug.Log(new Vector3Int(x, 0, z)+ " - " + new Vector3Int(0, y, z));
-            return !GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, 0, z)).IsBlockingSight()
-                   && !GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(0, y, z)).IsBlockingSight();
+            return (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, 0, z))?.IsBlockingSight() ?? true)
+                   && (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(0, y, z))?.IsBlockingSight() ?? true);
         }
         else if (x == 0 || y == 0 || z == 0)
         {
             //Debug.Log(new Vector3Int(x, y, z));
-            return !GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, z)).IsBlockingSight();
+            Field next = GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, z));
+            return (!next?.IsBlockingSight() ?? true) || next == field;
         }
 
         return false;

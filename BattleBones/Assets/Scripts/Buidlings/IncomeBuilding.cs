@@ -2,25 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IncomeBuilding : Building
+public class IncomeBuilding : MonoBehaviour
 {
     public Resources ResourcesIncome;
+    public Building Building;
 
-    public override void Construct()
+    private void Awake()
     {
-        base.Construct();
-        Player.ResourceManager.ResourcesIncome += ResourcesIncome;
+        Building = GetComponent<Building>();
     }
 
-    public override void Plunder()
+    public void Construct()
     {
-        base.Plunder();
-        Player.ResourceManager.ResourcesIncome -= ResourcesIncome;
+        Building.Construct();
+        Building.Player.ResourceManager.ResourcesIncome += ResourcesIncome;
     }
 
-    public override void Destroy()
+    public void Plunder()
     {
-        Player.ResourceManager.ResourcesIncome -= ResourcesIncome;
-        base.Destroy();
+        Building.Plunder();
+        Building.Player.ResourceManager.ResourcesIncome -= ResourcesIncome;
+    }
+
+    public void Destroy()
+    {
+        Building.Player.ResourceManager.ResourcesIncome -= ResourcesIncome;
+        Building.Destroy();
     }
 }

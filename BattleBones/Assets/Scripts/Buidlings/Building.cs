@@ -31,6 +31,7 @@ public class Building : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("Building " +BaseBuildingStats);
         SetStats();
     }
 
@@ -65,12 +66,12 @@ public class Building : MonoBehaviour
         BuildingState = BuildingState.UnderConstruction;
         Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, Construct));
     }
-    public virtual void Construct()
+    public void Construct()
     {
         BuildingState = BuildingState.Fine;
     }
 
-    public virtual void Plunder()
+    public void Plunder()
     {
         BuildingState = BuildingState.Plundered;
     }
@@ -81,12 +82,12 @@ public class Building : MonoBehaviour
         Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, Repair));
     }
 
-    public virtual void Repair()
+    public void Repair()
     {
         BuildingState = BuildingState.Fine;
     }
 
-    public virtual void Destroy()
+    public void Destroy()
     {
         Field.Building = null;
     }
