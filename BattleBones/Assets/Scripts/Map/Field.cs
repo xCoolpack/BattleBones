@@ -78,6 +78,10 @@ public class Field : MonoBehaviour
     {
         return Unit != null;
     }
+    public bool HasBuidling()
+    {
+        return Building != null;
+    }
 
     public int GetMovementPointsCost()
     {

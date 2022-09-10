@@ -16,11 +16,12 @@ MonoBehaviour:
   BaseHealth: 0
   BaseDamage: 0
   BaseDefense: 0
-  BaseMovementPoints: 5
-  BaseAttackRange: 0
+  BaseMovementPoints: 1
+  BaseAttackRange: 2
   BaseSightRange: 3
   BaseCost:
-    GoldCost: 0
-    WoodCost: 0
-    StoneCost: 0
-    DoggiumCost: 0
+    Gold: 0
+    Wood: 0
+    Stone: 0
+    Doggium: 0
+    Bone: 0

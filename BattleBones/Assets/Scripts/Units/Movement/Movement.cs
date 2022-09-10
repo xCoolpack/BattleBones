@@ -4,10 +4,10 @@ using UnityEngine;
 
 public abstract class Movement : MonoBehaviour
 {
-    public abstract int GetMovementPointsCostForUnit(Field field);
+    public abstract int GetMovementPointsCostForUnit(Unit unit, Field field);
 
-    public bool CanMove(Field field) 
+    public bool CanMove(Unit unit, Field field) 
     {
-        return !field.IsObstacle() && !field.HasUnit();
+        return !field.IsObstacle() && !field.HasUnit() && (!field.HasBuidling() || !field.Building.IsEnemy(unit.Player));
     }
 }

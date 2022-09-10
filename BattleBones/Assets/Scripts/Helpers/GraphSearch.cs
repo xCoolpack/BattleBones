@@ -39,7 +39,7 @@ public static class GraphSearch
                 {
                     //Debug.Log(cost(field));
                     sumCost = costOfFields[currentField] + cost(field);
-
+                    //Debug.Log(currentField.Coordinates+ " - "+ sumCost);
                     if (sumCost <= range)
                     {
                         if (!visitedFields.ContainsKey(field) || costOfFields[field] > sumCost)

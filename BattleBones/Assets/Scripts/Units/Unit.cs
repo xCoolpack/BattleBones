@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Unit : MonoBehaviour
 {
@@ -22,9 +24,13 @@ public class Unit : MonoBehaviour
     public Player Player;
     public Field Field;
     public Movement Movement;
+    public Attack Attack;
     public GameMap GameMap;
 
-    public  List<Field> MoveableFields;
+    public List<Field> MoveableFields;
+    public List<Field> VisibleFields;
+    public List<Field> FieldsWithinAttackRange;
+    public List<Field> AttackableFields;
 
     // Heuristic for A*
     public delegate int Heuristic(Field startingField, Field targetField);
@@ -34,9 +40,10 @@ public class Unit : MonoBehaviour
         SetStats();
 
         // Temp
-        Movement = GetComponent<Movement>();
+        Movement = GetComponent<Movement>(); // if null then it's hero
+        Attack = GetComponent<Attack>(); // if null then it's hero
         GameMap = GameObject.Find("GameMap").GetComponent<GameMap>();
-    }
+    } 
 
     private void Update()
     {
@@ -51,17 +58,23 @@ public class Unit : MonoBehaviour
 
     private void OnMouseDown()
     {
+        SetVisibleFields();
         SetMoveableFields();
-        Debug.Log("hey");
-        GetVisibleFields().ForEach(Debug.Log);
-        DisplayVisibleFields();
-        //DisplayMoveableFields();
+        SetAttackableFields();
+        //Debug.Log("hey");
+        //GetVisibleFields().ForEach(Debug.Log);
+        //ToggleVisibleFields();
+        //ToggleMoveableFields();
+        //ToggleAttackableFields();
+        ToggleFieldsWithinAttackRange();
     }
 
     private void OnMouseUp()
     {
-        HideVisibleFields();
-        //HideMoveableFields();
+        //ToggleVisibleFields();
+        //ToggleMoveableFields();
+        //ToggleAttackableFields();
+        ToggleFieldsWithinAttackRange();
     }
 
     /// <summary>
@@ -85,28 +98,29 @@ public class Unit : MonoBehaviour
     {
         return Player != player;
     }
+    #region VisibleFields
+
+    private void SetVisibleFields()
+    {
+        VisibleFields = GetVisibleFields();
+    }
 
     private List<Field> GetVisibleFields() 
     {
         return GraphSearch.BreadthFirstSearch(Field, SightRange, 
             (currentField, startingField) => currentField.IsVisibleFor(startingField), _ => 1);
     }
-    private void DisplayVisibleFields()
+    private void ToggleVisibleFields()
     {
         foreach (var field in GetVisibleFields())
         {
-            field.transform.Find("Mark").gameObject.SetActive(true);
+            var mark = field.transform.Find("Mark").gameObject;
+            mark.SetActive(!mark.activeSelf);
         }
     }
+    #endregion 
 
-    private void HideVisibleFields()
-    {
-        foreach (var field in GetVisibleFields())
-        {
-            field.transform.Find("Mark").gameObject.SetActive(false);
-        }
-    }
-
+    #region MoveableFields
     private void SetMoveableFields()
     {
         MoveableFields = GetMoveableFields();
@@ -115,24 +129,64 @@ public class Unit : MonoBehaviour
     private List<Field> GetMoveableFields() 
     {
        return GraphSearch.BreadthFirstSearch(Field, CurrentMovementPoints,
-            (currentField, startingField) => Movement.CanMove(currentField), Movement.GetMovementPointsCostForUnit);
+            (currentField, startingField) => Movement.CanMove(this, currentField), (field) => Movement.GetMovementPointsCostForUnit(this, field));
     }
 
-    private void DisplayMoveableFields() 
+    private void ToggleMoveableFields() 
     {
         foreach (var field in MoveableFields)
         {
-            field.transform.Find("Mark").gameObject.SetActive(true);
+            var mark = field.transform.Find("Mark").gameObject;
+            mark.SetActive(!mark.activeSelf);
+        }
+    }
+    #endregion
+
+    #region AttackableFields
+    private void SetAttackableFields()
+    {
+        (FieldsWithinAttackRange, AttackableFields) = GetAttackableFields();
+    }
+
+    public (List<Field> FieldsWithinAttackRange, List<Field> AttackableFields) GetAttackableFields()
+    {
+        HashSet<Field> set = new();
+        List<Field> list = new();
+        //Attack range is always smaller or equal to sight range
+        set.UnionWith(GraphSearch.BreadthFirstSearch(Field, AttackRange,
+                (currentField, startingField) => Attack.CanAttack(this, Field, currentField), _ => 1));
+        foreach (var field in MoveableFields)
+        {
+            set.UnionWith(GraphSearch.BreadthFirstSearch(field, AttackRange,
+                (currentField, startingField) => Attack.CanAttack(this, field, currentField), _ => 1));
+        }
+        foreach (Field field in set)
+        {
+            if (Attack.CanTarget(this, field)) 
+                list.Add(field);
+        }
+        set.Remove(Field);
+
+        return (set.ToList(), list);
+    }
+    private void ToggleFieldsWithinAttackRange()
+    {
+        foreach (var field in FieldsWithinAttackRange)
+        {
+            var mark = field.transform.Find("Mark").gameObject;
+            mark.SetActive(!mark.activeSelf);
         }
     }
 
-    private void HideMoveableFields() 
+    private void ToggleAttackableFields()
     {
-        foreach (var field in MoveableFields)
+        foreach (var field in AttackableFields)
         {
-            field.transform.Find("Mark").gameObject.SetActive(false);
+            var mark = field.transform.Find("Mark").gameObject;
+            mark.SetActive(!mark.activeSelf);
         }
     }
+    #endregion
 
     /// <summary>
     /// Methods calculating distance beetwen Fields coordinates
@@ -173,9 +227,9 @@ public class Unit : MonoBehaviour
 
             foreach (var field in currentField.GetNeighbors())
             {
-                if (Movement.CanMove(field))
+                if (Movement.CanMove(this, field))
                 {
-                    sumCost = costOfFields[currentField] + Movement.GetMovementPointsCostForUnit(field);
+                    sumCost = costOfFields[currentField] + Movement.GetMovementPointsCostForUnit(this, field);
 
                     if (!visitedFields.ContainsKey(field) || costOfFields[field] > sumCost)
                     {
@@ -232,7 +286,7 @@ public class Unit : MonoBehaviour
 
         foreach (var field in movementPath)
         {
-            nextMovementPointCost += Movement.GetMovementPointsCostForUnit(field);
+            nextMovementPointCost += Movement.GetMovementPointsCostForUnit(this, field);
             Debug.Log(nextMovementPointCost);
             if (CurrentMovementPoints < nextMovementPointCost)
                 break;
