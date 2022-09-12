@@ -263,8 +263,9 @@ GameObject:
   m_Component:
   - component: {fileID: 279555433}
   - component: {fileID: 279555432}
+  - component: {fileID: 279555436}
   - component: {fileID: 279555434}
-  - component: {fileID: 279555431}
+  - component: {fileID: 279555435}
   m_Layer: 0
   m_Name: TestBuilding
   m_TagString: Untagged
@@ -272,25 +273,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &279555431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 279555430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6a1d7ffe59ed3c43a4954f94319d352, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ResourcesIncome:
-    Gold: 0
-    Wood: 200
-    Stone: 0
-    Doggium: 0
-    Bone: 0
-  Building: {fileID: 0}
 --- !u!212 &279555432
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -329,8 +311,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1251167861
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
   m_Color: {r: 0.81568635, g: 0, b: 0, a: 1}
@@ -376,10 +358,54 @@ MonoBehaviour:
   CurrentDefense: 0
   SightRange: 0
   CurrentRepairCooldown: 0
-  BaseBuildingStats: {fileID: 11400000, guid: 11e22ad3bee3eaa4a9ce5b49a0a42cbb, type: 2}
+  BaseBuildingStats: {fileID: 11400000, guid: a08fe0f528d4e34449d9a9f39c638605, type: 2}
   Player: {fileID: 945539459}
   Field: {fileID: 1915227790}
   BuildingState: 1
+--- !u!114 &279555435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279555430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ff5b2bf3def414479be81d5dd6edb76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxDamage: 0
+  CurrentDamage: 0
+  AttackRange: 0
+  FieldsWithinAttackRange: []
+  AttackableFields: []
+  _building: {fileID: 0}
+--- !u!61 &279555436
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279555430}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 0.5}
+    newSize: {x: 1, y: 0.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.5}
+  m_EdgeRadius: 0
 --- !u!4 &369981539 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7260510673771770686, guid: ae63b689d470ce9459171d737d633d8a, type: 3}
@@ -1031,6 +1057,7 @@ MonoBehaviour:
   GameMap: {fileID: 0}
   MoveableFields: []
   VisibleFields: []
+  FieldsWithinAttackRange: []
   AttackableFields: []
 --- !u!70 &808286863
 CapsuleCollider2D:
@@ -1086,8 +1113,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1440949289
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
   m_Color: {r: 0.81568635, g: 0, b: 0, a: 1}
@@ -2982,6 +3009,7 @@ MonoBehaviour:
   GameMap: {fileID: 0}
   MoveableFields: []
   VisibleFields: []
+  FieldsWithinAttackRange: []
   AttackableFields: []
 --- !u!212 &1719227506
 SpriteRenderer:
@@ -3021,8 +3049,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1440949289
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
   m_Color: {r: 0, g: 0.35098314, b: 1, a: 1}
@@ -3500,7 +3528,7 @@ PrefabInstance:
     - target: {fileID: -5705379979245829049, guid: f6ae945f094939f429dc15fd7142f95a, type: 3}
       propertyPath: Unit
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1719227505}
     - target: {fileID: 65629987104253305, guid: f6ae945f094939f429dc15fd7142f95a, type: 3}
       propertyPath: m_Name
       value: hexForest

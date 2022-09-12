@@ -35,7 +35,7 @@ public class Field : MonoBehaviour
     private void OnMouseDown()
     {
         // Temporary for testing
-        GameObject.Find("TestUnit").GetComponent<Unit>().Move(this);
+        //GameObject.Find("TestUnit").GetComponent<Unit>().Move(this);
         //Debug.Log(IsVisibleFor(GameObject.Find("TestUnit").GetComponent<Unit>().Field));
         //EventHandler eventHandler = GameObject.Find("GlobalEventHandler").GetComponent<EventHandler>();
 
