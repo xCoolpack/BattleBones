@@ -20,12 +20,6 @@ public class TurnHandler : MonoBehaviour
         CurrentPlayer = Players[_playerIndex];
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void NextTurn(){
         Players[_playerIndex].PlayerEventHandler.TurnEnd();
         NextPlayer();

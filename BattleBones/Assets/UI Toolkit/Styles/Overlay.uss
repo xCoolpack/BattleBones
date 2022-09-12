@@ -1,0 +1,10 @@
+.OverlayTurnText {
+    color: rgba(255, 255, 255, 255);
+    font-size: 25px;
+    -unity-font-style: bold;
+}
+
+.OverlayResourcesText {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 255);
+}

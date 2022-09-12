@@ -147,7 +147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &272523556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -503,8 +503,9 @@ GameObject:
   m_Component:
   - component: {fileID: 458497462}
   - component: {fileID: 458497461}
+  - component: {fileID: 458497463}
   m_Layer: 5
-  m_Name: UIDocument
+  m_Name: Overlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -524,7 +525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PanelSettings: {fileID: 11400000, guid: fd8a4c19cf2b3c0428cabcd4b86fbcfd, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: f7a3b7ea54271f64fb816fce134112c0, type: 3}
   m_SortingOrder: 0
 --- !u!4 &458497462
 Transform:
@@ -541,6 +542,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &458497463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458497460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4f94e6e8d439a04bb5d163af29f7cfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TurnHandler: {fileID: 875089796}
 --- !u!1001 &472299035
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1031,6 +1045,7 @@ MonoBehaviour:
   GameMap: {fileID: 0}
   MoveableFields: []
   VisibleFields: []
+  FieldsWithinAttackRange: []
   AttackableFields: []
 --- !u!70 &808286863
 CapsuleCollider2D:
@@ -2982,6 +2997,7 @@ MonoBehaviour:
   GameMap: {fileID: 0}
   MoveableFields: []
   VisibleFields: []
+  FieldsWithinAttackRange: []
   AttackableFields: []
 --- !u!212 &1719227506
 SpriteRenderer:
@@ -3658,7 +3674,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ResourcesAmount:
-    Gold: 0
+    Gold: 6
     Wood: 0
     Stone: 0
     Doggium: 0

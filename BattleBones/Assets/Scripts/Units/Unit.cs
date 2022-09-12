@@ -58,6 +58,7 @@ public class Unit : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (!IsPlayersTurn()) return;
         SetVisibleFields();
         SetMoveableFields();
         SetAttackableFields();
@@ -71,10 +72,21 @@ public class Unit : MonoBehaviour
 
     private void OnMouseUp()
     {
+        if (!IsPlayersTurn()) return;
         //ToggleVisibleFields();
         //ToggleMoveableFields();
         //ToggleAttackableFields();
         ToggleFieldsWithinAttackRange();
+    }
+
+    /// <summary>
+    /// Checks if it's units owners turn 
+    /// </summary>
+    /// <returns>True if it is</returns>
+    private bool IsPlayersTurn()
+    {
+        var turnHandler = GameObject.Find("TurnHandler").GetComponent<TurnHandler>();
+        return turnHandler.CurrentPlayer == Player;
     }
 
     /// <summary>
