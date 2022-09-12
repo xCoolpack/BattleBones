@@ -308,10 +308,10 @@ public class Unit : MonoBehaviour
             movementPointCost = nextMovementPointCost;
         }
 
-        foreach (var field in accessibleMovementPath)
-        {
-            Debug.Log(field.Coordinates);
-        }
+        //foreach (var field in accessibleMovementPath)
+        //{
+        //    Debug.Log(field.Coordinates);
+        //}
 
         Field.Unit = null;
         Field = targetField;
@@ -320,24 +320,6 @@ public class Unit : MonoBehaviour
         MoveGraphicModel(accessibleMovementPath);
 
         return true;
-
-        //if (MoveableFields.Contains(targetField))
-        //{
-        //    Debug.Log("Moving to" + targetField.Coordinates);
-        //    (List<Field> movementPath, int movementPointsCost) = GeneratePathWithCost(this.Field, targetField);
-        //    this.Field.Unit = null;
-        //    this.Field = targetField;
-        //    targetField.Unit = this;
-        //    CurrentMovementPoints -= movementPointsCost;
-        //    MoveGraphicModel(movementPath);
-
-        //    if (CurrentMovementPoints > 0)
-        //        SetMoveableFields();
-
-        //    return true;
-        //}
-        //else 
-        //    return false;
     }
 
     
