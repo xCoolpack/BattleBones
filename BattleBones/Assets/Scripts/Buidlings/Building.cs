@@ -31,7 +31,6 @@ public class Building : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Building " +BaseBuildingStats);
         SetStats();
     }
 

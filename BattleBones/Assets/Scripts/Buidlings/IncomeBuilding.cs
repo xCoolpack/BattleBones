@@ -15,18 +15,18 @@ public class IncomeBuilding : MonoBehaviour
     public void Construct()
     {
         Building.Construct();
-        Building.Player.ResourceManager.ResourcesIncome += ResourcesIncome;
+        Building.Player.ResourceManager.AddIncome(ResourcesIncome);
     }
 
     public void Plunder()
     {
         Building.Plunder();
-        Building.Player.ResourceManager.ResourcesIncome -= ResourcesIncome;
+        Building.Player.ResourceManager.SubIncome(ResourcesIncome);
     }
 
     public void Destroy()
     {
-        Building.Player.ResourceManager.ResourcesIncome -= ResourcesIncome;
+        Building.Player.ResourceManager.SubIncome(ResourcesIncome);
         Building.Destroy();
     }
 }
