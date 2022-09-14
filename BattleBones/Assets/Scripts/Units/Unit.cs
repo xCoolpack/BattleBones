@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -337,5 +338,14 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public void BeginHealing()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void BeginDefending()
+    {
+        throw new NotImplementedException();
+    }
 }
 

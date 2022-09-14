@@ -20,8 +20,7 @@ public class Overlay : MonoBehaviour
     private Label _stoneIncomeLabel;
     private Label _doggiumIncomeLabel;
     private Label _boneIncomeLabel;
-    private Label _playerLabel;
-
+    private VisualElement _lowerContainer;
 
     private void OnEnable()
     {
@@ -41,6 +40,8 @@ public class Overlay : MonoBehaviour
         _stoneIncomeLabel = uiDocument.rootVisualElement.Q<Label>("StoneIncomeLabel");
         _doggiumIncomeLabel = uiDocument.rootVisualElement.Q<Label>("DoggiumIncomeLabel");
         _boneIncomeLabel = uiDocument.rootVisualElement.Q<Label>("BoneIncomeLabel");
+
+        _lowerContainer = uiDocument.rootVisualElement.Q<VisualElement>("LowerContainer");
 
         // Binding turn handler
         var tunHandlerSerializedObject = new SerializedObject(TurnHandler);
@@ -63,5 +64,84 @@ public class Overlay : MonoBehaviour
 
         // Registering callbacks
         _nextTurnButton.RegisterCallback<ClickEvent>(_ => TurnHandler.NextTurn());
+
+        //temp
+        uiDocument.rootVisualElement.Q<Button>("Button1").RegisterCallback<ClickEvent>(_ => RemoveInfoBox());
+        uiDocument.rootVisualElement.Q<Button>("Button2").RegisterCallback<ClickEvent>(_ => UnitInfoBox(GameObject.Find("TestUnit").GetComponent<Unit>()));
+        RemoveInfoBox();
+    }
+
+    /// <summary>
+    /// Removes InfoBox if it exists
+    /// </summary>
+    public void RemoveInfoBox()
+    {
+        var infoBox = _lowerContainer.Q<VisualElement>("InfoBox");
+        if (infoBox is null)
+            return;
+
+        _lowerContainer.Remove(infoBox);
+    }
+
+    /// <summary>
+    /// Creates base info box with title. Removes existing info box
+    /// </summary>
+    /// <param name="title"></param>
+    private VisualElement CreateBasicInfoBox(string title)
+    {
+        RemoveInfoBox();
+        var infoBox = new VisualElement();
+        infoBox.ClearClassList();
+        var titleLabel = new Label(title);
+        titleLabel.AddToClassList("TitleLabel");
+        infoBox.Add(titleLabel);
+        infoBox.AddToClassList("InfoBox");
+        infoBox.name = "InfoBox";
+        _lowerContainer.Add(infoBox);
+
+        return infoBox;
+    }
+
+    /// <summary>
+    /// Creates info box for the given unit
+    /// </summary>
+    /// <param name="unit"></param>
+    public void UnitInfoBox(Unit unit)
+    {
+        var infoBox = CreateBasicInfoBox(unit.BaseUnitStats.UnitName);
+        var hpLabel = new Label($"Health: {unit.CurrentHealth}/{unit.MaxHealth}");
+        var movePointsLabel = new Label($"Movement point: {unit.CurrentMovementPoints}/{unit.MaxMovementPoints}");
+        var damageLabel = new Label($"Damage: {unit.CurrentDamage}");
+        var defenseLabel = new Label($"Defense: {unit.CurrentDefense}");
+        var attackRangeLabel = new Label($"Attack range: {unit.AttackRange}");
+        var sightRangeLabel = new Label($"Sight range: {unit.SightRange}");
+        var healButton = new Button(unit.BeginHealing)
+        {
+            text = "Heal"
+        };
+        var defendButton = new Button(unit.BeginDefending)
+        {
+            text = "Defend"
+        };
+
+        healButton.AddToClassList("InfoBoxButton");
+        defendButton.AddToClassList("InfoBoxButton");
+
+        infoBox.Add(hpLabel);
+        infoBox.Add(damageLabel);
+        infoBox.Add(defenseLabel);
+        infoBox.Add(movePointsLabel);
+        infoBox.Add(attackRangeLabel);
+        infoBox.Add(sightRangeLabel);
+        infoBox.Add(healButton);
+        infoBox.Add(defendButton);
+
+        foreach (var visualElement in infoBox.Children())
+        {
+            if (visualElement is Label)
+                visualElement.ClearClassList();
+        }
+
+        
     }
 }
