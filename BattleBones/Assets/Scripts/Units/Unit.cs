@@ -62,8 +62,8 @@ public class Unit : MonoBehaviour
         if (!IsPlayersTurn()) return;
         SetVisibleFields();
         SetMoveableFields();
-        SetAttackableFields();
-        //Debug.Log("hey");
+        SetAttackableFields(); 
+        Debug.Log("hey");
         //GetVisibleFields().ForEach(Debug.Log);
         //ToggleVisibleFields();
         //ToggleMoveableFields();
@@ -340,12 +340,30 @@ public class Unit : MonoBehaviour
 
     public void BeginHealing()
     {
-        throw new NotImplementedException();
+        CurrentMovementPoints = 0;
+        Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, Heal));
+    }
+
+    public void Heal()
+    {
+        CurrentHealth = Math.Min(CurrentHealth + 20, MaxHealth); 
     }
 
     public void BeginDefending()
     {
-        throw new NotImplementedException();
+        CurrentMovementPoints = 0;
+        Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, Defend));
+        CurrentDefense += (int)Math.Ceiling(CurrentDefense * 0.2);
+    }
+
+    public void Defend()
+    {
+        CurrentDefense = MaxDefense;
+    }
+
+    public void RestoreMovementPoints()
+    {
+        CurrentMovementPoints = MaxMovementPoints;
     }
 }
 

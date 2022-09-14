@@ -14,7 +14,7 @@ public class DefensiveBuilding : MonoBehaviour
     public List<Field> FieldsWithinAttackRange;
     public List<Field> AttackableFields;
 
-    public Building _building;
+    private Building _building;
     private RangeAttack _attack;
 
     private void Awake()

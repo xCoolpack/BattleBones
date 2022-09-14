@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -36,7 +38,7 @@ public class Field : MonoBehaviour
     {
         // Temporary for testing
         //GameObject.Find("TestUnit").GetComponent<Unit>().Move(this);
-        //Debug.Log(IsVisibleFor(GameObject.Find("TestUnit").GetComponent<Unit>().Field));
+        //Debug.Log("clicked");
         //EventHandler eventHandler = GameObject.Find("GlobalEventHandler").GetComponent<EventHandler>();
 
         //GameEvent gameEvent = new GameEvent(1, () =>
@@ -144,6 +146,19 @@ public class Field : MonoBehaviour
 
         return false;
     }
+
+    public void BeginBuildingConstruction(Player player, String buildingName)
+    {
+        GameObject buildingPrefab = player.AvailableBuildings.FirstOrDefault(g => g.name == buildingName);
+        Building building = Instantiate(buildingPrefab, this.transform).GetComponent<Building>();
+        building.Player = player;
+        building.Field = this;
+        Building = building;
+        building.BuildingState = BuildingState.UnderConstruction;
+        player.AddBuilding(Building);
+        player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, building.Construct));
+    }
+    
 
     public override string ToString()
     {

@@ -10,17 +10,34 @@ public class Player : MonoBehaviour
     public ResourceManager ResourceManager;
     public MissionHandler MissionHandler;
     public EventHandler PlayerEventHandler;
-    public List<Unit> UnlockedUnits;
+    public List<GameObject> UnlockedUnits; // It has to be GameObject because we need Instantiate that unit
+    public List<GameObject> AvailableBuildings; // It has to be GameObject because we need Instantiate that building
 
-    // Start is called before the first frame update
-    void Start()
+    public List<Unit> Units;
+    public List<Building> Buildings;
+
+    public void AddUnit(Unit unit)
     {
-        
+        Units.Add(unit);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void RemoveUnit(Unit unit)
     {
-        
+        Units.Remove(unit);
+    }
+
+    public void RestoreUnitsMovementPoints()
+    {
+        Units.ForEach(u => u.RestoreMovementPoints());
+    }
+
+    public void AddBuilding(Building building)
+    {
+        Buildings.Add(building);
+    }
+
+    public void RemoveBuilding(Building building)
+    {
+        Buildings.Remove(building);
     }
 }
