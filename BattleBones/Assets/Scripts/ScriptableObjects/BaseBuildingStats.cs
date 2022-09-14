@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New BaseBuildingStats", menuName = "BaseBuildingStats")]
@@ -10,5 +11,6 @@ public class BaseBuildingStats : ScriptableObject
     public int BaseAttackRange;
     public int BaseSightRange;
 
+    public List<Field> AllowedFields;
     public Resources BaseCost;
 }

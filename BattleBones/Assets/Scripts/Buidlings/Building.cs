@@ -57,14 +57,6 @@ public class Building : MonoBehaviour
         return Player != player;
     }
 
-    public void BeginConstruction(Player player, Field field)
-    {
-        Player = player;
-        Field = field;
-        field.Building = this;
-        BuildingState = BuildingState.UnderConstruction;
-        Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, Construct));
-    }
     public void Construct()
     {
         BuildingState = BuildingState.Fine;

@@ -8,18 +8,6 @@ public class EventHandler : MonoBehaviour
     private List<GameEvent> _startTurnEvents = new();
 
     /// <summary>
-    /// Adds event to end turn queue
-    /// </summary>
-    /// <param name="e"></param>
-    public void AddEndTurnEvent(GameEvent e)
-    {
-        if (e.Timer <= 0)
-            e.Action_();
-        else
-            _endTurnEvents.Add(e);
-    }
-
-    /// <summary>
     /// Adds event to start turn queue
     /// </summary>
     /// <param name="e"></param>
@@ -29,6 +17,23 @@ public class EventHandler : MonoBehaviour
             e.Action_();
         else
             _startTurnEvents.Add(e);
+    }
+
+    public void RemoveStartTurnEvent(GameEvent e)
+    {
+        _startTurnEvents.Remove(e);
+    }
+
+    /// <summary>
+    /// Adds event to end turn queue
+    /// </summary>
+    /// <param name="e"></param>
+    public void AddEndTurnEvent(GameEvent e)
+    {
+        if (e.Timer <= 0)
+            e.Action_();
+        else
+            _endTurnEvents.Add(e);
     }
 
     /// <summary>

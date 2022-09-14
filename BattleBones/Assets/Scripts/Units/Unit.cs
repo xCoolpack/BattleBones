@@ -61,8 +61,8 @@ public class Unit : MonoBehaviour
         if (!IsPlayersTurn()) return;
         SetVisibleFields();
         SetMoveableFields();
-        SetAttackableFields();
-        //Debug.Log("hey");
+        SetAttackableFields(); 
+        Debug.Log("hey");
         //GetVisibleFields().ForEach(Debug.Log);
         //ToggleVisibleFields();
         //ToggleMoveableFields();
