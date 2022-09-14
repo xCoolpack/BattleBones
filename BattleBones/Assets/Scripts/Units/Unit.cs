@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -337,5 +338,32 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public void BeginHealing()
+    {
+        CurrentMovementPoints = 0;
+        Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, Heal));
+    }
+
+    public void Heal()
+    {
+        CurrentHealth = Math.Min(CurrentHealth + 20, MaxHealth); 
+    }
+
+    public void BeginDefending()
+    {
+        CurrentMovementPoints = 0;
+        Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, Defend));
+        CurrentDefense += (int)Math.Ceiling(CurrentDefense * 0.2);
+    }
+
+    public void Defend()
+    {
+        CurrentDefense = MaxDefense;
+    }
+
+    public void RestoreMovementPoints()
+    {
+        CurrentMovementPoints = MaxMovementPoints;
+    }
 }
 

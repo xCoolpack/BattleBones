@@ -40,6 +40,7 @@ public class Outpost : MonoBehaviour
         unit.Player = _building.Player;
         unit.Field = _building.Field;
         _building.Field.Unit = unit;
+        _building.Player.AddUnit(unit);
 
         RecruitingUnit = null;
     }

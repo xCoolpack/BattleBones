@@ -155,6 +155,7 @@ public class Field : MonoBehaviour
         building.Field = this;
         Building = building;
         building.BuildingState = BuildingState.UnderConstruction;
+        player.AddBuilding(Building);
         player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, building.Construct));
     }
     
