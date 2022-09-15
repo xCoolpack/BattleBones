@@ -20,7 +20,7 @@ public class ResourceManager : MonoBehaviour
         ResourcesAmount += res;
     }
 
-    public void SubIncome(Resources res)
+    public void RemoveIncome(Resources res)
     {
         ResourcesAmount -= res;
     }

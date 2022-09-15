@@ -57,9 +57,9 @@ public class Building : MonoBehaviour
         return Player != player;
     }
 
-    public void CanConstruct(Player player)
+    public bool CanAffordConstruction(Player player)
     {
-         
+        return player.ResourceManager.ResourcesAmount >= BaseBuildingStats.BaseCost;
     }
 
     public void Construct()

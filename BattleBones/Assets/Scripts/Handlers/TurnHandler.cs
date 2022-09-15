@@ -23,6 +23,7 @@ public class TurnHandler : MonoBehaviour
         Players[_playerIndex].PlayerEventHandler.TurnStart();
         Players[_playerIndex].ResourceManager.GenerateIncome();
         Players[_playerIndex].RestoreUnitsMovementPoints();
+        Players[_playerIndex].ApplyUnitsModifiers();
     }
 
     private void NextPlayer()

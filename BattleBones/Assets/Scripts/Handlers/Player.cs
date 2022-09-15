@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour
     public EventHandler PlayerEventHandler;
     public List<GameObject> UnlockedUnits; // It has to be GameObject because we need Instantiate that unit
     public List<GameObject> AvailableBuildings; // It has to be GameObject because we need Instantiate that building
+    public Dictionary<string, UnitModifiers> UnitModifiersDictionary; 
 
     public List<Unit> Units;
     public List<Building> Buildings;
@@ -29,6 +31,11 @@ public class Player : MonoBehaviour
     public void RestoreUnitsMovementPoints()
     {
         Units.ForEach(u => u.RestoreMovementPoints());
+    }
+
+    public void ApplyUnitsModifiers()
+    {
+        Units.ForEach(u => u.SetCurrentStats());
     }
 
     public void AddBuilding(Building building)
