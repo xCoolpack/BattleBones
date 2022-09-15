@@ -15,4 +15,6 @@ MonoBehaviour:
   FieldName: Plains
   MovementPointsCost: 1
   IsObstacle: 0
-  IsBlockSight: 0
+  IsBlockingSight: 0
+  AllowableBuildings:
+  - {fileID: 5565982200717348815, guid: ddeebbc15e43e0444b84f04058210e14, type: 3}

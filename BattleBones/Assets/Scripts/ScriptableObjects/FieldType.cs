@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New FieldType", menuName = "FieldType")]
@@ -7,4 +8,6 @@ public class FieldType : ScriptableObject
     public int MovementPointsCost;
     public bool IsObstacle;
     public bool IsBlockingSight;
+
+    public List<Building> AllowableBuildings;
 }

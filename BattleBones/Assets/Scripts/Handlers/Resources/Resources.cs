@@ -30,4 +30,94 @@ public struct Resources
     {
         return a + (-b);
     }
+
+    public static Resources operator *(Resources a, int b)
+    {
+        return new(a.Gold * b, a.Wood * b, a.Stone * b, a.Doggium * b, a.Bone * b);
+    }
+
+    public static Resources operator /(Resources a, int b)
+    {
+        return new(a.Gold / b, a.Wood / b, a.Stone / b, a.Doggium / b, a.Bone / b);
+    }
+
+    public static bool operator ==(Resources a, Resources b)
+    {
+        return (a.Gold == b.Gold && a.Wood == b.Wood && a.Stone == b.Stone && a.Doggium == b.Doggium && a.Bone == b.Bone);
+    }
+
+    public static bool operator !=(Resources a, Resources b)
+    {
+        return (a.Gold != b.Gold || a.Wood != b.Wood || a.Stone != b.Stone || a.Doggium != b.Doggium || a.Bone != b.Bone);
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is Resources resources && this == resources ;
+    }
+
+    public override int GetHashCode()
+    {
+        return Gold.GetHashCode()+Wood.GetHashCode()+Stone.GetHashCode()+Doggium.GetHashCode()+Bone.GetHashCode();
+    }
+
+    public static bool operator >(Resources a, Resources b)
+    {
+        if (a.Gold != 0 || b.Gold != 0)
+            if (a.Gold <= b.Gold)
+                return false;
+
+        if (a.Wood != 0 || b.Wood != 0)
+            if (a.Wood <= b.Wood)
+                return false;
+
+        if (a.Stone != 0 || b.Stone != 0)
+            if (a.Stone <= b.Stone)
+                return false;
+
+        if (a.Doggium != 0 || b.Doggium != 0)
+            if (a.Doggium <= b.Doggium)
+                return false;
+
+        if (a.Bone != 0 || b.Bone != 0)
+            if (a.Bone <= b.Bone)
+                return false;
+
+        return a != b;
+    }
+
+    public static bool operator <(Resources a, Resources b)
+    {
+        return b > a;
+    }
+
+    public static bool operator >=(Resources a, Resources b)
+    {
+        if (a.Gold != 0 || b.Gold != 0)
+            if (a.Gold < b.Gold)
+                return false;
+
+        if (a.Wood != 0 || b.Wood != 0)
+            if (a.Wood < b.Wood)
+                return false;
+
+        if (a.Stone != 0 || b.Stone != 0)
+            if (a.Stone < b.Stone)
+                return false;
+
+        if (a.Doggium != 0 || b.Doggium != 0)
+            if (a.Doggium < b.Doggium)
+                return false;
+
+        if (a.Bone != 0 || b.Bone != 0)
+            if (a.Bone < b.Bone)
+                return false;
+
+        return true;
+    }
+
+    public static bool operator <=(Resources a, Resources b)
+    {
+        return b >= a;
+    }
 }

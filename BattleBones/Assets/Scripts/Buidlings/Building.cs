@@ -57,6 +57,11 @@ public class Building : MonoBehaviour
         return Player != player;
     }
 
+    public void CanConstruct(Player player)
+    {
+         
+    }
+
     public void Construct()
     {
         BuildingState = BuildingState.Fine;

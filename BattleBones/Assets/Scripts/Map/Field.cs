@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Field : MonoBehaviour
 {
@@ -80,7 +81,7 @@ public class Field : MonoBehaviour
     {
         return Unit != null;
     }
-    public bool HasBuidling()
+    public bool HasBuilding()
     {
         return Building != null;
     }
@@ -88,6 +89,11 @@ public class Field : MonoBehaviour
     public int GetMovementPointsCost()
     {
         return Type.MovementPointsCost;
+    }
+
+    public List<Building> GetAllowableBuildings()
+    {
+        return Type.AllowableBuildings;
     }
 
     /// <summary>

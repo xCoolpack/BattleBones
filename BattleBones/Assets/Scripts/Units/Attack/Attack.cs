@@ -19,12 +19,12 @@ public abstract class Attack : MonoBehaviour
 
     public bool CanTarget(Unit unit, Field field)
     {
-        return (field.HasUnit() && field.Unit.IsEnemy(unit.Player)) || (field.HasBuidling() && field.Building.IsEnemy(unit.Player));
+        return (field.HasUnit() && field.Unit.IsEnemy(unit.Player)) || (field.HasBuilding() && field.Building.IsEnemy(unit.Player));
     }
 
     public bool CanTarget(Building building, Field field)
     {
-        return (field.HasUnit() && field.Unit.IsEnemy(building.Player)) || (field.HasBuidling() && field.Building.IsEnemy(building.Player));
+        return (field.HasUnit() && field.Unit.IsEnemy(building.Player)) || (field.HasBuilding() && field.Building.IsEnemy(building.Player));
     }
 
     public abstract bool HaveEnoughMovementpoints(Unit unit, Field field);
