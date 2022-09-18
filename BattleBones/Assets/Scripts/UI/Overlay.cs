@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -65,7 +66,7 @@ public class Overlay : MonoBehaviour
         // Registering callbacks
         _nextTurnButton.RegisterCallback<ClickEvent>(_ => TurnHandler.NextTurn());
 
-        //temp
+        // temp
         uiDocument.rootVisualElement.Q<Button>("Button1").RegisterCallback<ClickEvent>(_ => RemoveInfoBox());
         uiDocument.rootVisualElement.Q<Button>("Button2").RegisterCallback<ClickEvent>(_ => UnitInfoBox(GameObject.Find("TestUnit").GetComponent<Unit>()));
         RemoveInfoBox();
@@ -123,6 +124,10 @@ public class Overlay : MonoBehaviour
         {
             text = "Defend"
         };
+        var deleteButton = new Button(unit.Delete)
+        {
+            text = "Delete"
+        };
 
         healButton.AddToClassList("InfoBoxButton");
         defendButton.AddToClassList("InfoBoxButton");
@@ -141,7 +146,100 @@ public class Overlay : MonoBehaviour
             if (visualElement is Label)
                 visualElement.ClearClassList();
         }
+    }
 
-        
+    /// <summary>
+    /// Creates info box for the given building
+    /// </summary>
+    /// <param name="building"></param>
+    /// <returns>Pair (statsBox, buttonsBox)</returns>
+    private (VisualElement, VisualElement) CreateBuildingInfoBox(Building building)
+    {
+        var infoBox = CreateBasicInfoBox(building.BaseBuildingStats.BuildingName);
+        var sightRangeLabel = new Label($"Sight range: {building.SightRange}");
+        var repairLabel = new Label($"Repair cooldown: {building.CurrentRepairCooldown}");
+        var statsBox = new VisualElement();
+        var buttonsBox = new VisualElement();
+
+        statsBox.Add(sightRangeLabel);
+        statsBox.Add(repairLabel);
+
+        if (building.BuildingState == BuildingState.Plundered)
+        {
+            var repairButton = new Button(building.BeginRepair)
+            {
+                text = "Repair"
+            };
+            buttonsBox.Add(repairButton);
+        }
+
+        var destroyButton = new Button(building.Destroy)
+        {
+            text = "Destory"
+        };
+
+        buttonsBox.Add(destroyButton);
+
+        infoBox.Add(statsBox);
+        infoBox.Add(buttonsBox);
+
+        //TODO USS CLASSES
+
+        return (statsBox, buttonsBox);
+    }
+
+    private (VisualElement, VisualElement) CreateDefensiveBuildingInfoBox(DefensiveBuilding defensiveBuilding, Building building)
+    {
+        var (statsBox, buttonsBox) = CreateBuildingInfoBox(building);
+        var damageLabel = new Label($"Damage: {defensiveBuilding.CurrentDamage}");
+        var attackRangeLabel = new Label($"Attack range: {defensiveBuilding.AttackRange}");
+        var hpLabel = new Label($"Health: {building.CurrentHealth}/{building.MaxHealth}");
+        var defenseLabel = new Label($"Defense: {building.CurrentDefense}/{building.MaxDefense}");
+
+        statsBox.Add(hpLabel);
+        statsBox.Add(defenseLabel);
+        statsBox.Add(damageLabel);
+        statsBox.Add(attackRangeLabel);
+
+        //TODO
+
+        return (statsBox, buttonsBox);
+    }
+
+    public void DefensiveBuildingInfoBox(DefensiveBuilding defensiveBuilding, Building building)
+    {
+        CreateDefensiveBuildingInfoBox(defensiveBuilding, building);
+    }
+
+    public void OutpostInfoBox(DefensiveBuilding defensiveBuilding, Building building, Outpost outpost)
+    {
+        var (_, buttonsBox) = CreateDefensiveBuildingInfoBox(defensiveBuilding, building);
+        var recruitButton = new Button(() => CreateRecruitmentBox(outpost));
+        buttonsBox.Add(recruitButton);
+    }
+
+    private void CreateRecruitmentBox(Outpost outpost)
+    {
+
+    }
+
+    public void IncomeBuildingInfoBox(IncomeBuilding incomeBuilding, Building building)
+    {
+        var (statsBox, _) = CreateBuildingInfoBox(building);
+
+        if (incomeBuilding.ResourcesIncome.Gold > 0)
+            statsBox.Add(new Label($"Gold income: {incomeBuilding.ResourcesIncome.Gold}"));
+
+        if (incomeBuilding.ResourcesIncome.Wood > 0)
+            statsBox.Add(new Label($"Wood income: {incomeBuilding.ResourcesIncome.Wood}"));
+
+        if (incomeBuilding.ResourcesIncome.Stone > 0)
+            statsBox.Add(new Label($"Stone income: {incomeBuilding.ResourcesIncome.Stone}"));
+
+        if (incomeBuilding.ResourcesIncome.Doggium > 0)
+            statsBox.Add(new Label($"Doggium income: {incomeBuilding.ResourcesIncome.Doggium}"));
+
+        if (incomeBuilding.ResourcesIncome.Bone > 0)
+            statsBox.Add(new Label($"Bone income: {incomeBuilding.ResourcesIncome.Bone}"));
     }
 }

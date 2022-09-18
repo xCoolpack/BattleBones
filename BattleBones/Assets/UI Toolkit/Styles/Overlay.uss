@@ -35,6 +35,10 @@
     padding-right: 1px;
     padding-top: 1px;
     padding-bottom: 1px;
+    width: auto;
+    min-width: 85px;
+    align-items: center;
+    justify-content: center;
 }
 
 .mr-5 {
@@ -58,6 +62,6 @@
 }
 
 .InfoBoxButton {
-    background-color: rgba(168, 101, 55, 255);
+    background-color: rgb(168, 101, 55);
     padding: 1px;
 }

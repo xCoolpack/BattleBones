@@ -384,5 +384,10 @@ public class Unit : MonoBehaviour
     {
         CurrentMovementPoints = MaxMovementPoints;
     }
+
+    public void Delete()
+    {
+        throw new NotImplementedException();
+    }
 }
 
