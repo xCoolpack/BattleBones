@@ -8,6 +8,7 @@ public abstract class Movement : MonoBehaviour
 
     public bool CanMove(Unit unit, Field field) 
     {
-        return !field.IsObstacle() && !field.HasUnit() && (!field.HasBuilding() || !field.Building.IsEnemy(unit.Player));
+        return !field.IsObstacle() && !field.HasUnit() && 
+               (!field.HasBuilding() || (!field.Building.IsEnemy(unit.Player) || field.Building.BaseBuildingStats.IsPassable));
     }
 }

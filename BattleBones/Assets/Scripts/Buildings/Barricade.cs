@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Baricade : MonoBehaviour
+public class Barricade : MonoBehaviour
 {
-    public int DefenseModifier;
+    public UnitModifiers BuildingUnitModifier;
 
     private Building _building;
 
@@ -14,8 +14,4 @@ public class Baricade : MonoBehaviour
         _building = GetComponent<Building>();
     }
 
-    public void IncreaseDefense(Unit unit)
-    {
-        
-    }
 }

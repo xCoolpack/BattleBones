@@ -6,6 +6,10 @@ using UnityEngine.UIElements;
 
 public class Unit : MonoBehaviour
 {
+    // Const 
+    private const double HealRatio = 0.2;
+    private const double DefenseRatio = 0.15;
+
     // Max Stats
     public int MaxHealth;
     public int MaxDamage;
@@ -19,8 +23,6 @@ public class Unit : MonoBehaviour
     public int CurrentMovementPoints;
     public int AttackRange;
     public int SightRange;
-    public double HealRatio = 0.2;
-    public double DefenseRatio = 0.2;
 
     // References
     public BaseUnitStats BaseUnitStats;
@@ -43,7 +45,7 @@ public class Unit : MonoBehaviour
 
     private void Awake()
     {
-        SetStartingStats(new());
+        SetStartingStats();
 
         // Temp
         Movement = GetComponent<Movement>(); // if null then it's hero
@@ -75,7 +77,7 @@ public class Unit : MonoBehaviour
         //ToggleVisibleFields();
         //ToggleMoveableFields();
         //ToggleAttackableFields();
-        ToggleFieldsWithinAttackRange();
+        //ToggleFieldsWithinAttackRange();
     }
 
     private void OnMouseUp()
@@ -100,10 +102,8 @@ public class Unit : MonoBehaviour
     /// <summary>
     /// Methods setting unit stats from BaseUnitStats object
     /// </summary>
-    private void SetStartingStats(UnitModifiers unitModifiers)
+    private void SetStartingStats()
     {
-        CurrentModifiers = unitModifiers;
-        SetCurrentStats();
         CurrentHealth = MaxHealth;
         CurrentDamage = MaxDamage;
         CurrentDefense = MaxDefense;
@@ -115,9 +115,22 @@ public class Unit : MonoBehaviour
 
     public void SetCurrentStats()
     {
-        (MaxHealth, MaxDamage, MaxDefense) = CurrentModifiers.ApplyModifiers(this);
+        (MaxHealth, MaxDamage, MaxDefense) = CurrentModifiers.CalculateModifiers(this);
         CurrentDamage = MaxDamage;
         CurrentDefense = MaxDefense;
+    }
+
+
+    public void AddUnitModifiers(UnitModifiers unitModifiers)
+    {
+        CurrentModifiers += unitModifiers;
+        SetCurrentStats();
+    }
+
+    public void RemoveUnitModifiers(UnitModifiers unitModifiers)
+    {
+        CurrentModifiers -= unitModifiers;
+        SetCurrentStats();
     }
 
     public bool IsEnemy(Player player)
@@ -336,6 +349,16 @@ public class Unit : MonoBehaviour
         //    Debug.Log(field.Coordinates);
         //}
 
+        // Remove modifiers from starting field
+        RemoveUnitModifiers(Field.Type.FieldUnitModifiers);
+        AddUnitModifiers(Field.Building.GetUnitModifiers());
+
+        // Add modifiers from target field
+        AddUnitModifiers(targetField.Type.FieldUnitModifiers);
+        AddUnitModifiers(targetField.Building.GetUnitModifiers());
+
+
+        // Move references between fields
         Field.Unit = null;
         Field = targetField;
         targetField.Unit = this;
@@ -374,14 +397,13 @@ public class Unit : MonoBehaviour
     public void BeginDefending()
     {
         CurrentMovementPoints = 0;
-        CurrentModifiers += new UnitModifiers(defense: DefenseRatio);
-        SetCurrentStats();
+        AddUnitModifiers(new UnitModifiers(defense: DefenseRatio));
         Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, Defend));
     }
 
     public void Defend()
     {
-        CurrentModifiers -= new UnitModifiers(defense: DefenseRatio);
+        RemoveUnitModifiers(new UnitModifiers(defense: DefenseRatio));
     }
 
     public void RestoreMovementPoints()
@@ -391,7 +413,8 @@ public class Unit : MonoBehaviour
 
     public void Delete()
     {
-        throw new NotImplementedException();
+        Field.Unit = null;
+        Destroy(gameObject);
     }
 }
 

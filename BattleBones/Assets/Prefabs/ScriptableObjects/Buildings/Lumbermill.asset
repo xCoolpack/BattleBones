@@ -14,8 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BuildingName: Lumbermill
   BaseHealth: 1
+  BaseDamage: 0
   BaseDefense: 0
+  BaseAttackRange: 0
   BaseSightRange: 2
+  IsPassable: 1
   BaseCost:
     Gold: 0
     Wood: 0

@@ -10,6 +10,7 @@ public class BaseBuildingStats : ScriptableObject
     public int BaseDefense;
     public int BaseAttackRange;
     public int BaseSightRange;
+    public bool IsPassable;
     
     public Resources BaseCost;
 }

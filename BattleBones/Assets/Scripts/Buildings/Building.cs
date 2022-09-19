@@ -62,14 +62,21 @@ public class Building : MonoBehaviour
         return player.ResourceManager.ResourcesAmount >= BaseBuildingStats.BaseCost;
     }
 
+    public UnitModifiers GetUnitModifiers()
+    {
+        return GetComponent<Barricade>()?.BuildingUnitModifier ?? new UnitModifiers();
+    }
+
     public void Construct()
     {
         BuildingState = BuildingState.Fine;
+        Field.Unit?.AddUnitModifiers(Field.Building.GetUnitModifiers());
     }
 
     public void Plunder()
     {
         BuildingState = BuildingState.Plundered;
+        Field.Unit?.RemoveUnitModifiers(Field.Building.GetUnitModifiers());
     }
 
     public void BeginRepair()
@@ -81,10 +88,13 @@ public class Building : MonoBehaviour
     public void Repair()
     {
         BuildingState = BuildingState.Fine;
+        Field.Unit?.AddUnitModifiers(Field.Building.GetUnitModifiers());
     }
 
     public void Destroy()
     {
+        Field.Unit?.RemoveUnitModifiers(Field.Building.GetUnitModifiers());
         Field.Building = null;
+        Destroy(gameObject);
     }
 }
