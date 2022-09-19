@@ -2127,16 +2127,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e03ddfaeff9c4014aa445430b67e3d7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 0
-  MaxDamage: 0
-  MaxDefense: 0
-  MaxMovementPoints: 0
-  CurrentHealth: 0
-  CurrentDamage: 0
-  CurrentDefense: 0
-  CurrentMovementPoints: 0
-  AttackRange: 0
-  SightRange: 0
+  MaxHealth: 1
+  MaxDamage: 1
+  MaxDefense: 2
+  MaxMovementPoints: 3
+  CurrentHealth: 4
+  CurrentDamage: 5
+  CurrentDefense: 6
+  CurrentMovementPoints: 7
+  AttackRange: 8
+  SightRange: 9
   HealRatio: 0.2
   DefenseRatio: 0.2
   BaseUnitStats: {fileID: 11400000, guid: d7c7fd20f5e886b4aa0f7804782d1c84, type: 2}
@@ -3015,5 +3015,29 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 945539459}
+    - target: {fileID: 5565982200717348815, guid: ddeebbc15e43e0444b84f04058210e14, type: 3}
+      propertyPath: MaxHealth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5565982200717348815, guid: ddeebbc15e43e0444b84f04058210e14, type: 3}
+      propertyPath: MaxDefense
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5565982200717348815, guid: ddeebbc15e43e0444b84f04058210e14, type: 3}
+      propertyPath: SightRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5565982200717348815, guid: ddeebbc15e43e0444b84f04058210e14, type: 3}
+      propertyPath: CurrentHealth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5565982200717348815, guid: ddeebbc15e43e0444b84f04058210e14, type: 3}
+      propertyPath: CurrentDefense
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5565982200717348815, guid: ddeebbc15e43e0444b84f04058210e14, type: 3}
+      propertyPath: CurrentRepairCooldown
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddeebbc15e43e0444b84f04058210e14, type: 3}

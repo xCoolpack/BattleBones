@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -72,6 +73,14 @@ public class Overlay : MonoBehaviour
         RemoveInfoBox();
     }
 
+    private void TestDefensiveBuilding()
+    {
+        var go = GameObject.Find("TestBuilding");
+        var b = go.GetComponent<Building>();
+        var db = go.GetComponent<DefensiveBuilding>();
+        DefensiveBuildingInfoBox(db, b);
+    }
+
     /// <summary>
     /// Removes InfoBox if it exists
     /// </summary>
@@ -95,10 +104,6 @@ public class Overlay : MonoBehaviour
         var titleBox = new VisualElement();
         var titleLabel = new Label(title);
 
-        titleBox.ClearClassList();
-        infoBox.ClearClassList();
-        titleLabel.ClearClassList();
-
         titleLabel.AddToClassList("TitleLabel");
         titleBox.Add(titleLabel);
         titleBox.AddToClassList("InnerInfoBox");
@@ -119,46 +124,82 @@ public class Overlay : MonoBehaviour
     {
         var infoBox = CreateBasicInfoBox(unit.BaseUnitStats.UnitName);
         var statsBox = new VisualElement();
+        var statsBoxLeft = new VisualElement();
+        var statsBoxRight = new VisualElement();
         var buttonsBox = new VisualElement();
-        var hpLabel = new Label($"Health: {unit.CurrentHealth}/{unit.MaxHealth}");
-        var movePointsLabel = new Label($"Movement point: {unit.CurrentMovementPoints}/{unit.MaxMovementPoints}");
+        var movePointsLabel = new Label($"Movement points: {unit.CurrentMovementPoints}/{unit.MaxMovementPoints}");
         var damageLabel = new Label($"Damage: {unit.CurrentDamage}");
         var defenseLabel = new Label($"Defense: {unit.CurrentDefense}");
         var attackRangeLabel = new Label($"Attack range: {unit.AttackRange}");
         var sightRangeLabel = new Label($"Sight range: {unit.SightRange}");
-        var healButton = new Button(unit.BeginHealing)
+
+        var healButton = new Button(() =>
+        {
+            unit.BeginHealing();
+            UnitInfoBox(unit);
+        })
         {
             text = "Heal"
         };
-        var defendButton = new Button(unit.BeginDefending)
+
+        var defendButton = new Button(() =>
+        {
+            unit.BeginDefending();
+            UnitInfoBox(unit);
+        })
         {
             text = "Defend"
         };
-        var deleteButton = new Button(unit.Delete)
+
+        var deleteButton = new Button(() =>
+        {
+            unit.Delete();
+            RemoveInfoBox();
+        })
         {
             text = "Delete"
         };
 
+        var hpBar = new HpBar(unit.CurrentHealth, unit.MaxHealth);
+
         healButton.AddToClassList("InfoBoxButton");
         defendButton.AddToClassList("InfoBoxButton");
+        deleteButton.AddToClassList("InfoBoxButton");
+        hpBar.AddToClassList("InnerInfoBox");
+        
+        statsBoxLeft.Add(damageLabel);
+        statsBoxLeft.Add(defenseLabel);
+        statsBoxLeft.Add(movePointsLabel);
+        statsBoxRight.Add(attackRangeLabel);
+        statsBoxRight.Add(sightRangeLabel);
 
-        statsBox.Add(hpLabel);
-        statsBox.Add(damageLabel);
-        statsBox.Add(defenseLabel);
-        statsBox.Add(movePointsLabel);
-        statsBox.Add(attackRangeLabel);
-        statsBox.Add(sightRangeLabel);
+        foreach (var label in statsBoxLeft.Children())
+        {
+            label.AddToClassList("StatsLabel");
+        }
+
+        foreach (var label in statsBoxRight.Children())
+        {
+            label.AddToClassList("StatsLabel");
+        }
+
         buttonsBox.Add(healButton);
         buttonsBox.Add(defendButton);
+        buttonsBox.Add(deleteButton);
 
         statsBox.AddToClassList("InnerInfoBox");
         statsBox.AddToClassList("StatsInfoBox");
         buttonsBox.AddToClassList("InnerInfoBox");
+        buttonsBox.AddToClassList("ButtonsInfoBox");
+        statsBoxLeft.AddToClassList("InnerStatsInfoBox");
+        statsBoxRight.AddToClassList("InnerStatsInfoBox");
 
-        foreach (var visualElement in statsBox.Children())
-        {
-            visualElement.ClearClassList();
-        }
+        
+        statsBox.Add(statsBoxLeft);
+        statsBox.Add(statsBoxRight);
+        infoBox.Add(hpBar);
+        infoBox.Add(statsBox);
+        infoBox.Add(buttonsBox);
     }
 
     /// <summary>
@@ -174,8 +215,14 @@ public class Overlay : MonoBehaviour
         var statsBox = new VisualElement();
         var buttonsBox = new VisualElement();
 
+        statsBox.AddToClassList("InnerInfoBox");
+        statsBox.AddToClassList("StatsInfoBox");
+        buttonsBox.AddToClassList("InnerInfoBox");
+        buttonsBox.AddToClassList("ButtonsInfoBox");
+
         statsBox.Add(sightRangeLabel);
         statsBox.Add(repairLabel);
+
 
         if (building.BuildingState == BuildingState.Plundered)
         {
@@ -183,20 +230,20 @@ public class Overlay : MonoBehaviour
             {
                 text = "Repair"
             };
+            repairButton.AddToClassList("InfoBoxButton");
             buttonsBox.Add(repairButton);
         }
 
         var destroyButton = new Button(building.Destroy)
         {
-            text = "Destory"
+            text = "Destroy"
         };
+        destroyButton.AddToClassList("InfoBoxButton");
 
         buttonsBox.Add(destroyButton);
 
         infoBox.Add(statsBox);
         infoBox.Add(buttonsBox);
-
-        //TODO USS CLASSES
 
         return (statsBox, buttonsBox);
     }
@@ -206,15 +253,19 @@ public class Overlay : MonoBehaviour
         var (statsBox, buttonsBox) = CreateBuildingInfoBox(building);
         var damageLabel = new Label($"Damage: {defensiveBuilding.CurrentDamage}");
         var attackRangeLabel = new Label($"Attack range: {defensiveBuilding.AttackRange}");
-        var hpLabel = new Label($"Health: {building.CurrentHealth}/{building.MaxHealth}");
+        //var hpLabel = new Label($"Health: {building.CurrentHealth}/{building.MaxHealth}");
         var defenseLabel = new Label($"Defense: {building.CurrentDefense}/{building.MaxDefense}");
+        var hpBar = new HpBar(2, 3);
 
-        statsBox.Add(hpLabel);
-        statsBox.Add(defenseLabel);
+        //statsBox.
+        //statsBox.Add(defenseLabel);
         statsBox.Add(damageLabel);
         statsBox.Add(attackRangeLabel);
 
-        //TODO
+        foreach (var label in statsBox.Children())
+        {
+            label.AddToClassList("StatsLabel");
+        }
 
         return (statsBox, buttonsBox);
     }
@@ -228,12 +279,12 @@ public class Overlay : MonoBehaviour
     {
         var (_, buttonsBox) = CreateDefensiveBuildingInfoBox(defensiveBuilding, building);
         var recruitButton = new Button(() => CreateRecruitmentBox(outpost));
-        buttonsBox.Add(recruitButton);
+        recruitButton.AddToClassList("InfoBoxButton");
     }
 
     private void CreateRecruitmentBox(Outpost outpost)
     {
-
+        throw new NotImplementedException();
     }
 
     public void IncomeBuildingInfoBox(IncomeBuilding incomeBuilding, Building building)
