@@ -91,10 +91,18 @@ public class Overlay : MonoBehaviour
     {
         RemoveInfoBox();
         var infoBox = new VisualElement();
-        infoBox.ClearClassList();
+        var titleBox = new VisualElement();
         var titleLabel = new Label(title);
+
+        titleBox.ClearClassList();
+        infoBox.ClearClassList();
+        titleLabel.ClearClassList();
+
         titleLabel.AddToClassList("TitleLabel");
-        infoBox.Add(titleLabel);
+        titleBox.Add(titleLabel);
+        titleBox.AddToClassList("InnerInfoBox");
+        titleBox.AddToClassList("TitleInfoBox");
+        infoBox.Add(titleBox);
         infoBox.AddToClassList("InfoBox");
         infoBox.name = "InfoBox";
         _lowerContainer.Add(infoBox);
@@ -109,6 +117,8 @@ public class Overlay : MonoBehaviour
     public void UnitInfoBox(Unit unit)
     {
         var infoBox = CreateBasicInfoBox(unit.BaseUnitStats.UnitName);
+        var statsBox = new VisualElement();
+        var buttonsBox = new VisualElement();
         var hpLabel = new Label($"Health: {unit.CurrentHealth}/{unit.MaxHealth}");
         var movePointsLabel = new Label($"Movement point: {unit.CurrentMovementPoints}/{unit.MaxMovementPoints}");
         var damageLabel = new Label($"Damage: {unit.CurrentDamage}");
@@ -127,21 +137,25 @@ public class Overlay : MonoBehaviour
         healButton.AddToClassList("InfoBoxButton");
         defendButton.AddToClassList("InfoBoxButton");
 
-        infoBox.Add(hpLabel);
-        infoBox.Add(damageLabel);
-        infoBox.Add(defenseLabel);
-        infoBox.Add(movePointsLabel);
-        infoBox.Add(attackRangeLabel);
-        infoBox.Add(sightRangeLabel);
-        infoBox.Add(healButton);
-        infoBox.Add(defendButton);
+        statsBox.Add(hpLabel);
+        statsBox.Add(damageLabel);
+        statsBox.Add(defenseLabel);
+        statsBox.Add(movePointsLabel);
+        statsBox.Add(attackRangeLabel);
+        statsBox.Add(sightRangeLabel);
+        buttonsBox.Add(healButton);
+        buttonsBox.Add(defendButton);
 
-        foreach (var visualElement in infoBox.Children())
+        statsBox.AddToClassList("InnerInfoBox");
+        statsBox.AddToClassList("StatsInfoBox");
+        buttonsBox.AddToClassList("InnerInfoBox");
+
+        foreach (var visualElement in statsBox.Children())
         {
-            if (visualElement is Label)
-                visualElement.ClearClassList();
+            visualElement.ClearClassList();
         }
 
-        
+        infoBox.Add(statsBox);
+        infoBox.Add(buttonsBox);
     }
 }

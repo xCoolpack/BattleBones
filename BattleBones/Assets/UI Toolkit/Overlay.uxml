@@ -32,7 +32,11 @@
             </ui:GroupBox>
             <ui:VisualElement name="LowerContainer" style="position: absolute; bottom: 5px; right: 5px; width: 35%; height: 15%; flex-direction: row-reverse; -unity-slice-bottom: 0; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0;">
                 <ui:Button text="Next Turn" display-tooltip-when-elided="true" name="NextTurnButton" tooltip="End your turn" style="height: 100%; width: 25%; flex-direction: column; justify-content: flex-start; left: auto; position: relative; bottom: auto; right: auto; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
-                <ui:VisualElement name="InfoBox" class="InfoBox" style="flex-wrap: wrap;" />
+                <ui:VisualElement name="InfoBox" class="InfoBox" style="flex-wrap: wrap;">
+                    <ui:VisualElement style="height: 25px; -unity-text-align: middle-left;">
+                        <ui:Label text="Label" display-tooltip-when-elided="true" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="TurnContainer" class="OverlayTurnText" style="position: absolute; right: 5px; flex-direction: row; top: 5px; padding-left: 1px; padding-right: 1px; padding-top: 1px; padding-bottom: 1px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
                 <ui:Label text="Turn" display-tooltip-when-elided="true" name="TurnTextLabel" class="OverlayText" style="position: relative; right: auto; top: auto;" />

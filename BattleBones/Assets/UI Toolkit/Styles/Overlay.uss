@@ -5,7 +5,7 @@
 }
 
 .OverlayResourcesText {
-    font-size: 18px;
+    font-size: 25px;
     color: rgb(255, 255, 255);
     margin-left: 0;
     margin-right: 0;
@@ -48,16 +48,41 @@
     bottom: auto;
     right: auto;
     background-color: rgba(255, 123, 0, 0.75);
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .TitleLabel {
     position: relative;
-    font-size: 15px;
+    font-size: 18px;
     -unity-font-style: bold;
 }
 
 .InfoBoxButton {
-    background-color: rgba(168, 101, 55, 255);
+    background-color: rgb(168, 101, 55);
     padding: 1px;
+    font-size: 14px;
+}
+
+.InnerInfoBox {
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    padding-left: 1px;
+    padding-right: 1px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    flex-wrap: wrap;
+}
+
+.StatsInfoBox {
+    font-size: 14px;
+}
+
+.TitleInfoBox {
+    height: 50px;
 }
