@@ -6,6 +6,10 @@ using UnityEngine.UIElements;
 
 public class Unit : MonoBehaviour
 {
+    // Const 
+    private const double HealRatio = 0.2;
+    private const double DefenseRatio = 0.15;
+
     // Max Stats
     public int MaxHealth;
     public int MaxDamage;
@@ -19,8 +23,6 @@ public class Unit : MonoBehaviour
     public int CurrentMovementPoints;
     public int AttackRange;
     public int SightRange;
-    public double HealRatio = 0.2;
-    public double DefenseRatio = 0.2;
 
     // References
     public BaseUnitStats BaseUnitStats;
@@ -33,6 +35,7 @@ public class Unit : MonoBehaviour
     public UnitModifiers CurrentModifiers;
 
     public List<Field> MoveableFields;
+    private Dictionary<Field, int> _moveableFieldWithCost;
     public List<Field> VisibleFields;
     public List<Field> FieldsWithinAttackRange;
     public List<Field> AttackableFields;
@@ -42,7 +45,7 @@ public class Unit : MonoBehaviour
 
     private void Awake()
     {
-        SetStartingStats(new());
+        SetStartingStats();
 
         // Temp
         Movement = GetComponent<Movement>(); // if null then it's hero
@@ -68,7 +71,7 @@ public class Unit : MonoBehaviour
         SetMoveableFields();
         SetAttackableFields(); 
 
-        BeginDefending();
+        //BeginDefending();
 
         //GetVisibleFields().ForEach(Debug.Log);
         //ToggleVisibleFields();
@@ -99,10 +102,8 @@ public class Unit : MonoBehaviour
     /// <summary>
     /// Methods setting unit stats from BaseUnitStats object
     /// </summary>
-    private void SetStartingStats(UnitModifiers unitModifiers)
+    private void SetStartingStats()
     {
-        CurrentModifiers = unitModifiers;
-        SetCurrentStats();
         CurrentHealth = MaxHealth;
         CurrentDamage = MaxDamage;
         CurrentDefense = MaxDefense;
@@ -114,9 +115,22 @@ public class Unit : MonoBehaviour
 
     public void SetCurrentStats()
     {
-        (MaxHealth, MaxDamage, MaxDefense) = CurrentModifiers.ApplyModifiers(this);
+        (MaxHealth, MaxDamage, MaxDefense) = CurrentModifiers.CalculateModifiers(this);
         CurrentDamage = MaxDamage;
         CurrentDefense = MaxDefense;
+    }
+
+
+    public void AddUnitModifiers(UnitModifiers unitModifiers)
+    {
+        CurrentModifiers += unitModifiers;
+        SetCurrentStats();
+    }
+
+    public void RemoveUnitModifiers(UnitModifiers unitModifiers)
+    {
+        CurrentModifiers -= unitModifiers;
+        SetCurrentStats();
     }
 
     public bool IsEnemy(Player player)
@@ -138,7 +152,7 @@ public class Unit : MonoBehaviour
 
     private List<Field> GetVisibleFields() 
     {
-        return GraphSearch.BreadthFirstSearch(Field, SightRange, 
+        return GraphSearch.BreadthFirstSearchList(Field, SightRange, 
             (currentField, startingField) => currentField.IsVisibleFor(startingField), _ => 1);
     }
     private void ToggleVisibleFields()
@@ -154,12 +168,13 @@ public class Unit : MonoBehaviour
     #region MoveableFields
     private void SetMoveableFields()
     {
-        MoveableFields = GetMoveableFields();
+        _moveableFieldWithCost = GetMoveableFields();
+        MoveableFields = _moveableFieldWithCost.Keys.ToList();
     }
 
-    private List<Field> GetMoveableFields() 
+    private Dictionary<Field, int> GetMoveableFields() 
     {
-       return GraphSearch.BreadthFirstSearch(Field, CurrentMovementPoints,
+       return GraphSearch.BreadthFirstSearchDict(Field, CurrentMovementPoints,
             (currentField, startingField) => Movement.CanMove(this, currentField), (field) => Movement.GetMovementPointsCostForUnit(this, field));
     }
 
@@ -184,12 +199,13 @@ public class Unit : MonoBehaviour
         HashSet<Field> set = new();
         List<Field> list = new();
         //Attack range is always smaller or equal to sight range
-        set.UnionWith(GraphSearch.BreadthFirstSearch(Field, AttackRange,
-                (currentField, startingField) => Attack.CanAttack(this, Field, currentField), _ => 1));
-        foreach (var field in MoveableFields)
+        set.UnionWith(GraphSearch.BreadthFirstSearchList(Field, AttackRange,
+                (currentField, startingField) => Attack.CanAttack(Field, currentField), _ => 1));
+        foreach (var keyPair in _moveableFieldWithCost)
         {
-            set.UnionWith(GraphSearch.BreadthFirstSearch(field, AttackRange,
-                (currentField, startingField) => Attack.CanAttack(this, field, currentField), _ => 1));
+            if (Attack.HaveEnoughMovementPoints(CurrentMovementPoints - keyPair.Value))
+                set.UnionWith(GraphSearch.BreadthFirstSearchList(keyPair.Key, AttackRange, 
+                    (currentField, startingField) => Attack.CanAttack(keyPair.Key, currentField), _ => 1));
         }
         foreach (Field field in set)
         {
@@ -200,6 +216,7 @@ public class Unit : MonoBehaviour
 
         return (set.ToList(), list);
     }
+
     private void ToggleFieldsWithinAttackRange()
     {
         foreach (var field in FieldsWithinAttackRange)
@@ -332,6 +349,16 @@ public class Unit : MonoBehaviour
         //    Debug.Log(field.Coordinates);
         //}
 
+        // Remove modifiers from starting field
+        RemoveUnitModifiers(Field.Type.FieldUnitModifiers);
+        AddUnitModifiers(Field.Building.GetUnitModifiers());
+
+        // Add modifiers from target field
+        AddUnitModifiers(targetField.Type.FieldUnitModifiers);
+        AddUnitModifiers(targetField.Building.GetUnitModifiers());
+
+
+        // Move references between fields
         Field.Unit = null;
         Field = targetField;
         targetField.Unit = this;
@@ -370,14 +397,13 @@ public class Unit : MonoBehaviour
     public void BeginDefending()
     {
         CurrentMovementPoints = 0;
-        CurrentModifiers += new UnitModifiers(defense: DefenseRatio);
-        SetCurrentStats();
+        AddUnitModifiers(new UnitModifiers(defense: DefenseRatio));
         Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, Defend));
     }
 
     public void Defend()
     {
-        CurrentModifiers -= new UnitModifiers(defense: DefenseRatio);
+        RemoveUnitModifiers(new UnitModifiers(defense: DefenseRatio));
     }
 
     public void RestoreMovementPoints()
@@ -387,7 +413,8 @@ public class Unit : MonoBehaviour
 
     public void Delete()
     {
-        throw new NotImplementedException();
+        Field.Unit = null;
+        Destroy(gameObject);
     }
 }
 

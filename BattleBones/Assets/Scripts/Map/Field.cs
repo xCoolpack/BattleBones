@@ -7,9 +7,6 @@ using UnityEngine.Rendering;
 
 public class Field : MonoBehaviour
 {
-    //IMPORTANT
-    //LEAVE MARK AS FIRST CHILD IN FIELD GAMEOBJECT PLS
-
     // Graphical Offset
     public static float XOffset = 2.56f, YOffset = 1.93f;
 
@@ -164,7 +161,6 @@ public class Field : MonoBehaviour
         player.AddBuilding(Building);
         player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, building.Construct));
     }
-    
 
     public override string ToString()
     {

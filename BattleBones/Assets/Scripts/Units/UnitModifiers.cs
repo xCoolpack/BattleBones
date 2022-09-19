@@ -37,7 +37,7 @@ public struct UnitModifiers
         return a + (-b);
     }
 
-    public (int Health, int Damage, int Defense) ApplyModifiers(Unit unit)
+    public (int Health, int Damage, int Defense) CalculateModifiers(Unit unit)
     {
         return (AddModifier(unit.BaseUnitStats.BaseHealth, this.Health),
             AddModifier(unit.BaseUnitStats.BaseDamage, this.Damage),

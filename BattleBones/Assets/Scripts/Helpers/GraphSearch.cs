@@ -16,7 +16,7 @@ public static class GraphSearch
     /// <param name="canDoAction"></param>
     /// <param name="cost"></param>
     /// <returns></returns>
-    public static List<Field> BreadthFirstSearch(Field startingField, int range, CanDoAction canDoAction, Cost cost)
+    public static Dictionary<Field, int> BreadthFirstSearchDict(Field startingField, int range, CanDoAction canDoAction, Cost cost)
     {
         Dictionary<Field, Field> visitedFields = new();
         Queue<Field> fieldsToVisit = new();
@@ -54,7 +54,13 @@ public static class GraphSearch
         }
 
         visitedFields.Remove(startingField);
+        costOfFields.Remove(startingField);
 
-        return visitedFields.Keys.ToList();
-    } 
+        return costOfFields;
+    }
+
+    public static List<Field> BreadthFirstSearchList(Field startingField, int range, CanDoAction canDoAction, Cost cost)
+    {
+        return BreadthFirstSearchDict(startingField, range, canDoAction, cost).Keys.ToList();
+    }
 }

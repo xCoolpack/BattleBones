@@ -34,11 +34,11 @@ public class Outpost : MonoBehaviour
     public void RecruitUnit(string unitName)
     {
         GameObject unitPrefab = _building.Player.UnlockedUnits.FirstOrDefault(g => g.name == unitName);
-        _building.Player.UnlockedUnits.ForEach(e => Debug.Log(e.name));
-        Debug.Log(unitPrefab);
         Unit unit = Instantiate(unitPrefab, _building.Field.transform).GetComponent<Unit>();
         unit.Player = _building.Player;
         unit.Field = _building.Field;
+        unit.CurrentModifiers = _building.Player.UnitModifiersDictionary[unitName];
+        unit.SetCurrentStats();
         _building.Field.Unit = unit;
         _building.Player.AddUnit(unit);
 

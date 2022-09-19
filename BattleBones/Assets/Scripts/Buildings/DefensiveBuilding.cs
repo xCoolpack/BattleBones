@@ -51,7 +51,7 @@ public class DefensiveBuilding : MonoBehaviour
         List<Field> fieldsWithinAttackRange = new();
         List<Field> attackableFields = new();
         //Attack range is always smaller or equal to sight range
-        fieldsWithinAttackRange.AddRange(GraphSearch.BreadthFirstSearch(_building.Field, AttackRange,
+        fieldsWithinAttackRange.AddRange(GraphSearch.BreadthFirstSearchList(_building.Field, AttackRange,
             (currentField, startingField) => _attack.CanAttack(_building.Field, currentField), _ => 1));
 
         foreach (Field field in fieldsWithinAttackRange)
@@ -62,6 +62,7 @@ public class DefensiveBuilding : MonoBehaviour
 
         return (fieldsWithinAttackRange, attackableFields);
     }
+
     private void ToggleFieldsWithinAttackRange()
     {
         foreach (var field in FieldsWithinAttackRange)
