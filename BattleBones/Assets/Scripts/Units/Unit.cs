@@ -33,6 +33,7 @@ public class Unit : MonoBehaviour
     public UnitModifiers CurrentModifiers;
 
     public List<Field> MoveableFields;
+    private Dictionary<Field, int> _moveableFieldWithCost;
     public List<Field> VisibleFields;
     public List<Field> FieldsWithinAttackRange;
     public List<Field> AttackableFields;
@@ -68,13 +69,13 @@ public class Unit : MonoBehaviour
         SetMoveableFields();
         SetAttackableFields(); 
 
-        BeginDefending();
+        //BeginDefending();
 
         //GetVisibleFields().ForEach(Debug.Log);
         //ToggleVisibleFields();
         //ToggleMoveableFields();
         //ToggleAttackableFields();
-        //ToggleFieldsWithinAttackRange();
+        ToggleFieldsWithinAttackRange();
     }
 
     private void OnMouseUp()
@@ -138,7 +139,7 @@ public class Unit : MonoBehaviour
 
     private List<Field> GetVisibleFields() 
     {
-        return GraphSearch.BreadthFirstSearch(Field, SightRange, 
+        return GraphSearch.BreadthFirstSearchList(Field, SightRange, 
             (currentField, startingField) => currentField.IsVisibleFor(startingField), _ => 1);
     }
     private void ToggleVisibleFields()
@@ -154,12 +155,13 @@ public class Unit : MonoBehaviour
     #region MoveableFields
     private void SetMoveableFields()
     {
-        MoveableFields = GetMoveableFields();
+        _moveableFieldWithCost = GetMoveableFields();
+        MoveableFields = _moveableFieldWithCost.Keys.ToList();
     }
 
-    private List<Field> GetMoveableFields() 
+    private Dictionary<Field, int> GetMoveableFields() 
     {
-       return GraphSearch.BreadthFirstSearch(Field, CurrentMovementPoints,
+       return GraphSearch.BreadthFirstSearchDict(Field, CurrentMovementPoints,
             (currentField, startingField) => Movement.CanMove(this, currentField), (field) => Movement.GetMovementPointsCostForUnit(this, field));
     }
 
@@ -184,12 +186,13 @@ public class Unit : MonoBehaviour
         HashSet<Field> set = new();
         List<Field> list = new();
         //Attack range is always smaller or equal to sight range
-        set.UnionWith(GraphSearch.BreadthFirstSearch(Field, AttackRange,
-                (currentField, startingField) => Attack.CanAttack(this, Field, currentField), _ => 1));
-        foreach (var field in MoveableFields)
+        set.UnionWith(GraphSearch.BreadthFirstSearchList(Field, AttackRange,
+                (currentField, startingField) => Attack.CanAttack(Field, currentField), _ => 1));
+        foreach (var keyPair in _moveableFieldWithCost)
         {
-            set.UnionWith(GraphSearch.BreadthFirstSearch(field, AttackRange,
-                (currentField, startingField) => Attack.CanAttack(this, field, currentField), _ => 1));
+            if (Attack.HaveEnoughMovementPoints(CurrentMovementPoints - keyPair.Value))
+                set.UnionWith(GraphSearch.BreadthFirstSearchList(keyPair.Key, AttackRange, 
+                    (currentField, startingField) => Attack.CanAttack(keyPair.Key, currentField), _ => 1));
         }
         foreach (Field field in set)
         {
@@ -200,6 +203,7 @@ public class Unit : MonoBehaviour
 
         return (set.ToList(), list);
     }
+
     private void ToggleFieldsWithinAttackRange()
     {
         foreach (var field in FieldsWithinAttackRange)

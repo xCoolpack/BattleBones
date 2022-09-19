@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class RangeAttack : Attack
 {
-    public override bool HaveEnoughMovementpoints(Unit unit, Field field)
+    public override bool HaveEnoughMovementPoints(int currentMovementPoints, Unit unit = null, Field field = null)
     {
-        return unit.CurrentMovementPoints > 0;
+        return currentMovementPoints > 0;
     }
 }
