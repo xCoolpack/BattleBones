@@ -19,6 +19,8 @@ public class Unit : MonoBehaviour
     public int CurrentMovementPoints;
     public int AttackRange;
     public int SightRange;
+    public double HealRatio = 0.2;
+    public double DefenseRatio = 0.2;
 
     // References
     public BaseUnitStats BaseUnitStats;
@@ -27,6 +29,8 @@ public class Unit : MonoBehaviour
     public Movement Movement;
     public Attack Attack;
     public GameMap GameMap;
+
+    public UnitModifiers CurrentModifiers;
 
     public List<Field> MoveableFields;
     public List<Field> VisibleFields;
@@ -38,7 +42,7 @@ public class Unit : MonoBehaviour
 
     private void Awake()
     {
-        SetStats();
+        SetStartingStats(new());
 
         // Temp
         Movement = GetComponent<Movement>(); // if null then it's hero
@@ -63,12 +67,14 @@ public class Unit : MonoBehaviour
         SetVisibleFields();
         SetMoveableFields();
         SetAttackableFields(); 
-        Debug.Log("hey");
+
+        BeginDefending();
+
         //GetVisibleFields().ForEach(Debug.Log);
         //ToggleVisibleFields();
         //ToggleMoveableFields();
         //ToggleAttackableFields();
-        ToggleFieldsWithinAttackRange();
+        //ToggleFieldsWithinAttackRange();
     }
 
     private void OnMouseUp()
@@ -77,7 +83,7 @@ public class Unit : MonoBehaviour
         //ToggleVisibleFields();
         //ToggleMoveableFields();
         //ToggleAttackableFields();
-        ToggleFieldsWithinAttackRange();
+        //ToggleFieldsWithinAttackRange();
     }
 
     /// <summary>
@@ -93,24 +99,36 @@ public class Unit : MonoBehaviour
     /// <summary>
     /// Methods setting unit stats from BaseUnitStats object
     /// </summary>
-    private void SetStats()
+    private void SetStartingStats(UnitModifiers unitModifiers)
     {
-        MaxHealth = BaseUnitStats.BaseHealth;
-        CurrentHealth = BaseUnitStats.BaseHealth;
-        MaxDamage = BaseUnitStats.BaseDamage;
-        CurrentDamage = BaseUnitStats.BaseDamage;
-        MaxDefense = BaseUnitStats.BaseDefense;
-        CurrentDefense = BaseUnitStats.BaseDefense;
+        CurrentModifiers = unitModifiers;
+        SetCurrentStats();
+        CurrentHealth = MaxHealth;
+        CurrentDamage = MaxDamage;
+        CurrentDefense = MaxDefense;
         MaxMovementPoints = BaseUnitStats.BaseMovementPoints;
-        CurrentMovementPoints = BaseUnitStats.BaseMovementPoints;
+        CurrentMovementPoints = MaxMovementPoints;
         AttackRange = BaseUnitStats.BaseAttackRange;
         SightRange = BaseUnitStats.BaseSightRange;
+    }
+
+    public void SetCurrentStats()
+    {
+        (MaxHealth, MaxDamage, MaxDefense) = CurrentModifiers.ApplyModifiers(this);
+        CurrentDamage = MaxDamage;
+        CurrentDefense = MaxDefense;
     }
 
     public bool IsEnemy(Player player)
     {
         return Player != player;
     }
+
+    public bool CanAffordRecruitment(Player player)
+    {
+        return player.ResourceManager.ResourcesAmount >= BaseUnitStats.BaseCost;
+    }
+
     #region VisibleFields
 
     private void SetVisibleFields()
@@ -346,24 +364,30 @@ public class Unit : MonoBehaviour
 
     public void Heal()
     {
-        CurrentHealth = Math.Min(CurrentHealth + 20, MaxHealth); 
+        CurrentHealth = Math.Min(CurrentHealth + (int)Math.Ceiling(HealRatio*MaxHealth), MaxHealth); 
     }
 
     public void BeginDefending()
     {
         CurrentMovementPoints = 0;
+        CurrentModifiers += new UnitModifiers(defense: DefenseRatio);
+        SetCurrentStats();
         Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, Defend));
-        CurrentDefense += (int)Math.Ceiling(CurrentDefense * 0.2);
     }
 
     public void Defend()
     {
-        CurrentDefense = MaxDefense;
+        CurrentModifiers -= new UnitModifiers(defense: DefenseRatio);
     }
 
     public void RestoreMovementPoints()
     {
         CurrentMovementPoints = MaxMovementPoints;
+    }
+
+    public void Delete()
+    {
+        throw new NotImplementedException();
     }
 }
 

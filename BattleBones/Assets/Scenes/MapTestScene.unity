@@ -204,8 +204,10 @@ MonoBehaviour:
   PlayerEventHandler: {fileID: 966126647}
   UnlockedUnits:
   - {fileID: 1719227504}
-  AvailableBuildings: []
-  Units: []
+  AvailableBuildings:
+  - {fileID: 5565982200717348803, guid: ddeebbc15e43e0444b84f04058210e14, type: 3}
+  Units:
+  - {fileID: 1719227505}
   Buildings: []
 --- !u!4 &427005261 stripped
 Transform:
@@ -821,12 +823,18 @@ MonoBehaviour:
   CurrentMovementPoints: 0
   AttackRange: 0
   SightRange: 0
+  HealRatio: 0.2
+  DefenseRatio: 0.2
   BaseUnitStats: {fileID: 11400000, guid: d7c7fd20f5e886b4aa0f7804782d1c84, type: 2}
   Player: {fileID: 945539459}
   Field: {fileID: 1345443349}
   Movement: {fileID: 0}
   Attack: {fileID: 0}
   GameMap: {fileID: 0}
+  CurrentModifiers:
+    Health: 0
+    Damage: 0
+    Defense: 0
   MoveableFields: []
   VisibleFields: []
   FieldsWithinAttackRange: []
@@ -2129,12 +2137,18 @@ MonoBehaviour:
   CurrentMovementPoints: 0
   AttackRange: 0
   SightRange: 0
+  HealRatio: 0.2
+  DefenseRatio: 0.2
   BaseUnitStats: {fileID: 11400000, guid: d7c7fd20f5e886b4aa0f7804782d1c84, type: 2}
   Player: {fileID: 412005501}
   Field: {fileID: 1637120273}
   Movement: {fileID: 0}
   Attack: {fileID: 0}
   GameMap: {fileID: 0}
+  CurrentModifiers:
+    Health: 0
+    Damage: 0
+    Defense: 0
   MoveableFields: []
   VisibleFields: []
   FieldsWithinAttackRange: []

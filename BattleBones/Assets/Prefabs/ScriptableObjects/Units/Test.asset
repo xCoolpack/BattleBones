@@ -15,7 +15,7 @@ MonoBehaviour:
   UnitName: Test unit
   BaseHealth: 0
   BaseDamage: 0
-  BaseDefense: 0
+  BaseDefense: 5
   BaseMovementPoints: 1
   BaseAttackRange: 2
   BaseSightRange: 3
