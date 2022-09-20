@@ -17,12 +17,22 @@ public class ResourceManager : MonoBehaviour
 
     public void AddIncome(Resources res)
     {
+        ResourcesIncome += res;
+    }
+
+    public void AddAmount(Resources res)
+    {
         ResourcesAmount += res;
     }
 
     public void RemoveIncome(Resources res)
     {
-        ResourcesAmount -= res;
+        ResourcesIncome -= res;
+    }
+
+    public void RemoveAmount(Resources res)
+    {
+        ResourcesAmount += res;
     }
 }
 

@@ -1,10 +1,12 @@
 using Microsoft.Cci;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Outpost : MonoBehaviour
 {
     public GameEvent RecruitingUnit;
+    private Resources _unitCost;
     private Building _building;
 
     private void Awake()
@@ -14,10 +16,18 @@ public class Outpost : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (RecruitingUnit != null)
+        if (CanCancelRecruitment())
             CancelRecruitment();
         else
             BeginUnitRecruitment("TestUnit");
+    }
+
+    public bool CanRecruit(string unitName)
+    {
+        GameObject unitPrefab = _building.Player.UnlockedUnits.FirstOrDefault(g => g.name == unitName);
+        if (unitPrefab is null)
+            return false;
+        return unitPrefab.GetComponent<Unit>().CanAffordRecruitment(_building.Player) && !_building.Field.HasUnit();
     }
 
     public void BeginUnitRecruitment(string unitName)
@@ -41,14 +51,20 @@ public class Outpost : MonoBehaviour
         unit.SetCurrentStats();
         _building.Field.Unit = unit;
         _building.Player.AddUnit(unit);
+        _unitCost = unit.BaseUnitStats.BaseCost;
+        _building.Player.ResourceManager.RemoveAmount(_unitCost);
+    }
 
-        RecruitingUnit = null;
+    public bool CanCancelRecruitment()
+    {
+        return RecruitingUnit != null;
     }
 
     public void CancelRecruitment()
     {
         EventHandler eventHandler = _building.Player.PlayerEventHandler;
         eventHandler.RemoveStartTurnEvent(RecruitingUnit);
+        _building.Player.ResourceManager.AddAmount(_unitCost);
         RecruitingUnit = null;
     }
 }

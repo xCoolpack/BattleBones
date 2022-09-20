@@ -150,6 +150,14 @@ public class Field : MonoBehaviour
         return false;
     }
 
+    public bool CanConstruct(Player player, String buildingName)
+    {
+        GameObject buildingPrefab = player.AvailableBuildings.FirstOrDefault(g => g.name == buildingName);
+        if (buildingPrefab is null)
+            return false;
+        return buildingPrefab.GetComponent<Unit>().CanAffordRecruitment(player) && !HasBuilding();
+    }
+
     public void BeginBuildingConstruction(Player player, String buildingName)
     {
         GameObject buildingPrefab = player.AvailableBuildings.FirstOrDefault(g => g.name == buildingName);
@@ -159,6 +167,7 @@ public class Field : MonoBehaviour
         Building = building;
         building.BuildingState = BuildingState.UnderConstruction;
         player.AddBuilding(Building);
+        player.ResourceManager.RemoveAmount(building.BaseBuildingStats.BaseCost);
         player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, building.Construct));
     }
 

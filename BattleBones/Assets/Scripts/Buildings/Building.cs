@@ -62,6 +62,12 @@ public class Building : MonoBehaviour
         return player.ResourceManager.ResourcesAmount >= BaseBuildingStats.BaseCost;
     }
 
+    public bool CanAffordRepair()
+    {
+        return Player.ResourceManager.ResourcesAmount >= BaseBuildingStats.BaseCost / 2;
+    }
+
+
     public UnitModifiers GetUnitModifiers()
     {
         return GetComponent<Barricade>()?.BuildingUnitModifier ?? new UnitModifiers();
@@ -79,9 +85,15 @@ public class Building : MonoBehaviour
         Field.Unit?.RemoveUnitModifiers(Field.Building.GetUnitModifiers());
     }
 
+    public bool CanRepair()
+    {
+        return CanAffordRepair();
+    }
+
     public void BeginRepair()
     {
         BuildingState = BuildingState.UnderRepair;
+        Player.ResourceManager.RemoveAmount(BaseBuildingStats.BaseCost/2);
         Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, Repair));
     }
 
