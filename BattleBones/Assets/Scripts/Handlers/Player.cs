@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     public int MaxUnitCap;
-    public int CurrentUnitCap;
+    public int CurrentUnitCap => Units.Count;
     public int TradeBuildingCounter;
     public string Faction;
     public ResourceManager ResourceManager;
@@ -28,6 +27,11 @@ public class Player : MonoBehaviour
     public void RemoveUnit(Unit unit)
     {
         Units.Remove(unit);
+    }
+
+    public bool HaveEnoughUnitCap()
+    {
+        return CurrentUnitCap < MaxUnitCap;
     }
 
     public void RestoreUnitsMovementPoints()

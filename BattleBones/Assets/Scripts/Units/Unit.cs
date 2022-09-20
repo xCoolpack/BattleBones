@@ -28,8 +28,8 @@ public class Unit : MonoBehaviour
     public BaseUnitStats BaseUnitStats;
     public Player Player;
     public Field Field;
-    public Movement Movement;
-    public Attack Attack;
+    public Movement MovementScript;
+    public Attack AttackScript;
     public GameMap GameMap;
 
     public UnitModifiers CurrentModifiers;
@@ -48,8 +48,8 @@ public class Unit : MonoBehaviour
         SetStartingStats();
 
         // Temp
-        Movement = GetComponent<Movement>(); // if null then it's hero
-        Attack = GetComponent<Attack>(); // if null then it's hero
+        MovementScript = GetComponent<Movement>(); // if null then it's hero
+        AttackScript = GetComponent<Attack>(); // if null then it's hero
         GameMap = GameObject.Find("GameMap").GetComponent<GameMap>();
     } 
 
@@ -176,7 +176,7 @@ public class Unit : MonoBehaviour
     private Dictionary<Field, int> GetMoveableFields() 
     {
        return GraphSearch.BreadthFirstSearchDict(Field, CurrentMovementPoints,
-            (currentField, startingField) => Movement.CanMove(this, currentField), (field) => Movement.GetMovementPointsCostForUnit(this, field));
+            (currentField, startingField) => MovementScript.CanMove(this, currentField), (field) => MovementScript.GetMovementPointsCostForUnit(this, field));
     }
 
     private void ToggleMoveableFields() 
@@ -201,16 +201,16 @@ public class Unit : MonoBehaviour
         List<Field> list = new();
         //Attack range is always smaller or equal to sight range
         set.UnionWith(GraphSearch.BreadthFirstSearchList(Field, AttackRange,
-                (currentField, startingField) => Attack.CanAttack(Field, currentField), _ => 1));
+                (currentField, startingField) => AttackScript.CanAttack(Field, currentField), _ => 1));
         foreach (var keyPair in _moveableFieldWithCost)
         {
-            if (Attack.HaveEnoughMovementPoints(CurrentMovementPoints - keyPair.Value))
+            if (AttackScript.HaveEnoughMovementPoints(CurrentMovementPoints - keyPair.Value))
                 set.UnionWith(GraphSearch.BreadthFirstSearchList(keyPair.Key, AttackRange, 
-                    (currentField, startingField) => Attack.CanAttack(keyPair.Key, currentField), _ => 1));
+                    (currentField, startingField) => AttackScript.CanAttack(keyPair.Key, currentField), _ => 1));
         }
         foreach (Field field in set)
         {
-            if (Attack.CanTarget(this, field)) 
+            if (AttackScript.CanTarget(this, field)) 
                 list.Add(field);
         }
         set.Remove(Field);
@@ -237,6 +237,15 @@ public class Unit : MonoBehaviour
     }
     #endregion
 
+    public void MoveOrAttack(Field field)
+    {
+        // if unit can move to field
+            Move(field);
+        // if unit can attack field
+            Attack(field.Unit);
+    }
+
+    #region Move
     /// <summary>
     /// Methods calculating distance beetwen Fields coordinates
     /// </summary>
@@ -276,9 +285,9 @@ public class Unit : MonoBehaviour
 
             foreach (var field in currentField.GetNeighbors())
             {
-                if (Movement.CanMove(this, field))
+                if (MovementScript.CanMove(this, field))
                 {
-                    sumCost = costOfFields[currentField] + Movement.GetMovementPointsCostForUnit(this, field);
+                    sumCost = costOfFields[currentField] + MovementScript.GetMovementPointsCostForUnit(this, field);
 
                     if (!visitedFields.ContainsKey(field) || costOfFields[field] > sumCost)
                     {
@@ -335,7 +344,7 @@ public class Unit : MonoBehaviour
 
         foreach (var field in movementPath)
         {
-            nextMovementPointCost += Movement.GetMovementPointsCostForUnit(this, field);
+            nextMovementPointCost += MovementScript.GetMovementPointsCostForUnit(this, field);
             Debug.Log(nextMovementPointCost);
             if (CurrentMovementPoints < nextMovementPointCost)
                 break;
@@ -369,8 +378,6 @@ public class Unit : MonoBehaviour
         return true;
     }
 
-    
-
     // Not working as intended, only the last field is set as parent
     // comeback later
     private void MoveGraphicModel(List<Field> movementPath)
@@ -383,6 +390,37 @@ public class Unit : MonoBehaviour
             //System.Threading.Thread.Sleep(1000);  
         }
     }
+    #endregion
+
+
+    public void Attack(Unit unit)
+    {
+        // To do searching stuff
+
+
+        UnitModifiers unitModifiers = unit.CurrentModifiers +
+                                      new UnitModifiers(damage: unit.AttackScript.GetCounterAttackModifier());
+        var (_, damage, _) = unitModifiers.CalculateModifiers(0, unit.CurrentDamage, 0);
+        
+        unit.TakeDamage(CurrentDamage);
+        TakeDamage(damage);
+    }
+
+    /// <summary>
+    /// Method applying dealt damage
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <returns></returns>
+    public void TakeDamage(int damage)
+    {
+        CurrentHealth -= UnitCalculation.CalculateDealtDamage(damage, CurrentDefense);
+
+        if (CurrentHealth <= 0)
+            Delete();
+
+        // Recalculate DamageModifiers from missing health
+        AddUnitModifiers(new UnitModifiers(damage: UnitCalculation.CalculateDamageModifier(CurrentHealth, MaxHealth)));
+    }
 
     public void BeginHealing()
     {
@@ -392,7 +430,8 @@ public class Unit : MonoBehaviour
 
     public void Heal()
     {
-        CurrentHealth = Math.Min(CurrentHealth + (int)Math.Ceiling(HealRatio*MaxHealth), MaxHealth); 
+        CurrentHealth = Math.Min(CurrentHealth + (int)Math.Ceiling(HealRatio*MaxHealth), MaxHealth);
+        AddUnitModifiers(new UnitModifiers(damage: UnitCalculation.CalculateDamageModifier(CurrentHealth, MaxHealth)));
     }
 
     public void BeginDefending()
@@ -415,6 +454,7 @@ public class Unit : MonoBehaviour
     public void Delete()
     {
         Field.Unit = null;
+        Player.RemoveUnit(this);
         Destroy(gameObject);
     }
 }

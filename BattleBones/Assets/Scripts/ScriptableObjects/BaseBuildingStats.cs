@@ -7,7 +7,6 @@ public class BaseBuildingStats : ScriptableObject
     public string BuildingName;
     public int BaseHealth;
     public int BaseDamage;
-    public int BaseDefense;
     public int BaseAttackRange;
     public int BaseSightRange;
     public bool IsPassable;

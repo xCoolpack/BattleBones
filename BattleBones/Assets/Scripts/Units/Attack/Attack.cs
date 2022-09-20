@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class Attack : MonoBehaviour
@@ -24,4 +21,6 @@ public abstract class Attack : MonoBehaviour
     }
 
     public abstract bool HaveEnoughMovementPoints(int currentMovementPoints, Unit unit = null, Field field = null);
+
+    public abstract int GetCounterAttackModifier();
 }

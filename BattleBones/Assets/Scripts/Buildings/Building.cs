@@ -14,12 +14,10 @@ public class Building : MonoBehaviour
 {
     // Max stats
     public int MaxHealth;
-    public int MaxDefense;
-    public readonly int BaseRepairCooldown; 
+    public readonly int BaseRepairCooldown = 1; 
 
     // Current stats
     public int CurrentHealth;
-    public int CurrentDefense;
     public int SightRange;
     public int CurrentRepairCooldown;
 
@@ -47,8 +45,6 @@ public class Building : MonoBehaviour
     {
         MaxHealth = BaseBuildingStats.BaseHealth;
         CurrentHealth = BaseBuildingStats.BaseHealth;
-        MaxDefense = BaseBuildingStats.BaseDefense;
-        CurrentDefense = BaseBuildingStats.BaseDefense;
         SightRange = BaseBuildingStats.BaseSightRange;
     }
 
@@ -94,7 +90,7 @@ public class Building : MonoBehaviour
     {
         BuildingState = BuildingState.UnderRepair;
         Player.ResourceManager.RemoveAmount(BaseBuildingStats.BaseCost/2);
-        Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, Repair));
+        Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(BaseRepairCooldown, Repair));
     }
 
     public void Repair()

@@ -10,9 +10,9 @@ public struct UnitModifiers
 
     public UnitModifiers(int health = 0, int damage = 0, int defense = 0)
     {
-        Health = Math.Round((double)(health / 100), 2);
-        Damage = Math.Round((double)(damage / 100), 2);
-        Defense = Math.Round((double)(defense / 100), 2);
+        Health = Math.Round((double)health / 100, 2);
+        Damage = Math.Round((double)damage / 100, 2);
+        Defense = Math.Round((double)defense / 100, 2);
     }
 
     public UnitModifiers(double health = 0, double damage = 0, double defense = 0)
@@ -37,11 +37,14 @@ public struct UnitModifiers
         return a + (-b);
     }
 
+    public (int Health, int Damage, int Defense) CalculateModifiers(int health, int damage, int defense)
+    {
+        return (AddModifier(health, Health), AddModifier(damage, Damage), AddModifier(defense, Defense));
+    }
+
     public (int Health, int Damage, int Defense) CalculateModifiers(Unit unit)
     {
-        return (AddModifier(unit.BaseUnitStats.BaseHealth, this.Health),
-            AddModifier(unit.BaseUnitStats.BaseDamage, this.Damage),
-            AddModifier(unit.BaseUnitStats.BaseDefense, this.Defense));
+        return CalculateModifiers(unit.BaseUnitStats.BaseHealth, unit.BaseUnitStats.BaseDamage, unit.BaseUnitStats.BaseDefense);
     }
 
     private static int AddModifier(int a, double b)

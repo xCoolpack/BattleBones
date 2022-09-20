@@ -150,7 +150,7 @@ public class Field : MonoBehaviour
         return false;
     }
 
-    public bool CanConstruct(Player player, String buildingName)
+    public bool CanConstruct(Player player, string buildingName)
     {
         GameObject buildingPrefab = player.AvailableBuildings.FirstOrDefault(g => g.name == buildingName);
         if (buildingPrefab is null)
@@ -158,7 +158,7 @@ public class Field : MonoBehaviour
         return buildingPrefab.GetComponent<Unit>().CanAffordRecruitment(player) && !HasBuilding();
     }
 
-    public void BeginBuildingConstruction(Player player, String buildingName)
+    public void BeginBuildingConstruction(Player player, string buildingName)
     {
         GameObject buildingPrefab = player.AvailableBuildings.FirstOrDefault(g => g.name == buildingName);
         Building building = Instantiate(buildingPrefab, this.transform).GetComponent<Building>();

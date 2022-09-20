@@ -27,7 +27,8 @@ public class Outpost : MonoBehaviour
         GameObject unitPrefab = Building.Player.UnlockedUnits.FirstOrDefault(g => g.name == unitName);
         if (unitPrefab is null)
             return false;
-        return unitPrefab.GetComponent<Unit>().CanAffordRecruitment(Building.Player) && !Building.Field.HasUnit();
+        return unitPrefab.GetComponent<Unit>().CanAffordRecruitment(Building.Player) && 
+               !Building.Field.HasUnit() && Building.Player.HaveEnoughUnitCap();
     }
 
     public void BeginUnitRecruitment(string unitName)

@@ -271,15 +271,15 @@ public class Overlay : MonoBehaviour
         var (statsBox, buttonsBox) = CreateBuildingInfoBox(building);
         var damageLabel = new Label($"Damage: {defensiveBuilding.CurrentDamage}");
         var attackRangeLabel = new Label($"Attack range: {defensiveBuilding.AttackRange}");
-        var defenseLabel = new Label($"Defense: {building.CurrentDefense}/{building.MaxDefense}");
+        //var defenseLabel = new Label($"Defense: {building.CurrentDefense}/{building.MaxDefense}");
         var hpBar = new HpBar(building.CurrentHealth, building.MaxHealth);
 
         statsBox.parent.Insert(1, hpBar);
         VisualElement statsBoxLeft = ((List<VisualElement>)statsBox.Children())[0];
         VisualElement statsBoxRight = ((List<VisualElement>)statsBox.Children())[1];
 
-        defenseLabel.AddToClassList("StatsLabel");
-        statsBoxLeft.Add(defenseLabel);
+        //defenseLabel.AddToClassList("StatsLabel");
+        //statsBoxLeft.Add(defenseLabel);
         statsBoxRight.Add(damageLabel);
         statsBoxRight.Add(attackRangeLabel);
 
