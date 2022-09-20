@@ -67,6 +67,7 @@ public class Unit : MonoBehaviour
     private void OnMouseDown()
     {
         if (!IsPlayersTurn()) return;
+        Player.overlay?.UnitInfoBox(this);
         SetVisibleFields();
         SetMoveableFields();
         SetAttackableFields(); 

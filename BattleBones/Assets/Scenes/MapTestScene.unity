@@ -133,7 +133,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5565982200717348815, guid: ddeebbc15e43e0444b84f04058210e14, type: 3}
   m_PrefabInstance: {fileID: 5565982200438858405}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1411369342}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f1388f571f008149a7b1459a8719948, type: 3}
@@ -209,6 +209,7 @@ MonoBehaviour:
   Units:
   - {fileID: 1719227505}
   Buildings: []
+  overlay: {fileID: 0}
 --- !u!4 &427005261 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7260510673771770686, guid: ae63b689d470ce9459171d737d633d8a, type: 3}
@@ -823,8 +824,6 @@ MonoBehaviour:
   CurrentMovementPoints: 0
   AttackRange: 0
   SightRange: 0
-  HealRatio: 0.2
-  DefenseRatio: 0.2
   BaseUnitStats: {fileID: 11400000, guid: d7c7fd20f5e886b4aa0f7804782d1c84, type: 2}
   Player: {fileID: 945539459}
   Field: {fileID: 1345443349}
@@ -1140,6 +1139,7 @@ MonoBehaviour:
   AvailableBuildings: []
   Units: []
   Buildings: []
+  overlay: {fileID: 0}
 --- !u!1 &966126645
 GameObject:
   m_ObjectHideFlags: 0
@@ -1735,6 +1735,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7260510673771770686, guid: ae63b689d470ce9459171d737d633d8a, type: 3}
   m_PrefabInstance: {fileID: 1362262002}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1411369342 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5565982200717348803, guid: ddeebbc15e43e0444b84f04058210e14, type: 3}
+  m_PrefabInstance: {fileID: 5565982200438858405}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1411369347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411369342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 398cfc69a02aeb84c84e633621aedda6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1429981623
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2141,8 +2158,6 @@ MonoBehaviour:
   CurrentMovementPoints: 7
   AttackRange: 8
   SightRange: 9
-  HealRatio: 0.2
-  DefenseRatio: 0.2
   BaseUnitStats: {fileID: 11400000, guid: d7c7fd20f5e886b4aa0f7804782d1c84, type: 2}
   Player: {fileID: 412005501}
   Field: {fileID: 1637120273}

@@ -15,6 +15,10 @@ public class HpBar : VisualElement
         red.AddToClassList("HpBarRed");
 
         var hp = (float)currentHp / (float)maxHp;
+        if(maxHp == 0)
+        {
+            hp = 1;
+        }
         green.style.width = new StyleLength(Length.Percent(hp*100));
         red.style.width = new StyleLength(Length.Percent((1-hp)*100));
 

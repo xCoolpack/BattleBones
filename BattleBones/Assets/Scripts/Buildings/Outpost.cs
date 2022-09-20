@@ -7,11 +7,11 @@ public class Outpost : MonoBehaviour
 {
     public GameEvent RecruitingUnit;
     private Resources _unitCost;
-    private Building _building;
+    public Building Building { get; private set; }
 
     private void Awake()
     {
-        _building = GetComponent<Building>();
+        Building = GetComponent<Building>();
     }
 
     private void OnMouseDown()
@@ -24,15 +24,15 @@ public class Outpost : MonoBehaviour
 
     public bool CanRecruit(string unitName)
     {
-        GameObject unitPrefab = _building.Player.UnlockedUnits.FirstOrDefault(g => g.name == unitName);
+        GameObject unitPrefab = Building.Player.UnlockedUnits.FirstOrDefault(g => g.name == unitName);
         if (unitPrefab is null)
             return false;
-        return unitPrefab.GetComponent<Unit>().CanAffordRecruitment(_building.Player) && !_building.Field.HasUnit();
+        return unitPrefab.GetComponent<Unit>().CanAffordRecruitment(Building.Player) && !Building.Field.HasUnit();
     }
 
     public void BeginUnitRecruitment(string unitName)
     {
-        EventHandler eventHandler = _building.Player.PlayerEventHandler;
+        EventHandler eventHandler = Building.Player.PlayerEventHandler;
         RecruitingUnit = new GameEvent(1, () => RecruitUnit(unitName));
         eventHandler.AddStartTurnEvent(RecruitingUnit);
     }
@@ -43,16 +43,16 @@ public class Outpost : MonoBehaviour
     /// <param name="unitName"></param>
     public void RecruitUnit(string unitName)
     {
-        GameObject unitPrefab = _building.Player.UnlockedUnits.FirstOrDefault(g => g.name == unitName);
-        Unit unit = Instantiate(unitPrefab, _building.Field.transform).GetComponent<Unit>();
-        unit.Player = _building.Player;
-        unit.Field = _building.Field;
-        unit.CurrentModifiers = _building.Player.UnitModifiersDictionary[unitName];
+        GameObject unitPrefab = Building.Player.UnlockedUnits.FirstOrDefault(g => g.name == unitName);
+        Unit unit = Instantiate(unitPrefab, Building.Field.transform).GetComponent<Unit>();
+        unit.Player = Building.Player;
+        unit.Field = Building.Field;
+        unit.CurrentModifiers = Building.Player.UnitModifiersDictionary[unitName];
         unit.SetCurrentStats();
-        _building.Field.Unit = unit;
-        _building.Player.AddUnit(unit);
+        Building.Field.Unit = unit;
+        Building.Player.AddUnit(unit);
         _unitCost = unit.BaseUnitStats.BaseCost;
-        _building.Player.ResourceManager.RemoveAmount(_unitCost);
+        Building.Player.ResourceManager.RemoveAmount(_unitCost);
     }
 
     public bool CanCancelRecruitment()
@@ -62,9 +62,9 @@ public class Outpost : MonoBehaviour
 
     public void CancelRecruitment()
     {
-        EventHandler eventHandler = _building.Player.PlayerEventHandler;
+        EventHandler eventHandler = Building.Player.PlayerEventHandler;
         eventHandler.RemoveStartTurnEvent(RecruitingUnit);
-        _building.Player.ResourceManager.AddAmount(_unitCost);
+        Building.Player.ResourceManager.AddAmount(_unitCost);
         RecruitingUnit = null;
     }
 }

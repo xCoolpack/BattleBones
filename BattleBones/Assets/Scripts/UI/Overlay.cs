@@ -69,7 +69,7 @@ public class Overlay : MonoBehaviour
 
         // temp
         uiDocument.rootVisualElement.Q<Button>("Button1").RegisterCallback<ClickEvent>(_ => RemoveInfoBox());
-        uiDocument.rootVisualElement.Q<Button>("Button2").RegisterCallback<ClickEvent>(_ => UnitInfoBox(GameObject.Find("TestUnit").GetComponent<Unit>()));
+        uiDocument.rootVisualElement.Q<Button>("Button2").RegisterCallback<ClickEvent>(_ => TestDefensiveBuilding());
         RemoveInfoBox();
     }
 
@@ -78,7 +78,8 @@ public class Overlay : MonoBehaviour
         var go = GameObject.Find("TestBuilding");
         var b = go.GetComponent<Building>();
         var db = go.GetComponent<DefensiveBuilding>();
-        DefensiveBuildingInfoBox(db, b);
+        var o = go.GetComponent<Outpost>();
+        OutpostInfoBox(db, b, o);
     }
 
     /// <summary>
@@ -86,11 +87,24 @@ public class Overlay : MonoBehaviour
     /// </summary>
     public void RemoveInfoBox()
     {
+        RemoveRecruitmentBox();
         var infoBox = _lowerContainer.Q<VisualElement>("InfoBox");
         if (infoBox is null)
             return;
 
         _lowerContainer.Remove(infoBox);
+    }
+
+    /// <summary>
+    /// Removes RecruitmentBox if it exists
+    /// </summary>
+    public void RemoveRecruitmentBox()
+    {
+        var recruitmentBox = _lowerContainer.Q<VisualElement>("RecruitmentBox");
+        if (recruitmentBox is null)
+            return;
+
+        _lowerContainer.Remove(recruitmentBox);
     }
 
     /// <summary>
@@ -166,7 +180,7 @@ public class Overlay : MonoBehaviour
         defendButton.AddToClassList("InfoBoxButton");
         deleteButton.AddToClassList("InfoBoxButton");
         hpBar.AddToClassList("InnerInfoBox");
-        
+
         statsBoxLeft.Add(damageLabel);
         statsBoxLeft.Add(defenseLabel);
         statsBoxLeft.Add(movePointsLabel);
@@ -194,7 +208,7 @@ public class Overlay : MonoBehaviour
         statsBoxLeft.AddToClassList("InnerStatsInfoBox");
         statsBoxRight.AddToClassList("InnerStatsInfoBox");
 
-        
+
         statsBox.Add(statsBoxLeft);
         statsBox.Add(statsBoxRight);
         infoBox.Add(hpBar);
@@ -214,34 +228,38 @@ public class Overlay : MonoBehaviour
         var repairLabel = new Label($"Repair cooldown: {building.CurrentRepairCooldown}");
         var statsBox = new VisualElement();
         var buttonsBox = new VisualElement();
+        var statsBoxLeft = new VisualElement();
+        var statsBoxRight = new VisualElement();
 
         statsBox.AddToClassList("InnerInfoBox");
         statsBox.AddToClassList("StatsInfoBox");
         buttonsBox.AddToClassList("InnerInfoBox");
         buttonsBox.AddToClassList("ButtonsInfoBox");
 
-        statsBox.Add(sightRangeLabel);
-        statsBox.Add(repairLabel);
+        statsBoxLeft.Add(sightRangeLabel);
+        statsBoxLeft.Add(repairLabel);
 
-
-        if (building.BuildingState == BuildingState.Plundered)
+        var destroyButton = new Button(() =>
         {
-            var repairButton = new Button(building.BeginRepair)
-            {
-                text = "Repair"
-            };
-            repairButton.AddToClassList("InfoBoxButton");
-            buttonsBox.Add(repairButton);
-        }
-
-        var destroyButton = new Button(building.Destroy)
+            building.Destroy();
+            RemoveInfoBox();
+        })
         {
             text = "Destroy"
         };
         destroyButton.AddToClassList("InfoBoxButton");
 
-        buttonsBox.Add(destroyButton);
+        foreach (var label in statsBoxLeft.Children())
+        {
+            label.AddToClassList("StatsLabel");
+        }
 
+        statsBoxLeft.AddToClassList("InnerStatsInfoBox");
+        statsBoxRight.AddToClassList("InnerStatsInfoBox");
+
+        buttonsBox.Add(destroyButton);
+        statsBox.Add(statsBoxLeft);
+        statsBox.Add(statsBoxRight);
         infoBox.Add(statsBox);
         infoBox.Add(buttonsBox);
 
@@ -253,16 +271,19 @@ public class Overlay : MonoBehaviour
         var (statsBox, buttonsBox) = CreateBuildingInfoBox(building);
         var damageLabel = new Label($"Damage: {defensiveBuilding.CurrentDamage}");
         var attackRangeLabel = new Label($"Attack range: {defensiveBuilding.AttackRange}");
-        //var hpLabel = new Label($"Health: {building.CurrentHealth}/{building.MaxHealth}");
         var defenseLabel = new Label($"Defense: {building.CurrentDefense}/{building.MaxDefense}");
-        var hpBar = new HpBar(2, 3);
+        var hpBar = new HpBar(building.CurrentHealth, building.MaxHealth);
 
-        //statsBox.
-        //statsBox.Add(defenseLabel);
-        statsBox.Add(damageLabel);
-        statsBox.Add(attackRangeLabel);
+        statsBox.parent.Insert(1, hpBar);
+        VisualElement statsBoxLeft = ((List<VisualElement>)statsBox.Children())[0];
+        VisualElement statsBoxRight = ((List<VisualElement>)statsBox.Children())[1];
 
-        foreach (var label in statsBox.Children())
+        defenseLabel.AddToClassList("StatsLabel");
+        statsBoxLeft.Add(defenseLabel);
+        statsBoxRight.Add(damageLabel);
+        statsBoxRight.Add(attackRangeLabel);
+
+        foreach (var label in statsBoxRight.Children())
         {
             label.AddToClassList("StatsLabel");
         }
@@ -270,26 +291,85 @@ public class Overlay : MonoBehaviour
         return (statsBox, buttonsBox);
     }
 
+
+    /// <summary>
+    /// Displays InfoBox for the given DefensiveBuilding
+    /// </summary>
+    /// <param name="defensiveBuilding"></param>
+    /// <param name="building"></param>
     public void DefensiveBuildingInfoBox(DefensiveBuilding defensiveBuilding, Building building)
     {
-        CreateDefensiveBuildingInfoBox(defensiveBuilding, building);
+        var (statsBox, buttonsBox) = CreateDefensiveBuildingInfoBox(defensiveBuilding, building);
+
+        if (building.BuildingState == BuildingState.Plundered)
+        {
+            var repairButton = new Button(() =>
+            {
+                building.BeginRepair();
+                DefensiveBuildingInfoBox(defensiveBuilding, building);
+            })
+            {
+                text = "Repair"
+            };
+            repairButton.AddToClassList("InfoBoxButton");
+            buttonsBox.Add(repairButton);
+        }
     }
 
+    /// <summary>
+    /// Displays InfoBox for the given Outpost
+    /// </summary>
+    /// <param name="defensiveBuilding"></param>
+    /// <param name="building"></param>
+    /// <param name="outpost"></param>
     public void OutpostInfoBox(DefensiveBuilding defensiveBuilding, Building building, Outpost outpost)
     {
         var (_, buttonsBox) = CreateDefensiveBuildingInfoBox(defensiveBuilding, building);
-        var recruitButton = new Button(() => CreateRecruitmentBox(outpost));
+
+        if (building.BuildingState == BuildingState.Plundered)
+        {
+            var repairButton = new Button(() =>
+            {
+                building.BeginRepair();
+                OutpostInfoBox(defensiveBuilding, building, outpost);
+            })
+            {
+                text = "Repair"
+            };
+            repairButton.AddToClassList("InfoBoxButton");
+            buttonsBox.Add(repairButton);
+        }
+
+        var recruitButton = new Button(() => CreateRecruitmentBox(outpost)) { text = "Recruit" };
         recruitButton.AddToClassList("InfoBoxButton");
+        buttonsBox.Add(recruitButton);
     }
 
     private void CreateRecruitmentBox(Outpost outpost)
     {
-        throw new NotImplementedException();
+        var unlockedUnits = outpost.Building.Player.UnlockedUnits;
+        var recruitmentBox = new VisualElement() { name = "RecruitmentBox" };
+
+        foreach (var unitObject in unlockedUnits)
+        {
+            var unit = unitObject.GetComponent<Unit>();
+            var unitBox = new VisualElement();
+            unitBox.AddToClassList("InnerRecruitmentBox");
+            var name = new Label(unit.name);
+            var button = new Button() { text = "Buy" };
+            button.AddToClassList("InfoBoxButton");
+            unitBox.Add(name);
+            unitBox.Add(button);
+            recruitmentBox.Add(unitBox);
+        }
+
+        recruitmentBox.AddToClassList("RecruitmentBox");
+        _lowerContainer.Add(recruitmentBox);
     }
 
     public void IncomeBuildingInfoBox(IncomeBuilding incomeBuilding, Building building)
     {
-        var (statsBox, _) = CreateBuildingInfoBox(building);
+        var (statsBox, buttonsBox) = CreateBuildingInfoBox(building);
 
         if (incomeBuilding.ResourcesIncome.Gold > 0)
             statsBox.Add(new Label($"Gold income: {incomeBuilding.ResourcesIncome.Gold}"));
@@ -305,5 +385,19 @@ public class Overlay : MonoBehaviour
 
         if (incomeBuilding.ResourcesIncome.Bone > 0)
             statsBox.Add(new Label($"Bone income: {incomeBuilding.ResourcesIncome.Bone}"));
+
+        if (building.BuildingState == BuildingState.Plundered)
+        {
+            var repairButton = new Button(() =>
+            {
+                building.BeginRepair();
+                IncomeBuildingInfoBox(incomeBuilding, building);
+            })
+            {
+                text = "Repair"
+            };
+            repairButton.AddToClassList("InfoBoxButton");
+            buttonsBox.Add(repairButton);
+        }
     }
 }
