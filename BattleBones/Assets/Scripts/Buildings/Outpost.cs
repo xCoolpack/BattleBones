@@ -5,11 +5,11 @@ using UnityEngine;
 public class Outpost : MonoBehaviour
 {
     public GameEvent RecruitingUnit;
-    private Building _building;
+    public Building Building { get; private set; }
 
     private void Awake()
     {
-        _building = GetComponent<Building>();
+        Building = GetComponent<Building>();
     }
 
     private void OnMouseDown()
@@ -22,7 +22,7 @@ public class Outpost : MonoBehaviour
 
     public void BeginUnitRecruitment(string unitName)
     {
-        EventHandler eventHandler = _building.Player.PlayerEventHandler;
+        EventHandler eventHandler = Building.Player.PlayerEventHandler;
         RecruitingUnit = new GameEvent(1, () => RecruitUnit(unitName));
         eventHandler.AddStartTurnEvent(RecruitingUnit);
     }
@@ -33,21 +33,21 @@ public class Outpost : MonoBehaviour
     /// <param name="unitName"></param>
     public void RecruitUnit(string unitName)
     {
-        GameObject unitPrefab = _building.Player.UnlockedUnits.FirstOrDefault(g => g.name == unitName);
-        Unit unit = Instantiate(unitPrefab, _building.Field.transform).GetComponent<Unit>();
-        unit.Player = _building.Player;
-        unit.Field = _building.Field;
-        unit.CurrentModifiers = _building.Player.UnitModifiersDictionary[unitName];
+        GameObject unitPrefab = Building.Player.UnlockedUnits.FirstOrDefault(g => g.name == unitName);
+        Unit unit = Instantiate(unitPrefab, Building.Field.transform).GetComponent<Unit>();
+        unit.Player = Building.Player;
+        unit.Field = Building.Field;
+        unit.CurrentModifiers = Building.Player.UnitModifiersDictionary[unitName];
         unit.SetCurrentStats();
-        _building.Field.Unit = unit;
-        _building.Player.AddUnit(unit);
+        Building.Field.Unit = unit;
+        Building.Player.AddUnit(unit);
 
         RecruitingUnit = null;
     }
 
     public void CancelRecruitment()
     {
-        EventHandler eventHandler = _building.Player.PlayerEventHandler;
+        EventHandler eventHandler = Building.Player.PlayerEventHandler;
         eventHandler.RemoveStartTurnEvent(RecruitingUnit);
         RecruitingUnit = null;
     }

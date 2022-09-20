@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     public List<Unit> Units;
     public List<Building> Buildings;
 
+    public Overlay overlay;
+
     public void AddUnit(Unit unit)
     {
         Units.Add(unit);
