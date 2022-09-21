@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public TurnHandler TurnHandler;
     public int MaxUnitCap;
     public int CurrentUnitCap => Units.Count;
     public int TradeBuildingCounter;
@@ -17,7 +18,7 @@ public class Player : MonoBehaviour
     public List<Unit> Units;
     public List<Building> Buildings;
 
-    public Overlay overlay;
+    public Overlay Overlay;
 
     public void AddUnit(Unit unit)
     {
@@ -52,5 +53,10 @@ public class Player : MonoBehaviour
     public void RemoveBuilding(Building building)
     {
         Buildings.Remove(building);
+    }
+
+    public bool IsPlayersTurn()
+    {
+        return TurnHandler.IsPlayersTurn(this);
     }
 }

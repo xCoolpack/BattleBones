@@ -16,10 +16,10 @@ public class Outpost : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (CanCancelRecruitment())
-            CancelRecruitment();
-        else
-            BeginUnitRecruitment("TestUnit");
+        //if (CanCancelRecruitment())
+        //    CancelRecruitment();
+        //else
+        //    BeginUnitRecruitment("TestUnit");
     }
 
     public bool CanRecruit(string unitName)

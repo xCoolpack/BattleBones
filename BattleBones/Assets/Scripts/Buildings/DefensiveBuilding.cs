@@ -26,8 +26,8 @@ public class DefensiveBuilding : MonoBehaviour
 
     private void OnMouseDown()
     {
-        SetAttackableFields();
-        ToggleAttackableFields();
+        //SetAttackableFields();
+        //ToggleAttackableFields();
     }
 
     /// <summary>

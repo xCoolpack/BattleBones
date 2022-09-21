@@ -39,6 +39,7 @@ public class Unit : MonoBehaviour
     public List<Field> VisibleFields;
     public List<Field> FieldsWithinAttackRange;
     public List<Field> AttackableFields;
+    private Overlay _overlay;
 
     // Heuristic for A*
     public delegate int Heuristic(Field startingField, Field targetField);
@@ -61,43 +62,11 @@ public class Unit : MonoBehaviour
             Debug.Log("clicked r");
             CurrentMovementPoints = MaxMovementPoints;
         }
-
     }
 
-    private void OnMouseDown()
+    private void Start()
     {
-        if (!IsPlayersTurn()) return;
-        Player.overlay?.UnitInfoBox(this);
-        SetVisibleFields();
-        SetMoveableFields();
-        SetAttackableFields(); 
-
-        //BeginDefending();
-
-        //GetVisibleFields().ForEach(Debug.Log);
-        //ToggleVisibleFields();
-        //ToggleMoveableFields();
-        //ToggleAttackableFields();
-        //ToggleFieldsWithinAttackRange();
-    }
-
-    private void OnMouseUp()
-    {
-        if (!IsPlayersTurn()) return;
-        //ToggleVisibleFields();
-        //ToggleMoveableFields();
-        //ToggleAttackableFields();
-        //ToggleFieldsWithinAttackRange();
-    }
-
-    /// <summary>
-    /// Checks if it's units owners turn 
-    /// </summary>
-    /// <returns>True if it is</returns>
-    private bool IsPlayersTurn()
-    {
-        var turnHandler = GameObject.Find("TurnHandler").GetComponent<TurnHandler>();
-        return turnHandler.CurrentPlayer == Player;
+        _overlay = GameObject.Find("Overlay").GetComponent<Overlay>();
     }
 
     /// <summary>
@@ -456,6 +425,22 @@ public class Unit : MonoBehaviour
         Field.Unit = null;
         Player.RemoveUnit(this);
         Destroy(gameObject);
+    }
+
+    public void HandleOnClick()
+    {
+        _overlay.PickedUnit = this;
+
+        if (Player.IsPlayersTurn())
+        {
+            _overlay.UnitInfoBox(true);
+        }
+        else
+        {
+            _overlay.UnitInfoBox(false);
+        }
+
+
     }
 }
 

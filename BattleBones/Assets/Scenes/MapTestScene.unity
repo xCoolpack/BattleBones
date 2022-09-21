@@ -195,8 +195,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5f3dc11e88e0f459922b7705ef89bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TurnHandler: {fileID: 875089796}
   MaxUnitCap: 0
-  CurrentUnitCap: 0
   TradeBuildingCounter: 0
   Faction: 
   ResourceManager: {fileID: 2036472561}
@@ -209,7 +209,7 @@ MonoBehaviour:
   Units:
   - {fileID: 1719227505}
   Buildings: []
-  overlay: {fileID: 0}
+  Overlay: {fileID: 458497463}
 --- !u!4 &427005261 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7260510673771770686, guid: ae63b689d470ce9459171d737d633d8a, type: 3}
@@ -322,6 +322,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ResourceManager: {fileID: 2036472561}
   TurnHandler: {fileID: 875089796}
+  PickedBuilding: {fileID: 0}
+  PickedUnit: {fileID: 0}
+  PickedField: {fileID: 0}
 --- !u!1001 &472299035
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -827,8 +830,8 @@ MonoBehaviour:
   BaseUnitStats: {fileID: 11400000, guid: d7c7fd20f5e886b4aa0f7804782d1c84, type: 2}
   Player: {fileID: 945539459}
   Field: {fileID: 1345443349}
-  Movement: {fileID: 0}
-  Attack: {fileID: 0}
+  MovementScript: {fileID: 0}
+  AttackScript: {fileID: 0}
   GameMap: {fileID: 0}
   CurrentModifiers:
     Health: 0
@@ -1127,8 +1130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5f3dc11e88e0f459922b7705ef89bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TurnHandler: {fileID: 875089796}
   MaxUnitCap: 0
-  CurrentUnitCap: 0
   TradeBuildingCounter: 0
   Faction: 
   ResourceManager: {fileID: 1499339607}
@@ -1139,7 +1142,7 @@ MonoBehaviour:
   AvailableBuildings: []
   Units: []
   Buildings: []
-  overlay: {fileID: 0}
+  Overlay: {fileID: 0}
 --- !u!1 &966126645
 GameObject:
   m_ObjectHideFlags: 0
@@ -2161,8 +2164,8 @@ MonoBehaviour:
   BaseUnitStats: {fileID: 11400000, guid: d7c7fd20f5e886b4aa0f7804782d1c84, type: 2}
   Player: {fileID: 412005501}
   Field: {fileID: 1637120273}
-  Movement: {fileID: 0}
-  Attack: {fileID: 0}
+  MovementScript: {fileID: 0}
+  AttackScript: {fileID: 0}
   GameMap: {fileID: 0}
   CurrentModifiers:
     Health: 0
@@ -3082,9 +3085,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 0
-  MaxDefense: 0
   CurrentHealth: 0
-  CurrentDefense: 0
   SightRange: 0
   CurrentRepairCooldown: 0
   BaseBuildingStats: {fileID: 11400000, guid: 11e22ad3bee3eaa4a9ce5b49a0a42cbb, type: 2}

@@ -32,12 +32,6 @@ public class Building : MonoBehaviour
         SetStats();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     /// <summary>
     /// Methods setting unit stats from BaseBuildingStats object
     /// </summary>
@@ -104,5 +98,10 @@ public class Building : MonoBehaviour
         Field.Unit?.RemoveUnitModifiers(Field.Building.GetUnitModifiers());
         Field.Building = null;
         Destroy(gameObject);
+    }
+
+    public void HandleOnClick()
+    {
+        Debug.Log("Building click");
     }
 }

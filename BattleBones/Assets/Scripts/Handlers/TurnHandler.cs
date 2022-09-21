@@ -43,4 +43,9 @@ public class TurnHandler : MonoBehaviour
 
         CurrentPlayer = Players[_playerIndex];
     }
+
+    public bool IsPlayersTurn(Player player)
+    {
+        return CurrentPlayer == player;
+    }
 }

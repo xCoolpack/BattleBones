@@ -20,6 +20,8 @@ public class Field : MonoBehaviour
     public Building Building; 
     public Unit Unit;
     public GameMap GameMap;
+    private Overlay _overlay;
+
 
     private void Awake()
     {
@@ -30,27 +32,40 @@ public class Field : MonoBehaviour
     private void Start()
     {
         GameMap = GetComponentInParent<GameMap>();
+        _overlay = GameObject.Find("Overlay").GetComponent<Overlay>();
     }
 
     private void OnMouseDown()
     {
-        // Temporary for testing
-        //GameObject.Find("TestUnit").GetComponent<Unit>().Move(this);
-        //Debug.Log("clicked");
-        //EventHandler eventHandler = GameObject.Find("GlobalEventHandler").GetComponent<EventHandler>();
+        if (Unit != null && Building != null)
+        {
+            if (Unit == _overlay.PickedUnit)
+            {
+                Building.HandleOnClick();
+                return;
+            }
+            Unit.HandleOnClick();
+            return;
+        }
 
-        //GameEvent gameEvent = new GameEvent(1, () =>
-        //{
-        //    var unitO = GameObject.Find("TestUnit");
-        //    if (unitO is null)
-        //    {
-        //        Debug.Log("Is null!");
-        //        return;
-        //    }
-        //    var unit = unitO.GetComponent<Unit>();
-        //    unit.Move(this);
-        //});
-        //eventHandler.AddStartTurnEvent(gameEvent);
+        if (Building != null)
+        {
+            Building.HandleOnClick();
+            return;
+        }
+
+        if (Unit != null)
+        {
+            Unit.HandleOnClick();
+            return;
+        }
+
+        HandleOnClick();
+    }
+
+    public void HandleOnClick()
+    {
+        Debug.Log("Field click");
     }
 
     /// <summary>
