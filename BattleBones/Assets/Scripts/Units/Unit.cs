@@ -241,7 +241,9 @@ public class Unit : MonoBehaviour
     {
         // if unit can move to field
             Move(field);
-        // if unit can attack field
+        // if unit can attack building at field
+            Attack(field.Building);
+        // if unit can attack unit at field
             Attack(field.Unit);
     }
 
@@ -392,12 +394,18 @@ public class Unit : MonoBehaviour
     }
     #endregion
 
+    public void Attack(Building building)
+    {
+        UnitModifiers unitModifiers = building.Field.Unit.CurrentModifiers +
+                                      new UnitModifiers(damage: building.Field.Unit.AttackScript.GetCounterAttackModifier());
+        var (_, damage, _) = unitModifiers.CalculateModifiers(0, building.Field.Unit.CurrentDamage, 0);
+
+        building.TakeDamage(CurrentDamage);
+        TakeDamage(damage);
+    }
 
     public void Attack(Unit unit)
     {
-        // To do searching stuff
-
-
         UnitModifiers unitModifiers = unit.CurrentModifiers +
                                       new UnitModifiers(damage: unit.AttackScript.GetCounterAttackModifier());
         var (_, damage, _) = unitModifiers.CalculateModifiers(0, unit.CurrentDamage, 0);
@@ -407,7 +415,7 @@ public class Unit : MonoBehaviour
     }
 
     /// <summary>
-    /// Method applying dealt damage
+    /// Method applying dealt damage 
     /// </summary>
     /// <param name="damage"></param>
     /// <returns></returns>

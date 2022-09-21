@@ -72,12 +72,29 @@ public class Building : MonoBehaviour
     {
         BuildingState = BuildingState.Fine;
         Field.Unit?.AddUnitModifiers(Field.Building.GetUnitModifiers());
+
+        // Methods in "derived" scripts
+        GetComponent<IncomeBuilding>()?.Construct();
+        GetComponent<Housing>()?.Construct();
+    }
+
+
+    public void TakeDamage(int damage)
+    {
+        CurrentHealth -= damage;
+
+        if (CurrentHealth <= 0) 
+            Plunder();
     }
 
     public void Plunder()
     {
         BuildingState = BuildingState.Plundered;
         Field.Unit?.RemoveUnitModifiers(Field.Building.GetUnitModifiers());
+
+        // Methods in "derived" scripts
+        GetComponent<IncomeBuilding>()?.Plunder();
+        GetComponent<Housing>()?.Plunder();
     }
 
     public bool CanRepair()
@@ -95,11 +112,20 @@ public class Building : MonoBehaviour
     public void Repair()
     {
         BuildingState = BuildingState.Fine;
+        CurrentHealth = MaxHealth;
         Field.Unit?.AddUnitModifiers(Field.Building.GetUnitModifiers());
+
+        // Methods in "derived" scripts
+        GetComponent<IncomeBuilding>()?.Repair();
+        GetComponent<Housing>()?.Repair();
     }
 
     public void Destroy()
     {
+        // Methods in "derived" scripts
+        GetComponent<IncomeBuilding>()?.Destroy();
+        GetComponent<Housing>()?.Destroy();
+
         Field.Unit?.RemoveUnitModifiers(Field.Building.GetUnitModifiers());
         Field.Building = null;
         Destroy(gameObject);

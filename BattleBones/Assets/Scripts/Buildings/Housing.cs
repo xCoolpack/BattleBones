@@ -4,15 +4,31 @@ using UnityEngine;
 
 public class Housing : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public readonly int UnitCap = 3;
+    private Building _building;
+
+    private void Awake()
     {
-        
+        _building = GetComponent<Building>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Construct()
     {
-        
+        _building.Player.AddUnitCap(UnitCap);
+    }
+
+    public void Plunder()
+    {
+        _building.Player.RemoveUnitCap(UnitCap);
+    }
+
+    public void Repair()
+    {
+        _building.Player.AddUnitCap(UnitCap);
+    }
+
+    public void Destroy()
+    {
+        _building.Player.RemoveUnitCap(UnitCap);
     }
 }

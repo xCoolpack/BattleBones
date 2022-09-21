@@ -29,6 +29,16 @@ public class Player : MonoBehaviour
         Units.Remove(unit);
     }
 
+    public void AddUnitCap(int cap)
+    {
+        MaxUnitCap += cap;
+    }
+
+    public void RemoveUnitCap(int cap)
+    {
+        MaxUnitCap -= cap;
+    }
+
     public bool HaveEnoughUnitCap()
     {
         return CurrentUnitCap < MaxUnitCap;
