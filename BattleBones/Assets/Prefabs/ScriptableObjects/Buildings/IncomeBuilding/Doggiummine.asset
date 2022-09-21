@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e13072b6738cdf468e2011a31b509e8, type: 3}
-  m_Name: Lumbermill
+  m_Name: Doggiummine
   m_EditorClassIdentifier: 
-  BuildingName: Lumbermill
-  BaseHealth: 1
+  BuildingName: Dogiummine
+  BaseHealth: 0
   BaseDamage: 0
-  BaseDefense: 0
   BaseAttackRange: 0
   BaseSightRange: 2
   IsPassable: 1

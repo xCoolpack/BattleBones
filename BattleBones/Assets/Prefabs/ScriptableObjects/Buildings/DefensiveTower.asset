@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e13072b6738cdf468e2011a31b509e8, type: 3}
   m_Name: DefensiveTower
   m_EditorClassIdentifier: 
-  BuildingName: Defensive Tower
-  BaseHealth: 0
-  BaseDamage: 0
-  BaseDefense: 0
+  BuildingName: DefensiveTower
+  BaseHealth: 100
+  BaseDamage: 35
   BaseAttackRange: 2
   BaseSightRange: 2
+  IsPassable: 0
   BaseCost:
     Gold: 0
-    Wood: 0
-    Stone: 5
+    Wood: 100
+    Stone: 200
     Doggium: 0
     Bone: 0

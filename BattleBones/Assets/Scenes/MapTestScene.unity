@@ -196,7 +196,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxUnitCap: 0
-  CurrentUnitCap: 0
   TradeBuildingCounter: 0
   Faction: 
   ResourceManager: {fileID: 2036472561}
@@ -827,8 +826,8 @@ MonoBehaviour:
   BaseUnitStats: {fileID: 11400000, guid: d7c7fd20f5e886b4aa0f7804782d1c84, type: 2}
   Player: {fileID: 945539459}
   Field: {fileID: 1345443349}
-  Movement: {fileID: 0}
-  Attack: {fileID: 0}
+  MovementScript: {fileID: 0}
+  AttackScript: {fileID: 0}
   GameMap: {fileID: 0}
   CurrentModifiers:
     Health: 0
@@ -1128,7 +1127,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxUnitCap: 0
-  CurrentUnitCap: 0
   TradeBuildingCounter: 0
   Faction: 
   ResourceManager: {fileID: 1499339607}
@@ -2161,8 +2159,8 @@ MonoBehaviour:
   BaseUnitStats: {fileID: 11400000, guid: d7c7fd20f5e886b4aa0f7804782d1c84, type: 2}
   Player: {fileID: 412005501}
   Field: {fileID: 1637120273}
-  Movement: {fileID: 0}
-  Attack: {fileID: 0}
+  MovementScript: {fileID: 0}
+  AttackScript: {fileID: 0}
   GameMap: {fileID: 0}
   CurrentModifiers:
     Health: 0
@@ -3082,11 +3080,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 0
-  MaxDefense: 0
   CurrentHealth: 0
-  CurrentDefense: 0
   SightRange: 0
-  CurrentRepairCooldown: 0
   BaseBuildingStats: {fileID: 11400000, guid: 11e22ad3bee3eaa4a9ce5b49a0a42cbb, type: 2}
   Player: {fileID: 945539459}
   Field: {fileID: 1811702705}

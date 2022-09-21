@@ -225,7 +225,7 @@ public class Overlay : MonoBehaviour
     {
         var infoBox = CreateBasicInfoBox(building.BaseBuildingStats.BuildingName);
         var sightRangeLabel = new Label($"Sight range: {building.SightRange}");
-        var repairLabel = new Label($"Repair cooldown: {building.CurrentRepairCooldown}");
+        var repairLabel = new Label($"Repair cooldown: {building.BaseRepairCooldown}");
         var statsBox = new VisualElement();
         var buttonsBox = new VisualElement();
         var statsBoxLeft = new VisualElement();

@@ -19,7 +19,6 @@ public class Building : MonoBehaviour
     // Current stats
     public int CurrentHealth;
     public int SightRange;
-    public int CurrentRepairCooldown;
 
     // References 
     public BaseBuildingStats BaseBuildingStats;

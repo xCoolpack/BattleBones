@@ -7,8 +7,8 @@ using UnityEngine.UIElements;
 public class Unit : MonoBehaviour
 {
     // Const 
-    private const double HealRatio = 0.2;
-    private const double DefenseRatio = 0.15;
+    public const double HealRatio = 0.2;
+    public const double DefenseRatio = 0.15;
 
     // Max Stats
     public int MaxHealth;
@@ -361,7 +361,7 @@ public class Unit : MonoBehaviour
 
         // Remove modifiers from starting field
         RemoveUnitModifiers(Field.Type.FieldUnitModifiers);
-        AddUnitModifiers(Field.Building.GetUnitModifiers());
+        RemoveUnitModifiers(Field.Building.GetUnitModifiers());
 
         // Add modifiers from target field
         AddUnitModifiers(targetField.Type.FieldUnitModifiers);
