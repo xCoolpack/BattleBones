@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Barricade : MonoBehaviour
 {
-    public UnitModifiers BuildingUnitModifier;
+    public readonly UnitModifiers BuildingUnitModifier = new (defense: 15);
 
     private Building _building;
 

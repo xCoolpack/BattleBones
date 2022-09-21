@@ -5,6 +5,11 @@ public class RangeAttack : Attack
         return currentMovementPoints > 0;
     }
 
+    public override bool IsProvokingCounterAttack()
+    {
+        return false;
+    }
+
     public override int GetCounterAttackModifier()
     {
         return -50;

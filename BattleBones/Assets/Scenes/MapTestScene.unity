@@ -3087,7 +3087,6 @@ MonoBehaviour:
   MaxHealth: 0
   CurrentHealth: 0
   SightRange: 0
-  CurrentRepairCooldown: 0
   BaseBuildingStats: {fileID: 11400000, guid: 11e22ad3bee3eaa4a9ce5b49a0a42cbb, type: 2}
   Player: {fileID: 945539459}
   Field: {fileID: 1811702705}

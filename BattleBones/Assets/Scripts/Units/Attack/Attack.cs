@@ -22,5 +22,7 @@ public abstract class Attack : MonoBehaviour
 
     public abstract bool HaveEnoughMovementPoints(int currentMovementPoints, Unit unit = null, Field field = null);
 
+    public abstract bool IsProvokingCounterAttack();
+
     public abstract int GetCounterAttackModifier();
 }

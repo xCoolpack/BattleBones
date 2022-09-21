@@ -63,6 +63,26 @@ public class DefensiveBuilding : MonoBehaviour
         return (fieldsWithinAttackRange, attackableFields);
     }
 
+    //public void Attack(Building building)
+    //{
+    //    UnitModifiers unitModifiers = building.Field.Unit.CurrentModifiers +
+    //                                  new UnitModifiers(damage: building.Field.Unit.AttackScript.GetCounterAttackModifier());
+    //    var (_, damage, _) = unitModifiers.CalculateModifiers(0, building.Field.Unit.CurrentDamage, 0);
+
+    //    building.TakeDamage(CurrentDamage);
+    //    _building.TakeDamage(damage);
+    //}
+
+    //public void Attack(Unit unit)
+    //{
+    //    UnitModifiers unitModifiers = unit.CurrentModifiers +
+    //                                  new UnitModifiers(damage: unit.AttackScript.GetCounterAttackModifier());
+    //    var (_, damage, _) = unitModifiers.CalculateModifiers(0, unit.CurrentDamage, 0);
+
+    //    unit.TakeDamage(CurrentDamage);
+    //    _building.TakeDamage(damage);
+    //}
+
     private void ToggleFieldsWithinAttackRange()
     {
         foreach (var field in FieldsWithinAttackRange)
