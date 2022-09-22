@@ -33,6 +33,7 @@ public class Unit : MonoBehaviour
     public GameMap GameMap;
 
     public UnitModifiers CurrentModifiers;
+    private UnitModifiers _currentUnitModifiersFormHealth;
 
     public List<Field> MoveableFields;
     private Dictionary<Field, int> _moveableFieldWithCost;
@@ -81,6 +82,8 @@ public class Unit : MonoBehaviour
         CurrentMovementPoints = MaxMovementPoints;
         AttackRange = BaseUnitStats.BaseAttackRange;
         SightRange = BaseUnitStats.BaseSightRange;
+
+        _currentUnitModifiersFormHealth = new UnitModifiers();
     }
 
     public void SetCurrentStats()
@@ -94,6 +97,14 @@ public class Unit : MonoBehaviour
     public void AddUnitModifiers(UnitModifiers unitModifiers)
     {
         CurrentModifiers += unitModifiers;
+        SetCurrentStats();
+    }
+
+    public void ChangeModifiersFromHealth()
+    {
+        CurrentModifiers -= _currentUnitModifiersFormHealth;
+        _currentUnitModifiersFormHealth = new UnitModifiers(damage: UnitCalculation.CalculateDamageModifier(CurrentHealth, MaxHealth));
+        CurrentModifiers += _currentUnitModifiersFormHealth;
         SetCurrentStats();
     }
 
@@ -396,7 +407,7 @@ public class Unit : MonoBehaviour
             Delete();
 
         // Recalculate DamageModifiers from missing health
-        AddUnitModifiers(new UnitModifiers(damage: UnitCalculation.CalculateDamageModifier(CurrentHealth, MaxHealth)));
+        ChangeModifiersFromHealth();
     }
 
     public void BeginHealing()
@@ -408,7 +419,7 @@ public class Unit : MonoBehaviour
     public void Heal()
     {
         CurrentHealth = Math.Min(CurrentHealth + (int)Math.Ceiling(HealRatio*MaxHealth), MaxHealth);
-        AddUnitModifiers(new UnitModifiers(damage: UnitCalculation.CalculateDamageModifier(CurrentHealth, MaxHealth)));
+        ChangeModifiersFromHealth();
     }
 
     public void BeginDefending()
