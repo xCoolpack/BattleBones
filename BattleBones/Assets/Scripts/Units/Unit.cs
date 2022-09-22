@@ -448,6 +448,7 @@ public class Unit : MonoBehaviour
 
     public void HandleOnClick()
     {
+        _overlay.ClearPicked();
         _overlay.PickedUnit = this;
 
         if (Player.IsPlayersTurn())
