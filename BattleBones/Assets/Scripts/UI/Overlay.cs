@@ -79,15 +79,22 @@ public class Overlay : MonoBehaviour
     /// </summary>
     public void RemoveInfoBox()
     {
-        PickedBuilding = null;
-        PickedField = null;
-        PickedUnit = null;
         RemoveRecruitmentBox();
         var infoBox = _lowerContainer.Q<VisualElement>("InfoBox");
         if (infoBox is null)
             return;
 
         _lowerContainer.Remove(infoBox);
+    }
+
+    /// <summary>
+    /// Clears saved picked objects
+    /// </summary>
+    public void ClearPicked()
+    {
+        PickedBuilding = null;
+        PickedField = null;
+        PickedUnit = null;
     }
 
     /// <summary>
@@ -126,11 +133,22 @@ public class Overlay : MonoBehaviour
     }
 
     /// <summary>
+    /// Creates info box for the given Field. PickedField has to be set before calling method
+    /// </summary>
+    public void FieldInfoBox()
+    {
+        if (PickedField is null) throw new ArgumentNullException("PickedField has to be set");
+        var infoBox = CreateBasicInfoBox(PickedField.Type.FieldName);
+        // TODO
+    }
+
+    /// <summary>
     /// Creates info box for the given unit
     /// </summary>
     /// <param name="showButtons"></param>
     public void UnitInfoBox(bool showButtons)
     {
+        if (PickedUnit is null) throw new ArgumentNullException("PickedUnit has to be set");
         var infoBox = CreateBasicInfoBox(PickedUnit.BaseUnitStats.UnitName);
         var statsBox = new VisualElement();
         var statsBoxLeft = new VisualElement();
@@ -224,7 +242,7 @@ public class Overlay : MonoBehaviour
     {
         var infoBox = CreateBasicInfoBox(PickedBuilding.BaseBuildingStats.BuildingName);
         var sightRangeLabel = new Label($"Sight range: {PickedBuilding.SightRange}");
-        var repairLabel = new Label($"Repair cooldown: {PickedBuilding.CurrentRepairCooldown}");
+        var repairLabel = new Label($"Repair cooldown: {PickedBuilding.BaseRepairCooldown}");
         var statsBox = new VisualElement();
         var buttonsBox = new VisualElement();
         var statsBoxLeft = new VisualElement();
@@ -300,6 +318,8 @@ public class Overlay : MonoBehaviour
     /// <param name="defensiveBuilding"></param>
     public void DefensiveBuildingInfoBox(DefensiveBuilding defensiveBuilding, bool showButtons)
     {
+        if (PickedBuilding is null) throw new ArgumentNullException("PickedBuilding has to be set");
+
         var (statsBox, buttonsBox) = CreateDefensiveBuildingInfoBox(defensiveBuilding);
 
         if (showButtons && PickedBuilding.BuildingState == BuildingState.Plundered)
@@ -325,6 +345,8 @@ public class Overlay : MonoBehaviour
     /// <param name="showButtons"></param>
     public void OutpostInfoBox(DefensiveBuilding defensiveBuilding, Outpost outpost, bool showButtons)
     {
+        if (PickedBuilding is null) throw new ArgumentNullException("PickedBuilding has to be set");
+
         var (_, buttonsBox) = CreateDefensiveBuildingInfoBox(defensiveBuilding);
 
         if (showButtons && PickedBuilding.BuildingState == BuildingState.Plundered)
@@ -373,6 +395,8 @@ public class Overlay : MonoBehaviour
 
     public void IncomeBuildingInfoBox(IncomeBuilding incomeBuilding, bool showButtons)
     {
+        if (PickedBuilding is null) throw new ArgumentNullException("PickedBuilding has to be set");
+
         var (statsBox, buttonsBox) = CreateBuildingInfoBox(PickedBuilding);
 
         if (incomeBuilding.ResourcesIncome.Gold > 0)

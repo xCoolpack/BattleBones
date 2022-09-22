@@ -65,7 +65,8 @@ public class Field : MonoBehaviour
 
     public void HandleOnClick()
     {
-        Debug.Log("Field click");
+        _overlay.PickedField = this;
+        _overlay.FieldInfoBox();
     }
 
     /// <summary>
