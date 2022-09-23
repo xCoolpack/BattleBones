@@ -138,8 +138,10 @@ public class Building : MonoBehaviour
         var defensiveBuilding = GetComponent<DefensiveBuilding>();
         var showButtons = Player.IsPlayersTurn();
         
-        if(defensiveBuilding is not null)
+        if (defensiveBuilding is not null)
         {
+            defensiveBuilding.SetAttackableFields();
+
             var outpost = GetComponent<Outpost>();
 
             if(outpost is not null)
@@ -154,7 +156,7 @@ public class Building : MonoBehaviour
 
         var incomeBuilding = GetComponent<IncomeBuilding>();
 
-        if(incomeBuilding is not null)
+        if (incomeBuilding is not null)
         {
             _overlay.IncomeBuildingInfoBox(incomeBuilding, showButtons);
             return;
@@ -162,7 +164,7 @@ public class Building : MonoBehaviour
 
         var barricade = GetComponent<Barricade>();
 
-        if(barricade is not null)
+        if (barricade is not null)
         {
             _overlay.BarricadeInfoBox(barricade, showButtons);
             return;

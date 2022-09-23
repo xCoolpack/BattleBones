@@ -40,19 +40,18 @@ public class DefensiveBuilding : MonoBehaviour
         AttackRange = _building.BaseBuildingStats.BaseAttackRange;
     }
 
-    #region AttackableFields
-    private void SetAttackableFields()
+    public void SetAttackableFields()
     {
         (FieldsWithinAttackRange, AttackableFields) = GetAttackableFields();
     }
 
-    public (List<Field> FieldsWithinAttackRange, List<Field> AttackableFields) GetAttackableFields()
+    private (List<Field> FieldsWithinAttackRange, List<Field> AttackableFields) GetAttackableFields()
     {
         List<Field> fieldsWithinAttackRange = new();
         List<Field> attackableFields = new();
         //Attack range is always smaller or equal to sight range
         fieldsWithinAttackRange.AddRange(GraphSearch.BreadthFirstSearchList(_building.Field, AttackRange,
-            (currentField, startingField) => _attack.CanAttack(_building.Field, currentField), _ => 1));
+            (currentField, startingField) => _attack.CanAttack(_building, _building.Field, currentField), _ => 1));
 
         foreach (Field field in fieldsWithinAttackRange)
         {
@@ -63,25 +62,15 @@ public class DefensiveBuilding : MonoBehaviour
         return (fieldsWithinAttackRange, attackableFields);
     }
 
-    //public void Attack(Building building)
-    //{
-    //    UnitModifiers unitModifiers = building.Field.Unit.CurrentModifiers +
-    //                                  new UnitModifiers(damage: building.Field.Unit.AttackScript.GetCounterAttackModifier());
-    //    var (_, damage, _) = unitModifiers.CalculateModifiers(0, building.Field.Unit.CurrentDamage, 0);
+    public void DealDamage(Building building)
+    {
+        building.TakeDamage(CurrentDamage);
+    }
 
-    //    building.TakeDamage(CurrentDamage);
-    //    _building.TakeDamage(damage);
-    //}
-
-    //public void Attack(Unit unit)
-    //{
-    //    UnitModifiers unitModifiers = unit.CurrentModifiers +
-    //                                  new UnitModifiers(damage: unit.AttackScript.GetCounterAttackModifier());
-    //    var (_, damage, _) = unitModifiers.CalculateModifiers(0, unit.CurrentDamage, 0);
-
-    //    unit.TakeDamage(CurrentDamage);
-    //    _building.TakeDamage(damage);
-    //}
+    public void DealDamage(Unit unit)
+    {
+        unit.TakeDamage(CurrentDamage);
+    }
 
     private void ToggleFieldsWithinAttackRange()
     {
@@ -100,5 +89,4 @@ public class DefensiveBuilding : MonoBehaviour
             mark.SetActive(!mark.activeSelf);
         }
     }
-    #endregion
 }

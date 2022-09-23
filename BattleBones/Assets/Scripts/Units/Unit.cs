@@ -134,7 +134,7 @@ public class Unit : MonoBehaviour
     private List<Field> GetVisibleFields() 
     {
         return GraphSearch.BreadthFirstSearchList(Field, SightRange, 
-            (currentField, startingField) => currentField.IsVisibleFor(startingField), _ => 1);
+            (currentField, startingField) => currentField.IsVisibleFor(this, startingField), _ => 1);
     }
     private void ToggleVisibleFields()
     {
@@ -181,12 +181,12 @@ public class Unit : MonoBehaviour
         List<Field> list = new();
         //Attack range is always smaller or equal to sight range
         set.UnionWith(GraphSearch.BreadthFirstSearchList(Field, AttackRange,
-                (currentField, startingField) => AttackScript.CanAttack(Field, currentField), _ => 1));
+                (currentField, startingField) => AttackScript.CanAttack(this, Field, currentField), _ => 1));
         foreach (var keyPair in _moveableFieldWithCost)
         {
             if (AttackScript.HaveEnoughMovementPoints(CurrentMovementPoints - keyPair.Value))
                 set.UnionWith(GraphSearch.BreadthFirstSearchList(keyPair.Key, AttackRange, 
-                    (currentField, startingField) => AttackScript.CanAttack(keyPair.Key, currentField), _ => 1));
+                    (currentField, startingField) => AttackScript.CanAttack(this, keyPair.Key, currentField), _ => 1));
         }
         foreach (Field field in set)
         {
@@ -222,9 +222,9 @@ public class Unit : MonoBehaviour
         // if unit can move to field
             Move(field);
         // if unit can attack building at field
-            Attack(field.Building);
+            DealDamage(field.Building);
         // if unit can attack unit at field
-            Attack(field.Unit);
+            DealDamage(field.Unit);
     }
 
     #region Move
@@ -374,24 +374,26 @@ public class Unit : MonoBehaviour
     }
     #endregion
 
-    public void Attack(Building building)
+    public void DealDamage(Building building)
     {
         UnitModifiers unitModifiers = building.Field.Unit.CurrentModifiers +
                                       new UnitModifiers(damage: building.Field.Unit.AttackScript.GetCounterAttackModifier());
         var (_, damage, _) = unitModifiers.CalculateModifiers(0, building.Field.Unit.CurrentDamage, 0);
 
         building.TakeDamage(CurrentDamage);
-        TakeDamage(damage);
+        if (AttackScript.IsProvokingCounterAttack())
+            TakeDamage(damage);
     }
 
-    public void Attack(Unit unit)
+    public void DealDamage(Unit unit)
     {
-        UnitModifiers unitModifiers = unit.CurrentModifiers +
-                                      new UnitModifiers(damage: unit.AttackScript.GetCounterAttackModifier());
-        var (_, damage, _) = unitModifiers.CalculateModifiers(0, unit.CurrentDamage, 0);
+            UnitModifiers unitModifiers = unit.CurrentModifiers +
+                                          new UnitModifiers(damage: unit.AttackScript.GetCounterAttackModifier());
+            var (_, damage, _) = unitModifiers.CalculateModifiers(0, unit.CurrentDamage, 0);
         
         unit.TakeDamage(CurrentDamage);
-        TakeDamage(damage);
+        if (AttackScript.IsProvokingCounterAttack())
+            TakeDamage(damage);
     }
 
     /// <summary>
@@ -454,6 +456,10 @@ public class Unit : MonoBehaviour
         if (Player.IsPlayersTurn())
         {
             _overlay.UnitInfoBox(true);
+
+            SetMoveableFields();
+            SetAttackableFields();
+            SetVisibleFields();
         }
         else
         {

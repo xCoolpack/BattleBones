@@ -2,10 +2,14 @@ using UnityEngine;
 
 public abstract class Attack : MonoBehaviour
 {
-    public bool CanAttack(Field startingField, Field targetField)
+    public bool CanAttack(Unit unit, Field startingField, Field targetField)
     {
-        //Debug.Log(targetField.Coordinates);
-        return targetField.IsVisibleFor(startingField) && !targetField.IsObstacle();
+        return targetField.IsVisibleFor(unit, startingField) && !targetField.IsObstacle();
+    }
+
+    public bool CanAttack(Building building, Field startingField, Field targetField)
+    {
+        return targetField.IsVisibleFor(building, startingField) && !targetField.IsObstacle();
     }
 
     public bool CanTarget(Unit unit, Field field)

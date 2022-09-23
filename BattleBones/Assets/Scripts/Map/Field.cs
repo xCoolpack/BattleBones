@@ -86,9 +86,9 @@ public class Field : MonoBehaviour
     {
         return Type.IsObstacle;
     }
-    public bool IsBlockingSight()
+    public bool IsBlockingSightFor(Unit unit)
     {
-        return Type.IsBlockingSight;
+        return unit.MovementScript.IsBlockingSight(this);
     }
 
     public bool HasUnit()
@@ -129,7 +129,7 @@ public class Field : MonoBehaviour
         return neighbors;
     }
 
-    public bool IsVisibleFor(Field field)
+    public bool IsVisibleFor(Unit unit, Field field)
     {
         int x = System.Math.Sign(ThreeAxisCoordinates.x - field.ThreeAxisCoordinates.x) * -1;
         int y = System.Math.Sign(ThreeAxisCoordinates.y - field.ThreeAxisCoordinates.y) * -1;
@@ -143,25 +143,63 @@ public class Field : MonoBehaviour
         else if (x + y == 0 && x + z == 0)
         {
             
-            return (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, 0))?.IsBlockingSight() ?? true)
-                   && (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, 0, z))?.IsBlockingSight() ?? true);
+            return (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, 0))?.IsBlockingSightFor(unit) ?? true)
+                   && (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, 0, z))?.IsBlockingSightFor(unit) ?? true);
         }
         else if (y + x == 0 && y + z == 0)
         {
-            return (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(0, y, z))?.IsBlockingSight() ?? true)
-                   && (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, 0))?.IsBlockingSight() ?? true);
+            return (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(0, y, z))?.IsBlockingSightFor(unit) ?? true)
+                   && (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, 0))?.IsBlockingSightFor(unit) ?? true);
         }
         else if (z + x == 0 && z + y == 0)
         {
             //Debug.Log(new Vector3Int(x, 0, z)+ " - " + new Vector3Int(0, y, z));
-            return (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, 0, z))?.IsBlockingSight() ?? true)
-                   && (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(0, y, z))?.IsBlockingSight() ?? true);
+            return (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, 0, z))?.IsBlockingSightFor(unit) ?? true)
+                   && (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(0, y, z))?.IsBlockingSightFor(unit) ?? true);
         }
         else if (x == 0 || y == 0 || z == 0)
         {
             //Debug.Log(new Vector3Int(x, y, z));
             Field next = GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, z));
-            return (!next?.IsBlockingSight() ?? true) || next == field;
+            return (!next?.IsBlockingSightFor(unit) ?? true) || next == field;
+        }
+
+        return false;
+    }
+
+    public bool IsVisibleFor(Building building, Field field)
+    {
+        int x = System.Math.Sign(ThreeAxisCoordinates.x - field.ThreeAxisCoordinates.x) * -1;
+        int y = System.Math.Sign(ThreeAxisCoordinates.y - field.ThreeAxisCoordinates.y) * -1;
+        int z = System.Math.Sign(ThreeAxisCoordinates.z - field.ThreeAxisCoordinates.z) * -1;
+
+        //Debug.Log($"x:{x}, y:{y}, z:{z}");
+        if (x == 0 && y == 0 && z == 0)
+        {
+            return true;
+        }
+        else if (x + y == 0 && x + z == 0)
+        {
+
+            return (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, 0))?.Type.IsBlockingSight ?? true)
+                   && (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, 0, z))?.Type.IsBlockingSight ?? true);
+        }
+        else if (y + x == 0 && y + z == 0)
+        {
+            return (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(0, y, z))?.Type.IsBlockingSight ?? true)
+                   && (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, 0))?.Type.IsBlockingSight ?? true);
+        }
+        else if (z + x == 0 && z + y == 0)
+        {
+            //Debug.Log(new Vector3Int(x, 0, z)+ " - " + new Vector3Int(0, y, z));
+            return (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, 0, z))?.Type.IsBlockingSight ?? true)
+                   && (!GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(0, y, z))?.Type.IsBlockingSight ?? true);
+        }
+        else if (x == 0 || y == 0 || z == 0)
+        {
+            //Debug.Log(new Vector3Int(x, y, z));
+            Field next = GameMap.GetFieldAt(ThreeAxisCoordinates + new Vector3Int(x, y, z));
+            return (!next?.Type.IsBlockingSight ?? true) || next == field;
         }
 
         return false;

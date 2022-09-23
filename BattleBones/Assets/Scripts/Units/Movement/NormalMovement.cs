@@ -8,4 +8,9 @@ public class NormalMovement : Movement
     {
         return field.GetMovementPointsCost();
     }
+
+    public override bool IsBlockingSight(Field field)
+    {
+        return field.Type.IsBlockingSight;
+    }
 }
