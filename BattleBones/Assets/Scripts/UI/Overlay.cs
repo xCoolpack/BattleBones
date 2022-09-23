@@ -69,7 +69,12 @@ public class Overlay : MonoBehaviour
         uiDocument.rootVisualElement.Bind(resourcesAmount);
 
         // Registering callbacks
-        _nextTurnButton.RegisterCallback<ClickEvent>(_ => TurnHandler.NextTurn());
+        _nextTurnButton.RegisterCallback<ClickEvent>(_ =>
+        {
+            TurnHandler.NextTurn();
+            RemoveInfoBox();
+            ClearPicked();
+        });
 
         RemoveInfoBox();
     }
@@ -128,6 +133,18 @@ public class Overlay : MonoBehaviour
         infoBox.AddToClassList("InfoBox");
         infoBox.name = "InfoBox";
         _lowerContainer.Add(infoBox);
+
+        var closeButton = new Button(() =>
+        {
+            RemoveInfoBox();
+            ClearPicked();
+        })
+        {
+            text = "x"
+        };
+
+        closeButton.AddToClassList("InfoBoxCloseButton");
+        titleBox.Add(closeButton);
 
         return infoBox;
     }
@@ -199,7 +216,7 @@ public class Overlay : MonoBehaviour
 
         var hpBar = new HpBar(PickedUnit.CurrentHealth, PickedUnit.MaxHealth);
 
-        
+
         hpBar.AddToClassList("InnerInfoBox");
 
         statsBoxLeft.Add(damageLabel);
@@ -277,7 +294,7 @@ public class Overlay : MonoBehaviour
 
         statsBoxLeft.AddToClassList("InnerStatsInfoBox");
         statsBoxRight.AddToClassList("InnerStatsInfoBox");
-        
+
         statsBox.Add(statsBoxLeft);
         statsBox.Add(statsBoxRight);
         infoBox.Add(statsBox);
@@ -393,33 +410,58 @@ public class Overlay : MonoBehaviour
         _lowerContainer.Add(recruitmentBox);
     }
 
+    /// <summary>
+    /// Creates an info box for the income building
+    /// </summary>
+    /// <param name="incomeBuilding"></param>
+    /// <param name="showButtons"></param>
     public void IncomeBuildingInfoBox(IncomeBuilding incomeBuilding, bool showButtons)
     {
         if (PickedBuilding is null) throw new ArgumentNullException("PickedBuilding has to be set");
 
         var (statsBox, buttonsBox) = CreateBuildingInfoBox(PickedBuilding);
+        VisualElement statsBoxLeft = ((List<VisualElement>)statsBox.Children())[0];
+        VisualElement statsBoxRight = ((List<VisualElement>)statsBox.Children())[1];
+
+        List<Label> labels = new();
 
         if (incomeBuilding.ResourcesIncome.Gold > 0)
-            statsBox.Add(new Label($"Gold income: {incomeBuilding.ResourcesIncome.Gold}"));
+            labels.Add(new Label($"Gold income: {incomeBuilding.ResourcesIncome.Gold}"));
 
         if (incomeBuilding.ResourcesIncome.Wood > 0)
-            statsBox.Add(new Label($"Wood income: {incomeBuilding.ResourcesIncome.Wood}"));
+            labels.Add(new Label($"Wood income: {incomeBuilding.ResourcesIncome.Wood}"));
 
         if (incomeBuilding.ResourcesIncome.Stone > 0)
-            statsBox.Add(new Label($"Stone income: {incomeBuilding.ResourcesIncome.Stone}"));
+            labels.Add(new Label($"Stone income: {incomeBuilding.ResourcesIncome.Stone}"));
 
         if (incomeBuilding.ResourcesIncome.Doggium > 0)
-            statsBox.Add(new Label($"Doggium income: {incomeBuilding.ResourcesIncome.Doggium}"));
+            labels.Add(new Label($"Doggium income: {incomeBuilding.ResourcesIncome.Doggium}"));
 
         if (incomeBuilding.ResourcesIncome.Bone > 0)
-            statsBox.Add(new Label($"Bone income: {incomeBuilding.ResourcesIncome.Bone}"));
+            labels.Add(new Label($"Bone income: {incomeBuilding.ResourcesIncome.Bone}"));
+
+        for (int i = 0; i < labels.Count; i++)
+        {
+            var label = labels[i];
+            label.AddToClassList("StatsLabel");
+
+            if (i == 0)
+            {
+                statsBoxLeft.Add(label);
+            }
+            else
+            {
+                statsBoxRight.Add(label);
+            }
+        }
+
 
         if (showButtons && PickedBuilding.BuildingState == BuildingState.Plundered)
         {
             var repairButton = new Button(() =>
             {
                 PickedBuilding.BeginRepair();
-                IncomeBuildingInfoBox(incomeBuilding, PickedBuilding);
+                IncomeBuildingInfoBox(incomeBuilding, showButtons);
             })
             {
                 text = "Repair"
@@ -427,5 +469,49 @@ public class Overlay : MonoBehaviour
             repairButton.AddToClassList("InfoBoxButton");
             buttonsBox.Add(repairButton);
         }
+    }
+
+    /// <summary>
+    /// Creates an info box for the given housing
+    /// </summary>
+    /// <param name="housing"></param>
+    /// <param name="showButtons"></param>
+    public void HousingInfoBox(Housing housing, bool showButtons)
+    {
+        if (PickedBuilding is null) throw new ArgumentNullException("PickedBuilding has to be set");
+
+        var (statsBox, buttonsBox) = CreateBuildingInfoBox(PickedBuilding);
+
+        if (showButtons && PickedBuilding.BuildingState == BuildingState.Plundered)
+        {
+            var repairButton = new Button(() =>
+            {
+                PickedBuilding.BeginRepair();
+                HousingInfoBox(housing, PickedBuilding);
+            })
+            {
+                text = "Repair"
+            };
+            repairButton.AddToClassList("InfoBoxButton");
+            buttonsBox.Add(repairButton);
+        }
+
+        VisualElement statsBoxLeft = ((List<VisualElement>)statsBox.Children())[0];
+        VisualElement statsBoxRight = ((List<VisualElement>)statsBox.Children())[1];
+
+        var capLabel = new Label($"Unit cap: {housing.UnitCap}");
+        capLabel.AddToClassList("StatsLabel");
+        statsBoxRight.Add(capLabel);
+    }
+
+    /// <summary>
+    /// Creates an info box for the giveb Barricade
+    /// </summary>
+    /// <param name="barricade"></param>
+    /// <param name="showButtons"></param>
+    public void BarricadeInfoBox(Barricade barricade, bool showButtons)
+    {
+        if (PickedBuilding is null) throw new ArgumentNullException("PickedBuilding has to be set");
+        var (statsBox, buttonsBox) = CreateBuildingInfoBox(PickedBuilding);
     }
 }

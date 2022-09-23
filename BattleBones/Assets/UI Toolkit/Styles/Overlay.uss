@@ -9,6 +9,17 @@
     margin-bottom: 0;
 }
 
+.unity-button {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 .OverlayTurnText {
     color: rgb(255, 255, 255);
     font-size: 25px;
@@ -113,11 +124,23 @@
 
 .InnerStatsInfoBox {
     width: 50%;
+    height: 82px;
 }
 
 .TitleInfoBox {
     min-height: 25px;
     max-height: 25px;
+}
+
+.InfoBoxCloseButton {
+    height: 24px;
+    width: 24px;
+    position: absolute;
+    right: 0px;
+    background-color: rgb(173, 97, 27);
+    font-size: 14px;
+    align-items: center;
+    justify-content: center;
 }
 
 .ButtonsInfoBox {

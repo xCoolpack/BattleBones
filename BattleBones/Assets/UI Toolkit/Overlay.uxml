@@ -42,8 +42,6 @@
                 <ui:Label text="Turn" display-tooltip-when-elided="true" name="TurnTextLabel" class="OverlayText" style="position: relative; right: auto; top: auto; margin-right: 5px;" />
                 <ui:Label text="0" display-tooltip-when-elided="true" name="TurnCounterLabel" class="OverlayText" style="position: relative; right: auto;" />
             </ui:VisualElement>
-            <ui:Button text="Remove info" display-tooltip-when-elided="true" name="Button1" style="height: 49px; width: 131px; position: absolute; left: 5px; top: 100px;" />
-            <ui:Button text="Display info" display-tooltip-when-elided="true" name="Button2" style="height: 49px; width: 131px; position: absolute; left: 5px; top: 164px;" />
         </AspectRatioPanel>
     </ui:VisualElement>
 </ui:UXML>

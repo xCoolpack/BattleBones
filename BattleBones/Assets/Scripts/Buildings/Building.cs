@@ -25,10 +25,16 @@ public class Building : MonoBehaviour
     public Player Player;
     public Field Field;
     public BuildingState BuildingState;
+    private Overlay _overlay;
 
     private void Awake()
     {
         SetStats();
+    }
+
+    private void Start()
+    {
+        _overlay = GameObject.Find("Overlay").GetComponent<Overlay>();
     }
 
     /// <summary>
@@ -127,6 +133,41 @@ public class Building : MonoBehaviour
 
     public void HandleOnClick()
     {
-        Debug.Log("Building click");
+        _overlay.ClearPicked();
+        _overlay.PickedBuilding = this;
+        var defensiveBuilding = GetComponent<DefensiveBuilding>();
+        var showButtons = Player.IsPlayersTurn();
+        
+        if(defensiveBuilding is not null)
+        {
+            var outpost = GetComponent<Outpost>();
+
+            if(outpost is not null)
+            {
+                _overlay.OutpostInfoBox(defensiveBuilding, outpost, showButtons);
+                return;
+            }
+
+            _overlay.DefensiveBuildingInfoBox(defensiveBuilding, showButtons);
+            return;
+        }
+
+        var incomeBuilding = GetComponent<IncomeBuilding>();
+
+        if(incomeBuilding is not null)
+        {
+            _overlay.IncomeBuildingInfoBox(incomeBuilding, showButtons);
+            return;
+        }
+
+        var barricade = GetComponent<Barricade>();
+
+        if(barricade is not null)
+        {
+            _overlay.BarricadeInfoBox(barricade, showButtons);
+            return;
+        }
+
+        throw new System.Exception("Unknown building was clicked"); 
     }
 }
