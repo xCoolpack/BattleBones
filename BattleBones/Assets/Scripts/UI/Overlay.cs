@@ -93,10 +93,15 @@ public class Overlay : MonoBehaviour
     }
 
     /// <summary>
-    /// Clears saved picked objects
+    /// Clears picked objects and marked fields
     /// </summary>
     public void ClearPicked()
     {
+        if(PickedUnit is not null)
+        {
+            PickedUnit.ToggleOffMoveableFields();
+            PickedUnit.ToggleOffAttackableFields();
+        }
         PickedBuilding = null;
         PickedField = null;
         PickedUnit = null;

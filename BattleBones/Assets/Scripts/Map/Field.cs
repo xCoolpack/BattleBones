@@ -21,7 +21,7 @@ public class Field : MonoBehaviour
     public Unit Unit;
     public GameMap GameMap;
     private Overlay _overlay;
-
+    public Mark Mark_;
 
     private void Awake()
     {
@@ -35,6 +35,19 @@ public class Field : MonoBehaviour
         _overlay = GameObject.Find("Overlay").GetComponent<Overlay>();
     }
 
+    private void OnMouseOver()
+    {
+        // Right click
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (Mark_ == Mark.Movable || Mark_ == Mark.Attackable)
+            {
+                _overlay.PickedUnit?.MoveOrAttack(this);
+            }
+        }
+    }
+
+    // Left click
     private void OnMouseDown()
     {
         if (Unit != null && Building != null)
@@ -63,6 +76,9 @@ public class Field : MonoBehaviour
         HandleOnClick();
     }
 
+    /// <summary>
+    /// Handles on click for this field
+    /// </summary>
     public void HandleOnClick()
     {
         _overlay.ClearPicked();
@@ -229,6 +245,12 @@ public class Field : MonoBehaviour
     public override string ToString()
     {
         return $"{Type.FieldName} ({Coordinates.x}, {Coordinates.y})";
+    }
+    public enum Mark
+    {
+        Unmarked,
+        Attackable,
+        Movable
     }
 }
 

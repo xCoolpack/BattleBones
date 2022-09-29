@@ -159,12 +159,23 @@ public class Unit : MonoBehaviour
             (currentField, startingField) => MovementScript.CanMove(this, currentField), (field) => MovementScript.GetMovementPointsCostForUnit(this, field));
     }
 
-    private void ToggleMoveableFields() 
+    public void ToggleOnMoveableFields() 
     {
         foreach (var field in MoveableFields)
         {
-            var mark = field.transform.Find("Mark").gameObject;
-            mark.SetActive(!mark.activeSelf);
+            field.Mark_ = Field.Mark.Movable;
+            var mark = field.transform.Find("MoveMark").gameObject;
+            mark.SetActive(true);
+        }
+    }
+
+    public void ToggleOffMoveableFields()
+    {
+        foreach (var field in MoveableFields)
+        {
+            field.Mark_ = Field.Mark.Unmarked;
+            var mark = field.transform.Find("MoveMark").gameObject;
+            mark.SetActive(false);
         }
     }
     #endregion
@@ -207,17 +218,28 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private void ToggleAttackableFields()
+    public void ToggleOnAttackableFields()
     {
         foreach (var field in AttackableFields)
         {
-            var mark = field.transform.Find("Mark").gameObject;
-            mark.SetActive(!mark.activeSelf);
+            field.Mark_ = Field.Mark.Attackable;
+            var mark = field.transform.Find("AttackMark").gameObject;
+            mark.SetActive(true);
         }
     }
-    #endregion
 
-    public void MoveOrAttack(Field field)
+    public void ToggleOffAttackableFields()
+    {
+        foreach (var field in AttackableFields)
+        {
+            field.Mark_ = Field.Mark.Unmarked;
+            var mark = field.transform.Find("AttackMark").gameObject;
+            mark.SetActive(false);
+        }
+    }
+        #endregion
+
+        public void MoveOrAttack(Field field)
     {
         // if unit can move to field
             Move(field);
@@ -460,6 +482,8 @@ public class Unit : MonoBehaviour
             SetMoveableFields();
             SetAttackableFields();
             SetVisibleFields();
+            ToggleOnMoveableFields();
+            ToggleOnAttackableFields();
         }
         else
         {
