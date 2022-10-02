@@ -40,9 +40,16 @@ public class Field : MonoBehaviour
         // Right click
         if (Input.GetMouseButtonDown(1))
         {
-            if (Mark_ == Mark.Movable || Mark_ == Mark.Attackable)
+            if (Mark_ == Mark.Movable)
             {
-                _overlay.PickedUnit?.MoveOrAttack(this);
+                _overlay.PickedUnit.Move(this);
+                _overlay.UnitInfoBox(true);
+                _overlay.PickedUnit.ToggleOffAllMarks();
+                _overlay.PickedUnit.UpdateAndDisplayMarks();
+            }
+            else if (Mark_ == Mark.Attackable)
+            {
+                //todo
             }
         }
     }

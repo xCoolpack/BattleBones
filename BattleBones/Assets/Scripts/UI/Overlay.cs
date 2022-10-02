@@ -99,8 +99,7 @@ public class Overlay : MonoBehaviour
     {
         if(PickedUnit is not null)
         {
-            PickedUnit.ToggleOffMoveableFields();
-            PickedUnit.ToggleOffAttackableFields();
+            PickedUnit.ToggleOffAllMarks();
         }
         PickedBuilding = null;
         PickedField = null;

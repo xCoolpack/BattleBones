@@ -365,11 +365,11 @@ public class Unit : MonoBehaviour
 
         // Remove modifiers from starting field
         RemoveUnitModifiers(Field.Type.FieldUnitModifiers);
-        RemoveUnitModifiers(Field.Building.GetUnitModifiers());
+        //RemoveUnitModifiers(Field.Building.GetUnitModifiers());
 
         // Add modifiers from target field
         AddUnitModifiers(targetField.Type.FieldUnitModifiers);
-        AddUnitModifiers(targetField.Building.GetUnitModifiers());
+        //AddUnitModifiers(targetField.Building.GetUnitModifiers());
 
 
         // Move references between fields
@@ -478,19 +478,33 @@ public class Unit : MonoBehaviour
         if (Player.IsPlayersTurn())
         {
             _overlay.UnitInfoBox(true);
-
-            SetMoveableFields();
-            SetAttackableFields();
-            SetVisibleFields();
-            ToggleOnMoveableFields();
-            ToggleOnAttackableFields();
+            UpdateAndDisplayMarks();
         }
         else
         {
             _overlay.UnitInfoBox(false);
         }
+    }
 
+    /// <summary>
+    /// Updates an displays all marks on map
+    /// </summary>
+    public void UpdateAndDisplayMarks()
+    {
+        SetMoveableFields();
+        SetAttackableFields();
+        SetVisibleFields();
+        ToggleOnMoveableFields();
+        ToggleOnAttackableFields();
+    }
 
+    /// <summary>
+    /// Clears map from all unit marks
+    /// </summary>
+    public void ToggleOffAllMarks()
+    {
+        ToggleOffMoveableFields();
+        ToggleOffAttackableFields();
     }
 }
 
