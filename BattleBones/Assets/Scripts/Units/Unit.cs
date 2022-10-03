@@ -159,12 +159,23 @@ public class Unit : MonoBehaviour
             (currentField, startingField) => MovementScript.CanMove(this, currentField), (field) => MovementScript.GetMovementPointsCostForUnit(this, field));
     }
 
-    private void ToggleMoveableFields() 
+    public void ToggleOnMoveableFields() 
     {
         foreach (var field in MoveableFields)
         {
-            var mark = field.transform.Find("Mark").gameObject;
-            mark.SetActive(!mark.activeSelf);
+            field.Mark_ = Field.Mark.Movable;
+            var mark = field.transform.Find("MoveMark").gameObject;
+            mark.SetActive(true);
+        }
+    }
+
+    public void ToggleOffMoveableFields()
+    {
+        foreach (var field in MoveableFields)
+        {
+            field.Mark_ = Field.Mark.Unmarked;
+            var mark = field.transform.Find("MoveMark").gameObject;
+            mark.SetActive(false);
         }
     }
     #endregion
@@ -207,12 +218,13 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private void ToggleAttackableFields()
+    public void ToggleOnAttackableFields()
     {
         foreach (var field in AttackableFields)
         {
-            var mark = field.transform.Find("Mark").gameObject;
-            mark.SetActive(!mark.activeSelf);
+            field.Mark_ = Field.Mark.Attackable;
+            var mark = field.transform.Find("AttackMark").gameObject;
+            mark.SetActive(true);
         }
     }
     #endregion
@@ -446,17 +458,33 @@ public class Unit : MonoBehaviour
         if (Player.IsPlayersTurn())
         {
             _overlay.UnitInfoBox(true);
-
-            SetMoveableFields();
-            SetAttackableFields();
-            SetVisibleFields();
+            UpdateAndDisplayMarks();
         }
         else
         {
             _overlay.UnitInfoBox(false);
         }
+    }
 
+    /// <summary>
+    /// Updates an displays all marks on map
+    /// </summary>
+    public void UpdateAndDisplayMarks()
+    {
+        SetMoveableFields();
+        SetAttackableFields();
+        SetVisibleFields();
+        ToggleOnMoveableFields();
+        ToggleOnAttackableFields();
+    }
 
+    /// <summary>
+    /// Clears map from all unit marks
+    /// </summary>
+    public void ToggleOffAllMarks()
+    {
+        ToggleOffMoveableFields();
+        ToggleOffAttackableFields();
     }
 }
 
