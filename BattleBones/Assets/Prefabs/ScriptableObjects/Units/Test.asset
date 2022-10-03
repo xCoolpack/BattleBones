@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   UnitName: Test unit
-  BaseHealth: 0
-  BaseDamage: 0
-  BaseDefense: 5
-  BaseMovementPoints: 1
+  BaseHealth: 100
+  BaseDamage: 35
+  BaseDefense: 20
+  BaseMovementPoints: 2
   BaseAttackRange: 2
   BaseSightRange: 3
   BaseCost:

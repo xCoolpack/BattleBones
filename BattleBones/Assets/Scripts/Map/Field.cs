@@ -110,6 +110,11 @@ public class Field : MonoBehaviour
         return Type.AllowableBuildings;
     }
 
+    public UnitModifiers GetUnitModifiersFromBuilding()
+    {
+        return Building?.GetUnitModifiers() ?? new UnitModifiers();
+    }
+
     /// <summary>
     /// Methods returning list of neighbors of field
     /// </summary>

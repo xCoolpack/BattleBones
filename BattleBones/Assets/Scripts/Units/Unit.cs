@@ -48,7 +48,7 @@ public class Unit : MonoBehaviour
     private void Awake()
     {
         SetStartingStats();
-
+        SetCurrentStats();
         // Temp
         MovementScript = GetComponent<Movement>(); // if null then it's hero
         AttackScript = GetComponent<Attack>(); // if null then it's hero
@@ -217,16 +217,6 @@ public class Unit : MonoBehaviour
     }
     #endregion
 
-    public void MoveOrAttack(Field field)
-    {
-        // if unit can move to field
-            Move(field);
-        // if unit can attack building at field
-            DealDamage(field.Building);
-        // if unit can attack unit at field
-            DealDamage(field.Unit);
-    }
-
     #region Move
     /// <summary>
     /// Methods calculating distance beetwen Fields coordinates
@@ -343,11 +333,11 @@ public class Unit : MonoBehaviour
 
         // Remove modifiers from starting field
         RemoveUnitModifiers(Field.Type.FieldUnitModifiers);
-        RemoveUnitModifiers(Field.Building.GetUnitModifiers());
+        RemoveUnitModifiers(Field.GetUnitModifiersFromBuilding());
 
         // Add modifiers from target field
         AddUnitModifiers(targetField.Type.FieldUnitModifiers);
-        AddUnitModifiers(targetField.Building.GetUnitModifiers());
+        AddUnitModifiers(targetField.GetUnitModifiersFromBuilding());
 
 
         // Move references between fields
