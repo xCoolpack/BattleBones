@@ -47,8 +47,8 @@ public class Unit : MonoBehaviour
 
     private void Awake()
     {
-        SetStartingStats();
         SetCurrentStats();
+        SetStartingStats();
         // Temp
         MovementScript = GetComponent<Movement>(); // if null then it's hero
         AttackScript = GetComponent<Attack>(); // if null then it's hero
@@ -73,7 +73,7 @@ public class Unit : MonoBehaviour
     /// <summary>
     /// Methods setting unit stats from BaseUnitStats object
     /// </summary>
-    private void SetStartingStats()
+    public void SetStartingStats()
     {
         CurrentHealth = MaxHealth;
         CurrentDamage = MaxDamage;
@@ -225,6 +225,16 @@ public class Unit : MonoBehaviour
             field.Mark_ = Field.Mark.Attackable;
             var mark = field.transform.Find("AttackMark").gameObject;
             mark.SetActive(true);
+        }
+    }
+
+    public void ToggleOffAttackableFields()
+    {
+        foreach (var field in AttackableFields)
+        {
+            field.Mark_ = Field.Mark.Unmarked;
+            var mark = field.transform.Find("AttackMark").gameObject;
+            mark.SetActive(false);
         }
     }
     #endregion
