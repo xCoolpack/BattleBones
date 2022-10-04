@@ -244,9 +244,9 @@ public class Unit : MonoBehaviour
         // if unit can move to field
             Move(field);
         // if unit can attack building at field
-            DealDamage(field.Building);
+           // DealDamage(field.Building);
         // if unit can attack unit at field
-            DealDamage(field.Unit);
+           // DealDamage(field.Unit);
     }
 
     #region Move
