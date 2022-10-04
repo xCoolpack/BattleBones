@@ -1,8 +1,8 @@
 public class MeleeAttack : Attack
 {
-    public override bool HaveEnoughMovementPoints(int currentMovementPoints, Unit unit = null, Field field = null)
+    public override bool HaveEnoughMovementPoints(int currentMovementPoints, Unit unit, Field field)
     {
-        return currentMovementPoints > unit.MovementScript.GetMovementPointsCostForUnit(unit, field);
+        return currentMovementPoints >= unit.MovementScript.GetMovementPointsCostForUnit(unit, field);
     }
 
     public override bool IsProvokingCounterAttack()

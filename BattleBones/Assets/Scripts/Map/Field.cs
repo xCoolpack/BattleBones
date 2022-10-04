@@ -50,6 +50,7 @@ public class Field : MonoBehaviour
             else if (Mark_ == Mark.Attackable)
             {
                 //todo
+                _overlay.PickedUnit.Attack(this);
             }
         }
     }

@@ -1,6 +1,6 @@
 public class RangeAttack : Attack
 {
-    public override bool HaveEnoughMovementPoints(int currentMovementPoints, Unit unit = null, Field field = null)
+    public override bool HaveEnoughMovementPoints(int currentMovementPoints, Unit unit, Field field)
     {
         return currentMovementPoints > 0;
     }

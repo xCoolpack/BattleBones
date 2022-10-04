@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Unit : MonoBehaviour
 {
@@ -42,8 +42,6 @@ public class Unit : MonoBehaviour
     public List<Field> AttackableFields;
     private Overlay _overlay;
 
-    // Heuristic for A*
-    public delegate int Heuristic(Field startingField, Field targetField);
 
     private void Awake()
     {
@@ -140,7 +138,7 @@ public class Unit : MonoBehaviour
     {
         foreach (var field in GetVisibleFields())
         {
-            var mark = field.transform.Find("Mark").gameObject;
+            var mark = field.transform.Find("MoveMark").gameObject;
             mark.SetActive(!mark.activeSelf);
         }
     }
@@ -156,7 +154,8 @@ public class Unit : MonoBehaviour
     private Dictionary<Field, int> GetMoveableFields() 
     {
        return GraphSearch.BreadthFirstSearchDict(Field, CurrentMovementPoints,
-            (currentField, startingField) => MovementScript.CanMove(this, currentField), (field) => MovementScript.GetMovementPointsCostForUnit(this, field));
+            (currentField, startingField) => MovementScript.CanMove(this, currentField), 
+            (field) => MovementScript.GetMovementPointsCostForUnit(this, field));
     }
 
     public void ToggleOnMoveableFields() 
@@ -190,14 +189,25 @@ public class Unit : MonoBehaviour
     {
         HashSet<Field> set = new();
         List<Field> list = new();
+        List<Field> temp = new();
         //Attack range is always smaller or equal to sight range
-        set.UnionWith(GraphSearch.BreadthFirstSearchList(Field, AttackRange,
-                (currentField, startingField) => AttackScript.CanAttack(this, Field, currentField), _ => 1));
+        
+        temp = GraphSearch.BreadthFirstSearchList(Field, AttackRange, 
+            (currentField, startingField) => AttackScript.CanAttack(this, Field, currentField), _ => 1);
+        foreach (var field in temp)
+        {
+            if (AttackScript.HaveEnoughMovementPoints(CurrentMovementPoints, this, field))
+                set.Add(field);
+        }
         foreach (var keyPair in _moveableFieldWithCost)
         {
-            if (AttackScript.HaveEnoughMovementPoints(CurrentMovementPoints - keyPair.Value))
-                set.UnionWith(GraphSearch.BreadthFirstSearchList(keyPair.Key, AttackRange, 
-                    (currentField, startingField) => AttackScript.CanAttack(this, keyPair.Key, currentField), _ => 1));
+            temp = GraphSearch.BreadthFirstSearchList(keyPair.Key, AttackRange, 
+                (currentField, startingField) => AttackScript.CanAttack(this, keyPair.Key, currentField), _ => 1);
+            foreach (var field in temp)
+            {
+                if (AttackScript.HaveEnoughMovementPoints(CurrentMovementPoints - keyPair.Value, this, field))
+                    set.Add(field);
+            }
         }
         foreach (Field field in set)
         {
@@ -213,7 +223,7 @@ public class Unit : MonoBehaviour
     {
         foreach (var field in FieldsWithinAttackRange)
         {
-            var mark = field.transform.Find("Mark").gameObject;
+            var mark = field.transform.Find("AttackMark").gameObject;
             mark.SetActive(!mark.activeSelf);
         }
     }
@@ -241,61 +251,17 @@ public class Unit : MonoBehaviour
 
     #region Move
     /// <summary>
-    /// Methods calculating distance beetwen Fields coordinates
+    /// Methods calculating distance between Fields coordinates
     /// </summary>
     /// <param name="startingField"></param>
     /// <param name="targetField"></param>
     /// <returns></returns>
     public int GetDistance(Field startingField, Field targetField)
     {
-        // TO DO
-        return 0;
+        return Math.Abs(startingField.ThreeAxisCoordinates.x - targetField.ThreeAxisCoordinates.x) +
+               Math.Abs(startingField.ThreeAxisCoordinates.y - targetField.ThreeAxisCoordinates.y) +
+               Math.Abs(startingField.ThreeAxisCoordinates.z - targetField.ThreeAxisCoordinates.z);
     } 
-
-    /// <summary>
-    /// A* graph search for fields
-    /// </summary>
-    /// <param name="startingField"></param>
-    /// <param name="targetField"></param>
-    /// <param name="heuristic"></param>
-    /// <returns></returns>
-    public Dictionary<Field, Field> AStarSearch(Field startingField, Field targetField, Heuristic heuristic)
-    {
-        Dictionary<Field, Field> visitedFields = new();
-        IntPriorityQueue<Field> fieldsToVisit = new();
-        Dictionary<Field, int> costOfFields = new();
-        int sumCost = 0;
-
-        fieldsToVisit.Enqueue(startingField, sumCost);
-        costOfFields[startingField] = sumCost;
-        visitedFields[startingField] = null;
-
-        while (fieldsToVisit.Count > 0)
-        {
-            (Field currentField, _) = fieldsToVisit.Dequeue();
-
-            if (targetField == currentField)
-                break;
-
-            foreach (var field in currentField.GetNeighbors())
-            {
-                if (MovementScript.CanMove(this, field))
-                {
-                    sumCost = costOfFields[currentField] + MovementScript.GetMovementPointsCostForUnit(this, field);
-
-                    if (!visitedFields.ContainsKey(field) || costOfFields[field] > sumCost)
-                    {
-                        costOfFields[field] = sumCost;
-                        int priority = sumCost + heuristic(field, targetField);
-                        fieldsToVisit.Enqueue(field, priority);
-                        visitedFields[field] = currentField;
-                    }
-                }
-            }
-        }
-
-        return visitedFields;
-    }
 
     /// <summary>
     /// Generating path to target field
@@ -322,7 +288,7 @@ public class Unit : MonoBehaviour
 
 
     /// <summary>
-    /// Move method for unit 
+    /// Move method for unit - responsible for defining A* search
     /// </summary>
     /// <param name="targetField"></param>
     /// <returns></returns>
@@ -330,7 +296,21 @@ public class Unit : MonoBehaviour
     {
         if (targetField == Field)
             return false;
-        Dictionary<Field, Field> graph = AStarSearch(Field, targetField, GetDistance);
+        (Dictionary<Field, Field> graph, _) = GraphSearch.AStarSearch(Field, targetField, 
+            (currentField, startingField) => MovementScript.CanMove(this, currentField), 
+            (field) => MovementScript.GetMovementPointsCostForUnit(this, field), GetDistance, targetField => false);
+        
+        MoveUnit(graph, targetField);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Helper move method for unit - responsible for counting accessible path
+    /// </summary>
+    /// <param name="targetField"></param>
+    private void MoveUnit(Dictionary<Field, Field> graph, Field targetField)
+    {
         List<Field> movementPath = GeneratePathTo(graph, Field, targetField);
         var accessibleMovementPath = new List<Field>();
         int movementPointCost = 0;
@@ -348,10 +328,17 @@ public class Unit : MonoBehaviour
             movementPointCost = nextMovementPointCost;
         }
 
-        //foreach (var field in accessibleMovementPath)
-        //{
-        //    Debug.Log(field.Coordinates);
-        //}
+        MoveReferences(targetField, movementPointCost, accessibleMovementPath);
+    }
+
+    /// <summary>
+    /// Method responsible for moving references and graphical model of unit
+    /// </summary>
+    /// <param name="targetField"></param>
+    /// <param name="movementPointCost"></param>
+    /// <param name="accessibleMovementPath"></param>
+    private void MoveReferences(Field targetField, int movementPointCost, List<Field> accessibleMovementPath)
+    {
 
         // Remove modifiers from starting field
         RemoveUnitModifiers(Field.Type.FieldUnitModifiers);
@@ -368,8 +355,6 @@ public class Unit : MonoBehaviour
         targetField.Unit = this;
         CurrentMovementPoints -= movementPointCost;
         MoveGraphicModel(accessibleMovementPath);
-
-        return true;
     }
 
     // Not working as intended, only the last field is set as parent
@@ -386,6 +371,67 @@ public class Unit : MonoBehaviour
     }
     #endregion
 
+    #region attack
+    /// <summary>
+    /// Return all fields from which this unit can attack field
+    /// </summary>
+    /// <param name="field"></param>
+    /// <returns></returns>
+    public List<Field> GetFieldsFromUnitCanAttack(Field field)
+    {
+        HashSet<Field> set = new();
+        List<Field> list = new();
+        set.UnionWith(GraphSearch.BreadthFirstSearchList(field, AttackRange,
+            (currentField, startingField) => AttackScript.CanAttack(this, field, currentField), _ => 1));
+
+        return set.ToList();
+    }
+
+    public bool CanMoveOrAttack(Field currentField, List<Field> possibleFieldsForAttack)
+    {
+        return MovementScript.CanMove(this, currentField) || possibleFieldsForAttack.Contains(currentField);
+    }
+
+    public bool Attack(Field targetField)
+    {
+        if (targetField == Field)
+            return false;
+
+        //Find path to field from unit can attack
+        List<Field> possibleFieldsForAttack = GetFieldsFromUnitCanAttack(targetField);
+        
+        //If unit cannot attack from current field, move it
+        if (!possibleFieldsForAttack.Contains(Field))
+        {
+            (Dictionary<Field, Field> graph, Field attackingField) = GraphSearch.AStarSearch(Field, targetField,
+                (currentField, startingField) => CanMoveOrAttack(currentField, possibleFieldsForAttack),
+                (field) => MovementScript.GetMovementPointsCostForUnit(this, field), GetDistance,
+                (currentField) => possibleFieldsForAttack.Contains(currentField));
+            //Move unit to that field
+            MoveUnit(graph, attackingField);
+        }
+
+        //Check if unit have enough movement points to attack
+        if (AttackScript.HaveEnoughMovementPoints(CurrentMovementPoints, this, targetField))
+        {
+            //Deal damage to unit
+            if (AttackScript.CanTargetBuilding(this, targetField))
+                DealDamage(targetField.Building);
+            else
+                DealDamage(targetField.Unit);
+            //If unit is melee and destroy enemy unit, move unit to new position 
+            if (AttackRange == 1 && MovementScript.CanMove(this, targetField))
+                MoveReferences(targetField, MovementScript.GetMovementPointsCostForUnit(this, targetField),
+                    new List<Field>() {targetField});
+
+            CurrentMovementPoints = 0;
+        }
+        else
+            return false;
+
+        return true;
+    }
+
     public void DealDamage(Building building)
     {
         UnitModifiers unitModifiers = building.Field.Unit.CurrentModifiers +
@@ -399,9 +445,9 @@ public class Unit : MonoBehaviour
 
     public void DealDamage(Unit unit)
     {
-            UnitModifiers unitModifiers = unit.CurrentModifiers +
-                                          new UnitModifiers(damage: unit.AttackScript.GetCounterAttackModifier());
-            var (_, damage, _) = unitModifiers.CalculateModifiers(0, unit.CurrentDamage, 0);
+        UnitModifiers unitModifiers = unit.CurrentModifiers +
+                                      new UnitModifiers(damage: unit.AttackScript.GetCounterAttackModifier());
+        var (_, damage, _) = unitModifiers.CalculateModifiers(0, unit.CurrentDamage, 0);
         
         unit.TakeDamage(CurrentDamage);
         if (AttackScript.IsProvokingCounterAttack())
@@ -423,6 +469,9 @@ public class Unit : MonoBehaviour
         // Recalculate DamageModifiers from missing health
         ChangeModifiersFromHealth();
     }
+
+    
+    #endregion
 
     public void BeginHealing()
     {
@@ -484,6 +533,7 @@ public class Unit : MonoBehaviour
         SetMoveableFields();
         SetAttackableFields();
         SetVisibleFields();
+        //ToggleFieldsWithinAttackRange();
         ToggleOnMoveableFields();
         ToggleOnAttackableFields();
     }

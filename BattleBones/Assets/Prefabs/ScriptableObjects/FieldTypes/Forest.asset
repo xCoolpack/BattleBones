@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: Forest
   m_EditorClassIdentifier: 
   FieldName: Forest
-  MovementPointsCost: 5
+  MovementPointsCost: 2
   IsObstacle: 0
   IsBlockingSight: 1
+  FieldUnitModifiers:
+    Health: 0
+    Damage: 0
+    Defense: 0
+  AllowableBuildings: []
