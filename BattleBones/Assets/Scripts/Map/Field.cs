@@ -43,12 +43,13 @@ public class Field : MonoBehaviour
             if (Mark_ == Mark.Movable)
             {
                 _overlay.PickedUnit.Move(this);
-
+                _overlay.UnitInfoBox(true);
+                _overlay.PickedUnit.ToggleOffAllMarks();
+                _overlay.PickedUnit.UpdateAndDisplayMarks();
             }
-
-            if (Mark_ == Mark.Attackable)
+            else if (Mark_ == Mark.Attackable)
             {
-                //_overlay.PickedUnit?.AttackRange(this);
+                //todo
             }
         }
     }
@@ -130,6 +131,11 @@ public class Field : MonoBehaviour
     public List<Building> GetAllowableBuildings()
     {
         return Type.AllowableBuildings;
+    }
+
+    public UnitModifiers GetUnitModifiersFromBuilding()
+    {
+        return Building?.GetUnitModifiers() ?? new UnitModifiers();
     }
 
     /// <summary>

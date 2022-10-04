@@ -47,8 +47,8 @@ public class Unit : MonoBehaviour
 
     private void Awake()
     {
+        SetCurrentStats();
         SetStartingStats();
-
         // Temp
         MovementScript = GetComponent<Movement>(); // if null then it's hero
         AttackScript = GetComponent<Attack>(); // if null then it's hero
@@ -73,7 +73,7 @@ public class Unit : MonoBehaviour
     /// <summary>
     /// Methods setting unit stats from BaseUnitStats object
     /// </summary>
-    private void SetStartingStats()
+    public void SetStartingStats()
     {
         CurrentHealth = MaxHealth;
         CurrentDamage = MaxDamage;
@@ -237,17 +237,7 @@ public class Unit : MonoBehaviour
             mark.SetActive(false);
         }
     }
-        #endregion
-
-        public void MoveOrAttack(Field field)
-    {
-        // if unit can move to field
-            Move(field);
-        // if unit can attack building at field
-           // DealDamage(field.Building);
-        // if unit can attack unit at field
-           // DealDamage(field.Unit);
-    }
+    #endregion
 
     #region Move
     /// <summary>
@@ -365,11 +355,11 @@ public class Unit : MonoBehaviour
 
         // Remove modifiers from starting field
         RemoveUnitModifiers(Field.Type.FieldUnitModifiers);
-        RemoveUnitModifiers(Field.Building.GetUnitModifiers());
+        RemoveUnitModifiers(Field.GetUnitModifiersFromBuilding());
 
         // Add modifiers from target field
         AddUnitModifiers(targetField.Type.FieldUnitModifiers);
-        AddUnitModifiers(targetField.Building.GetUnitModifiers());
+        AddUnitModifiers(targetField.GetUnitModifiersFromBuilding());
 
 
         // Move references between fields
@@ -478,19 +468,33 @@ public class Unit : MonoBehaviour
         if (Player.IsPlayersTurn())
         {
             _overlay.UnitInfoBox(true);
-
-            SetMoveableFields();
-            SetAttackableFields();
-            SetVisibleFields();
-            ToggleOnMoveableFields();
-            ToggleOnAttackableFields();
+            UpdateAndDisplayMarks();
         }
         else
         {
             _overlay.UnitInfoBox(false);
         }
+    }
 
+    /// <summary>
+    /// Updates an displays all marks on map
+    /// </summary>
+    public void UpdateAndDisplayMarks()
+    {
+        SetMoveableFields();
+        SetAttackableFields();
+        SetVisibleFields();
+        ToggleOnMoveableFields();
+        ToggleOnAttackableFields();
+    }
 
+    /// <summary>
+    /// Clears map from all unit marks
+    /// </summary>
+    public void ToggleOffAllMarks()
+    {
+        ToggleOffMoveableFields();
+        ToggleOffAttackableFields();
     }
 }
 

@@ -65,6 +65,8 @@ public class Building : MonoBehaviour
 
     public UnitModifiers GetUnitModifiers()
     {
+        if (BuildingState != BuildingState.Fine)
+            return new UnitModifiers();
         return GetComponent<Barricade>()?.BuildingUnitModifier ?? new UnitModifiers();
     }
 
