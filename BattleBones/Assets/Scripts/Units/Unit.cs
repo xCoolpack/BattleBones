@@ -319,12 +319,10 @@ public class Unit : MonoBehaviour
         foreach (var field in movementPath)
         {
             nextMovementPointCost += MovementScript.GetMovementPointsCostForUnit(this, field);
-            Debug.Log(nextMovementPointCost);
             if (CurrentMovementPoints < nextMovementPointCost)
                 break;
 
             accessibleMovementPath.Add(field);
-            Debug.Log(field);
             movementPointCost = nextMovementPointCost;
         }
 
@@ -379,12 +377,20 @@ public class Unit : MonoBehaviour
     /// <returns></returns>
     public List<Field> GetFieldsFromUnitCanAttack(Field field)
     {
-        HashSet<Field> set = new();
         List<Field> list = new();
-        set.UnionWith(GraphSearch.BreadthFirstSearchList(field, AttackRange,
+        list.AddRange(GraphSearch.BreadthFirstSearchList(field, AttackRange,
             (currentField, startingField) => AttackScript.CanAttack(this, field, currentField), _ => 1));
 
-        return set.ToList();
+        var i = 0;
+        while (i < list.Count)
+        {
+            if (!MovementScript.CanMove(this, list[i]))
+                list.RemoveAt(i);
+            else
+                i++;
+        }
+
+        return list;
     }
 
     public bool CanMoveOrAttack(Field currentField, List<Field> possibleFieldsForAttack)
@@ -400,13 +406,17 @@ public class Unit : MonoBehaviour
         //Find path to field from unit can attack
         List<Field> possibleFieldsForAttack = GetFieldsFromUnitCanAttack(targetField);
         
+        // If unit cannot access attacked unit return false
+        if (possibleFieldsForAttack.Count == 0)
+            return false;
+
         //If unit cannot attack from current field, move it
         if (!possibleFieldsForAttack.Contains(Field))
         {
             (Dictionary<Field, Field> graph, Field attackingField) = GraphSearch.AStarSearch(Field, targetField,
-                (currentField, startingField) => CanMoveOrAttack(currentField, possibleFieldsForAttack),
+                (currentField, startingField) => MovementScript.CanMove(this, currentField),
                 (field) => MovementScript.GetMovementPointsCostForUnit(this, field), GetDistance,
-                (currentField) => possibleFieldsForAttack.Contains(currentField));
+                (currentField) =>possibleFieldsForAttack.Contains(currentField) );
             //Move unit to that field
             MoveUnit(graph, attackingField);
         }
@@ -434,12 +444,17 @@ public class Unit : MonoBehaviour
 
     public void DealDamage(Building building)
     {
-        UnitModifiers unitModifiers = building.Field.Unit.CurrentModifiers +
-                                      new UnitModifiers(damage: building.Field.Unit.AttackScript.GetCounterAttackModifier());
-        var (_, damage, _) = unitModifiers.CalculateModifiers(0, building.Field.Unit.CurrentDamage, 0);
+        // If building has a unit, it does counterattack
+        var damage = 0;
+        if (building.Field.HasUnit())
+        {
+            UnitModifiers unitModifiers = building.Field.Unit.CurrentModifiers +
+                                          new UnitModifiers(damage: building.Field.Unit.AttackScript.GetCounterAttackModifier());
+            (_, damage, _) = unitModifiers.CalculateModifiers(0, building.Field.Unit.CurrentDamage, 0);
+        }
 
         building.TakeDamage(CurrentDamage);
-        if (AttackScript.IsProvokingCounterAttack())
+        if (AttackScript.IsProvokingCounterAttack() && building.Field.HasUnit())
             TakeDamage(damage);
     }
 
