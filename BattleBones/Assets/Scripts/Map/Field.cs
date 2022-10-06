@@ -49,8 +49,10 @@ public class Field : MonoBehaviour
             }
             else if (Mark_ == Mark.Attackable)
             {
-                //todo
                 _overlay.PickedUnit.Attack(this);
+                _overlay.UnitInfoBox(true);
+                _overlay.PickedUnit.ToggleOffAllMarks();
+                _overlay.PickedUnit.UpdateAndDisplayMarks();
             }
         }
     }
