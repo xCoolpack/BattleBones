@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5801692695271579817}
   - component: {fileID: 5536509540290845529}
   - component: {fileID: -5705379979245829049}
-  - component: {fileID: 9002846834787914327}
+  - component: {fileID: 8141668808266994993}
   m_Layer: 0
-  m_Name: hexForest
+  m_Name: ForestField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,8 +108,8 @@ MonoBehaviour:
   Unit: {fileID: 0}
   GameMap: {fileID: 0}
   Mark_: 0
---- !u!61 &9002846834787914327
-BoxCollider2D:
+--- !u!60 &8141668808266994993
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -121,7 +121,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.08812952, y: 1.387553}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -131,9 +131,14 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.619956, y: 1.790997}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 1.2635857, y: 0.6569709}
+      - {x: 1.2647028, y: 1.9004217}
+      - {x: -0.007492438, y: 2.5478973}
+      - {x: -1.2613672, y: 1.9137495}
+      - {x: -1.2549747, y: 0.65099055}
+      - {x: -0.0030781925, y: 0.02248922}
 --- !u!1 &93943813547067072
 GameObject:
   m_ObjectHideFlags: 0

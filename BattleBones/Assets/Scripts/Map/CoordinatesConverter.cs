@@ -10,7 +10,7 @@ public static class CoordinatesConverter
     /// <returns></returns>
     public static Vector3Int To3Axis(Vector2Int position)
     {
-        var z = position.x - (position.y - (position.y % 2 + 2) % 2) / 2;
+        var z = position.x - (position.y + (position.y % 2 + 2) % 2) / 2;
         var y = position.y;
         return new Vector3Int(-z - y, y, z);
     }
@@ -22,7 +22,7 @@ public static class CoordinatesConverter
     /// <returns></returns>
     public static Vector2Int To2Axis(Vector3Int position)
     {
-        var x = position.z + (position.y - (position.y % 2 + 2) % 2) / 2;
+        var x = position.z + (position.y + (position.y % 2 + 2) % 2) / 2;
         var y = position.y;
         return new Vector2Int(x, y);
     }

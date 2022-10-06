@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class Field : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class Field : MonoBehaviour
 
     private void Start()
     {
-        GameMap = GetComponentInParent<GameMap>();
+        GameMap = GameObject.Find("GameMap").GetComponent<GameMap>();
         _overlay = GameObject.Find("Overlay").GetComponent<Overlay>();
     }
 
@@ -58,6 +59,7 @@ public class Field : MonoBehaviour
     // Left click
     private void OnMouseDown()
     {
+
         if (Unit != null && Building != null)
         {
             if (Unit == _overlay.PickedUnit)
@@ -101,8 +103,8 @@ public class Field : MonoBehaviour
     /// <returns></returns>
     private Vector2Int ConvertPositionToCoordinates(Vector2 position)
     {
-        var x = Mathf.CeilToInt((float)System.Math.Round(position.x, 2) / XOffset);
-        var y = Mathf.CeilToInt((float)System.Math.Round(position.y, 2) / YOffset);
+        var x = (int)Math.Ceiling(Math.Round(Math.Round(transform.position.x, 2) / XOffset, 2));
+        var y = (int)Math.Ceiling(Math.Round(Math.Round(transform.position.y, 2) / YOffset, 2));
         return new Vector2Int(x, y);
     }
 
