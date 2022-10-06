@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 4881552863685125914}
   - component: {fileID: 1723868658032942681}
   - component: {fileID: -574906213752717324}
+  - component: {fileID: 6759318867242481708}
   m_Layer: 0
-  m_Name: hexMountain
+  m_Name: MountainField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,6 +107,38 @@ MonoBehaviour:
   Building: {fileID: 0}
   Unit: {fileID: 0}
   GameMap: {fileID: 0}
+  Mark_: 0
+--- !u!60 &6759318867242481708
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2186562210105214081}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 2.56, y: 3.84}
+    newSize: {x: 2.56, y: 3.84}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 1.2635857, y: 0.6569709}
+      - {x: 1.2647028, y: 1.9004217}
+      - {x: -0.007492438, y: 2.5478973}
+      - {x: -1.2613672, y: 1.9137495}
+      - {x: -1.2549747, y: 0.65099055}
+      - {x: -0.0030781925, y: 0.02248922}
 --- !u!1 &2393327227002028481
 GameObject:
   m_ObjectHideFlags: 0
