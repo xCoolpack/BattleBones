@@ -13,7 +13,101 @@ MonoBehaviour:
   m_Name: CounterValues
   m_EditorClassIdentifier: 
   counterValues:
-  - unitDefending: 
+  - unitDefending: Dog scout
     counters:
-    - unitAttacking: 
+    - unitAttacking: Cat scout
+      counterValue: 0
+    - unitAttacking: Cat
+      counterValue: 0
+    - unitAttacking: Cat-at-arms
+      counterValue: 0
+    - unitAttacking: Crossbowcat
+      counterValue: 0
+    - unitAttacking: Cat-a-copter
+      counterValue: 0
+    - unitAttacking: Cat mountaineer
+      counterValue: 0
+  - unitDefending: Dog
+    counters:
+    - unitAttacking: Cat scout
+      counterValue: 0
+    - unitAttacking: Cat
+      counterValue: 0
+    - unitAttacking: Cat-at-arms
+      counterValue: 0
+    - unitAttacking: Crossbowcat
+      counterValue: 0
+    - unitAttacking: Cat-a-copter
+      counterValue: 0
+    - unitAttacking: Cat mountaineer
+      counterValue: 0
+  - unitDefending: Dog-at-arms
+    counters:
+    - unitAttacking: Cat scout
+      counterValue: 0
+    - unitAttacking: Cat
+      counterValue: 0
+    - unitAttacking: Cat-at-arms
+      counterValue: 0
+    - unitAttacking: Crossbowcat
+      counterValue: 0
+    - unitAttacking: Cat-a-copter
+      counterValue: 0
+    - unitAttacking: Cat mountaineer
+      counterValue: 0
+  - unitDefending: Crossbowdog
+    counters:
+    - unitAttacking: Cat scout
+      counterValue: 0
+    - unitAttacking: Cat
+      counterValue: 0
+    - unitAttacking: Cat-at-arms
+      counterValue: 0
+    - unitAttacking: Crossbowcat
+      counterValue: 0
+    - unitAttacking: Cat-a-copter
+      counterValue: 0
+    - unitAttacking: Cat mountaineer
+      counterValue: 0
+  - unitDefending: Dog-a-copter
+    counters:
+    - unitAttacking: Cat scout
+      counterValue: 0
+    - unitAttacking: Cat
+      counterValue: 0
+    - unitAttacking: Cat-at-arms
+      counterValue: 0
+    - unitAttacking: Crossbowcat
+      counterValue: 0
+    - unitAttacking: Cat-a-copter
+      counterValue: 0
+    - unitAttacking: Cat mountaineer
+      counterValue: 0
+  - unitDefending: Battering dog
+    counters:
+    - unitAttacking: Cat scout
+      counterValue: 0
+    - unitAttacking: Cat
+      counterValue: 0
+    - unitAttacking: Cat-at-arms
+      counterValue: 0
+    - unitAttacking: Crossbowcat
+      counterValue: 0
+    - unitAttacking: Cat-a-copter
+      counterValue: 0
+    - unitAttacking: Cat mountaineer
+      counterValue: 0
+  - unitDefending: Dog-a-pult
+    counters:
+    - unitAttacking: Cat scout
+      counterValue: 0
+    - unitAttacking: Cat
+      counterValue: 0
+    - unitAttacking: Cat-at-arms
+      counterValue: 0
+    - unitAttacking: Crossbowcat
+      counterValue: 0
+    - unitAttacking: Cat-a-copter
+      counterValue: 0
+    - unitAttacking: Cat mountaineer
       counterValue: 0

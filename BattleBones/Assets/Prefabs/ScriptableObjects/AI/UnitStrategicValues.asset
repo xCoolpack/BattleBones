@@ -12,4 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 487f05b0e4fd7134c99b2f9ce5187088, type: 3}
   m_Name: UnitStrategicValues
   m_EditorClassIdentifier: 
-  unitStrategicValues: []
+  unitStrategicValues:
+  - unitName: Dog scout
+    unitValue: 0
+  - unitName: Dog
+    unitValue: 0
+  - unitName: Dog-at-arms
+    unitValue: 0
+  - unitName: Crossbowdog
+    unitValue: 0
+  - unitName: Dog-a-copter
+    unitValue: 0
+  - unitName: Battering dog
+    unitValue: 0
+  - unitName: Dog-a-pult
+    unitValue: 0
+  - unitName: Cat scout
+    unitValue: 0
+  - unitName: Cat
+    unitValue: 0
+  - unitName: Cat-at-arms
+    unitValue: 0
+  - unitName: Crossbowcat
+    unitValue: 0
+  - unitName: Cat-a-copter
+    unitValue: 0
+  - unitName: Cat mountaineer
+    unitValue: 0
