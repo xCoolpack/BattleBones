@@ -14,18 +14,14 @@ public class GameMap : MonoBehaviour
         FieldGrid = new Dictionary<Vector2Int, Field>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         PopulateGrid();
+    }
 
-        // tests
-        //Debug.Log("Neighbours for 0, 0");
-
-        //GetNeighboursOf(new Vector2Int(0, 0)).ForEach(x => Debug.Log(x.coordinates));
-
-        //Debug.Log("Neighbours for 0, -1");
-
-        //GetNeighboursOf(new Vector2Int(0, -1)).ForEach(x => Debug.Log(x.coordinates));
+    private void Start()
+    {
+        //PopulateGrid();
     }
 
     /// <summary>

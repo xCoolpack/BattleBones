@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -42,15 +41,18 @@ public class Unit : MonoBehaviour
     public List<Field> AttackableFields;
     private Overlay _overlay;
 
+    private SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
         SetCurrentStats();
         SetStartingStats();
         // Temp
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         MovementScript = GetComponent<Movement>(); // if null then it's hero
         AttackScript = GetComponent<Attack>(); // if null then it's hero
         GameMap = GameObject.Find("GameMap").GetComponent<GameMap>();
+        Hide(Player.HumanPlayer);
     } 
 
     private void Update()
@@ -58,7 +60,7 @@ public class Unit : MonoBehaviour
         // Test necessary
         if (Input.GetKeyDown("r")) 
         {
-            Debug.Log("clicked r");
+            ShowFields();
             CurrentMovementPoints = MaxMovementPoints;
         }
     }
@@ -66,6 +68,14 @@ public class Unit : MonoBehaviour
     private void Start()
     {
         _overlay = GameObject.Find("Overlay").GetComponent<Overlay>();
+        // Set unit visibility
+        Debug.Log($"Sight : {SightRange}");
+        ShowFields();
+
+        foreach (Player key in Field.SeenBy.Keys)
+        {
+            Show(key);
+        }
     }
 
     /// <summary>
@@ -124,9 +134,22 @@ public class Unit : MonoBehaviour
 
     #region VisibleFields
 
+    public void Show(Player player)
+    {
+        if (player == Player.HumanPlayer)
+            _spriteRenderer.enabled = true;
+    }
+
+    public void Hide(Player player)
+    {
+        if (player == Player.HumanPlayer)
+            _spriteRenderer.enabled = false;
+    }
+
     private void SetVisibleFields()
     {
         VisibleFields = GetVisibleFields();
+        VisibleFields.Add(Field);
     }
 
     private List<Field> GetVisibleFields() 
@@ -134,14 +157,39 @@ public class Unit : MonoBehaviour
         return GraphSearch.BreadthFirstSearchList(Field, SightRange, 
             (currentField, startingField) => currentField.IsVisibleFor(this, startingField), _ => 1);
     }
+
     private void ToggleVisibleFields()
     {
-        foreach (var field in GetVisibleFields())
+        foreach (var field in VisibleFields)
         {
-            var mark = field.transform.Find("MoveMark").gameObject;
+            var mark = field.transform.Find("AttackMark").gameObject;
             mark.SetActive(!mark.activeSelf);
         }
     }
+
+    public void ShowFields()
+    {
+        SetVisibleFields();
+        foreach (var field in VisibleFields)
+            field.Discover(Player);
+    }
+
+    public void HideFields()
+    {
+        SetVisibleFields();
+        foreach (var field in VisibleFields)
+            field.Hide(Player);
+    }
+
+    public void ChangeFieldsVisibility(List<Field> list)
+    {
+        SetVisibleFields();
+        foreach (var field in VisibleFields)
+            field.Discover(Player);
+        foreach (var field in list)
+            field.Hide(Player);
+    }
+
     #endregion 
 
     #region MoveableFields
@@ -337,6 +385,10 @@ public class Unit : MonoBehaviour
     /// <param name="accessibleMovementPath"></param>
     private void MoveReferences(Field targetField, int movementPointCost, List<Field> accessibleMovementPath)
     {
+        // Rethink - apply show and hide methods for every position in movement path
+        // Hide fields that unit no longer see
+        SetVisibleFields();
+        List<Field> temp = VisibleFields; 
 
         // Remove modifiers from starting field
         RemoveUnitModifiers(Field.Type.FieldUnitModifiers);
@@ -352,6 +404,10 @@ public class Unit : MonoBehaviour
         Field = targetField;
         targetField.Unit = this;
         CurrentMovementPoints -= movementPointCost;
+
+        // Show fields that unit now see
+        ChangeFieldsVisibility(temp);
+
         MoveGraphicModel(accessibleMovementPath);
     }
 
@@ -361,10 +417,7 @@ public class Unit : MonoBehaviour
     {
         foreach (Field field in movementPath)
         {
-            Debug.Log(field.Coordinates);
-            //temporary solution, find better later (clipping colliders - selecting field instead of unit)
             this.transform.SetParent(field.transform, false);
-            //System.Threading.Thread.Sleep(1000);  
         }
     }
     #endregion
@@ -519,6 +572,7 @@ public class Unit : MonoBehaviour
 
     public void Delete()
     {
+        HideFields();
         Field.Unit = null;
         Player.RemoveUnit(this);
         Destroy(gameObject);
@@ -545,10 +599,12 @@ public class Unit : MonoBehaviour
     /// </summary>
     public void UpdateAndDisplayMarks()
     {
+        //ShowFields();
+
         SetMoveableFields();
         SetAttackableFields();
         SetVisibleFields();
-        //ToggleFieldsWithinAttackRange();
+        //ToggleVisibleFields();
         ToggleOnMoveableFields();
         ToggleOnAttackableFields();
     }

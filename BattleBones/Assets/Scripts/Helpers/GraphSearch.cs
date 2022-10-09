@@ -35,6 +35,7 @@ public static class GraphSearch
 
             foreach (var field in currentField.GetNeighbors())
             {
+                Debug.Log(field);
                 if (canDoAction(field, startingField))
                 {
                     sumCost = costOfFields[currentField] + cost(field);

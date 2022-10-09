@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player HumanPlayer;
+
     public TurnHandler TurnHandler;
     public int MaxUnitCap;
     public int CurrentUnitCap => Units.Count;
@@ -19,6 +21,11 @@ public class Player : MonoBehaviour
     public List<Building> Buildings;
 
     public Overlay Overlay;
+
+    private void Awake()
+    {
+        HumanPlayer = GameObject.Find("Player1").GetComponent<Player>();
+    }
 
     public void AddUnit(Unit unit)
     {
@@ -69,4 +76,5 @@ public class Player : MonoBehaviour
     {
         return TurnHandler.IsPlayersTurn(this);
     }
+
 }

@@ -55,6 +55,14 @@ public class Outpost : MonoBehaviour
         Building.Player.AddUnit(unit);
         _unitCost = unit.BaseUnitStats.BaseCost;
         Building.Player.ResourceManager.RemoveAmount(_unitCost);
+
+        // Set unit visibility
+        foreach (Player key in Building.Field.SeenBy.Keys)
+        {
+            unit.Show(key);
+        }
+
+        unit.ShowFields();
     }
 
     public bool IsUnitBeingRecruited()

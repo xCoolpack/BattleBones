@@ -17,22 +17,33 @@ public class Field : MonoBehaviour
 
     // References
     public FieldType Type;
-    public List<Player> SeenBy; 
     public Building Building; 
     public Unit Unit;
     public GameMap GameMap;
+    private SpriteRenderer _spriteRenderer;
     private Overlay _overlay;
     public Mark Mark_;
 
+    public HashSet<Player> DiscoveredBy;
+    // int stand for number of entities that see that field
+    public Dictionary<Player, int> SeenBy;
+    [SerializeField] private Sprite _fogOfWarSprite;
+    private Sprite _fieldSprite;
+
     private void Awake()
     {
+        DiscoveredBy = new HashSet<Player>();
+        SeenBy = new Dictionary<Player, int>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _fieldSprite = _spriteRenderer.sprite;
+        _spriteRenderer.sprite = _fogOfWarSprite;
         Coordinates = ConvertPositionToCoordinates(transform.position);
         ThreeAxisCoordinates = CoordinatesConverter.To3Axis(Coordinates);
+        GameMap = GameObject.Find("GameMap").GetComponent<GameMap>();
     }
 
     private void Start()
     {
-        GameMap = GameObject.Find("GameMap").GetComponent<GameMap>();
         _overlay = GameObject.Find("Overlay").GetComponent<Overlay>();
     }
 
@@ -127,6 +138,56 @@ public class Field : MonoBehaviour
     {
         return Building != null;
     }
+
+    #region FogOfWar
+
+    public bool IsDiscoveredBy(Player player)
+    {
+        return DiscoveredBy.Contains(player);
+    }
+
+    public void Discover(Player player)
+    {
+        DiscoveredBy.Add(player);
+        if (player == Player.HumanPlayer)
+            _spriteRenderer.sprite = _fieldSprite;
+        
+        Show(player);
+    }
+
+    private void Show(Player player)
+    {
+        Building?.Discover(player);
+
+        if (SeenBy.Increase(player))
+            Unit?.Show(player);
+    }
+
+    public void Hide(Player player)
+    {
+        if (Coordinates.x == 4 && Coordinates.y == -7)
+            foreach(var key in SeenBy.Keys)
+                Debug.Log($"KEy: {key}, count : {SeenBy[key]}");
+        if (SeenBy.Decrease(player))
+        {
+            if (Coordinates.x == 4 && Coordinates.y == -7)
+                foreach (var key in SeenBy.Keys)
+                    Debug.Log($"KEy: {key}, count : {SeenBy[key]}");
+            Unit?.Hide(player);
+        }
+    }
+
+    public bool IsSeenBy(Player player)
+    {
+        return SeenBy.ContainsKey(player);
+    }
+
+    public bool IsBuildingDiscoveredBy(Player player)
+    {
+        return Building?.DiscoveredBy.Contains(player) ?? false;
+    }
+
+    #endregion
 
     public int GetMovementPointsCost()
     {
@@ -243,7 +304,7 @@ public class Field : MonoBehaviour
         GameObject buildingPrefab = player.AvailableBuildings.FirstOrDefault(g => g.name == buildingName);
         if (buildingPrefab is null)
             return false;
-        return buildingPrefab.GetComponent<Unit>().CanAffordRecruitment(player) && !HasBuilding();
+        return IsSeenBy(player) && !HasBuilding() && buildingPrefab.GetComponent<Building>().CanAffordConstruction(player);
     }
 
     public void BeginBuildingConstruction(Player player, string buildingName)
@@ -256,6 +317,15 @@ public class Field : MonoBehaviour
         building.BuildingState = BuildingState.UnderConstruction;
         player.AddBuilding(Building);
         player.ResourceManager.RemoveAmount(building.BaseBuildingStats.BaseCost);
+
+        // Set building visibility
+        foreach (Player key in SeenBy.Keys)
+        {
+            building.Discover(key);
+        }
+
+        building.ShowFields();
+
         player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, building.Construct));
     }
 
@@ -298,4 +368,3 @@ public static class Direction
         return y % 2 == 0 ? OffsetEven : OffsetOdd;
     }
 }
-

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -26,15 +28,31 @@ public class Building : MonoBehaviour
     public Field Field;
     public BuildingState BuildingState;
     private Overlay _overlay;
+    public List<Field> VisibleFields;
+
+    public HashSet<Player> DiscoveredBy;
+    private SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
+        VisibleFields = new List<Field>();
+        DiscoveredBy = new HashSet<Player>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer.enabled = false;
         SetStats();
+        Hide(Player.HumanPlayer);
     }
 
     private void Start()
     {
         _overlay = GameObject.Find("Overlay").GetComponent<Overlay>();
+        // Set building visibility
+        foreach (Player key in Field.SeenBy.Keys)
+        {
+            Discover(key);
+        }
+
+        ShowFields();
     }
 
     /// <summary>
@@ -62,6 +80,48 @@ public class Building : MonoBehaviour
         return Player.ResourceManager.ResourcesAmount >= BaseBuildingStats.BaseCost / 2;
     }
 
+    private void SetVisibleFields()
+    {
+        VisibleFields = GetVisibleFields();
+        VisibleFields.Add(Field);
+    }
+
+    private List<Field> GetVisibleFields()
+    {
+        return GraphSearch.BreadthFirstSearchList(Field, SightRange,
+            (currentField, startingField) => currentField.IsVisibleFor(this, startingField), _ => 1);
+    }
+
+    public void Discover(Player player)
+    {
+        DiscoveredBy.Add(player);
+        if (player == Player.HumanPlayer)
+            _spriteRenderer.enabled = true;
+    }
+
+    public void Hide(Player player)
+    {
+        if (player == Player.HumanPlayer)
+            _spriteRenderer.enabled = false;
+    }
+
+    public void ShowFields()
+    {
+        SetVisibleFields();
+        foreach (var field in VisibleFields)
+        {
+            field.Discover(Player);
+        }
+    }
+
+    public void HideFields()
+    {
+        SetVisibleFields();
+        foreach (var field in VisibleFields)
+        {
+            field.Hide(Player);
+        }
+    }
 
     public UnitModifiers GetUnitModifiers()
     {
@@ -124,6 +184,8 @@ public class Building : MonoBehaviour
 
     public void Destroy()
     {
+        HideFields();
+
         // Methods in "derived" scripts
         GetComponent<IncomeBuilding>()?.Destroy();
         GetComponent<Housing>()?.Destroy();
