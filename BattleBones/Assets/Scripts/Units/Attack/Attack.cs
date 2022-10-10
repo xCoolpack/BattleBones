@@ -4,12 +4,12 @@ public abstract class Attack : MonoBehaviour
 {
     public bool CanAttack(Unit unit, Field startingField, Field targetField)
     {
-        return targetField.IsVisibleFor(unit, startingField) && !targetField.IsObstacle();
+        return targetField.IsVisibleFor(unit, startingField) && !targetField.IsObstacle() && targetField.IsSeenBy(unit.Player);
     }
 
     public bool CanAttack(Building building, Field startingField, Field targetField)
     {
-        return targetField.IsVisibleFor(building, startingField) && !targetField.IsObstacle();
+        return targetField.IsVisibleFor(building, startingField) && !targetField.IsObstacle() && targetField.IsSeenBy(building.Player);
     }
 
     public bool CanTarget(Unit unit, Field field)

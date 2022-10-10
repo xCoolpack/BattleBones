@@ -69,7 +69,6 @@ public class Unit : MonoBehaviour
     {
         _overlay = GameObject.Find("Overlay").GetComponent<Overlay>();
         // Set unit visibility
-        Debug.Log($"Sight : {SightRange}");
         ShowFields();
 
         foreach (Player key in Field.SeenBy.Keys)
@@ -202,7 +201,7 @@ public class Unit : MonoBehaviour
     private Dictionary<Field, int> GetMoveableFields() 
     {
        return GraphSearch.BreadthFirstSearchDict(Field, CurrentMovementPoints,
-            (currentField, startingField) => MovementScript.CanMove(this, currentField), 
+            (currentField, startingField) => MovementScript.CanMove(this, currentField),
             (field) => MovementScript.GetMovementPointsCostForUnit(this, field));
     }
 
