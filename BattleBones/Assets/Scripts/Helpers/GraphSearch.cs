@@ -32,21 +32,11 @@ public static class GraphSearch
         while (fieldsToVisit.Count > 0)
         {
             Field currentField = fieldsToVisit.Dequeue();
-
             foreach (var field in currentField.GetNeighbors())
             {
-                
                 if (canDoAction(field, startingField))
                 {
-                    
-                    
                     sumCost = costOfFields[currentField] + cost(field);
-                    if (field.Coordinates.x == 6 && field.Coordinates.y == -2)
-                    {
-                        Debug.Log($"Neighbor of {currentField}: {field}");
-                        Debug.Log($"Cost: {sumCost} - {sumCost <= range}");
-                    }
-                    
                     if (sumCost <= range)
                     {
                         if (!visitedFields.ContainsKey(field) || costOfFields[field] > sumCost)
