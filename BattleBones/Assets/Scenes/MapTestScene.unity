@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 352980282}
   - component: {fileID: 352980281}
   m_Layer: 0
-  m_Name: Mission
+  m_Name: Objective
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -283,6 +283,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 412005501}
+  <IsPrimary>k__BackingField: 1
+  <ObjectiveInfo>k__BackingField: 
 --- !u!4 &352980282
 Transform:
   m_ObjectHideFlags: 0
@@ -1181,7 +1183,7 @@ MonoBehaviour:
   - {fileID: 412005501}
   - {fileID: 945539459}
   GlobalEventHandler: {fileID: 1490929974}
-  MissionHandler: {fileID: 1862221628}
+  ObjectiveHandler: {fileID: 0}
 --- !u!4 &887510589 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7260510673771770686, guid: ae63b689d470ce9459171d737d633d8a, type: 3}
@@ -2896,7 +2898,7 @@ GameObject:
   - component: {fileID: 1862221629}
   - component: {fileID: 1862221628}
   m_Layer: 0
-  m_Name: MissionHandler
+  m_Name: ObjectiveHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

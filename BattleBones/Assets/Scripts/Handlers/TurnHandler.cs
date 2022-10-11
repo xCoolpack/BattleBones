@@ -9,7 +9,7 @@ public class TurnHandler : MonoBehaviour
     private int _playerIndex;
     public List<Player> Players;
     public EventHandler GlobalEventHandler;
-    public MissionHandler MissionHandler;
+    public ObjectiveHandler ObjectiveHandler;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +20,6 @@ public class TurnHandler : MonoBehaviour
 
     public void NextTurn(){
         Players[_playerIndex].PlayerEventHandler.TurnEnd();
-        MissionHandler.CheckMission();
         NextPlayer();
         Players[_playerIndex].PlayerEventHandler.TurnStart();
         Players[_playerIndex].ResourceManager.GenerateIncome();
