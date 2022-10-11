@@ -103,11 +103,11 @@ MonoBehaviour:
   Coordinates: {x: 0, y: 0}
   ThreeAxisCoordinates: {x: 0, y: 0, z: 0}
   Type: {fileID: 11400000, guid: a1a1d15e17b85e44696adea498a35491, type: 2}
-  SeenBy: []
   Building: {fileID: 0}
   Unit: {fileID: 0}
   GameMap: {fileID: 0}
   Mark_: 0
+  _fogOfWarSprite: {fileID: 21300000, guid: 2b4118e0228e32a4293c7541873e1028, type: 3}
 --- !u!60 &8141668808266994993
 PolygonCollider2D:
   m_ObjectHideFlags: 0

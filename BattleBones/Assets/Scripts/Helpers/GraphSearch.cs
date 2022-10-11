@@ -32,7 +32,6 @@ public static class GraphSearch
         while (fieldsToVisit.Count > 0)
         {
             Field currentField = fieldsToVisit.Dequeue();
-
             foreach (var field in currentField.GetNeighbors())
             {
                 if (canDoAction(field, startingField))

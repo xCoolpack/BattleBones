@@ -16,7 +16,7 @@ MonoBehaviour:
   BaseHealth: 100
   BaseDamage: 35
   BaseDefense: 20
-  BaseMovementPoints: 10
+  BaseMovementPoints: 3
   BaseAttackRange: 1
   BaseSightRange: 3
   BaseCost:

@@ -16,7 +16,7 @@ public class Outpost : MonoBehaviour
 
     private void OnMouseDown()
     {
-        //if (CanCancelRecruitment())
+        //if (IsUnitBeingRecruited())
         //    CancelRecruitment();
         //else
         //    BeginUnitRecruitment("TestUnit");
@@ -27,7 +27,7 @@ public class Outpost : MonoBehaviour
         GameObject unitPrefab = Building.Player.UnlockedUnits.FirstOrDefault(g => g.name == unitName);
         if (unitPrefab is null)
             return false;
-        return unitPrefab.GetComponent<Unit>().CanAffordRecruitment(Building.Player) && 
+        return !IsUnitBeingRecruited() && unitPrefab.GetComponent<Unit>().CanAffordRecruitment(Building.Player) && 
                !Building.Field.HasUnit() && Building.Player.HaveEnoughUnitCap();
     }
 
@@ -55,9 +55,17 @@ public class Outpost : MonoBehaviour
         Building.Player.AddUnit(unit);
         _unitCost = unit.BaseUnitStats.BaseCost;
         Building.Player.ResourceManager.RemoveAmount(_unitCost);
+
+        // Set unit visibility
+        foreach (Player key in Building.Field.SeenBy.Keys)
+        {
+            unit.Show(key);
+        }
+
+        unit.ShowFields();
     }
 
-    public bool CanCancelRecruitment()
+    public bool IsUnitBeingRecruited()
     {
         return RecruitingUnit != null;
     }
