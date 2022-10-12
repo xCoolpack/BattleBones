@@ -436,7 +436,7 @@ public class Unit : MonoBehaviour
         var i = 0;
         while (i < list.Count)
         {
-            if (!MovementScript.CanMove(this, list[i]))
+            if (!MovementScript.CanMove(this, list[i]) && list[i] != Field)
                 list.RemoveAt(i);
             else
                 i++;
