@@ -25,6 +25,8 @@ public class TurnHandler : MonoBehaviour
         Players[_playerIndex].ResourceManager.GenerateIncome();
         Players[_playerIndex].RestoreUnitsMovementPoints();
         Players[_playerIndex].ApplyUnitsModifiers();
+
+        Debug.Log(ObjectiveHandler.CheckPrimaryObjectives());
     }
 
     private void NextPlayer()

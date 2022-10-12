@@ -9,6 +9,7 @@ public class ObjectiveHandler : MonoBehaviour
 
     private void Start()
     {
+        _objectives = new List<IObjective>();
         for (int i = 0; i < gameObject.transform.childCount; i++)
         {
             _objectives.Add(gameObject.transform.GetChild(i).gameObject.GetComponent<IObjective>());

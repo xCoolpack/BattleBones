@@ -190,8 +190,9 @@ public class Building : MonoBehaviour
         GetComponent<IncomeBuilding>()?.Destroy();
         GetComponent<Housing>()?.Destroy();
 
+        Player.RemoveBuilding(this);
         Field.Unit?.RemoveUnitModifiers(Field.Building.GetUnitModifiers());
-        Field.Building = null;
+        Field.Building = null;     
         Destroy(gameObject);
     }
 
