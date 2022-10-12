@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class ObjectiveHandler : MonoBehaviour
 {
-    private List<IObjective> _objectives;
-
+    public List<IObjective> Objectives { get; }
     private void Start()
     {
         _objectives = new List<IObjective>();
         for (int i = 0; i < gameObject.transform.childCount; i++)
         {
-            _objectives.Add(gameObject.transform.GetChild(i).gameObject.GetComponent<IObjective>());
+            Objectives.Add(gameObject.transform.GetChild(i).gameObject.GetComponent<IObjective>());
         }
     }
 
@@ -22,7 +21,7 @@ public class ObjectiveHandler : MonoBehaviour
     /// <returns></returns>
     public bool CheckPrimaryObjectives()
     {
-        return !_objectives.Any(o => o.IsPrimary && !o.IsComplited);
+        return !Objectives.Any(o => o.IsPrimary && !o.IsComplited);
     }
 
     /// <summary>
@@ -31,6 +30,6 @@ public class ObjectiveHandler : MonoBehaviour
     /// <returns></returns>
     public bool CheckAllObjectives()
     {
-        return _objectives.All(o => o.IsComplited);
+        return Objectives.All(o => o.IsComplited);
     }
 }

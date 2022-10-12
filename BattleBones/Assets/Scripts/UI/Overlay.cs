@@ -9,6 +9,7 @@ public class Overlay : MonoBehaviour
 {
     public ResourceManager ResourceManager;
     public TurnHandler TurnHandler;
+    public ObjectiveHandler ObjectiveHandler;
 
     private Button _nextTurnButton;
     private Label _turnCounterLabel;
@@ -23,10 +24,13 @@ public class Overlay : MonoBehaviour
     private Label _doggiumIncomeLabel;
     private Label _boneIncomeLabel;
     private VisualElement _lowerContainer;
+    private VisualElement _objectivesMenu;
 
     public Building PickedBuilding;
     public Unit PickedUnit;
     public Field PickedField;
+
+    private bool _isOnObjectivesMenu = false;
 
     private void OnEnable()
     {
@@ -48,6 +52,7 @@ public class Overlay : MonoBehaviour
         _boneIncomeLabel = uiDocument.rootVisualElement.Q<Label>("BoneIncomeLabel");
 
         _lowerContainer = uiDocument.rootVisualElement.Q<VisualElement>("LowerContainer");
+        _objectivesMenu = uiDocument.rootVisualElement.Q<VisualElement>("ObjectivesMenu");
 
         // Binding turn handler
         var tunHandlerSerializedObject = new SerializedObject(TurnHandler);
@@ -75,6 +80,8 @@ public class Overlay : MonoBehaviour
             RemoveInfoBox();
             ClearPicked();
         });
+
+        _objectivesMenu.Q<VisualElement>("OpenButton").RegisterCallback<ClickEvent>(_ => HandleObjectivesMenuClick());
 
         RemoveInfoBox();
     }
@@ -517,5 +524,46 @@ public class Overlay : MonoBehaviour
     {
         if (PickedBuilding is null) throw new ArgumentNullException("PickedBuilding has to be set");
         var (statsBox, buttonsBox) = CreateBuildingInfoBox(PickedBuilding);
+    }
+
+    private void HandleObjectivesMenuClick()
+    {
+        if (_isOnObjectivesMenu)
+        {
+            _isOnObjectivesMenu = false;
+            ToggleOffObjectives();
+        }
+        else
+        {
+            _isOnObjectivesMenu = true;
+            ToggleOnObjectives();
+        }
+    }
+
+    /// <summary>
+    /// Toggles on objectives info
+    /// </summary>
+    private void ToggleOnObjectives()
+    {
+        var list = new VisualElement();
+        list.name = "ObjectivesList";
+
+        foreach (var objective in ObjectiveHandler.Objectives)
+        {
+            var box = new VisualElement();
+            var info = new Label(objective.ObjectiveInfo);
+            box.Add(info);
+            list.Add(box);
+        }
+
+        _objectivesMenu.Add(list);
+    }
+
+    /// <summary>
+    /// Toggles off objectives info
+    /// </summary>
+    private void ToggleOffObjectives()
+    {
+        _objectivesMenu.RemoveAt(1);
     }
 }
