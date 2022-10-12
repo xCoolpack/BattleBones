@@ -6,12 +6,21 @@ using UnityEngine;
 public class ObjectiveHandler : MonoBehaviour
 {
     public List<IObjective> Objectives { get; private set; }
+    public List<IObjective> FailObjectives { get; private set; }
+
     private void Start()
     {
         Objectives = new List<IObjective>();
-        for (int i = 0; i < gameObject.transform.childCount; i++)
+        FailObjectives = new List<IObjective>();
+        Transform childTransform = transform.Find("Objectives").transform;
+        for (int i = 0; i < childTransform.childCount; i++)
         {
-            Objectives.Add(gameObject.transform.GetChild(i).gameObject.GetComponent<IObjective>());
+            Objectives.Add(childTransform.GetChild(i).gameObject.GetComponent<IObjective>());
+        }
+        childTransform = transform.Find("FailObjectives").transform;
+        for (int i = 0; i < childTransform.childCount; i++)
+        {
+            Objectives.Add(childTransform.GetChild(i).gameObject.GetComponent<IObjective>());
         }
     }
 
@@ -31,5 +40,14 @@ public class ObjectiveHandler : MonoBehaviour
     public bool CheckAllObjectives()
     {
         return Objectives.All(o => o.IsComplited);
+    }
+
+    /// <summary>
+    /// Checks if any fail objectives are complited
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckFailObjectives()
+    {
+        return FailObjectives.Any(o => o.IsComplited);
     }
 }
