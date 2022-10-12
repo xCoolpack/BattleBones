@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class ObjectiveHandler : MonoBehaviour
 {
-    public List<IObjective> Objectives { get; }
+    public List<IObjective> Objectives { get; private set; }
     private void Start()
     {
-        _objectives = new List<IObjective>();
+        Objectives = new List<IObjective>();
         for (int i = 0; i < gameObject.transform.childCount; i++)
         {
             Objectives.Add(gameObject.transform.GetChild(i).gameObject.GetComponent<IObjective>());
