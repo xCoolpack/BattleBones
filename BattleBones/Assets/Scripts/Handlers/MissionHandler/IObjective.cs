@@ -1,4 +1,4 @@
-﻿interface IObjective
+﻿public interface IObjective
 {
     /// <summary>
     /// Is objective primary

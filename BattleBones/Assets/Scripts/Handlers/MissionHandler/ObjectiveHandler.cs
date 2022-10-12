@@ -5,13 +5,22 @@ using UnityEngine;
 
 public class ObjectiveHandler : MonoBehaviour
 {
-    private List<IObjective> _objectives;
+    public List<IObjective> Objectives { get; private set; }
+    public List<IObjective> FailObjectives { get; private set; }
 
     private void Start()
     {
-        for (int i = 0; i < gameObject.transform.childCount; i++)
+        Objectives = new List<IObjective>();
+        FailObjectives = new List<IObjective>();
+        Transform childTransform = transform.Find("Objectives").transform;
+        for (int i = 0; i < childTransform.childCount; i++)
         {
-            _objectives.Add(gameObject.transform.GetChild(i).gameObject.GetComponent<IObjective>());
+            Objectives.Add(childTransform.GetChild(i).gameObject.GetComponent<IObjective>());
+        }
+        childTransform = transform.Find("FailObjectives").transform;
+        for (int i = 0; i < childTransform.childCount; i++)
+        {
+            Objectives.Add(childTransform.GetChild(i).gameObject.GetComponent<IObjective>());
         }
     }
 
@@ -21,7 +30,7 @@ public class ObjectiveHandler : MonoBehaviour
     /// <returns></returns>
     public bool CheckPrimaryObjectives()
     {
-        return !_objectives.Any(o => o.IsPrimary && !o.IsComplited);
+        return !Objectives.Any(o => o.IsPrimary && !o.IsComplited);
     }
 
     /// <summary>
@@ -30,6 +39,15 @@ public class ObjectiveHandler : MonoBehaviour
     /// <returns></returns>
     public bool CheckAllObjectives()
     {
-        return _objectives.All(o => o.IsComplited);
+        return Objectives.All(o => o.IsComplited);
+    }
+
+    /// <summary>
+    /// Checks if any fail objectives are complited
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckFailObjectives()
+    {
+        return FailObjectives.Any(o => o.IsComplited);
     }
 }

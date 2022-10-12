@@ -22,9 +22,19 @@ public class Player : MonoBehaviour
 
     public Overlay Overlay;
 
+    public Building test;
+
     private void Awake()
     {
         HumanPlayer = GameObject.Find("Player1").GetComponent<Player>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown("t"))
+        {
+            test.Destroy();
+        }
     }
 
     public void AddUnit(Unit unit)

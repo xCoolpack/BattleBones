@@ -468,7 +468,7 @@ public class Unit : MonoBehaviour
             (Dictionary<Field, Field> graph, Field attackingField) = GraphSearch.AStarSearch(Field, targetField,
                 (currentField, startingField) => MovementScript.CanMove(this, currentField),
                 (field) => MovementScript.GetMovementPointsCostForUnit(this, field), GetDistance,
-                (currentField) =>possibleFieldsForAttack.Contains(currentField) );
+                (currentField) => possibleFieldsForAttack.Contains(currentField));
             //Move unit to that field
             MoveUnit(graph, attackingField);
         }
