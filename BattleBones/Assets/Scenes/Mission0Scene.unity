@@ -2077,6 +2077,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5801692695271579817, guid: f6ae945f094939f429dc15fd7142f95a, type: 3}
   m_PrefabInstance: {fileID: 266001561}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &266411241
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 266411242}
+  - component: {fileID: 266411243}
+  m_Layer: 0
+  m_Name: Mission0PrimaryObjective (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &266411242
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266411241}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 362875262}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &266411243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266411241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13db139c15e13549ba124d140505693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyPlayer: {fileID: 55676344}
+  <IsPrimary>k__BackingField: 1
+  <ObjectiveInfo>k__BackingField: Primary Obj 2
 --- !u!1001 &275112438
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2649,6 +2696,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1135273013}
+  - {fileID: 266411242}
   m_Father: {fileID: 662046947}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6540,7 +6588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPlayer: {fileID: 55676344}
   <IsPrimary>k__BackingField: 1
-  <ObjectiveInfo>k__BackingField: 
+  <ObjectiveInfo>k__BackingField: Primary Obj 1
 --- !u!4 &1137735448 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7260510673771770686, guid: ae63b689d470ce9459171d737d633d8a, type: 3}
@@ -9011,7 +9059,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ResourceManager: {fileID: 459017981}
   TurnHandler: {fileID: 2095766468}
-  ObjectiveHandler: {fileID: 0}
+  ObjectiveHandler: {fileID: 662046946}
   PickedBuilding: {fileID: 0}
   PickedUnit: {fileID: 0}
   PickedField: {fileID: 0}
