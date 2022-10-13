@@ -26,7 +26,7 @@ public class TurnHandler : MonoBehaviour
         Players[_playerIndex].RestoreUnitsMovementPoints();
         Players[_playerIndex].ApplyUnitsModifiers();
 
-        Debug.Log(ObjectiveHandler.CheckPrimaryObjectives());
+        //Debug.Log(ObjectiveHandler.CheckPrimaryObjectives());
     }
 
     private void NextPlayer()
@@ -45,6 +45,34 @@ public class TurnHandler : MonoBehaviour
         }
 
         CurrentPlayer = Players[_playerIndex];
+    }
+
+    private void CheckMissionObjectives()
+    {
+        if (ObjectiveHandler.CheckFailObjectives())
+        {
+            GameOver();
+        }
+        else if (ObjectiveHandler.CheckPrimaryObjectives())
+        {
+            GameWon();
+        }
+    }
+
+    /// <summary>
+    /// Method ending the mission when player won
+    /// </summary>
+    private void GameWon()
+    {
+        Debug.Log("Game won");
+    }
+
+    /// <summary>
+    /// Method ending the mission when player lost
+    /// </summary>
+    private void GameOver()
+    {
+        Debug.Log("Game over");
     }
 
     public bool IsPlayersTurn(Player player)
