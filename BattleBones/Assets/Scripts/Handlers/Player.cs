@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -25,6 +26,25 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         HumanPlayer = GameObject.Find("Player1").GetComponent<Player>();
+        //temp
+        UnitModifiersDictionary = new Dictionary<string, UnitModifiers>()
+        {
+            //dogs
+            {"Dog scout", new ()},
+            {"Dog", new ()},
+            {"Dog-at-arms", new ()},
+            {"Crossbowdog", new ()},
+            {"Dog-a-copter", new ()},
+            {"Battering dog", new ()},
+            {"Dog-a-pult", new ()},
+            //cats
+            {"Cat scout", new ()},
+            {"Cat", new ()},
+            {"Cat-at-arms", new ()},
+            {"Crossbowcat", new ()},
+            {"Cat-a-copter", new ()},
+            {"Mountain cat", new ()},
+        };
     }
 
     private void Update()
