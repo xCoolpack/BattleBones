@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,9 +16,10 @@ public class Mission : MonoBehaviour
 
     private void Awake()
     {
-        IsCompleted = false;
-
-        Debug.Log(CanStartMission());
+        foreach (var objective in Objectives.Where(objective => !PlayerPrefs.HasKey(objective.ObjectiveId.ToString())))
+        {
+            PlayerPrefs.SetInt(objective.ObjectiveId.ToString(), 0);
+        }
     }
 
     public bool CanStartMission()
@@ -39,10 +42,4 @@ public struct ObjectiveTuple
     /// </summary>
     public int ObjectiveId;
     public string ObjectiveDescription;
-
-    public ObjectiveTuple(int objectiveId, string objectiveDescription)
-    {
-        ObjectiveId = objectiveId;
-        ObjectiveDescription = objectiveDescription;
-    }
 }

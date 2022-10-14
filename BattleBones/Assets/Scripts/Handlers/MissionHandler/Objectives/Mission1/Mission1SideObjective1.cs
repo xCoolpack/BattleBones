@@ -9,13 +9,20 @@ public class Mission1SideObjective1 : MonoBehaviour, IObjective
     [field: SerializeField]
     public bool IsPrimary { get; set; }
 
-    public bool IsComplited => CompletionCheck();
+    [field: SerializeField]
+    public int ObjectiveId { get; set; }
+
+    public bool IsCompleted => CompletionCheck();
 
     [field: SerializeField]
     public string ObjectiveInfo { get; set; }
 
     private bool CompletionCheck()
     {
+        ObjectiveInfo = $"Current income: \t" +
+                        $"{_player.ResourceManager.ResourcesIncome.Gold}/150 \t" +
+                        $"{_player.ResourceManager.ResourcesIncome.Wood}/200 \t" +
+                        $"{_player.ResourceManager.ResourcesIncome.Stone}/200";
         return _player.ResourceManager.ResourcesIncome > new Resources(150, 200, 200);
     }
 }

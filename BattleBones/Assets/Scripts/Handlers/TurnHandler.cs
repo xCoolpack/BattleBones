@@ -65,6 +65,8 @@ public class TurnHandler : MonoBehaviour
     private void GameWon()
     {
         Debug.Log("Game won");
+        ObjectiveHandler.Objectives.ForEach(objective => 
+            PlayerPrefs.SetInt(objective.ObjectiveId.ToString(), objective.IsCompleted ? 1 : 0));
     }
 
     /// <summary>

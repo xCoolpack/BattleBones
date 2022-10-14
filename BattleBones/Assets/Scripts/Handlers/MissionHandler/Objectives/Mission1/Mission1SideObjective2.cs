@@ -9,13 +9,17 @@ public class Mission1SideObjective2 : MonoBehaviour, IObjective
     [field: SerializeField]
     public bool IsPrimary { get; set; }
 
-    public bool IsComplited => CompletionCheck();
+    [field: SerializeField]
+    public int ObjectiveId { get; set; }
+
+    public bool IsCompleted => CompletionCheck();
 
     [field: SerializeField]
     public string ObjectiveInfo { get; set; }
 
-    private bool CompletionCheck() 
+    private bool CompletionCheck()
     {
+        ObjectiveInfo = $"Current units {_player.Units.Count}/10";
         return _player.Units.Count >= 10;
     }
 }

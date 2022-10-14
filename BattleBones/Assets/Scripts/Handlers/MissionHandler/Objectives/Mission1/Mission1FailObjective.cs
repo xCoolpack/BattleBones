@@ -9,12 +9,15 @@ public class Mission1FailObjective : MonoBehaviour, IObjective
     [field: SerializeField]
     public bool IsPrimary { get; set; }
 
-    public bool IsComplited => CompletionCheck();
+    [field: SerializeField]
+    public int ObjectiveId { get; set; }
+
+    public bool IsCompleted => CompletionCheck();
 
     [field: SerializeField]
     public string ObjectiveInfo { get; set; }
 
-    private bool CompletionCheck() 
+    private bool CompletionCheck()
     {
         return _player.Buildings.FirstOrDefault(building => building.gameObject.GetComponent<Outpost>() != null) == null;
     }

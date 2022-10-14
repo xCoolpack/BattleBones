@@ -6,10 +6,15 @@
     public bool IsPrimary { get; set; }
 
     /// <summary>
-    /// Is objective complited
+    /// Objective id
+    /// </summary>
+    public int ObjectiveId { get; set; }
+
+    /// <summary>
+    /// Is objective completed
     /// </summary>
     /// <returns></returns>
-    public bool IsComplited { get; }
+    public bool IsCompleted { get; }
 
     /// <summary>
     /// Objective information
