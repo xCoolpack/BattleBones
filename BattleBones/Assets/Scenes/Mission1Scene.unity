@@ -11522,7 +11522,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 915598024}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &819764335
 MonoBehaviour:
@@ -11538,6 +11538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPlayer: {fileID: 55676344}
   <IsPrimary>k__BackingField: 0
+  <ObjectiveId>k__BackingField: 0
   <ObjectiveInfo>k__BackingField: Nie zgin
 --- !u!1001 &824201687
 PrefabInstance:
@@ -12706,6 +12707,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1806669294}
   - {fileID: 819764334}
   m_Father: {fileID: 662046947}
   m_RootOrder: 1
@@ -13997,7 +13999,6 @@ MonoBehaviour:
   _player: {fileID: 1354927224}
   <IsPrimary>k__BackingField: 0
   <ObjectiveId>k__BackingField: 0
-  <ObjectiveInfo>k__BackingField: Mantain 10 units
 --- !u!4 &1006527839 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7260510673771770686, guid: d23f17626068fb94d8a4d482c5ccee60, type: 3}
@@ -17000,7 +17001,6 @@ MonoBehaviour:
   _player: {fileID: 1354927224}
   <IsPrimary>k__BackingField: 0
   <ObjectiveId>k__BackingField: 0
-  <ObjectiveInfo>k__BackingField: 
 --- !u!1001 &1243752774
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21464,6 +21464,7 @@ GameObject:
   - component: {fileID: 1609666544}
   - component: {fileID: 1609666543}
   - component: {fileID: 1609666542}
+  - component: {fileID: 1609666545}
   m_Layer: 5
   m_Name: Overlay
   m_TagString: Untagged
@@ -21521,6 +21522,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &1609666545
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609666541}
+  m_Enabled: 1
+  m_SortingLayerID: 1643283725
+  m_SortingLayer: 4
+  m_SortingOrder: 0
 --- !u!1 &1612622098
 GameObject:
   m_ObjectHideFlags: 0

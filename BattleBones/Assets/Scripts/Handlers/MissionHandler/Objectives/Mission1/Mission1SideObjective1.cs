@@ -14,7 +14,6 @@ public class Mission1SideObjective1 : MonoBehaviour, IObjective
 
     public bool IsCompleted => CompletionCheck();
 
-    [field: SerializeField]
     public string ObjectiveInfo =>
         $@"Current income: \t {_player.ResourceManager.ResourcesIncome.Gold}/150 
         \t{_player.ResourceManager.ResourcesIncome.Wood}/200 

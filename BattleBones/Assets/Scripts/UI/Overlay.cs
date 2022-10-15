@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
 public class Overlay : MonoBehaviour
@@ -82,7 +83,10 @@ public class Overlay : MonoBehaviour
             ClearPicked();
         });
 
-        _objectivesMenu.Q<VisualElement>("OpenButton").RegisterCallback<ClickEvent>(_ => HandleObjectivesMenuClick());
+        _objectivesMenu.Q<VisualElement>("OpenButton").RegisterCallback<ClickEvent>(_ =>
+        {
+            HandleObjectivesMenuClick();
+        });
 
         RemoveInfoBox();
     }
@@ -101,25 +105,39 @@ public class Overlay : MonoBehaviour
     /// </summary>
     /// <param name="screenPos"></param>
     /// <returns></returns>
+    //public bool IsPointerOverUI()
+    //{
+    //    var screenPos = MousePosition;
+    //    Vector2 pointerUiPos = new Vector2 { x = screenPos.x, y = Screen.height - screenPos.y };
+    //    List<VisualElement> picked = new List<VisualElement>();
+    //    UiDocument.rootVisualElement.panel.PickAll(pointerUiPos, picked);
+    //    foreach (var ve in picked)
+    //        if (ve != null)
+    //        {
+    //            Color32 bcol = ve.resolvedStyle.backgroundColor;
+    //            if (bcol.a != 0 && ve.enabledInHierarchy)
+    //            {
+    //                Debug.Log("Pointer OVER UI");
+    //                return true;
+    //            }
+    //        }
+
+    //    Debug.Log("Pointer NOT OVER UI");
+    //    return false;
+    //}
+
     public bool IsPointerOverUI()
     {
-        var screenPos = MousePosition;
-        Vector2 pointerUiPos = new Vector2 { x = screenPos.x, y = Screen.height - screenPos.y };
-        List<VisualElement> picked = new List<VisualElement>();
-        UiDocument.rootVisualElement.panel.PickAll(pointerUiPos, picked);
-        foreach (var ve in picked)
-            if (ve != null)
-            {
-                Color32 bcol = ve.resolvedStyle.backgroundColor;
-                if (bcol.a != 0 && ve.enabledInHierarchy)
-                {
-                    Debug.Log("Pointer OVER UI");
-                    return true;
-                }
-            }
-
-        Debug.Log("Pointer NOT OVER UI");
-        return false;
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            Debug.Log("Over game object");
+            return false;
+        }
+        else
+        {
+            Debug.Log("Over UI");
+            return true;
+        }
     }
 
     /// <summary>
@@ -630,11 +648,11 @@ public class Overlay : MonoBehaviour
             {
                 var box = new VisualElement();
                 var primary = new Label(objective.IsPrimary ? "Primary" : "Side");
-                var complited = new Label(objective.IsComplited ? "Complited" : "Not complited");
+                var completed = new Label(objective.IsCompleted ? "Completed" : "Not completed");
                 var info = new Label(objective.ObjectiveInfo);
                 box.Add(primary);
                 box.Add(info);
-                box.Add(complited);
+                box.Add(completed);
                 box.AddToClassList("ObjectiveInfoBox");
                 list.Add(box);
             }
