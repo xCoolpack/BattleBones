@@ -29,35 +29,36 @@ public class Overlay : MonoBehaviour
     public Building PickedBuilding;
     public Unit PickedUnit;
     public Field PickedField;
+    public UIDocument UiDocument;
 
     private bool _isOnObjectivesMenu = false;
 
     private void OnEnable()
     {
         // Get references from UI
-        var uiDocument = GetComponent<UIDocument>();
-        _nextTurnButton = uiDocument.rootVisualElement.Q<Button>("NextTurnButton");
-        _turnCounterLabel = uiDocument.rootVisualElement.Q<Label>("TurnCounterLabel");
+        UiDocument = GetComponent<UIDocument>();
+        _nextTurnButton = UiDocument.rootVisualElement.Q<Button>("NextTurnButton");
+        _turnCounterLabel = UiDocument.rootVisualElement.Q<Label>("TurnCounterLabel");
 
-        _goldLabel = uiDocument.rootVisualElement.Q<Label>("GoldLabel");
-        _woodLabel = uiDocument.rootVisualElement.Q<Label>("WoodLabel");
-        _stoneLabel = uiDocument.rootVisualElement.Q<Label>("StoneLabel");
-        _doggiumLabel = uiDocument.rootVisualElement.Q<Label>("DoggiumLabel");
-        _boneLabel = uiDocument.rootVisualElement.Q<Label>("BoneLabel");
+        _goldLabel = UiDocument.rootVisualElement.Q<Label>("GoldLabel");
+        _woodLabel = UiDocument.rootVisualElement.Q<Label>("WoodLabel");
+        _stoneLabel = UiDocument.rootVisualElement.Q<Label>("StoneLabel");
+        _doggiumLabel = UiDocument.rootVisualElement.Q<Label>("DoggiumLabel");
+        _boneLabel = UiDocument.rootVisualElement.Q<Label>("BoneLabel");
 
-        _goldIncomeLabel = uiDocument.rootVisualElement.Q<Label>("GoldIncomeLabel");
-        _woodIncomeLabel = uiDocument.rootVisualElement.Q<Label>("WoodIncomeLabel");
-        _stoneIncomeLabel = uiDocument.rootVisualElement.Q<Label>("StoneIncomeLabel");
-        _doggiumIncomeLabel = uiDocument.rootVisualElement.Q<Label>("DoggiumIncomeLabel");
-        _boneIncomeLabel = uiDocument.rootVisualElement.Q<Label>("BoneIncomeLabel");
+        _goldIncomeLabel = UiDocument.rootVisualElement.Q<Label>("GoldIncomeLabel");
+        _woodIncomeLabel = UiDocument.rootVisualElement.Q<Label>("WoodIncomeLabel");
+        _stoneIncomeLabel = UiDocument.rootVisualElement.Q<Label>("StoneIncomeLabel");
+        _doggiumIncomeLabel = UiDocument.rootVisualElement.Q<Label>("DoggiumIncomeLabel");
+        _boneIncomeLabel = UiDocument.rootVisualElement.Q<Label>("BoneIncomeLabel");
 
-        _lowerContainer = uiDocument.rootVisualElement.Q<VisualElement>("LowerContainer");
-        _objectivesMenu = uiDocument.rootVisualElement.Q<VisualElement>("ObjectivesMenu");
+        _lowerContainer = UiDocument.rootVisualElement.Q<VisualElement>("LowerContainer");
+        _objectivesMenu = UiDocument.rootVisualElement.Q<VisualElement>("ObjectivesMenu");
 
         // Binding turn handler
         var tunHandlerSerializedObject = new SerializedObject(TurnHandler);
         _turnCounterLabel.bindingPath = "TurnCounter";
-        uiDocument.rootVisualElement.Bind(tunHandlerSerializedObject);
+        UiDocument.rootVisualElement.Bind(tunHandlerSerializedObject);
 
         // Binding resource manager
         var resourcesAmount = new SerializedObject(ResourceManager);
@@ -71,7 +72,7 @@ public class Overlay : MonoBehaviour
         _doggiumIncomeLabel.bindingPath = "ResourcesIncome.Doggium";
         _boneLabel.bindingPath = "ResourcesAmount.Bone";
         _boneIncomeLabel.bindingPath = "ResourcesIncome.Bone";
-        uiDocument.rootVisualElement.Bind(resourcesAmount);
+        UiDocument.rootVisualElement.Bind(resourcesAmount);
 
         // Registering callbacks
         _nextTurnButton.RegisterCallback<ClickEvent>(_ =>
@@ -84,6 +85,41 @@ public class Overlay : MonoBehaviour
         _objectivesMenu.Q<VisualElement>("OpenButton").RegisterCallback<ClickEvent>(_ => HandleObjectivesMenuClick());
 
         RemoveInfoBox();
+    }
+
+    public Vector2 MousePosition
+    {
+        get
+        {
+            var mousePos = new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y);
+            return RuntimePanelUtils.ScreenToPanel(UiDocument.rootVisualElement.panel, mousePos);
+        }
+    }
+
+    /// <summary>
+    /// Checks if mouse is over the ui
+    /// </summary>
+    /// <param name="screenPos"></param>
+    /// <returns></returns>
+    public bool IsPointerOverUI()
+    {
+        var screenPos = MousePosition;
+        Vector2 pointerUiPos = new Vector2 { x = screenPos.x, y = Screen.height - screenPos.y };
+        List<VisualElement> picked = new List<VisualElement>();
+        UiDocument.rootVisualElement.panel.PickAll(pointerUiPos, picked);
+        foreach (var ve in picked)
+            if (ve != null)
+            {
+                Color32 bcol = ve.resolvedStyle.backgroundColor;
+                if (bcol.a != 0 && ve.enabledInHierarchy)
+                {
+                    Debug.Log("Pointer OVER UI");
+                    return true;
+                }
+            }
+
+        Debug.Log("Pointer NOT OVER UI");
+        return false;
     }
 
     /// <summary>
@@ -166,8 +202,44 @@ public class Overlay : MonoBehaviour
     public void FieldInfoBox()
     {
         if (PickedField is null) throw new ArgumentNullException("PickedField has to be set");
-        var infoBox = CreateBasicInfoBox(PickedField.Type.FieldName);
-        // TODO
+        var title = $"{PickedField.Type.FieldName} - cost {PickedField.Type.MovementPointsCost}";
+        var infoBox = CreateBasicInfoBox(title);
+        var buildings = PickedField.Type.AllowableBuildings;
+
+        foreach (var building in buildings)
+        {
+            var buyBox = new VisualElement();
+            var buildingName = new Label(building.BaseBuildingStats.BuildingName);
+            var costs = new List<Label>();
+
+            var cost = building.BaseBuildingStats.BaseCost;
+
+            if (cost.Bone > 0)
+                costs.Add(new Label($"Bones: {cost.Bone}"));
+
+            if (cost.Doggium > 0)
+                costs.Add(new Label($"Doggium: {cost.Doggium}"));
+
+            if (cost.Gold > 0)
+                costs.Add(new Label($"Gold: {cost.Gold}"));
+
+            if (cost.Stone > 0)
+                costs.Add(new Label($"Stone: {cost.Stone}"));
+
+            if (cost.Wood > 0)
+                costs.Add(new Label($"Wood: {cost.Wood}"));
+
+            buyBox.Add(buildingName);
+            costs.ForEach(c => buyBox.Add(c));
+            var buyButton = new Button(() => Debug.Log("buy"))
+            {
+                text = "Build"
+            };
+            buyButton.AddToClassList("InfoBoxButton");
+            buyBox.Add(buyButton);
+            buyBox.AddToClassList("BuildBox");
+            infoBox.Add(buyBox);
+        }
     }
 
     /// <summary>
@@ -547,18 +619,25 @@ public class Overlay : MonoBehaviour
     {
         var list = new VisualElement();
         list.name = "ObjectivesList";
-
-        foreach (var objective in ObjectiveHandler.Objectives)
+        var listOfLists = new List<List<IObjective>>()
         {
-            var box = new VisualElement();
-            var primary = new Label(objective.IsPrimary ? "Primary" : "Side");
-            var complited = new Label(objective.IsCompleted ? "Completed" : "Not completed");
-            var info = new Label(objective.ObjectiveInfo);
-            box.Add(primary);
-            box.Add(info);
-            box.Add(complited);
-            box.AddToClassList("ObjectiveInfoBox");
-            list.Add(box);
+            ObjectiveHandler.Objectives,
+            ObjectiveHandler.FailObjectives
+        };
+
+        foreach (var objectives in listOfLists) {
+            foreach (var objective in objectives)
+            {
+                var box = new VisualElement();
+                var primary = new Label(objective.IsPrimary ? "Primary" : "Side");
+                var complited = new Label(objective.IsComplited ? "Complited" : "Not complited");
+                var info = new Label(objective.ObjectiveInfo);
+                box.Add(primary);
+                box.Add(info);
+                box.Add(complited);
+                box.AddToClassList("ObjectiveInfoBox");
+                list.Add(box);
+            }
         }
 
         _objectivesMenu.Add(list);
