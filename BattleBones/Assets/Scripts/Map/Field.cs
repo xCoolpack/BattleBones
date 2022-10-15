@@ -49,7 +49,7 @@ public class Field : MonoBehaviour
         // Right click
         if (Input.GetMouseButtonDown(1))
         {
-            if (_overlay.IsPointerOverUI())
+            if (_overlay.IsPointerOverUI)
             {
                 return;
             }
@@ -74,7 +74,7 @@ public class Field : MonoBehaviour
     // Left click
     private void OnMouseDown()
     {
-        if (_overlay.IsPointerOverUI())
+        if (_overlay.IsPointerOverUI)
         {
             return;
         }

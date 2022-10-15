@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
@@ -26,6 +28,7 @@ public class Overlay : MonoBehaviour
     private Label _boneIncomeLabel;
     private VisualElement _lowerContainer;
     private VisualElement _objectivesMenu;
+    private VisualElement _aspectRatioPanel;
 
     public Building PickedBuilding;
     public Unit PickedUnit;
@@ -33,6 +36,7 @@ public class Overlay : MonoBehaviour
     public UIDocument UiDocument;
 
     private bool _isOnObjectivesMenu = false;
+    public bool IsPointerOverUI { get; private set; }
 
     private void OnEnable()
     {
@@ -55,6 +59,8 @@ public class Overlay : MonoBehaviour
 
         _lowerContainer = UiDocument.rootVisualElement.Q<VisualElement>("LowerContainer");
         _objectivesMenu = UiDocument.rootVisualElement.Q<VisualElement>("ObjectivesMenu");
+
+        _aspectRatioPanel = UiDocument.rootVisualElement.Q<VisualElement>("AspectRatioPanel");
 
         // Binding turn handler
         var tunHandlerSerializedObject = new SerializedObject(TurnHandler);
@@ -88,56 +94,13 @@ public class Overlay : MonoBehaviour
             HandleObjectivesMenuClick();
         });
 
+        foreach (var child in _aspectRatioPanel.Children())
+        {
+            child.RegisterCallback<MouseEnterEvent>(_ => IsPointerOverUI = true);
+            child.RegisterCallback<MouseLeaveEvent>(_ => IsPointerOverUI = false);
+        }
+
         RemoveInfoBox();
-    }
-
-    public Vector2 MousePosition
-    {
-        get
-        {
-            var mousePos = new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y);
-            return RuntimePanelUtils.ScreenToPanel(UiDocument.rootVisualElement.panel, mousePos);
-        }
-    }
-
-    /// <summary>
-    /// Checks if mouse is over the ui
-    /// </summary>
-    /// <param name="screenPos"></param>
-    /// <returns></returns>
-    //public bool IsPointerOverUI()
-    //{
-    //    var screenPos = MousePosition;
-    //    Vector2 pointerUiPos = new Vector2 { x = screenPos.x, y = Screen.height - screenPos.y };
-    //    List<VisualElement> picked = new List<VisualElement>();
-    //    UiDocument.rootVisualElement.panel.PickAll(pointerUiPos, picked);
-    //    foreach (var ve in picked)
-    //        if (ve != null)
-    //        {
-    //            Color32 bcol = ve.resolvedStyle.backgroundColor;
-    //            if (bcol.a != 0 && ve.enabledInHierarchy)
-    //            {
-    //                Debug.Log("Pointer OVER UI");
-    //                return true;
-    //            }
-    //        }
-
-    //    Debug.Log("Pointer NOT OVER UI");
-    //    return false;
-    //}
-
-    public bool IsPointerOverUI()
-    {
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            Debug.Log("Over game object");
-            return false;
-        }
-        else
-        {
-            Debug.Log("Over UI");
-            return true;
-        }
     }
 
     /// <summary>
@@ -151,6 +114,7 @@ public class Overlay : MonoBehaviour
             return;
 
         _lowerContainer.Remove(infoBox);
+        IsPointerOverUI = false;
     }
 
     /// <summary>
@@ -158,10 +122,7 @@ public class Overlay : MonoBehaviour
     /// </summary>
     public void ClearPicked()
     {
-        if(PickedUnit is not null)
-        {
-            PickedUnit.ToggleOffAllMarks();
-        }
+        PickedUnit?.ToggleOffAllMarks();
         PickedBuilding = null;
         PickedField = null;
         PickedUnit = null;
@@ -177,6 +138,7 @@ public class Overlay : MonoBehaviour
             return;
 
         _lowerContainer.Remove(recruitmentBox);
+        IsPointerOverUI = false;
     }
 
     /// <summary>
