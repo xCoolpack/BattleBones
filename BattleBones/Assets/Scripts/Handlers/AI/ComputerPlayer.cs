@@ -34,13 +34,14 @@ public class ComputerPlayer : MonoBehaviour
             List<Move> moves = GenerateMoves(unit);
             SelectAndRunMoves(moves);
         }
-        
+
         //end turn?
+        playerComponent.TurnHandler.NextTurn();
     }
 
     public void SortPlayersEntities()
     {
-        // desc sort with ranged units going first
+        // desc sort with ranged units going first (only cat units for now)
         playerComponent.Units.Sort((b, a) =>
         {
             string[] rangedNames = {"Crossbowcat"};
@@ -96,13 +97,29 @@ public class ComputerPlayer : MonoBehaviour
 
     public List<Move> GenerateBuildingMoves(Building building)
     {
-        //TO-DO
-        return null;
+        List<Move> moves = new List<Move>();
+
+        if (building.BaseBuildingStats.BuildingName == "DefensiveTower")
+        {
+            //TO-DO: how to get defensive building
+        }
+
+        if (building.BaseBuildingStats.BuildingName != "Outpost")
+        {
+            //TO-DO: recruitment
+        }
+
+        return moves;
     }
 
     public void SelectAndRunMoves(List<Move> moves)
     {
         if (moves.Count == 0)
             return;
+
+        moves.OrderByDescending(move => move.EvalValue);
+
+        //TO-DO: introduce randomisation
+        moves[0].Execute();
     }
 }
