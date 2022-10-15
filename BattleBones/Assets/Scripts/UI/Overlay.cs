@@ -630,11 +630,11 @@ public class Overlay : MonoBehaviour
             {
                 var box = new VisualElement();
                 var primary = new Label(objective.IsPrimary ? "Primary" : "Side");
-                var complited = new Label(objective.IsComplited ? "Complited" : "Not complited");
+                var completed = new Label(objective.IsCompleted ? "Completed" : "Not completed");
                 var info = new Label(objective.ObjectiveInfo);
                 box.Add(primary);
                 box.Add(info);
-                box.Add(complited);
+                box.Add(completed);
                 box.AddToClassList("ObjectiveInfoBox");
                 list.Add(box);
             }

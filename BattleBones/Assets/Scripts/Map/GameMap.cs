@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -33,8 +34,10 @@ public class GameMap : MonoBehaviour
         FieldGrid.Clear();
         foreach (var field in FindObjectsOfType<Field>())
         {
-            FieldGrid.Add(field.Coordinates, field);
+            if (!FieldGrid.ContainsKey(field.Coordinates))
+                FieldGrid.Add(field.Coordinates, field);
         }
+        Debug.Log(FieldGrid.Count);
     }
 
     /// <summary>
