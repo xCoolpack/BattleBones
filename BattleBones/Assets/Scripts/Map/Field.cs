@@ -17,7 +17,7 @@ public class Field : MonoBehaviour
 
     // References
     public FieldType Type;
-    public Building Building; 
+    public Building Building;
     public Unit Unit;
     public GameMap GameMap;
     private SpriteRenderer _spriteRenderer;
@@ -52,6 +52,11 @@ public class Field : MonoBehaviour
         // Right click
         if (Input.GetMouseButtonDown(1))
         {
+            if (_overlay.IsPointerOverUI())
+            {
+                return;
+            }
+
             if (Mark_ == Mark.Movable)
             {
                 _overlay.PickedUnit.Move(this);
@@ -72,6 +77,10 @@ public class Field : MonoBehaviour
     // Left click
     private void OnMouseDown()
     {
+        if (_overlay.IsPointerOverUI())
+        {
+            return;
+        }
 
         if (Unit != null && Building != null)
         {
@@ -99,14 +108,26 @@ public class Field : MonoBehaviour
         HandleOnClick();
     }
 
+    private bool IsSeenByCurrentPlayer()
+    {
+        return SeenBy.ContainsKey(_overlay.TurnHandler.CurrentPlayer);
+    }
+
     /// <summary>
     /// Handles on click for this field
     /// </summary>
     public void HandleOnClick()
     {
+        if (IsSeenByCurrentPlayer())
+        {
+            _overlay.ClearPicked();
+            _overlay.PickedField = this;
+            _overlay.FieldInfoBox();
+            return;
+        }
+
         _overlay.ClearPicked();
-        _overlay.PickedField = this;
-        _overlay.FieldInfoBox();
+        _overlay.RemoveInfoBox();
     }
 
     /// <summary>
