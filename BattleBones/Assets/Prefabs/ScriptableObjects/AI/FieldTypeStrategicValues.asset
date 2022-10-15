@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5870eb455000fe49a987a2bb9ef32f0, type: 3}
-  m_Name: FieldStrategicValues
+  m_Name: FieldTypeStrategicValues
   m_EditorClassIdentifier: 
   fieldValues: []

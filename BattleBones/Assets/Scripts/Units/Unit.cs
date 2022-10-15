@@ -74,7 +74,14 @@ public class Unit : MonoBehaviour
         foreach (Player key in Field.SeenBy.Keys)
         {
             Show(key);
-        }
+        }   
+    }
+
+    public void UpdateFieldSets()
+    {
+        SetVisibleFields();
+        SetMoveableFields();
+        SetAttackableFields();
     }
 
     /// <summary>
