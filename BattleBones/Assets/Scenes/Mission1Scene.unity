@@ -195,6 +195,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7260510673771770686, guid: ae63b689d470ce9459171d737d633d8a, type: 3}
   m_PrefabInstance: {fileID: 802337180}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9606092 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3636441255636271323, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+  m_PrefabInstance: {fileID: 448772933}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f1388f571f008149a7b1459a8719948, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &10788705 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7260510673771770686, guid: ae63b689d470ce9459171d737d633d8a, type: 3}
@@ -930,6 +941,8 @@ MonoBehaviour:
   - {fileID: 1878106604}
   - {fileID: 1877851542}
   Overlay: {fileID: 0}
+  test: {fileID: 0}
+  test2: {fileID: 0}
 --- !u!4 &55676345
 Transform:
   m_ObjectHideFlags: 0
@@ -6336,6 +6349,87 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5801692695271579817, guid: f6ae945f094939f429dc15fd7142f95a, type: 3}
   m_PrefabInstance: {fileID: 1078076465}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &448772933
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 986514720}
+    m_Modifications:
+    - target: {fileID: 2143448562743333146, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143448562743333146, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143448562743333146, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143448562743333146, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143448562743333146, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143448562743333146, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143448562743333146, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143448562743333146, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143448562743333146, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143448562743333146, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143448562743333146, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3636441255636271323, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: Field
+      value: 
+      objectReference: {fileID: 986514721}
+    - target: {fileID: 3636441255636271323, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 1354927224}
+    - target: {fileID: 3636441255636271323, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: BuildingState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4676323450524676282, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: m_Name
+      value: Outpost
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903866804048829975, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5471698
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903866804048829975, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: m_Color.g
+      value: 0.19311894
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903866804048829975, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8c8292e597330ef4d8b6230888dd25ca, type: 3}
 --- !u!1001 &449025047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13855,6 +13949,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1354927224}
   <IsPrimary>k__BackingField: 0
+  <ObjectiveId>k__BackingField: 0
   <ObjectiveInfo>k__BackingField: Mantain 10 units
 --- !u!4 &1006527839 stripped
 Transform:
@@ -15564,6 +15659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPlayer: {fileID: 55676344}
   <IsPrimary>k__BackingField: 1
+  <ObjectiveId>k__BackingField: 0
   <ObjectiveInfo>k__BackingField: Destroy enemy Outpost
 --- !u!4 &1137735448 stripped
 Transform:
@@ -16856,6 +16952,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1354927224}
   <IsPrimary>k__BackingField: 0
+  <ObjectiveId>k__BackingField: 0
   <ObjectiveInfo>k__BackingField: 
 --- !u!1001 &1243752774
 PrefabInstance:
@@ -18114,8 +18211,11 @@ MonoBehaviour:
   - {fileID: 5565982200717348803, guid: ddeebbc15e43e0444b84f04058210e14, type: 3}
   Units:
   - {fileID: 1726256401}
-  Buildings: []
+  Buildings:
+  - {fileID: 9606092}
   Overlay: {fileID: 1609666542}
+  test: {fileID: 9606092}
+  test2: {fileID: 1878106604}
 --- !u!4 &1354927225
 Transform:
   m_ObjectHideFlags: 0
@@ -23144,6 +23244,10 @@ PrefabInstance:
       propertyPath: Unit
       value: 
       objectReference: {fileID: 1726256401}
+    - target: {fileID: 2136978895132901007, guid: ae63b689d470ce9459171d737d633d8a, type: 3}
+      propertyPath: Building
+      value: 
+      objectReference: {fileID: 9606092}
     - target: {fileID: 3226305129641127651, guid: ae63b689d470ce9459171d737d633d8a, type: 3}
       propertyPath: m_Name
       value: PlainsField (2)
@@ -24198,6 +24302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1354927224}
   <IsPrimary>k__BackingField: 0
+  <ObjectiveId>k__BackingField: 0
   <ObjectiveInfo>k__BackingField: Defend your outpost
 --- !u!1001 &1820605142
 PrefabInstance:

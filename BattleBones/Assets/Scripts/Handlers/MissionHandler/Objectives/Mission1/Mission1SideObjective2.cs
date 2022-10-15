@@ -15,11 +15,10 @@ public class Mission1SideObjective2 : MonoBehaviour, IObjective
     public bool IsCompleted => CompletionCheck();
 
     [field: SerializeField]
-    public string ObjectiveInfo { get; set; }
+    public string ObjectiveInfo => $"Current units {_player.Units.Count}/10";
 
     private bool CompletionCheck()
     {
-        ObjectiveInfo = $"Current units {_player.Units.Count}/10";
         return _player.Units.Count >= 10;
     }
 }

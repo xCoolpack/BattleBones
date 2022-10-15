@@ -20,7 +20,7 @@ public class ObjectiveHandler : MonoBehaviour
         childTransform = transform.Find("FailObjectives").transform;
         for (int i = 0; i < childTransform.childCount; i++)
         {
-            Objectives.Add(childTransform.GetChild(i).gameObject.GetComponent<IObjective>());
+            FailObjectives.Add(childTransform.GetChild(i).gameObject.GetComponent<IObjective>());
         }
     }
 

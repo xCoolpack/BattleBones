@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TurnHandler : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class TurnHandler : MonoBehaviour
         Players[_playerIndex].RestoreUnitsMovementPoints();
         Players[_playerIndex].ApplyUnitsModifiers();
 
-        //Debug.Log(ObjectiveHandler.CheckPrimaryObjectives());
+        CheckMissionObjectives();
     }
 
     private void NextPlayer()
@@ -67,6 +68,7 @@ public class TurnHandler : MonoBehaviour
         Debug.Log("Game won");
         ObjectiveHandler.Objectives.ForEach(objective => 
             PlayerPrefs.SetInt(objective.ObjectiveId.ToString(), objective.IsCompleted ? 1 : 0));
+        SceneManager.LoadScene("CampaignMapScene");
     }
 
     /// <summary>

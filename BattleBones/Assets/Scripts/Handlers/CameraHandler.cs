@@ -49,19 +49,19 @@ public class CameraHandler : MonoBehaviour
         value *= CameraSpeed * Time.deltaTime;
 
         // Movement for mouse
-        Vector2 mousePos = _mousePosition.ReadValue<Vector2>();
-        // Up
-        if (mousePos.y >= Screen.height - BorderThickness)
-            value.y += CameraSpeed * Time.deltaTime;
-        // Down
-        if (mousePos.y <= BorderThickness)
-            value.y -= CameraSpeed * Time.deltaTime;
-        // Left
-        if (mousePos.x <= BorderThickness)
-            value.x -= CameraSpeed * Time.deltaTime;
-        // Right
-        if (mousePos.x >= Screen.width - BorderThickness)
-            value.x += CameraSpeed * Time.deltaTime;
+        //Vector2 mousePos = _mousePosition.ReadValue<Vector2>();
+        //// Up
+        //if (mousePos.y >= Screen.height - BorderThickness)
+        //    value.y += CameraSpeed * Time.deltaTime;
+        //// Down
+        //if (mousePos.y <= BorderThickness)
+        //    value.y -= CameraSpeed * Time.deltaTime;
+        //// Left
+        //if (mousePos.x <= BorderThickness)
+        //    value.x -= CameraSpeed * Time.deltaTime;
+        //// Right
+        //if (mousePos.x >= Screen.width - BorderThickness)
+        //    value.x += CameraSpeed * Time.deltaTime;
 
         // Scroll
         float scroll = _scroll.ReadValue<float>();
