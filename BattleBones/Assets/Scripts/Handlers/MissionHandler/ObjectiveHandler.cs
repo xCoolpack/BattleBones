@@ -30,7 +30,7 @@ public class ObjectiveHandler : MonoBehaviour
     /// <returns></returns>
     public bool CheckPrimaryObjectives()
     {
-        return !Objectives.Any(o => o.IsPrimary && !o.IsComplited);
+        return !Objectives.Any(o => o.IsPrimary && !o.IsCompleted);
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public class ObjectiveHandler : MonoBehaviour
     /// <returns></returns>
     public bool CheckAllObjectives()
     {
-        return Objectives.All(o => o.IsComplited);
+        return Objectives.All(o => o.IsCompleted);
     }
 
     /// <summary>
@@ -48,6 +48,6 @@ public class ObjectiveHandler : MonoBehaviour
     /// <returns></returns>
     public bool CheckFailObjectives()
     {
-        return FailObjectives.Any(o => o.IsComplited);
+        return FailObjectives.Any(o => o.IsCompleted);
     }
 }

@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class Mission0PrimaryObjective : MonoBehaviour, IObjective
+public class Mission1PrimaryObjective : MonoBehaviour, IObjective
 {
     [SerializeField]
     private Player _enemyPlayer;
@@ -13,7 +13,6 @@ public class Mission0PrimaryObjective : MonoBehaviour, IObjective
     public int ObjectiveId { get; set; }
 
     public bool IsCompleted => CompletionCheck();
-
 
     [field: SerializeField]
     public string ObjectiveInfo { get; set; }

@@ -1,11 +1,13 @@
+using System.Linq;
 using UnityEngine;
 
-public class TestObjective : MonoBehaviour, IObjective
+public class Mission1SideObjective2 : MonoBehaviour, IObjective
 {
-    public Player Player;
+    [SerializeField]
+    private Player _player;
 
     [field: SerializeField]
-    public bool IsPrimary { get; set; } = true;
+    public bool IsPrimary { get; set; }
 
     [field: SerializeField]
     public int ObjectiveId { get; set; }
@@ -15,12 +17,9 @@ public class TestObjective : MonoBehaviour, IObjective
     [field: SerializeField]
     public string ObjectiveInfo { get; set; }
 
-    /// <summary>
-    /// Mission for 10 gold amount
-    /// </summary>
-    /// <returns></returns>
     private bool CompletionCheck()
     {
-        return Player.ResourceManager.ResourcesAmount.Gold > 10;
+        ObjectiveInfo = $"Current units {_player.Units.Count}/10";
+        return _player.Units.Count >= 10;
     }
 }
