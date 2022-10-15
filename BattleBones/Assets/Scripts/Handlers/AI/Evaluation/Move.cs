@@ -1,18 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Move : MonoBehaviour
+public class Move
 {
-    // Start is called before the first frame update
-    void Start()
+    public int EvalValue { get; set; }
+    public Action MoveAction;
+
+    public Move(int evalValue, Action moveAction)
     {
-        
+        EvalValue = evalValue;
+        MoveAction = moveAction;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Execute()
     {
-        
+        MoveAction();
     }
 }
