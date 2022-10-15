@@ -5,18 +5,13 @@ using UnityEngine;
 
 public class ComputerPlayer : MonoBehaviour
 {
-    public static Player playerComponent;
+    public Player playerComponent;
     public EvaluationEngine evaluationEngine;
 
     void Awake()
     {
-        playerComponent = GameObject.Find("Player2").GetComponent<Player>();
-    }
-
-    void Update()
-    {
-        if (playerComponent.IsPlayersTurn())
-            ProcessTurn();
+        playerComponent = GetComponent<Player>();
+        evaluationEngine = new EvaluationEngine();
     }
 
     public void ProcessTurn()
@@ -35,7 +30,6 @@ public class ComputerPlayer : MonoBehaviour
             SelectAndRunMoves(moves);
         }
 
-        //end turn?
         playerComponent.TurnHandler.NextTurn();
     }
 
@@ -69,8 +63,8 @@ public class ComputerPlayer : MonoBehaviour
     public List<Move> GenerateUnitMoves(Unit unit)
     {
         List<Move> moves = new List<Move>();
+        unit.UpdateFieldSets();
         List<Field> attackableFields = unit.AttackableFields;
-
         //TO-DO: consider defending/healing
 
         //for now units always attack if possible (this might become permanent)

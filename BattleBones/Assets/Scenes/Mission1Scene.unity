@@ -906,6 +906,7 @@ GameObject:
   m_Component:
   - component: {fileID: 55676345}
   - component: {fileID: 55676344}
+  - component: {fileID: 55676346}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -960,6 +961,20 @@ Transform:
   m_Father: {fileID: 2095766469}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &55676346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55676343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df2b2ca2959dca6409146212fa681cc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerComponent: {fileID: 0}
+  evaluationEngine: {fileID: 0}
 --- !u!4 &58151246 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4881552863685125914, guid: 90bad53b184cbd94fa05177e22429de6, type: 3}
@@ -29181,9 +29196,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TurnCounter: 0
-  Players:
-  - {fileID: 1354927224}
-  - {fileID: 55676344}
+  HumanPlayer: {fileID: 1354927224}
+  ComputerPlayerObj: {fileID: 55676346}
   GlobalEventHandler: {fileID: 221945677}
   ObjectiveHandler: {fileID: 662046946}
 --- !u!4 &2095766469

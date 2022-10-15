@@ -7,45 +7,57 @@ public class TurnHandler : MonoBehaviour
 {
     public int TurnCounter;
     public Player CurrentPlayer { get; private set; }
-    private int _playerIndex;
-    public List<Player> Players;
+    private bool _humanTurn;
+    public Player HumanPlayer;
+    public ComputerPlayer ComputerPlayerObj;
     public EventHandler GlobalEventHandler;
     public ObjectiveHandler ObjectiveHandler;
 
     // Start is called before the first frame update
     void Start()
     {
-        _playerIndex = 0;
-        CurrentPlayer = Players[_playerIndex];
+        _humanTurn = true;
+        CurrentPlayer = HumanPlayer;
     }
 
     public void NextTurn(){
-        Players[_playerIndex].PlayerEventHandler.TurnEnd();
-        NextPlayer();
-        Players[_playerIndex].PlayerEventHandler.TurnStart();
-        Players[_playerIndex].ResourceManager.GenerateIncome();
-        Players[_playerIndex].RestoreUnitsMovementPoints();
-        Players[_playerIndex].ApplyUnitsModifiers();
-
+        CurrentPlayer.PlayerEventHandler.TurnEnd();
         CheckMissionObjectives();
+        NextPlayer();
+        CurrentPlayer.PlayerEventHandler.TurnStart();
+        CurrentPlayer.ResourceManager.GenerateIncome();
+        CurrentPlayer.RestoreUnitsMovementPoints();
+        CurrentPlayer.ApplyUnitsModifiers();
+        if (!_humanTurn)
+        {
+            ComputerPlayerObj.ProcessTurn();
+        }
+
+         /*Players[_playerIndex].PlayerEventHandler.TurnEnd();
+         NextPlayer();
+         Players[_playerIndex].PlayerEventHandler.TurnStart();
+         Players[_playerIndex].ResourceManager.GenerateIncome();
+         Players[_playerIndex].RestoreUnitsMovementPoints();
+         Players[_playerIndex].ApplyUnitsModifiers();*/
+
+         
     }
 
     private void NextPlayer()
     {
-        if (_playerIndex < Players.Count - 1)
+        if (_humanTurn)
         {
-            _playerIndex++;
+            CurrentPlayer = ComputerPlayerObj.playerComponent;
         }
         else
         {
-            // End of global turn
-            _playerIndex = 0;
+            CurrentPlayer = HumanPlayer;
             TurnCounter++;
             GlobalEventHandler.TurnEnd();
             GlobalEventHandler.TurnStart();
         }
 
-        CurrentPlayer = Players[_playerIndex];
+        _humanTurn = !_humanTurn;
     }
 
     private void CheckMissionObjectives()
