@@ -546,12 +546,13 @@ public class Unit : MonoBehaviour
 
     public bool CanPlunder()
     {
-        return Field.HasBuilding() && Field.Building.IsEnemy(Player);
+        return CurrentMovementPoints >= 1 && Field.HasBuilding() && Field.Building.IsEnemy(Player);
     }
 
     public void Plunder()
     {
         Field.Building.TakeDamage(CurrentDamage);
+        CurrentMovementPoints -= 1;
     }
 
     #endregion
