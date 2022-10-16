@@ -35,7 +35,7 @@ public class Overlay : MonoBehaviour
     public Field PickedField;
     public UIDocument UiDocument;
 
-    private bool _isOnObjectivesMenu = false;
+    private bool _isOnObjectivesMenu;
     public bool IsPointerOverUI { get; private set; }
 
     private void OnEnable()
@@ -181,7 +181,7 @@ public class Overlay : MonoBehaviour
     /// </summary>
     public void FieldInfoBox()
     {
-        if (PickedField is null) throw new ArgumentNullException("PickedField has to be set");
+        if (PickedField is null) throw new ArgumentNullException(nameof(PickedField),"PickedField has to be set");
         var title = $"{PickedField.Type.FieldName} - cost {PickedField.Type.MovementPointsCost}";
         var infoBox = CreateBasicInfoBox(title);
         var buildings = PickedField.Type.AllowableBuildings;
@@ -211,12 +211,22 @@ public class Overlay : MonoBehaviour
 
             buyBox.Add(buildingName);
             costs.ForEach(c => buyBox.Add(c));
-            var buyButton = new Button(() => Debug.Log("buy"))
+
+            if (PickedField.CanConstruct(TurnHandler.CurrentPlayer, building.name))
             {
-                text = "Build"
-            };
-            buyButton.AddToClassList("InfoBoxButton");
-            buyBox.Add(buyButton);
+                var buyButton = new Button(() => PickedField.BeginBuildingConstruction(TurnHandler.CurrentPlayer, building.name))
+                {
+                    text = "Build"
+                };
+                buyButton.AddToClassList("InfoBoxButton");
+                buyBox.Add(buyButton);
+            }
+            else
+            {
+                var cantAffordLabel = new Label("Can't afford");
+                buyBox.Add(cantAffordLabel);
+            }
+
             buyBox.AddToClassList("BuildBox");
             infoBox.Add(buyBox);
         }
@@ -228,7 +238,7 @@ public class Overlay : MonoBehaviour
     /// <param name="showButtons"></param>
     public void UnitInfoBox(bool showButtons)
     {
-        if (PickedUnit is null) throw new ArgumentNullException("PickedUnit has to be set");
+        if (PickedUnit is null) throw new ArgumentNullException(nameof(PickedUnit),"PickedUnit has to be set");
         var infoBox = CreateBasicInfoBox(PickedUnit.BaseUnitStats.UnitName);
         var statsBox = new VisualElement();
         var statsBoxLeft = new VisualElement();
@@ -398,11 +408,11 @@ public class Overlay : MonoBehaviour
     /// <param name="defensiveBuilding"></param>
     public void DefensiveBuildingInfoBox(DefensiveBuilding defensiveBuilding, bool showButtons)
     {
-        if (PickedBuilding is null) throw new ArgumentNullException("PickedBuilding has to be set");
+        if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding), "PickedBuilding has to be set");
 
         var (statsBox, buttonsBox) = CreateDefensiveBuildingInfoBox(defensiveBuilding);
 
-        if (showButtons && PickedBuilding.BuildingState == BuildingState.Plundered)
+        if (showButtons && PickedBuilding.CanRepair())
         {
             var repairButton = new Button(() =>
             {
@@ -425,11 +435,11 @@ public class Overlay : MonoBehaviour
     /// <param name="showButtons"></param>
     public void OutpostInfoBox(DefensiveBuilding defensiveBuilding, Outpost outpost, bool showButtons)
     {
-        if (PickedBuilding is null) throw new ArgumentNullException("PickedBuilding has to be set");
+        if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding), "PickedBuilding has to be set");
 
         var (_, buttonsBox) = CreateDefensiveBuildingInfoBox(defensiveBuilding);
 
-        if (showButtons && PickedBuilding.BuildingState == BuildingState.Plundered)
+        if (showButtons && PickedBuilding.CanRepair())
         {
             var repairButton = new Button(() =>
             {
@@ -480,7 +490,7 @@ public class Overlay : MonoBehaviour
     /// <param name="showButtons"></param>
     public void IncomeBuildingInfoBox(IncomeBuilding incomeBuilding, bool showButtons)
     {
-        if (PickedBuilding is null) throw new ArgumentNullException("PickedBuilding has to be set");
+        if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding), "PickedBuilding has to be set");
 
         var (statsBox, buttonsBox) = CreateBuildingInfoBox(PickedBuilding);
         VisualElement statsBoxLeft = ((List<VisualElement>)statsBox.Children())[0];
@@ -519,7 +529,7 @@ public class Overlay : MonoBehaviour
         }
 
 
-        if (showButtons && PickedBuilding.BuildingState == BuildingState.Plundered)
+        if (showButtons && PickedBuilding.CanRepair())
         {
             var repairButton = new Button(() =>
             {
@@ -541,11 +551,11 @@ public class Overlay : MonoBehaviour
     /// <param name="showButtons"></param>
     public void HousingInfoBox(Housing housing, bool showButtons)
     {
-        if (PickedBuilding is null) throw new ArgumentNullException("PickedBuilding has to be set");
+        if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding),"PickedBuilding has to be set");
 
         var (statsBox, buttonsBox) = CreateBuildingInfoBox(PickedBuilding);
 
-        if (showButtons && PickedBuilding.BuildingState == BuildingState.Plundered)
+        if (showButtons && PickedBuilding.CanRepair())
         {
             var repairButton = new Button(() =>
             {
@@ -568,13 +578,13 @@ public class Overlay : MonoBehaviour
     }
 
     /// <summary>
-    /// Creates an info box for the giveb Barricade
+    /// Creates an info box for the given Barricade
     /// </summary>
     /// <param name="barricade"></param>
     /// <param name="showButtons"></param>
     public void BarricadeInfoBox(Barricade barricade, bool showButtons)
     {
-        if (PickedBuilding is null) throw new ArgumentNullException("PickedBuilding has to be set");
+        if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding),"PickedBuilding has to be set");
         var (statsBox, buttonsBox) = CreateBuildingInfoBox(PickedBuilding);
     }
 
@@ -597,8 +607,11 @@ public class Overlay : MonoBehaviour
     /// </summary>
     private void ToggleOnObjectives()
     {
-        var list = new VisualElement();
-        list.name = "ObjectivesList";
+        var list = new VisualElement
+        {
+            name = "ObjectivesList"
+        };
+
         var listOfLists = new List<List<IObjective>>()
         {
             ObjectiveHandler.Objectives,

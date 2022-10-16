@@ -74,14 +74,14 @@ public class ComputerPlayer : MonoBehaviour
 
             foreach (Field field in moveableFields)
             {
-                moves.Add(new Move(evaluationEngine.evaluate("move", unit, field), 
+                moves.Add(new Move(evaluationEngine.Evaluate("move", unit, field), 
                     () => { unit.Move(field); }));
             }
         }
 
         foreach (Field field in attackableFields)
         {
-            moves.Add(new Move(evaluationEngine.evaluate("move", unit, field), 
+            moves.Add(new Move(evaluationEngine.Evaluate("move", unit, field), 
                 () => { unit.Attack(field); }));
         }
 
