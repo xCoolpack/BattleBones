@@ -20,4 +20,5 @@ MonoBehaviour:
     Health: 0
     Damage: 0
     Defense: 0
-  AllowableBuildings: []
+  AllowableBuildings:
+  - {fileID: 3636441255636271323, guid: c10a5b9113f29c34d939c8db705f5520, type: 3}

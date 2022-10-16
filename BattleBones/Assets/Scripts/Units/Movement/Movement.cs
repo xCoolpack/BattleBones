@@ -11,7 +11,7 @@ public abstract class Movement : MonoBehaviour
     public bool CanMove(Unit unit, Field field) 
     {
         return field.IsSeenBy(unit.Player) && !field.IsObstacle() && !field.HasUnit() && 
-               (!field.HasBuilding() || (!field.Building.IsEnemy(unit.Player) || field.Building.BaseBuildingStats.IsPassable));
+               (!field.HasBuilding() || field.Building.IsPassable(unit.Player));
     }
 
     

@@ -331,6 +331,7 @@ public class Field : MonoBehaviour
         Building building = Instantiate(buildingPrefab, this.transform).GetComponent<Building>();
         building.Player = player;
         building.Field = this;
+        building.CurrentHealth = 0;
         Building = building;
         building.BuildingState = BuildingState.UnderConstruction;
         player.AddBuilding(Building);
@@ -344,7 +345,8 @@ public class Field : MonoBehaviour
 
         building.ShowFields();
 
-        player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, building.Construct));
+        building.BuildingGameEvent = new GameEvent(1, building.Construct);
+        player.PlayerEventHandler.AddStartTurnEvent(building.BuildingGameEvent);
     }
 
     public override string ToString()

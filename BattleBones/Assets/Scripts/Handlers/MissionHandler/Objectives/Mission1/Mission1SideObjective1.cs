@@ -13,8 +13,7 @@ public class Mission1SideObjective1 : MonoBehaviour, IObjective
     public int ObjectiveId { get; set; }
 
     public bool IsCompleted => CompletionCheck();
-
-    [field: SerializeField]
+    
     public string ObjectiveInfo => $@"Current income: 
     Gold: {_player.ResourceManager.ResourcesIncome.Gold}/150 
     Wood: {_player.ResourceManager.ResourcesIncome.Wood}/200 
