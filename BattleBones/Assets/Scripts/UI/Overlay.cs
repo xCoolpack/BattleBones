@@ -185,6 +185,8 @@ public class Overlay : MonoBehaviour
         var title = $"{PickedField.Type.FieldName} - cost {PickedField.Type.MovementPointsCost}";
         var infoBox = CreateBasicInfoBox(title);
         var buildings = PickedField.Type.AllowableBuildings;
+        var container = new VisualElement();
+        container.AddToClassList("BuildBoxContainer");
 
         foreach (var building in buildings)
         {
@@ -219,17 +221,22 @@ public class Overlay : MonoBehaviour
                     text = "Build"
                 };
                 buyButton.AddToClassList("InfoBoxButton");
+                buyButton.AddToClassList("BuildButton");
                 buyBox.Add(buyButton);
             }
             else
             {
                 var cantAffordLabel = new Label("Can't afford");
+                cantAffordLabel.AddToClassList("BuildButton");
                 buyBox.Add(cantAffordLabel);
             }
 
             buyBox.AddToClassList("BuildBox");
-            infoBox.Add(buyBox);
+            container.Add(buyBox);
         }
+
+        infoBox.AddToClassList("BuildInfoBox");
+        infoBox.Add(container);
     }
 
     /// <summary>
@@ -252,23 +259,44 @@ public class Overlay : MonoBehaviour
 
         if (showButtons)
         {
-            var healButton = new Button(() =>
+            if (PickedUnit.CanHeal())
             {
-                PickedUnit.BeginHealing();
-                UnitInfoBox(showButtons);
-            })
-            {
-                text = "Heal"
-            };
+                var healButton = new Button(() =>
+                {
+                    PickedUnit.BeginHealing();
+                    UnitInfoBox(showButtons);
+                })
+                {
+                    text = "Heal"
+                };
+                healButton.AddToClassList("InfoBoxButton");
+                buttonsBox.Add(healButton);
+            }
 
-            var defendButton = new Button(() =>
+            if (PickedUnit.CanDefend())
             {
-                PickedUnit.BeginDefending();
-                UnitInfoBox(showButtons);
-            })
+                var defendButton = new Button(() =>
+                {
+                    PickedUnit.BeginDefending();
+                    UnitInfoBox(showButtons);
+                })
+                {
+                    text = "Defend"
+                };
+                defendButton.AddToClassList("InfoBoxButton");
+                buttonsBox.Add(defendButton);
+            }
+
+            if (PickedUnit.CanPlunder())
             {
-                text = "Defend"
-            };
+                var plunderButton = new Button(() =>
+                {
+                    PickedUnit.Plunder();
+                    UnitInfoBox(showButtons);
+                });
+                plunderButton.AddToClassList("InfoBoxButton");
+                buttonsBox.Add(plunderButton);
+            }
 
             var deleteButton = new Button(() =>
             {
@@ -278,18 +306,12 @@ public class Overlay : MonoBehaviour
             {
                 text = "Delete"
             };
-
-            healButton.AddToClassList("InfoBoxButton");
-            defendButton.AddToClassList("InfoBoxButton");
+            
             deleteButton.AddToClassList("InfoBoxButton");
-            buttonsBox.Add(healButton);
-            buttonsBox.Add(defendButton);
             buttonsBox.Add(deleteButton);
         }
 
         var hpBar = new HpBar(PickedUnit.CurrentHealth, PickedUnit.MaxHealth);
-
-
         hpBar.AddToClassList("InnerInfoBox");
 
         statsBoxLeft.Add(damageLabel);
@@ -314,7 +336,6 @@ public class Overlay : MonoBehaviour
         buttonsBox.AddToClassList("ButtonsInfoBox");
         statsBoxLeft.AddToClassList("InnerStatsInfoBox");
         statsBoxRight.AddToClassList("InnerStatsInfoBox");
-
 
         statsBox.Add(statsBoxLeft);
         statsBox.Add(statsBoxRight);

@@ -210,15 +210,26 @@
 }
 
 .BuildBox{
-    border-left-width: 1px;
-    border-right-width: 1px;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
-    border-left-color: rgb(0, 0, 0);
-    border-right-color: rgb(0, 0, 0);
-    border-top-color: rgb(0, 0, 0);
-    border-bottom-color: rgb(0, 0, 0);
-    width: 150px;
+    width: 130px;
     height: 100%;
     padding: 2px;
+    border-right-width: 1px;
+    border-right-color: rgb(0, 0, 0);
+}
+
+.BuildBoxContainer{
+    height: 100%;
+    flex-direction: row;
+    border-bottom-color: rgb(0, 0, 0);
+    border-bottom-width: 1px;
+}
+
+.BuildInfoBox{
+    width: auto;
+}
+
+.BuildButton{
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
 }
