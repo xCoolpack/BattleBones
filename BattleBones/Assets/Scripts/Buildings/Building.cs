@@ -11,6 +11,7 @@ public enum BuildingState
     Fine,
     Plundered,
     UnderRepair,
+    None
 } 
 
 
@@ -76,13 +77,18 @@ public class Building : MonoBehaviour
 
     public bool IsPassable(Player player)
     {
-        return !IsEnemy(player) || BaseBuildingStats.IsPassable ||
-               BuildingState is BuildingState.Plundered or BuildingState.UnderRepair;
+        return !IsEnemy(player) 
+               || BaseBuildingStats.IsPassable 
+               || BuildingState is BuildingState.Plundered or BuildingState.UnderConstruction 
+               || PreviousBuildingState == BuildingState.Plundered; 
     }
 
     public bool CanBeTargeted(Player player)
     {
-        return IsEnemy(player) && BuildingState != BuildingState.Plundered && !IsPassable(player);
+        return IsEnemy(player) 
+               && BuildingState != BuildingState.Plundered 
+               && PreviousBuildingState != BuildingState.Plundered
+               && !IsPassable(player);
     }
 
     public bool CanAffordConstruction(Player player)

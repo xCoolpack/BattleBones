@@ -333,6 +333,7 @@ public class Field : MonoBehaviour
         building.Field = this;
         building.CurrentHealth = 0;
         Building = building;
+        building.PreviousBuildingState = BuildingState.None;
         building.BuildingState = BuildingState.UnderConstruction;
         player.AddBuilding(Building);
         player.ResourceManager.RemoveAmount(building.BaseBuildingStats.BaseCost);
