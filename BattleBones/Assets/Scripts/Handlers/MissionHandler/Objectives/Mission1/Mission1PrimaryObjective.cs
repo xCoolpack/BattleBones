@@ -1,4 +1,5 @@
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class Mission1PrimaryObjective : MonoBehaviour, IObjective
@@ -17,8 +18,10 @@ public class Mission1PrimaryObjective : MonoBehaviour, IObjective
     [field: SerializeField]
     public string ObjectiveInfo { get; set; }
 
-    private bool CompletionCheck() 
+    private bool CompletionCheck()
     {
-        return _enemyPlayer.Buildings.FirstOrDefault(building => building.gameObject.GetComponent<Outpost>() != null) == null;
+        var building =
+            _enemyPlayer.Buildings.FirstOrDefault(building => building.gameObject.GetComponent<Outpost>() != null);
+        return building == null || building.BuildingState == BuildingState.Plundered;
     }
 }

@@ -19,6 +19,8 @@ public class Mission1FailObjective : MonoBehaviour, IObjective
 
     private bool CompletionCheck()
     {
-        return _player.Buildings.FirstOrDefault(building => building.gameObject.GetComponent<Outpost>() != null) == null;
+        var building =
+            _player.Buildings.FirstOrDefault(building => building.gameObject.GetComponent<Outpost>() != null);
+        return building == null || building.BuildingState == BuildingState.Plundered;
     }
 }

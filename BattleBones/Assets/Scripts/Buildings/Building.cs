@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.UI.CanvasScaler;
 
 public enum BuildingState
 {
@@ -27,6 +29,8 @@ public class Building : MonoBehaviour
     public Player Player;
     public Field Field;
     public BuildingState BuildingState;
+    public BuildingState PreviousBuildingState;
+    public GameEvent BuildingGameEvent;
     private Overlay _overlay;
     public List<Field> VisibleFields;
 
@@ -68,6 +72,17 @@ public class Building : MonoBehaviour
     public bool IsEnemy(Player player)
     {
         return Player != player;
+    }
+
+    public bool IsPassable(Player player)
+    {
+        return !IsEnemy(player) || BaseBuildingStats.IsPassable ||
+               BuildingState is BuildingState.Plundered or BuildingState.UnderRepair;
+    }
+
+    public bool CanBeTargeted(Player player)
+    {
+        return IsEnemy(player) && BuildingState != BuildingState.Plundered && !IsPassable(player);
     }
 
     public bool CanAffordConstruction(Player player)
@@ -132,17 +147,33 @@ public class Building : MonoBehaviour
 
     public void Construct()
     {
-        BuildingState = BuildingState.Fine;
+        CurrentHealth = MaxHealth;
         Field.Unit?.AddUnitModifiers(Field.Building.GetUnitModifiers());
 
         // Methods in "derived" scripts
         GetComponent<IncomeBuilding>()?.Construct();
         GetComponent<Housing>()?.Construct();
+
+        PreviousBuildingState = BuildingState;
+        BuildingState = BuildingState.Fine;
     }
 
 
     public void TakeDamage(int damage)
     {
+        if (BuildingState == BuildingState.UnderConstruction)
+        {
+            Player.PlayerEventHandler.RemoveStartTurnEvent(BuildingGameEvent);
+            Destroy();
+            return;
+        }
+        else if (BuildingState == BuildingState.UnderRepair)
+        {
+            Player.PlayerEventHandler.RemoveStartTurnEvent(BuildingGameEvent);
+            BuildingGameEvent = null;
+            return;
+        }
+
         CurrentHealth -= damage;
 
         if (CurrentHealth <= 0) 
@@ -151,35 +182,48 @@ public class Building : MonoBehaviour
 
     public void Plunder()
     {
-        BuildingState = BuildingState.Plundered;
         Field.Unit?.RemoveUnitModifiers(Field.Building.GetUnitModifiers());
+        CurrentHealth = 0;
 
         // Methods in "derived" scripts
         GetComponent<IncomeBuilding>()?.Plunder();
         GetComponent<Housing>()?.Plunder();
+
+        PreviousBuildingState = BuildingState;
+        BuildingState = BuildingState.Plundered;
     }
 
     public bool CanRepair()
     {
-        return CanAffordRepair();
+        return CurrentHealth < MaxHealth && CanAffordRepair();
     }
 
     public void BeginRepair()
     {
-        BuildingState = BuildingState.UnderRepair;
         Player.ResourceManager.RemoveAmount(BaseBuildingStats.BaseCost/2);
-        Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(BaseRepairCooldown, Repair));
+        BuildingGameEvent = new GameEvent(BaseRepairCooldown, Repair);
+
+        PreviousBuildingState = BuildingState;
+        BuildingState = BuildingState.UnderRepair;
+
+        Player.PlayerEventHandler.AddStartTurnEvent(BuildingGameEvent);
     }
 
     public void Repair()
     {
-        BuildingState = BuildingState.Fine;
         CurrentHealth = MaxHealth;
-        Field.Unit?.AddUnitModifiers(Field.Building.GetUnitModifiers());
 
-        // Methods in "derived" scripts
-        GetComponent<IncomeBuilding>()?.Repair();
-        GetComponent<Housing>()?.Repair();
+        if (PreviousBuildingState == BuildingState.Plundered)
+        {
+            Field.Unit?.AddUnitModifiers(Field.Building.GetUnitModifiers());
+
+            // Methods in "derived" scripts
+            GetComponent<IncomeBuilding>()?.Repair();
+            GetComponent<Housing>()?.Repair();
+        }
+
+        PreviousBuildingState = BuildingState;
+        BuildingState = BuildingState.Fine;
     }
 
     public void Destroy()

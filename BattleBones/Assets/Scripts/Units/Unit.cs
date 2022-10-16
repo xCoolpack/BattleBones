@@ -544,8 +544,22 @@ public class Unit : MonoBehaviour
         ChangeModifiersFromHealth();
     }
 
-    
+    public bool CanPlunder()
+    {
+        return Field.HasBuilding() && Field.Building.IsEnemy(Player);
+    }
+
+    public void Plunder()
+    {
+        Field.Building.TakeDamage(CurrentDamage);
+    }
+
     #endregion
+
+    public bool CanHeal()
+    {
+        return CurrentMovementPoints > 0 && CurrentHealth <= MaxHealth;
+    }
 
     public void BeginHealing()
     {
@@ -557,6 +571,11 @@ public class Unit : MonoBehaviour
     {
         CurrentHealth = Math.Min(CurrentHealth + (int)Math.Ceiling(HealRatio*MaxHealth), MaxHealth);
         ChangeModifiersFromHealth();
+    }
+
+    public bool CanDefend()
+    {
+        return CurrentMovementPoints > 0;
     }
 
     public void BeginDefending()
