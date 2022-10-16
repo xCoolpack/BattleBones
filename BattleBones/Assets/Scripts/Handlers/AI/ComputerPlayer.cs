@@ -11,7 +11,6 @@ public class ComputerPlayer : MonoBehaviour
     void Awake()
     {
         playerComponent = GetComponent<Player>();
-        evaluationEngine = new EvaluationEngine();
     }
 
     public void ProcessTurn()
