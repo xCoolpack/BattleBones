@@ -32,7 +32,7 @@ public class ResourceManager : MonoBehaviour
 
     public void RemoveAmount(Resources res)
     {
-        ResourcesAmount += res;
+        ResourcesAmount -= res;
     }
 }
 

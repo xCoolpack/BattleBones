@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,12 +7,14 @@ public class Mission : MonoBehaviour
 {
     public string MissionName;
     public string MissionDescription;
-    public bool IsCompleted;
+    public bool IsCompleted => PlayerPrefs.GetInt(MissionName) == 1;
     public List<Mission> PreviousMissions;
     public List<ObjectiveTuple> Objectives;
 
     private void Awake()
     {
+        if (!PlayerPrefs.HasKey(MissionName)) 
+            PlayerPrefs.SetInt(MissionName, 0);
         foreach (var objective in Objectives.Where(objective => !PlayerPrefs.HasKey(objective.ObjectiveId.ToString())))
         {
             PlayerPrefs.SetInt(objective.ObjectiveId.ToString(), 0);

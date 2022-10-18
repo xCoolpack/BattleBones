@@ -80,6 +80,8 @@ public class TurnHandler : MonoBehaviour
         Debug.Log("Game won");
         ObjectiveHandler.Objectives.ForEach(objective => 
             PlayerPrefs.SetInt(objective.ObjectiveId.ToString(), objective.IsCompleted ? 1 : 0));
+        var name = SceneManager.GetActiveScene().name;
+        PlayerPrefs.SetInt(name.Substring(0, name.Length - 5), 1);
         SceneManager.LoadScene("CampaignMapScene");
     }
 

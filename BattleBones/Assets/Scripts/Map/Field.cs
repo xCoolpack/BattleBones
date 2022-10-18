@@ -320,9 +320,11 @@ public class Field : MonoBehaviour
     public bool CanConstruct(Player player, string buildingName)
     {
         GameObject buildingPrefab = player.AvailableBuildings.FirstOrDefault(g => g.name == buildingName);
-        if (buildingPrefab is null)
-            return false;
-        return IsSeenBy(player) && !HasBuilding() && buildingPrefab.GetComponent<Building>().CanAffordConstruction(player);
+        Debug.Log(buildingPrefab != null);
+        Debug.Log(IsSeenBy(player));
+        Debug.Log(!HasBuilding());
+        Debug.Log(buildingPrefab.GetComponent<Building>().CanAffordConstruction(player));
+        return buildingPrefab != null && IsSeenBy(player) && !HasBuilding() && buildingPrefab.GetComponent<Building>().CanAffordConstruction(player);
     }
 
     public void BeginBuildingConstruction(Player player, string buildingName)
