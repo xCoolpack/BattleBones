@@ -351,7 +351,7 @@ public class Overlay : MonoBehaviour
     /// <param name="showButtons"></param>
     private (VisualElement, VisualElement) CreateBuildingInfoBox(bool showButtons)
     {
-        var infoBox = CreateBasicInfoBox(PickedBuilding.BaseBuildingStats.BuildingName);
+        var infoBox = CreateBasicInfoBox($"{PickedBuilding.BaseBuildingStats.BuildingName}-{PickedBuilding.GetBuildingStateName()}");
         var sightRangeLabel = new Label($"Sight range: {PickedBuilding.SightRange}");
         var repairLabel = new Label($"Repair cooldown: {PickedBuilding.BaseRepairCooldown}");
         var statsBox = new VisualElement();

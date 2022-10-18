@@ -75,6 +75,23 @@ public class Building : MonoBehaviour
         return Player != player;
     }
 
+    public string GetBuildingStateName()
+    {
+        switch (BuildingState)
+        {
+            case BuildingState.UnderConstruction:
+                return "Under construction";
+            case BuildingState.Fine:
+                return "Fine";
+            case BuildingState.Plundered:
+                return "Plundered";
+            case BuildingState.UnderRepair:
+                return "Under repair";
+            default:
+                return "";
+        }
+    }
+
     public bool IsPassable(Player player)
     {
         return !IsEnemy(player) 
