@@ -935,7 +935,17 @@ MonoBehaviour:
   PlayerEventHandler: {fileID: 803453024}
   UnlockedUnits:
   - {fileID: 0}
-  AvailableBuildings: []
+  AvailableBuildings:
+  - {fileID: 4676323450524676282, guid: ba88bbd48ffd52240a0edf78d9c58ba5, type: 3}
+  - {fileID: 4676323450524676282, guid: c67cf3a2a1c79504d8e2014d5a444d3b, type: 3}
+  - {fileID: 4676323450524676282, guid: 8f295966afb0a274aae200d43e284011, type: 3}
+  - {fileID: 4676323450524676282, guid: c10a5b9113f29c34d939c8db705f5520, type: 3}
+  - {fileID: 4676323450524676282, guid: b29dc87981e4fc2469d25b7f74eaa6b3, type: 3}
+  - {fileID: 4676323450524676282, guid: 132ed9fa6c9570a4bb65588a866e4c7b, type: 3}
+  - {fileID: 4676323450524676282, guid: b6646dda718e47a428e4d4dc30e2d513, type: 3}
+  - {fileID: 5565982200717348803, guid: ddeebbc15e43e0444b84f04058210e14, type: 3}
+  - {fileID: 4676323450524676282, guid: 203640c0b75c4784e8a9dcc1d4b9622d, type: 3}
+  - {fileID: 4676323450524676282, guid: e4a3918dd4eef43499fcf0a5cfbbbd35, type: 3}
   Units:
   - {fileID: 1829760002}
   Buildings:
@@ -18266,7 +18276,16 @@ MonoBehaviour:
   UnlockedUnits:
   - {fileID: 0}
   AvailableBuildings:
+  - {fileID: 4676323450524676282, guid: ba88bbd48ffd52240a0edf78d9c58ba5, type: 3}
+  - {fileID: 4676323450524676282, guid: c67cf3a2a1c79504d8e2014d5a444d3b, type: 3}
+  - {fileID: 4676323450524676282, guid: 8f295966afb0a274aae200d43e284011, type: 3}
+  - {fileID: 4676323450524676282, guid: c10a5b9113f29c34d939c8db705f5520, type: 3}
+  - {fileID: 4676323450524676282, guid: b29dc87981e4fc2469d25b7f74eaa6b3, type: 3}
+  - {fileID: 4676323450524676282, guid: b6646dda718e47a428e4d4dc30e2d513, type: 3}
   - {fileID: 5565982200717348803, guid: ddeebbc15e43e0444b84f04058210e14, type: 3}
+  - {fileID: 4676323450524676282, guid: 203640c0b75c4784e8a9dcc1d4b9622d, type: 3}
+  - {fileID: 4676323450524676282, guid: e4a3918dd4eef43499fcf0a5cfbbbd35, type: 3}
+  - {fileID: 4676323450524676282, guid: 132ed9fa6c9570a4bb65588a866e4c7b, type: 3}
   Units:
   - {fileID: 1726256401}
   Buildings:
@@ -21216,6 +21235,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7260510673771770686, guid: d23f17626068fb94d8a4d482c5ccee60, type: 3}
   m_PrefabInstance: {fileID: 1243752774}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1585725600 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2136978895132901007, guid: ae63b689d470ce9459171d737d633d8a, type: 3}
+  m_PrefabInstance: {fileID: 359825838}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f9cdf06719594d4e80bb26220ea40fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1586688498
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29257,6 +29287,7 @@ MonoBehaviour:
   ComputerPlayerObj: {fileID: 55676346}
   GlobalEventHandler: {fileID: 221945677}
   ObjectiveHandler: {fileID: 662046946}
+  test: {fileID: 1585725600}
 --- !u!4 &2095766469
 Transform:
   m_ObjectHideFlags: 0

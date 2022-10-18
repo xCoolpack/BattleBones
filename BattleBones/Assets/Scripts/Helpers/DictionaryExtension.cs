@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public static class DictionaryExtension
 {
@@ -8,13 +9,13 @@ public static class DictionaryExtension
     /// <typeparam name="T"></typeparam>
     /// <param name="dict"></param>
     /// <param name="element"></param>
-    /// <returns>True if dictionary didn't contain key before incrementation</returns>
+    /// <returns>True if dictionary didn't contain key or has value 0 before incrementation</returns>
     public static bool Increase<T>(this Dictionary<T, int> dict, T element)
     {
         if (dict.ContainsKey(element))
         {
             dict[element] += 1;
-            return false;
+            return dict[element] <= 1;
         }
 
         dict.Add(element, 1);
@@ -27,16 +28,10 @@ public static class DictionaryExtension
     /// <typeparam name="T"></typeparam>
     /// <param name="dict"></param>
     /// <param name="element"></param>
-    /// <returns>True if dictionary no longer contains key</returns>
+    /// <returns>True if key dictionary has value 0</returns>
     public static bool Decrease<T>(this Dictionary<T, int> dict, T element)
     {
-        dict[element] -= 1;
-        if (dict[element] <= 0)
-        {
-            dict.Remove(element);
-            return true;
-        }
-
-        return false;
+        dict[element] = System.Math.Max(dict[element] - 1, 0);
+        return dict[element] <= 0;
     }
 }

@@ -71,9 +71,10 @@ public class Unit : MonoBehaviour
         // Set unit visibility
         ShowFields();
 
-        foreach (Player key in Field.SeenBy.Keys)
+        foreach (var pair in Field.SeenBy)
         {
-            Show(key);
+            if (pair.Value > 0)
+                Show(pair.Key);
         }   
     }
 
@@ -394,7 +395,7 @@ public class Unit : MonoBehaviour
         // Rethink - apply show and hide methods for every position in movement path
         // Hide fields that unit no longer see
         SetVisibleFields();
-        List<Field> temp = VisibleFields; 
+        List<Field> temp = VisibleFields;
 
         // Remove modifiers from starting field
         RemoveUnitModifiers(Field.Type.FieldUnitModifiers);
@@ -413,6 +414,18 @@ public class Unit : MonoBehaviour
 
         // Show fields that unit now see
         ChangeFieldsVisibility(temp);
+
+        foreach (var keyValuePair in Field.SeenBy)
+        {
+            Debug.Log($"{keyValuePair.Key} - {keyValuePair.Value}");
+        }
+
+        // Show unit to every player that see this field
+        foreach (var pair in Field.SeenBy)
+            if (pair.Value > 0)
+                Show(pair.Key);
+            else if (pair.Value <= 0)
+                Hide(pair.Key);
 
         MoveGraphicModel(accessibleMovementPath);
     }

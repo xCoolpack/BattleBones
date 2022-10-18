@@ -52,9 +52,10 @@ public class Building : MonoBehaviour
     {
         _overlay = GameObject.Find("Overlay").GetComponent<Overlay>();
         // Set building visibility
-        foreach (Player key in Field.SeenBy.Keys)
+        foreach (var pair in Field.SeenBy)
         {
-            Discover(key);
+            if (pair.Value > 0)
+                Discover(pair.Key);
         }
 
         ShowFields();

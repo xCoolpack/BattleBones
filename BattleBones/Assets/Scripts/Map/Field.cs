@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Field : MonoBehaviour
@@ -31,6 +32,9 @@ public class Field : MonoBehaviour
     {
         DiscoveredBy = new HashSet<Player>();
         SeenBy = new Dictionary<Player, int>();
+        var turnHandler = GameObject.Find("TurnHandler").GetComponent<TurnHandler>();
+        SeenBy[turnHandler.HumanPlayer] = 0;
+        SeenBy[turnHandler.ComputerPlayerObj.GetComponent<Player>()] = 0;
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _fieldSprite = _spriteRenderer.sprite;
         _spriteRenderer.sprite = _fogOfWarSprite;
@@ -173,7 +177,7 @@ public class Field : MonoBehaviour
         Show(player);
     }
 
-    private void Show(Player player)
+    public void Show(Player player)
     {
         Building?.Discover(player);
 
@@ -183,14 +187,8 @@ public class Field : MonoBehaviour
 
     public void Hide(Player player)
     {
-        if (Coordinates.x == 4 && Coordinates.y == -7)
-            foreach(var key in SeenBy.Keys)
-                Debug.Log($"KEy: {key}, count : {SeenBy[key]}");
         if (SeenBy.Decrease(player))
         {
-            if (Coordinates.x == 4 && Coordinates.y == -7)
-                foreach (var key in SeenBy.Keys)
-                    Debug.Log($"KEy: {key}, count : {SeenBy[key]}");
             Unit?.Hide(player);
         }
     }
@@ -320,10 +318,6 @@ public class Field : MonoBehaviour
     public bool CanConstruct(Player player, string buildingName)
     {
         GameObject buildingPrefab = player.AvailableBuildings.FirstOrDefault(g => g.name == buildingName);
-        Debug.Log(buildingPrefab != null);
-        Debug.Log(IsSeenBy(player));
-        Debug.Log(!HasBuilding());
-        Debug.Log(buildingPrefab.GetComponent<Building>().CanAffordConstruction(player));
         return buildingPrefab != null && IsSeenBy(player) && !HasBuilding() && buildingPrefab.GetComponent<Building>().CanAffordConstruction(player);
     }
 
