@@ -209,8 +209,8 @@ public class Unit : MonoBehaviour
     private Dictionary<Field, int> GetMoveableFields() 
     {
        return GraphSearch.BreadthFirstSearchDict(Field, CurrentMovementPoints,
-            (currentField, startingField) => MovementScript.CanMove(this, currentField),
-            (field) => MovementScript.GetMovementPointsCostForUnit(this, field));
+            (currentField, startingField) => MovementScript.CanMoveAll(this, currentField),
+            (field) => MovementScript.GetMovementPointsCostAll(this, field));
     }
 
     public void ToggleOnMoveableFields() 
@@ -352,8 +352,8 @@ public class Unit : MonoBehaviour
         if (targetField == Field)
             return false;
         (Dictionary<Field, Field> graph, _) = GraphSearch.AStarSearch(Field, targetField, 
-            (currentField, startingField) => MovementScript.CanMove(this, currentField), 
-            (field) => MovementScript.GetMovementPointsCostForUnit(this, field), GetDistance, targetField => false);
+            (currentField, startingField) => MovementScript.CanMoveAll(this, currentField), 
+            (field) => MovementScript.GetMovementPointsCostAll(this, field), GetDistance, targetField => false);
         
         MoveUnit(graph, targetField);
 
@@ -370,18 +370,20 @@ public class Unit : MonoBehaviour
         var accessibleMovementPath = new List<Field>();
         int movementPointCost = 0;
         int nextMovementPointCost = 0;
+        Field previousField = null;
 
         foreach (var field in movementPath)
         {
-            nextMovementPointCost += MovementScript.GetMovementPointsCostForUnit(this, field);
-            if (CurrentMovementPoints < nextMovementPointCost)
+            nextMovementPointCost += MovementScript.GetMovementPointsCost(this, field);
+            if (CurrentMovementPoints < nextMovementPointCost && MovementScript.CanMoveVisible(this, field))
                 break;
 
             accessibleMovementPath.Add(field);
+            previousField = field;
             movementPointCost = nextMovementPointCost;
         }
 
-        MoveReferences(targetField, movementPointCost, accessibleMovementPath);
+        MoveReferences(previousField, movementPointCost, accessibleMovementPath);
     }
 
     /// <summary>
@@ -414,11 +416,6 @@ public class Unit : MonoBehaviour
 
         // Show fields that unit now see
         ChangeFieldsVisibility(temp);
-
-        foreach (var keyValuePair in Field.SeenBy)
-        {
-            Debug.Log($"{keyValuePair.Key} - {keyValuePair.Value}");
-        }
 
         // Show unit to every player that see this field
         foreach (var pair in Field.SeenBy)
@@ -470,31 +467,32 @@ public class Unit : MonoBehaviour
         return MovementScript.CanMove(this, currentField) || possibleFieldsForAttack.Contains(currentField);
     }
 
-    public bool Attack(Field targetField)
+    public void Attack(Field targetField)
     {
         if (targetField == Field)
-            return false;
+            return ;
 
         //Find path to field from unit can attack
         List<Field> possibleFieldsForAttack = GetFieldsFromUnitCanAttack(targetField);
         
         // If unit cannot access attacked unit return false
         if (possibleFieldsForAttack.Count == 0)
-            return false;
+            return ;
 
         //If unit cannot attack from current field, move it
         if (!possibleFieldsForAttack.Contains(Field))
         {
             (Dictionary<Field, Field> graph, Field attackingField) = GraphSearch.AStarSearch(Field, targetField,
-                (currentField, startingField) => MovementScript.CanMove(this, currentField),
-                (field) => MovementScript.GetMovementPointsCostForUnit(this, field), GetDistance,
+                (currentField, startingField) => MovementScript.CanMoveAll(this, currentField),
+                (field) => MovementScript.GetMovementPointsCostAll(this, field), GetDistance,
                 (currentField) => possibleFieldsForAttack.Contains(currentField));
             //Move unit to that field
             MoveUnit(graph, attackingField);
         }
 
-        //Check if unit have enough movement points to attack
-        if (AttackScript.HaveEnoughMovementPoints(CurrentMovementPoints, this, targetField))
+        //Check if unit can attack and have enough movement points to attack
+        if (possibleFieldsForAttack.Contains(Field) 
+            && AttackScript.HaveEnoughMovementPoints(CurrentMovementPoints, this, targetField))
         {
             //Deal damage to unit
             if (AttackScript.CanTargetBuilding(this, targetField))
@@ -503,15 +501,11 @@ public class Unit : MonoBehaviour
                 DealDamage(targetField.Unit);
             //If unit is melee and destroy enemy unit, move unit to new position 
             if (AttackRange == 1 && MovementScript.CanMove(this, targetField))
-                MoveReferences(targetField, MovementScript.GetMovementPointsCostForUnit(this, targetField),
+                MoveReferences(targetField, MovementScript.GetMovementPointsCost(this, targetField),
                     new List<Field>() {targetField});
 
             CurrentMovementPoints = 0;
         }
-        else
-            return false;
-
-        return true;
     }
 
     public void DealDamage(Building building)

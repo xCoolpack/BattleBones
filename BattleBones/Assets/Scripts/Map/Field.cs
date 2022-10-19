@@ -195,7 +195,7 @@ public class Field : MonoBehaviour
 
     public bool IsSeenBy(Player player)
     {
-        return SeenBy.ContainsKey(player);
+        return SeenBy.ContainsKey(player) && SeenBy[player] > 0;
     }
 
     public bool IsBuildingDiscoveredBy(Player player)
@@ -362,22 +362,22 @@ public static class Direction
 {
     public static List<Vector2Int> OffsetEven = new()
     {
-        new Vector2Int(0, 1), //NL
         new Vector2Int(1, 1), //NR
         new Vector2Int(1, 0), //E
         new Vector2Int(1, -1), //SR
         new Vector2Int(0, -1), //SL
         new Vector2Int(-1, 0), //W
+        new Vector2Int(0, 1), //NL
     };
 
     public static List<Vector2Int> OffsetOdd = new()
     {
-        new Vector2Int(-1, 1), //NL
         new Vector2Int(0, 1), //NR
         new Vector2Int(1, 0), //E
         new Vector2Int(0, -1), //SR
         new Vector2Int(-1, -1), //SL
         new Vector2Int(-1, 0), //W
+        new Vector2Int(-1, 1), //NL
     };
 
     public static List<Vector2Int> GetDirectionList(int y)

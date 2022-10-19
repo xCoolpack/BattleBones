@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NormalMovement : Movement
 {
-    public override int GetMovementPointsCostForUnit(Unit unit, Field field)
+    public override int GetMovementPointsCost(Unit unit, Field field)
     {
         return field.GetMovementPointsCost();
     }

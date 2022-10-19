@@ -7,7 +7,7 @@ public class FlyingMovement : Movement
     public int ForestCost;
     public int HillsCost;
 
-    public override int GetMovementPointsCostForUnit(Unit unit, Field field)
+    public override int GetMovementPointsCost(Unit unit, Field field)
     {
         switch (field.Type.FieldName)
         {
