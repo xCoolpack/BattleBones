@@ -8,4 +8,6 @@ public class UnitRelatedEvaluation : MonoBehaviour
     public UnitStrategicValue UnitStrategicValue;
     public AttackDanger AttackDanger;
     public AttackValuability AttackValuability;
+
+    public CustomEvaluationCharacteristics CustomEval;
 }
