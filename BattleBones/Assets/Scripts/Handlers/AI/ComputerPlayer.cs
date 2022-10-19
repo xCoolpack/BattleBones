@@ -81,7 +81,7 @@ public class ComputerPlayer : MonoBehaviour
 
         foreach (Field field in attackableFields)
         {
-            moves.Add(new Move(evaluationEngine.Evaluate("move", unit, field), 
+            moves.Add(new Move(evaluationEngine.Evaluate("unitAttack", unit, field), 
                 () => { unit.Attack(field); }));
         }
 
