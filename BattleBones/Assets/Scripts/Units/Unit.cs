@@ -650,5 +650,14 @@ public class Unit : MonoBehaviour
         ToggleOffMoveableFields();
         ToggleOffAttackableFields();
     }
-}
 
+    public void TurnOnChosenMark()
+    {
+        Field.TurnOnChosenMark();
+    }
+
+    public void TurnOffChosenMark()
+    {
+        Field.TurnOffChosenMark();
+    }
+}

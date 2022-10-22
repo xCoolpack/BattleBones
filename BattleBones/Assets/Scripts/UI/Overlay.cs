@@ -150,7 +150,7 @@ public class Overlay : MonoBehaviour
     }
 
     /// <summary>
-    /// Creates base info box with title. Removes existing info box
+    /// Creates base info box with title. Removes existing info box-
     /// </summary>
     /// <param name="title"></param>
     private VisualElement CreateBasicInfoBox(string title)

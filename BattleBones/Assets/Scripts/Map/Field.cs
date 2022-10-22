@@ -62,17 +62,21 @@ public class Field : MonoBehaviour
 
             if (Mark_ == Mark.Movable)
             {
+                _overlay.PickedUnit.TurnOffChosenMark();
                 _overlay.PickedUnit.Move(this);
                 _overlay.UnitInfoBox(true);
                 _overlay.PickedUnit.ToggleOffAllMarks();
                 _overlay.PickedUnit.UpdateAndDisplayMarks();
+                _overlay.PickedUnit.TurnOnChosenMark();
             }
             else if (Mark_ == Mark.Attackable)
             {
+                _overlay.PickedUnit.TurnOffChosenMark();
                 _overlay.PickedUnit.Attack(this);
                 _overlay.UnitInfoBox(true);
                 _overlay.PickedUnit.ToggleOffAllMarks();
                 _overlay.PickedUnit.UpdateAndDisplayMarks();
+                _overlay.PickedUnit.TurnOnChosenMark();
             }
         }
     }
@@ -123,6 +127,12 @@ public class Field : MonoBehaviour
             Mark_ = Mark.Chosen;
             ChosenMark.SetActive(true);
         }
+    }
+
+    public void TurnOffChosenMark()
+    {
+        Mark_ = Mark.Unmarked;
+        ChosenMark.SetActive(false);
     }
 
     private GameObject GetChosenMark()
