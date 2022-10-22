@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public TurnHandler TurnHandler;
     public int MaxUnitCap;
     public int CurrentUnitCap => Units.Count;
+    public int UnitsKilled;
     public int TradeBuildingCounter;
     public string Faction;
     public ResourceManager ResourceManager;
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         HumanPlayer = GameObject.Find("Player1").GetComponent<Player>();
+        UnitsKilled = 0;
         //temp
         UnitModifiersDictionary = new Dictionary<string, UnitModifiers>()
         {

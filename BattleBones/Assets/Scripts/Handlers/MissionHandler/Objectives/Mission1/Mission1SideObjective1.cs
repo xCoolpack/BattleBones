@@ -15,12 +15,12 @@ public class Mission1SideObjective1 : MonoBehaviour, IObjective
     public bool IsCompleted => CompletionCheck();
     
     public string ObjectiveInfo => $@"Current income: 
-    Gold: {_player.ResourceManager.ResourcesIncome.Gold}/150 
-    Wood: {_player.ResourceManager.ResourcesIncome.Wood}/200 
-    Stone: {_player.ResourceManager.ResourcesIncome.Stone}/200";
+    Gold: {_player.ResourceManager.ResourcesIncome.Gold}/50 
+    Wood: {_player.ResourceManager.ResourcesIncome.Wood}/100 
+    Stone: {_player.ResourceManager.ResourcesIncome.Stone}/100";
 
     private bool CompletionCheck()
     {
-        return _player.ResourceManager.ResourcesIncome > new Resources(150, 200, 200);
+        return _player.ResourceManager.ResourcesIncome > new Resources(50, 100, 100);
     }
 }

@@ -532,7 +532,8 @@ public class Unit : MonoBehaviour
         
         unit.TakeDamage(CurrentDamage);
         if (AttackScript.IsProvokingCounterAttack())
-            TakeDamage(damage);
+            if (TakeDamage(damage))
+                Player.UnitsKilled++;
     }
 
     /// <summary>
@@ -540,15 +541,19 @@ public class Unit : MonoBehaviour
     /// </summary>
     /// <param name="damage"></param>
     /// <returns></returns>
-    public void TakeDamage(int damage)
+    public bool TakeDamage(int damage)
     {
         CurrentHealth -= UnitCalculation.CalculateDealtDamage(damage, CurrentDefense);
 
         if (CurrentHealth <= 0)
+        {
             Delete();
+            return true;
+        }
 
         // Recalculate DamageModifiers from missing health
         ChangeModifiersFromHealth();
+        return false;
     }
 
     public bool CanPlunder()
