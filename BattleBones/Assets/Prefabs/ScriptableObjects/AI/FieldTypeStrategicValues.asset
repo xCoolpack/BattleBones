@@ -12,4 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5870eb455000fe49a987a2bb9ef32f0, type: 3}
   m_Name: FieldTypeStrategicValues
   m_EditorClassIdentifier: 
-  fieldValues: []
+  fieldValues:
+  - fieldName: Forest
+    fieldValue: 2
+  - fieldName: Hills
+    fieldValue: 2
+  - fieldName: Plains
+    fieldValue: 1
+  - fieldName: Mountains
+    fieldValue: 2
+  - fieldName: Stone
+    fieldValue: 1
+  - fieldName: Wood
+    fieldValue: 1

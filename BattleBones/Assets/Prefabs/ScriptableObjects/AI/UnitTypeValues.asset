@@ -14,28 +14,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitStrategicValues:
   - unitName: Dog scout
-    unitValue: 0
+    unitValue: 20
   - unitName: Dog
-    unitValue: 0
+    unitValue: 40
   - unitName: Dog-at-arms
-    unitValue: 0
+    unitValue: 60
   - unitName: Crossbowdog
-    unitValue: 0
+    unitValue: 60
   - unitName: Dog-a-copter
-    unitValue: 0
+    unitValue: 70
   - unitName: Battering dog
-    unitValue: 0
+    unitValue: 80
   - unitName: Dog-a-pult
-    unitValue: 0
+    unitValue: 90
   - unitName: Cat scout
-    unitValue: 0
+    unitValue: 20
   - unitName: Cat
-    unitValue: 0
+    unitValue: 40
   - unitName: Cat-at-arms
-    unitValue: 0
+    unitValue: 60
   - unitName: Crossbowcat
-    unitValue: 0
+    unitValue: 60
   - unitName: Cat-a-copter
-    unitValue: 0
+    unitValue: 70
   - unitName: Cat mountaineer
-    unitValue: 0
+    unitValue: 65

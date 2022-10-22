@@ -4,5 +4,10 @@ using UnityEngine;
 
 public class UnitTypeValue
 {
+    UnitStrategicValues UnitValues;
 
+    public UnitTypeValue(UnitStrategicValues unitValues)
+    {
+        UnitValues = unitValues;
+    }
 }

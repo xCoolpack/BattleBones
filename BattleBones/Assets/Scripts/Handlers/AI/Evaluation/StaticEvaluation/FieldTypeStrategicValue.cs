@@ -4,5 +4,10 @@ using UnityEngine;
 
 public class FieldTypeStrategicValue
 {
+    public FieldValues Values;
 
+    public FieldTypeStrategicValue(FieldValues values)
+    {
+        Values = values;
+    }
 }
