@@ -111,7 +111,7 @@ public class Field : MonoBehaviour
 
     private bool IsSeenByCurrentPlayer()
     {
-        return SeenBy.ContainsKey(_overlay.TurnHandler.CurrentPlayer);
+        return IsSeenBy(_overlay.TurnHandler.CurrentPlayer);
     }
 
     /// <summary>
@@ -318,7 +318,11 @@ public class Field : MonoBehaviour
     public bool CanConstruct(Player player, string buildingName)
     {
         GameObject buildingPrefab = player.AvailableBuildings.FirstOrDefault(g => g.name == buildingName);
-        return buildingPrefab != null && IsSeenBy(player) && !HasBuilding() && buildingPrefab.GetComponent<Building>().CanAffordConstruction(player);
+        return buildingPrefab != null 
+               && IsSeenBy(player) 
+               && !HasBuilding() 
+               && buildingPrefab.GetComponent<Building>().CanAffordConstruction(player)
+               && (buildingName != "Farm" || !GetNeighbors().Any(field => field.HasBuilding() && field.Building.BaseBuildingStats.BuildingName == "Farm"));
     }
 
     public void BeginBuildingConstruction(Player player, string buildingName)
