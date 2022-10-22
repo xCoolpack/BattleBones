@@ -21,6 +21,7 @@ public class Field : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Overlay _overlay;
     public Mark Mark_;
+    public GameObject ChosenMark;
 
     public HashSet<Player> DiscoveredBy;
     // int stand for number of entities that see that field
@@ -41,6 +42,7 @@ public class Field : MonoBehaviour
         Coordinates = ConvertPositionToCoordinates(transform.position);
         ThreeAxisCoordinates = CoordinatesConverter.To3Axis(Coordinates);
         GameMap = GameObject.Find("GameMap").GetComponent<GameMap>();
+        ChosenMark = GetChosenMark();
     }
 
     private void Start()
@@ -88,25 +90,50 @@ public class Field : MonoBehaviour
             if (Unit == _overlay.PickedUnit)
             {
                 Building.HandleOnClick();
+                TurnOnChosenMark();
                 return;
             }
             Unit.HandleOnClick();
+            TurnOnChosenMark();
             return;
         }
 
         if (Building != null)
         {
             Building.HandleOnClick();
+            TurnOnChosenMark();
             return;
         }
 
         if (Unit != null)
         {
             Unit.HandleOnClick();
+            TurnOnChosenMark();
             return;
         }
 
         HandleOnClick();
+        TurnOnChosenMark();
+    }
+
+    public void TurnOnChosenMark()
+    {
+        if (IsSeenByCurrentPlayer())
+        {
+            Mark_ = Mark.Chosen;
+            ChosenMark.SetActive(true);
+        }
+    }
+
+    private GameObject GetChosenMark()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.gameObject.name == "ChosenMark")
+                return child.gameObject;
+        }
+
+        return null;
     }
 
     private bool IsSeenByCurrentPlayer()
@@ -354,7 +381,8 @@ public class Field : MonoBehaviour
     {
         Unmarked,
         Attackable,
-        Movable
+        Movable,
+        Chosen
     }
 }
 

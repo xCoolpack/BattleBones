@@ -122,6 +122,14 @@ public class Overlay : MonoBehaviour
     /// </summary>
     public void ClearPicked()
     {
+        var field = PickedField ?? PickedBuilding?.Field ?? PickedUnit?.Field;
+
+        if (field != null)
+        {
+            field.Mark_ = Field.Mark.Unmarked;
+            field.ChosenMark.SetActive(false);
+        }
+
         PickedUnit?.ToggleOffAllMarks();
         PickedBuilding = null;
         PickedField = null;
@@ -181,7 +189,7 @@ public class Overlay : MonoBehaviour
     /// </summary>
     public void FieldInfoBox()
     {
-        if (PickedField is null) throw new ArgumentNullException(nameof(PickedField),"PickedField has to be set");
+        if (PickedField is null) throw new ArgumentNullException(nameof(PickedField), "PickedField has to be set");
         var title = $"{PickedField.Type.FieldName} - cost {PickedField.Type.MovementPointsCost}";
         var infoBox = CreateBasicInfoBox(title);
         var buildings = PickedField.Type.AllowableBuildings;
@@ -245,7 +253,7 @@ public class Overlay : MonoBehaviour
     /// <param name="showButtons"></param>
     public void UnitInfoBox(bool showButtons)
     {
-        if (PickedUnit is null) throw new ArgumentNullException(nameof(PickedUnit),"PickedUnit has to be set");
+        if (PickedUnit is null) throw new ArgumentNullException(nameof(PickedUnit), "PickedUnit has to be set");
         var infoBox = CreateBasicInfoBox(PickedUnit.BaseUnitStats.UnitName);
         var statsBox = new VisualElement();
         var statsBoxLeft = new VisualElement();
@@ -306,7 +314,7 @@ public class Overlay : MonoBehaviour
             {
                 text = "Delete"
             };
-            
+
             deleteButton.AddToClassList("InfoBoxButton");
             buttonsBox.Add(deleteButton);
         }
@@ -572,7 +580,7 @@ public class Overlay : MonoBehaviour
     /// <param name="showButtons"></param>
     public void HousingInfoBox(Housing housing, bool showButtons)
     {
-        if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding),"PickedBuilding has to be set");
+        if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding), "PickedBuilding has to be set");
 
         var (statsBox, buttonsBox) = CreateBuildingInfoBox(PickedBuilding);
 
@@ -605,7 +613,7 @@ public class Overlay : MonoBehaviour
     /// <param name="showButtons"></param>
     public void BarricadeInfoBox(Barricade barricade, bool showButtons)
     {
-        if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding),"PickedBuilding has to be set");
+        if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding), "PickedBuilding has to be set");
         var (statsBox, buttonsBox) = CreateBuildingInfoBox(PickedBuilding);
     }
 
@@ -639,7 +647,8 @@ public class Overlay : MonoBehaviour
             ObjectiveHandler.FailObjectives
         };
 
-        foreach (var objectives in listOfLists) {
+        foreach (var objectives in listOfLists)
+        {
             foreach (var objective in objectives)
             {
                 var box = new VisualElement();
