@@ -41,6 +41,7 @@ public class Unit : MonoBehaviour
     public List<Field> AttackableFields;
     private Overlay _overlay;
 
+    private UnitsCounter _unitsCounter;
     private SpriteRenderer _spriteRenderer;
 
     private void Awake()
@@ -52,6 +53,7 @@ public class Unit : MonoBehaviour
         MovementScript = GetComponent<Movement>(); // if null then it's hero
         AttackScript = GetComponent<Attack>(); // if null then it's hero
         GameMap = GameObject.Find("GameMap").GetComponent<GameMap>();
+        _unitsCounter = GameObject.Find("UnitsCounter").GetComponent<UnitsCounter>();
         Hide(Player.HumanPlayer);
     } 
 
@@ -512,25 +514,31 @@ public class Unit : MonoBehaviour
     {
         // If building has a unit, it does counterattack
         var damage = 0;
+        var thisDamage = CurrentDamage;
         if (building.Field.HasUnit())
         {
-            UnitModifiers unitModifiers = building.Field.Unit.CurrentModifiers +
-                                          new UnitModifiers(damage: building.Field.Unit.AttackScript.GetCounterAttackModifier());
+            UnitModifiers unitModifiers = building.Field.Unit.CurrentModifiers 
+                                          + new UnitModifiers(damage: building.Field.Unit.AttackScript.GetCounterAttackModifier());
             (_, damage, _) = unitModifiers.CalculateModifiers(0, building.Field.Unit.CurrentDamage, 0);
+            (_, thisDamage, _) = 
+                GetCounterModifier(building.Field.Unit.BaseUnitStats.UnitName).CalculateModifiers(0, CurrentDamage, 0);
         }
-
-        building.TakeDamage(CurrentDamage);
+        
+        building.TakeDamage(thisDamage);
         if (AttackScript.IsProvokingCounterAttack() && building.Field.HasUnit())
             TakeDamage(damage);
     }
 
     public void DealDamage(Unit unit)
     {
-        UnitModifiers unitModifiers = unit.CurrentModifiers +
-                                      new UnitModifiers(damage: unit.AttackScript.GetCounterAttackModifier());
+        UnitModifiers unitModifiers = unit.CurrentModifiers 
+                                      + new UnitModifiers(damage: unit.AttackScript.GetCounterAttackModifier());
         var (_, damage, _) = unitModifiers.CalculateModifiers(0, unit.CurrentDamage, 0);
-        
-        unit.TakeDamage(CurrentDamage);
+        var (_, thisDamage, _) =
+            GetCounterModifier(unit.BaseUnitStats.UnitName).CalculateModifiers(0, CurrentDamage, 0);
+
+
+        unit.TakeDamage(thisDamage);
         if (AttackScript.IsProvokingCounterAttack())
             if (TakeDamage(damage))
                 Player.UnitsKilled++;
@@ -554,6 +562,18 @@ public class Unit : MonoBehaviour
         // Recalculate DamageModifiers from missing health
         ChangeModifiersFromHealth();
         return false;
+    }
+
+    public UnitModifiers GetCounterModifier(string defender)
+    {
+        return _unitsCounter.GetCounterModifier(defender, BaseUnitStats.UnitName, CurrentModifiers);
+    }
+
+    public int PredictDamage(Unit targetUnit)
+    {
+        var (_, damage, _) =
+            GetCounterModifier(targetUnit.BaseUnitStats.UnitName).CalculateModifiers(0, CurrentDamage, 0);
+        return UnitCalculation.CalculateDealtDamage(damage, targetUnit.CurrentDefense);
     }
 
     public bool CanPlunder()

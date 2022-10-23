@@ -412,6 +412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TurnHandler: {fileID: 2095766468}
   MaxUnitCap: 0
+  UnitsKilled: 0
   TradeBuildingCounter: 0
   Faction: 
   ResourceManager: {fileID: 1840569381}
@@ -427,6 +428,7 @@ MonoBehaviour:
   - {fileID: 1877851542}
   Overlay: {fileID: 0}
   test: {fileID: 1878106604}
+  test2: {fileID: 0}
 --- !u!4 &55676345
 Transform:
   m_ObjectHideFlags: 0
@@ -595,6 +597,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7260510673771770686, guid: ae63b689d470ce9459171d737d633d8a, type: 3}
   m_PrefabInstance: {fileID: 144560354}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &90988293
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1972290005887504989, guid: 662c43bb6a0ebbd43b8c4e7fbd68bf75, type: 3}
+      propertyPath: m_Name
+      value: UnitsCounter
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972290005887505059, guid: 662c43bb6a0ebbd43b8c4e7fbd68bf75, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972290005887505059, guid: 662c43bb6a0ebbd43b8c4e7fbd68bf75, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 22.575432
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972290005887505059, guid: 662c43bb6a0ebbd43b8c4e7fbd68bf75, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.720234
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972290005887505059, guid: 662c43bb6a0ebbd43b8c4e7fbd68bf75, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.2030239
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972290005887505059, guid: 662c43bb6a0ebbd43b8c4e7fbd68bf75, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972290005887505059, guid: 662c43bb6a0ebbd43b8c4e7fbd68bf75, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972290005887505059, guid: 662c43bb6a0ebbd43b8c4e7fbd68bf75, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972290005887505059, guid: 662c43bb6a0ebbd43b8c4e7fbd68bf75, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972290005887505059, guid: 662c43bb6a0ebbd43b8c4e7fbd68bf75, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972290005887505059, guid: 662c43bb6a0ebbd43b8c4e7fbd68bf75, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1972290005887505059, guid: 662c43bb6a0ebbd43b8c4e7fbd68bf75, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 662c43bb6a0ebbd43b8c4e7fbd68bf75, type: 3}
 --- !u!1001 &94379309
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2123,6 +2182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPlayer: {fileID: 55676344}
   <IsPrimary>k__BackingField: 1
+  <ObjectiveId>k__BackingField: 0
   <ObjectiveInfo>k__BackingField: Primary Obj 2
 --- !u!1001 &275112438
 PrefabInstance:
@@ -6588,6 +6648,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPlayer: {fileID: 55676344}
   <IsPrimary>k__BackingField: 1
+  <ObjectiveId>k__BackingField: 0
   <ObjectiveInfo>k__BackingField: Primary Obj 1
 --- !u!4 &1137735448 stripped
 Transform:
@@ -7684,6 +7745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TurnHandler: {fileID: 2095766468}
   MaxUnitCap: 0
+  UnitsKilled: 0
   TradeBuildingCounter: 0
   Faction: 
   ResourceManager: {fileID: 459017981}
@@ -7698,6 +7760,7 @@ MonoBehaviour:
   Buildings: []
   Overlay: {fileID: 1609666542}
   test: {fileID: 0}
+  test2: {fileID: 0}
 --- !u!4 &1354927225
 Transform:
   m_ObjectHideFlags: 0
@@ -9063,6 +9126,7 @@ MonoBehaviour:
   PickedBuilding: {fileID: 0}
   PickedUnit: {fileID: 0}
   PickedField: {fileID: 0}
+  UiDocument: {fileID: 0}
 --- !u!114 &1609666543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12950,9 +13014,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TurnCounter: 0
-  Players:
-  - {fileID: 1354927224}
-  - {fileID: 55676344}
+  HumanPlayer: {fileID: 0}
+  ComputerPlayerObj: {fileID: 0}
   GlobalEventHandler: {fileID: 221945677}
   ObjectiveHandler: {fileID: 662046946}
 --- !u!4 &2095766469
