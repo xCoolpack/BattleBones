@@ -156,6 +156,12 @@ public class Overlay : MonoBehaviour
     private VisualElement CreateBasicInfoBox(string title)
     {
         RemoveInfoBox();
+
+        if (title.Length > 33)
+        {
+            title = title[..33] + '.';
+        }
+
         var infoBox = new VisualElement();
         var titleBox = new VisualElement();
         var titleLabel = new Label(title);
@@ -224,7 +230,12 @@ public class Overlay : MonoBehaviour
 
             if (PickedField.CanConstruct(TurnHandler.CurrentPlayer, building.name))
             {
-                var buyButton = new Button(() => PickedField.BeginBuildingConstruction(TurnHandler.CurrentPlayer, building.name))
+                var buyButton = new Button(() =>
+                {
+                    PickedField.BeginBuildingConstruction(TurnHandler.CurrentPlayer, building.name);
+                    RemoveInfoBox();
+                    ClearPicked();
+                })
                 {
                     text = "Build"
                 };
@@ -308,8 +319,10 @@ public class Overlay : MonoBehaviour
 
             var deleteButton = new Button(() =>
             {
+                PickedUnit.Field.TurnOffChosenMark();
                 PickedUnit.Delete();
                 RemoveInfoBox();
+                ClearPicked();
             })
             {
                 text = "Delete"
@@ -379,8 +392,10 @@ public class Overlay : MonoBehaviour
         {
             var destroyButton = new Button(() =>
             {
+                PickedBuilding.Field.TurnOffChosenMark();
                 PickedBuilding.Destroy();
                 RemoveInfoBox();
+                ClearPicked();
             })
             {
                 text = "Destroy"
@@ -435,6 +450,7 @@ public class Overlay : MonoBehaviour
     /// Displays InfoBox for the given DefensiveBuilding
     /// </summary>
     /// <param name="defensiveBuilding"></param>
+    /// <param name="showButtons"></param>
     public void DefensiveBuildingInfoBox(DefensiveBuilding defensiveBuilding, bool showButtons)
     {
         if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding), "PickedBuilding has to be set");

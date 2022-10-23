@@ -11,8 +11,7 @@ public class TemplateObjective : MonoBehaviour, IObjective
 
     public bool IsCompleted => CompletionCheck();
 
-    [field: SerializeField]
-    public string ObjectiveInfo { get; set; }
+    public string ObjectiveInfo => "Info";
 
     private bool CompletionCheck() 
     {
