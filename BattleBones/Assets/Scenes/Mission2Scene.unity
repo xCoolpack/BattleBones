@@ -10339,6 +10339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPlayer: {fileID: 55676344}
+  _unitCount: 8
   <IsPrimary>k__BackingField: 0
   <ObjectiveId>k__BackingField: 103
 --- !u!1001 &1010067326
@@ -11187,6 +11188,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1354927224}
+  _resources:
+    Gold: 3600
+    Wood: 2000
+    Stone: 1600
+    Doggium: 0
+    Bone: 0
   <IsPrimary>k__BackingField: 1
   <ObjectiveId>k__BackingField: 201
 --- !u!4 &1139693734 stripped
@@ -12115,6 +12122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1354927224}
+  _farmCount: 6
   <IsPrimary>k__BackingField: 0
   <ObjectiveId>k__BackingField: 102
 --- !u!4 &1244020911 stripped

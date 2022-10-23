@@ -190,7 +190,7 @@ public class Overlay : MonoBehaviour
     public void FieldInfoBox()
     {
         if (PickedField is null) throw new ArgumentNullException(nameof(PickedField), "PickedField has to be set");
-        var title = $"{PickedField.Type.FieldName} - cost {PickedField.Type.MovementPointsCost}";
+        var title = $"{PickedField.Type.FieldName} {PickedField.ThreeAxisCoordinates} - cost {PickedField.Type.MovementPointsCost}";
         var infoBox = CreateBasicInfoBox(title);
         var buildings = PickedField.Type.AllowableBuildings;
         var container = new VisualElement();
@@ -254,7 +254,7 @@ public class Overlay : MonoBehaviour
     public void UnitInfoBox(bool showButtons)
     {
         if (PickedUnit is null) throw new ArgumentNullException(nameof(PickedUnit), "PickedUnit has to be set");
-        var infoBox = CreateBasicInfoBox(PickedUnit.BaseUnitStats.UnitName);
+        var infoBox = CreateBasicInfoBox($"{PickedUnit.BaseUnitStats.UnitName} {PickedUnit.Field.ThreeAxisCoordinates}");
         var statsBox = new VisualElement();
         var statsBoxLeft = new VisualElement();
         var statsBoxRight = new VisualElement();
@@ -359,7 +359,7 @@ public class Overlay : MonoBehaviour
     /// <param name="showButtons"></param>
     private (VisualElement, VisualElement) CreateBuildingInfoBox(bool showButtons)
     {
-        var infoBox = CreateBasicInfoBox($"{PickedBuilding.BaseBuildingStats.BuildingName}-{PickedBuilding.GetBuildingStateName()}");
+        var infoBox = CreateBasicInfoBox($"{PickedBuilding.BaseBuildingStats.BuildingName} {PickedBuilding.Field.ThreeAxisCoordinates}-{PickedBuilding.GetBuildingStateName()}");
         var sightRangeLabel = new Label($"Sight range: {PickedBuilding.SightRange}");
         var repairLabel = new Label($"Repair cooldown: {PickedBuilding.BaseRepairCooldown}");
         var statsBox = new VisualElement();

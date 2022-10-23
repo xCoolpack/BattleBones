@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class Mission1SideObjective2 : MonoBehaviour, IObjective
+public class Mission4SideObjective1 : MonoBehaviour, IObjective
 {
     [SerializeField] private Player _player;
     [SerializeField] private int _unitCount;
@@ -14,7 +14,7 @@ public class Mission1SideObjective2 : MonoBehaviour, IObjective
 
     public bool IsCompleted => CompletionCheck();
 
-    public string ObjectiveInfo => $"Current units {_player.CurrentUnitCap}/{_unitCount}";
+    public string ObjectiveInfo => $"Current units: {_player.CurrentUnitCap}/{_unitCount}";
 
     private bool CompletionCheck()
     {

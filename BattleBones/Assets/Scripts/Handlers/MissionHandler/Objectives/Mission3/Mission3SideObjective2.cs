@@ -1,12 +1,10 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class Mission3SideObjective2 : MonoBehaviour, IObjective
 {
-    [SerializeField]
-    private Field _field1;
-    [SerializeField]
-    private Field _field2;
+    [SerializeField] private List<Field> _fieldList;
 
     [field: SerializeField]
     public bool IsPrimary { get; set; }
@@ -16,11 +14,11 @@ public class Mission3SideObjective2 : MonoBehaviour, IObjective
 
     public bool IsCompleted => CompletionCheck();
 
-    public string ObjectiveInfo => $"Towers destroyed: {CheckTower(_field1) + CheckTower(_field2)}/2";
+    public string ObjectiveInfo => $"Towers destroyed: {_fieldList.Sum(CheckTower)}/{_fieldList.Count}";
 
     private bool CompletionCheck()
     {
-        return CheckTower(_field1) + CheckTower(_field2) >= 2;
+        return _fieldList.Sum(CheckTower) >= _fieldList.Count;
     }
 
     private int CheckTower(Field field)

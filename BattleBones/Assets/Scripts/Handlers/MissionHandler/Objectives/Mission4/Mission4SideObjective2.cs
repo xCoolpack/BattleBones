@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class Mission3SideObjective1 : MonoBehaviour, IObjective
+public class Mission4SideObjective2 : MonoBehaviour, IObjective
 {
     [SerializeField] private TurnHandler _turnHandler;
     [SerializeField] private int _turnCounter;

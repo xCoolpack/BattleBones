@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Mission2PrimaryObjective : MonoBehaviour, IObjective
 {
-    [SerializeField]
-    private Player _player;
+    [SerializeField] private Player _player;
+    [SerializeField] private Resources _resources;
 
     [field: SerializeField]
     public bool IsPrimary { get; set; }
@@ -16,12 +16,12 @@ public class Mission2PrimaryObjective : MonoBehaviour, IObjective
     public bool IsCompleted => CompletionCheck();
 
     public string ObjectiveInfo => $@"Current resources amount: 
-    Gold: {_player.ResourceManager.ResourcesAmount.Gold}/3600 
-    Wood: {_player.ResourceManager.ResourcesAmount.Wood}/2000 
-    Stone: {_player.ResourceManager.ResourcesAmount.Stone}/1600";
+    Gold: {_player.ResourceManager.ResourcesAmount.Gold}/{_resources.Gold} 
+    Wood: {_player.ResourceManager.ResourcesAmount.Wood}/{_resources.Wood} 
+    Stone: {_player.ResourceManager.ResourcesAmount.Stone}/{_resources.Stone}";
 
     private bool CompletionCheck()
     {
-        return _player.ResourceManager.ResourcesAmount >= new Resources(3600, 2000, 1600);
+        return _player.ResourceManager.ResourcesAmount >= _resources;
     }
 }

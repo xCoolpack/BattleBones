@@ -1,10 +1,9 @@
-using System.Linq;
 using UnityEngine;
 
-public class Mission1SideObjective2 : MonoBehaviour, IObjective
+public class Mission4PrimaryObjective : MonoBehaviour, IObjective
 {
     [SerializeField] private Player _player;
-    [SerializeField] private int _unitCount;
+    [SerializeField] private Field _field;
 
     [field: SerializeField]
     public bool IsPrimary { get; set; }
@@ -14,10 +13,10 @@ public class Mission1SideObjective2 : MonoBehaviour, IObjective
 
     public bool IsCompleted => CompletionCheck();
 
-    public string ObjectiveInfo => $"Current units {_player.CurrentUnitCap}/{_unitCount}";
+    public string ObjectiveInfo => $"Move your army to {_field.ThreeAxisCoordinates}";
 
     private bool CompletionCheck()
     {
-        return _player.CurrentUnitCap >= _unitCount;
+        return _field.HasUnit() && !_field.Unit.IsEnemy(_player);
     }
 }
