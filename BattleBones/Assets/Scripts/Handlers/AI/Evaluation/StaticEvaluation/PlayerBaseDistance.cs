@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class PlayerBaseDistance
 {
-
+    public int EvaluateDistance(Field target)
+    {
+        //TO-DO
+        return 0;
+    }
 }

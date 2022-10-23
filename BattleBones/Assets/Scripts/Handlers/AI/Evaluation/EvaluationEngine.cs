@@ -23,21 +23,6 @@ public class EvaluationEngine : MonoBehaviour
         return 0;
     }
 
-    public int EvaluateUnitAttack(Unit source, Field target)
-    {
-        return 1;
-    }
-
-    public int EvaluateUnitMovement(Field target)
-    {
-        return 2;
-    }
-
-    public int EvaluateBuildingAttack(Building source, Field target)
-    {
-        return 3;
-    }
-
     public int EvaluateRecruitment()
     {
         return 4;

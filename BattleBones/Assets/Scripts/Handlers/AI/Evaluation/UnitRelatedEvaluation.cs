@@ -7,6 +7,7 @@ public class UnitRelatedEvaluation : MonoBehaviour
 {
     public FieldStrategicValue FieldStrategicValue;
     public UnitStrategicValue UnitStrategicValue;
+    public PlayerBaseDistance PlayerBaseDistance;
     public AttackDanger AttackDanger;
     public AttackValuability AttackValuability;
 
@@ -20,7 +21,52 @@ public class UnitRelatedEvaluation : MonoBehaviour
 
         FieldStrategicValue = new FieldStrategicValue(ftsv);
         UnitStrategicValue = new UnitStrategicValue(new UnitTypeValue(usv));
-        AttackDanger = new AttackDanger();
-        AttackValuability = new AttackValuability();
+        AttackDanger = new AttackDanger(UnitStrategicValue);
+        AttackValuability = new AttackValuability(UnitStrategicValue);
+        PlayerBaseDistance = new PlayerBaseDistance();
+    }
+
+    public int Evaluate(string moveType, Object source, Object target)
+    {
+        int eval = 0;
+
+        switch (moveType)
+        {
+            case "unitAttack":
+                eval = AttackEval(source as Unit, target as Field);
+                break;
+
+            case "move":
+                eval = MovementEval(source as Unit, target as Field);
+                break;
+
+            default:
+                break;
+        }
+
+        return CustomEval.ProcessEvaluation(moveType, source, target, eval);
+    }
+
+    public int FieldEval(Field target)
+    {
+        return FieldStrategicValue.EvaluateField(target);
+    }
+
+    public int AttackEval(Unit source, Field target)
+    {
+        int unitEval = UnitStrategicValue.EvaluateUnit(source);
+        int fieldEval = FieldEval(target);
+        int attackDanger = AttackDanger.EvaluateAttackDanger(source, target, unitEval, fieldEval);
+        int attackValuability = AttackValuability.EvaluateAttackValuability(source, target, unitEval, fieldEval);
+        
+        return attackValuability - attackDanger;
+    }
+
+    public int MovementEval(Unit source, Field target)
+    {
+        int fieldEval = FieldEval(target);
+        fieldEval += PlayerBaseDistance.EvaluateDistance(target);
+
+        return fieldEval;
     }
 }

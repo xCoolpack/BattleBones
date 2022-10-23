@@ -54,6 +54,7 @@ public class ComputerPlayer : MonoBehaviour
 
     public List<Move> GenerateMoves(Object entity)
     {
+        //TO-DO: building construction
         return entity is Unit ? 
             GenerateUnitMoves((Unit) entity) 
             : GenerateBuildingMoves((Building) entity);
@@ -92,14 +93,18 @@ public class ComputerPlayer : MonoBehaviour
     {
         List<Move> moves = new List<Move>();
 
-        if (building.BaseBuildingStats.BuildingName == "DefensiveTower")
+        if (building.BaseBuildingStats.BuildingName == "Defensive tower")
         {
-            //TO-DO: how to get defensive building
+            //TO-DO: how to get defensive building (getComponent?)
+            // moveName = buildingAttack
         }
+
+        //TO-DO: somehow attack and recruit with outpost
 
         if (building.BaseBuildingStats.BuildingName != "Outpost")
         {
             //TO-DO: recruitment
+            // moveName = recruitment
         }
 
         return moves;

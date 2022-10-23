@@ -10,4 +10,10 @@ public class UnitStrategicValue
     {
         UnitTypeValue = unitTypeValue;
     }
+
+    public int EvaluateUnit(Unit source)
+    {
+        //TO-DO
+        return 0;
+    }
 }

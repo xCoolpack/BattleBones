@@ -10,4 +10,9 @@ public class FieldTypeStrategicValue
     {
         Values = values;
     }
+
+    public int EvaluateFieldType(string fieldType)
+    {
+        return Values.fieldValues.Find(a => a.fieldName == fieldType).fieldValue;
+    }
 }
