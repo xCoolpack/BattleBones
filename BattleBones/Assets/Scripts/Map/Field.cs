@@ -21,6 +21,7 @@ public class Field : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Overlay _overlay;
     public Mark Mark_;
+    public GameObject ChosenMark;
 
     public HashSet<Player> DiscoveredBy;
     // int stand for number of entities that see that field
@@ -41,6 +42,7 @@ public class Field : MonoBehaviour
         Coordinates = ConvertPositionToCoordinates(transform.position);
         ThreeAxisCoordinates = CoordinatesConverter.To3Axis(Coordinates);
         GameMap = GameObject.Find("GameMap").GetComponent<GameMap>();
+        ChosenMark = GetChosenMark();
     }
 
     private void Start()
@@ -60,17 +62,21 @@ public class Field : MonoBehaviour
 
             if (Mark_ == Mark.Movable)
             {
+                _overlay.PickedUnit.TurnOffChosenMark();
                 _overlay.PickedUnit.Move(this);
                 _overlay.UnitInfoBox(true);
                 _overlay.PickedUnit.ToggleOffAllMarks();
                 _overlay.PickedUnit.UpdateAndDisplayMarks();
+                _overlay.PickedUnit.TurnOnChosenMark();
             }
             else if (Mark_ == Mark.Attackable)
             {
+                _overlay.PickedUnit.TurnOffChosenMark();
                 _overlay.PickedUnit.Attack(this);
                 _overlay.UnitInfoBox(true);
                 _overlay.PickedUnit.ToggleOffAllMarks();
                 _overlay.PickedUnit.UpdateAndDisplayMarks();
+                _overlay.PickedUnit.TurnOnChosenMark();
             }
         }
     }
@@ -88,30 +94,61 @@ public class Field : MonoBehaviour
             if (Unit == _overlay.PickedUnit)
             {
                 Building.HandleOnClick();
+                TurnOnChosenMark();
                 return;
             }
             Unit.HandleOnClick();
+            TurnOnChosenMark();
             return;
         }
 
         if (Building != null)
         {
             Building.HandleOnClick();
+            TurnOnChosenMark();
             return;
         }
 
         if (Unit != null)
         {
             Unit.HandleOnClick();
+            TurnOnChosenMark();
             return;
         }
 
         HandleOnClick();
+        TurnOnChosenMark();
+    }
+
+    public void TurnOnChosenMark()
+    {
+        if (IsSeenByCurrentPlayer())
+        {
+            Mark_ = Mark.Chosen;
+            ChosenMark.SetActive(true);
+        }
+    }
+
+    public void TurnOffChosenMark()
+    {
+        Mark_ = Mark.Unmarked;
+        ChosenMark.SetActive(false);
+    }
+
+    private GameObject GetChosenMark()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.gameObject.name == "ChosenMark")
+                return child.gameObject;
+        }
+
+        return null;
     }
 
     private bool IsSeenByCurrentPlayer()
     {
-        return SeenBy.ContainsKey(_overlay.TurnHandler.CurrentPlayer);
+        return IsSeenBy(_overlay.TurnHandler.CurrentPlayer);
     }
 
     /// <summary>
@@ -195,7 +232,7 @@ public class Field : MonoBehaviour
 
     public bool IsSeenBy(Player player)
     {
-        return SeenBy.ContainsKey(player);
+        return SeenBy.ContainsKey(player) && SeenBy[player] > 0;
     }
 
     public bool IsBuildingDiscoveredBy(Player player)
@@ -318,7 +355,11 @@ public class Field : MonoBehaviour
     public bool CanConstruct(Player player, string buildingName)
     {
         GameObject buildingPrefab = player.AvailableBuildings.FirstOrDefault(g => g.name == buildingName);
-        return buildingPrefab != null && IsSeenBy(player) && !HasBuilding() && buildingPrefab.GetComponent<Building>().CanAffordConstruction(player);
+        return buildingPrefab != null 
+               && IsSeenBy(player) 
+               && !HasBuilding() 
+               && buildingPrefab.GetComponent<Building>().CanAffordConstruction(player)
+               && (buildingName != "Farm" || !GetNeighbors().Any(field => field.HasBuilding() && field.Building.BaseBuildingStats.BuildingName == "Farm"));
     }
 
     public void BeginBuildingConstruction(Player player, string buildingName)
@@ -354,7 +395,8 @@ public class Field : MonoBehaviour
     {
         Unmarked,
         Attackable,
-        Movable
+        Movable,
+        Chosen
     }
 }
 
@@ -362,22 +404,22 @@ public static class Direction
 {
     public static List<Vector2Int> OffsetEven = new()
     {
-        new Vector2Int(0, 1), //NL
         new Vector2Int(1, 1), //NR
         new Vector2Int(1, 0), //E
         new Vector2Int(1, -1), //SR
         new Vector2Int(0, -1), //SL
         new Vector2Int(-1, 0), //W
+        new Vector2Int(0, 1), //NL
     };
 
     public static List<Vector2Int> OffsetOdd = new()
     {
-        new Vector2Int(-1, 1), //NL
         new Vector2Int(0, 1), //NR
         new Vector2Int(1, 0), //E
         new Vector2Int(0, -1), //SR
         new Vector2Int(-1, -1), //SL
         new Vector2Int(-1, 0), //W
+        new Vector2Int(-1, 1), //NL
     };
 
     public static List<Vector2Int> GetDirectionList(int y)

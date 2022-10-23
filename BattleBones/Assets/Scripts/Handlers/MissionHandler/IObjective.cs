@@ -19,5 +19,5 @@
     /// <summary>
     /// Objective information
     /// </summary>
-    public string ObjectiveInfo { get;}
+    public string ObjectiveInfo { get; }
 }

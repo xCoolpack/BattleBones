@@ -78,19 +78,14 @@ public class Building : MonoBehaviour
 
     public string GetBuildingStateName()
     {
-        switch (BuildingState)
+        return BuildingState switch
         {
-            case BuildingState.UnderConstruction:
-                return "Under construction";
-            case BuildingState.Fine:
-                return "Fine";
-            case BuildingState.Plundered:
-                return "Plundered";
-            case BuildingState.UnderRepair:
-                return "Under repair";
-            default:
-                return "";
-        }
+            BuildingState.UnderConstruction => "Construction",
+            BuildingState.Fine => "Fine",
+            BuildingState.Plundered => "Plundered",
+            BuildingState.UnderRepair => "Under repair",
+            _ => ""
+        };
     }
 
     public bool IsPassable(Player player)
@@ -300,6 +295,14 @@ public class Building : MonoBehaviour
         if (barricade is not null)
         {
             _overlay.BarricadeInfoBox(barricade, showButtons);
+            return;
+        }
+
+        var housing = GetComponent<Housing>();
+
+        if (housing is not null)
+        {
+            _overlay.HousingInfoBox(housing, showButtons);
             return;
         }
 

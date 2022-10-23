@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Mission1SideObjective2 : MonoBehaviour, IObjective
 {
-    [SerializeField]
-    private Player _player;
+    [SerializeField] private Player _player;
+    [SerializeField] private int _unitCount;
 
     [field: SerializeField]
     public bool IsPrimary { get; set; }
@@ -14,10 +14,10 @@ public class Mission1SideObjective2 : MonoBehaviour, IObjective
 
     public bool IsCompleted => CompletionCheck();
 
-    public string ObjectiveInfo => $"Current units {_player.Units.Count}/10";
+    public string ObjectiveInfo => $"Current units {_player.CurrentUnitCap}/{_unitCount}";
 
     private bool CompletionCheck()
     {
-        return _player.Units.Count >= 10;
+        return _player.CurrentUnitCap >= _unitCount;
     }
 }

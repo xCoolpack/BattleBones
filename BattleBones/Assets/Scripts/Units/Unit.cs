@@ -41,6 +41,7 @@ public class Unit : MonoBehaviour
     public List<Field> AttackableFields;
     private Overlay _overlay;
 
+    private UnitsCounter _unitsCounter;
     private SpriteRenderer _spriteRenderer;
 
     private void Awake()
@@ -52,6 +53,7 @@ public class Unit : MonoBehaviour
         MovementScript = GetComponent<Movement>(); // if null then it's hero
         AttackScript = GetComponent<Attack>(); // if null then it's hero
         GameMap = GameObject.Find("GameMap").GetComponent<GameMap>();
+        _unitsCounter = GameObject.Find("UnitsCounter").GetComponent<UnitsCounter>();
         Hide(Player.HumanPlayer);
     } 
 
@@ -209,8 +211,8 @@ public class Unit : MonoBehaviour
     private Dictionary<Field, int> GetMoveableFields() 
     {
        return GraphSearch.BreadthFirstSearchDict(Field, CurrentMovementPoints,
-            (currentField, startingField) => MovementScript.CanMove(this, currentField),
-            (field) => MovementScript.GetMovementPointsCostForUnit(this, field));
+            (currentField, startingField) => MovementScript.CanMoveAll(this, currentField),
+            (field) => MovementScript.GetMovementPointsCostAll(this, field));
     }
 
     public void ToggleOnMoveableFields() 
@@ -352,8 +354,8 @@ public class Unit : MonoBehaviour
         if (targetField == Field)
             return false;
         (Dictionary<Field, Field> graph, _) = GraphSearch.AStarSearch(Field, targetField, 
-            (currentField, startingField) => MovementScript.CanMove(this, currentField), 
-            (field) => MovementScript.GetMovementPointsCostForUnit(this, field), GetDistance, targetField => false);
+            (currentField, startingField) => MovementScript.CanMoveAll(this, currentField), 
+            (field) => MovementScript.GetMovementPointsCostAll(this, field), GetDistance, targetField => false);
         
         MoveUnit(graph, targetField);
 
@@ -370,18 +372,20 @@ public class Unit : MonoBehaviour
         var accessibleMovementPath = new List<Field>();
         int movementPointCost = 0;
         int nextMovementPointCost = 0;
+        Field previousField = null;
 
         foreach (var field in movementPath)
         {
-            nextMovementPointCost += MovementScript.GetMovementPointsCostForUnit(this, field);
-            if (CurrentMovementPoints < nextMovementPointCost)
+            nextMovementPointCost += MovementScript.GetMovementPointsCost(this, field);
+            if (CurrentMovementPoints < nextMovementPointCost && MovementScript.CanMoveVisible(this, field))
                 break;
 
             accessibleMovementPath.Add(field);
+            previousField = field;
             movementPointCost = nextMovementPointCost;
         }
 
-        MoveReferences(targetField, movementPointCost, accessibleMovementPath);
+        MoveReferences(previousField, movementPointCost, accessibleMovementPath);
     }
 
     /// <summary>
@@ -414,11 +418,6 @@ public class Unit : MonoBehaviour
 
         // Show fields that unit now see
         ChangeFieldsVisibility(temp);
-
-        foreach (var keyValuePair in Field.SeenBy)
-        {
-            Debug.Log($"{keyValuePair.Key} - {keyValuePair.Value}");
-        }
 
         // Show unit to every player that see this field
         foreach (var pair in Field.SeenBy)
@@ -470,31 +469,32 @@ public class Unit : MonoBehaviour
         return MovementScript.CanMove(this, currentField) || possibleFieldsForAttack.Contains(currentField);
     }
 
-    public bool Attack(Field targetField)
+    public void Attack(Field targetField)
     {
         if (targetField == Field)
-            return false;
+            return ;
 
         //Find path to field from unit can attack
         List<Field> possibleFieldsForAttack = GetFieldsFromUnitCanAttack(targetField);
         
         // If unit cannot access attacked unit return false
         if (possibleFieldsForAttack.Count == 0)
-            return false;
+            return ;
 
         //If unit cannot attack from current field, move it
         if (!possibleFieldsForAttack.Contains(Field))
         {
             (Dictionary<Field, Field> graph, Field attackingField) = GraphSearch.AStarSearch(Field, targetField,
-                (currentField, startingField) => MovementScript.CanMove(this, currentField),
-                (field) => MovementScript.GetMovementPointsCostForUnit(this, field), GetDistance,
+                (currentField, startingField) => MovementScript.CanMoveAll(this, currentField),
+                (field) => MovementScript.GetMovementPointsCostAll(this, field), GetDistance,
                 (currentField) => possibleFieldsForAttack.Contains(currentField));
             //Move unit to that field
             MoveUnit(graph, attackingField);
         }
 
-        //Check if unit have enough movement points to attack
-        if (AttackScript.HaveEnoughMovementPoints(CurrentMovementPoints, this, targetField))
+        //Check if unit can attack and have enough movement points to attack
+        if (possibleFieldsForAttack.Contains(Field) 
+            && AttackScript.HaveEnoughMovementPoints(CurrentMovementPoints, this, targetField))
         {
             //Deal damage to unit
             if (AttackScript.CanTargetBuilding(this, targetField))
@@ -503,42 +503,45 @@ public class Unit : MonoBehaviour
                 DealDamage(targetField.Unit);
             //If unit is melee and destroy enemy unit, move unit to new position 
             if (AttackRange == 1 && MovementScript.CanMove(this, targetField))
-                MoveReferences(targetField, MovementScript.GetMovementPointsCostForUnit(this, targetField),
+                MoveReferences(targetField, MovementScript.GetMovementPointsCost(this, targetField),
                     new List<Field>() {targetField});
 
             CurrentMovementPoints = 0;
         }
-        else
-            return false;
-
-        return true;
     }
 
     public void DealDamage(Building building)
     {
         // If building has a unit, it does counterattack
         var damage = 0;
+        var thisDamage = CurrentDamage;
         if (building.Field.HasUnit())
         {
-            UnitModifiers unitModifiers = building.Field.Unit.CurrentModifiers +
-                                          new UnitModifiers(damage: building.Field.Unit.AttackScript.GetCounterAttackModifier());
+            UnitModifiers unitModifiers = building.Field.Unit.CurrentModifiers 
+                                          + new UnitModifiers(damage: building.Field.Unit.AttackScript.GetCounterAttackModifier());
             (_, damage, _) = unitModifiers.CalculateModifiers(0, building.Field.Unit.CurrentDamage, 0);
+            (_, thisDamage, _) = 
+                GetCounterModifier(building.Field.Unit.BaseUnitStats.UnitName).CalculateModifiers(0, CurrentDamage, 0);
         }
-
-        building.TakeDamage(CurrentDamage);
+        
+        building.TakeDamage(thisDamage);
         if (AttackScript.IsProvokingCounterAttack() && building.Field.HasUnit())
             TakeDamage(damage);
     }
 
     public void DealDamage(Unit unit)
     {
-        UnitModifiers unitModifiers = unit.CurrentModifiers +
-                                      new UnitModifiers(damage: unit.AttackScript.GetCounterAttackModifier());
+        UnitModifiers unitModifiers = unit.CurrentModifiers 
+                                      + new UnitModifiers(damage: unit.AttackScript.GetCounterAttackModifier());
         var (_, damage, _) = unitModifiers.CalculateModifiers(0, unit.CurrentDamage, 0);
-        
-        unit.TakeDamage(CurrentDamage);
+        var (_, thisDamage, _) =
+            GetCounterModifier(unit.BaseUnitStats.UnitName).CalculateModifiers(0, CurrentDamage, 0);
+
+
+        unit.TakeDamage(thisDamage);
         if (AttackScript.IsProvokingCounterAttack())
-            TakeDamage(damage);
+            if (TakeDamage(damage))
+                Player.UnitsKilled++;
     }
 
     /// <summary>
@@ -546,15 +549,31 @@ public class Unit : MonoBehaviour
     /// </summary>
     /// <param name="damage"></param>
     /// <returns></returns>
-    public void TakeDamage(int damage)
+    public bool TakeDamage(int damage)
     {
         CurrentHealth -= UnitCalculation.CalculateDealtDamage(damage, CurrentDefense);
 
         if (CurrentHealth <= 0)
+        {
             Delete();
+            return true;
+        }
 
         // Recalculate DamageModifiers from missing health
         ChangeModifiersFromHealth();
+        return false;
+    }
+
+    public UnitModifiers GetCounterModifier(string defender)
+    {
+        return _unitsCounter.GetCounterModifier(defender, BaseUnitStats.UnitName, CurrentModifiers);
+    }
+
+    public int PredictDamage(Unit targetUnit)
+    {
+        var (_, damage, _) =
+            GetCounterModifier(targetUnit.BaseUnitStats.UnitName).CalculateModifiers(0, CurrentDamage, 0);
+        return UnitCalculation.CalculateDealtDamage(damage, targetUnit.CurrentDefense);
     }
 
     public bool CanPlunder()
@@ -656,5 +675,14 @@ public class Unit : MonoBehaviour
         ToggleOffMoveableFields();
         ToggleOffAttackableFields();
     }
-}
 
+    public void TurnOnChosenMark()
+    {
+        Field.TurnOnChosenMark();
+    }
+
+    public void TurnOffChosenMark()
+    {
+        Field.TurnOffChosenMark();
+    }
+}

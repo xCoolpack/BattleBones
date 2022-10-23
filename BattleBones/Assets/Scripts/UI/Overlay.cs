@@ -122,6 +122,14 @@ public class Overlay : MonoBehaviour
     /// </summary>
     public void ClearPicked()
     {
+        var field = PickedField ?? PickedBuilding?.Field ?? PickedUnit?.Field;
+
+        if (field != null)
+        {
+            field.Mark_ = Field.Mark.Unmarked;
+            field.ChosenMark.SetActive(false);
+        }
+
         PickedUnit?.ToggleOffAllMarks();
         PickedBuilding = null;
         PickedField = null;
@@ -142,12 +150,18 @@ public class Overlay : MonoBehaviour
     }
 
     /// <summary>
-    /// Creates base info box with title. Removes existing info box
+    /// Creates base info box with title. Removes existing info box-
     /// </summary>
     /// <param name="title"></param>
     private VisualElement CreateBasicInfoBox(string title)
     {
         RemoveInfoBox();
+
+        if (title.Length > 33)
+        {
+            title = title[..33] + '.';
+        }
+
         var infoBox = new VisualElement();
         var titleBox = new VisualElement();
         var titleLabel = new Label(title);
@@ -181,8 +195,8 @@ public class Overlay : MonoBehaviour
     /// </summary>
     public void FieldInfoBox()
     {
-        if (PickedField is null) throw new ArgumentNullException(nameof(PickedField),"PickedField has to be set");
-        var title = $"{PickedField.Type.FieldName} - cost {PickedField.Type.MovementPointsCost}";
+        if (PickedField is null) throw new ArgumentNullException(nameof(PickedField), "PickedField has to be set");
+        var title = $"{PickedField.Type.FieldName} {PickedField.ThreeAxisCoordinates} - cost {PickedField.Type.MovementPointsCost}";
         var infoBox = CreateBasicInfoBox(title);
         var buildings = PickedField.Type.AllowableBuildings;
         var container = new VisualElement();
@@ -216,7 +230,12 @@ public class Overlay : MonoBehaviour
 
             if (PickedField.CanConstruct(TurnHandler.CurrentPlayer, building.name))
             {
-                var buyButton = new Button(() => PickedField.BeginBuildingConstruction(TurnHandler.CurrentPlayer, building.name))
+                var buyButton = new Button(() =>
+                {
+                    PickedField.BeginBuildingConstruction(TurnHandler.CurrentPlayer, building.name);
+                    RemoveInfoBox();
+                    ClearPicked();
+                })
                 {
                     text = "Build"
                 };
@@ -245,8 +264,8 @@ public class Overlay : MonoBehaviour
     /// <param name="showButtons"></param>
     public void UnitInfoBox(bool showButtons)
     {
-        if (PickedUnit is null) throw new ArgumentNullException(nameof(PickedUnit),"PickedUnit has to be set");
-        var infoBox = CreateBasicInfoBox(PickedUnit.BaseUnitStats.UnitName);
+        if (PickedUnit is null) throw new ArgumentNullException(nameof(PickedUnit), "PickedUnit has to be set");
+        var infoBox = CreateBasicInfoBox($"{PickedUnit.BaseUnitStats.UnitName} {PickedUnit.Field.ThreeAxisCoordinates}");
         var statsBox = new VisualElement();
         var statsBoxLeft = new VisualElement();
         var statsBoxRight = new VisualElement();
@@ -300,13 +319,15 @@ public class Overlay : MonoBehaviour
 
             var deleteButton = new Button(() =>
             {
+                PickedUnit.Field.TurnOffChosenMark();
                 PickedUnit.Delete();
                 RemoveInfoBox();
+                ClearPicked();
             })
             {
                 text = "Delete"
             };
-            
+
             deleteButton.AddToClassList("InfoBoxButton");
             buttonsBox.Add(deleteButton);
         }
@@ -351,7 +372,7 @@ public class Overlay : MonoBehaviour
     /// <param name="showButtons"></param>
     private (VisualElement, VisualElement) CreateBuildingInfoBox(bool showButtons)
     {
-        var infoBox = CreateBasicInfoBox($"{PickedBuilding.BaseBuildingStats.BuildingName}-{PickedBuilding.GetBuildingStateName()}");
+        var infoBox = CreateBasicInfoBox($"{PickedBuilding.BaseBuildingStats.BuildingName} {PickedBuilding.Field.ThreeAxisCoordinates}-{PickedBuilding.GetBuildingStateName()}");
         var sightRangeLabel = new Label($"Sight range: {PickedBuilding.SightRange}");
         var repairLabel = new Label($"Repair cooldown: {PickedBuilding.BaseRepairCooldown}");
         var statsBox = new VisualElement();
@@ -371,8 +392,10 @@ public class Overlay : MonoBehaviour
         {
             var destroyButton = new Button(() =>
             {
+                PickedBuilding.Field.TurnOffChosenMark();
                 PickedBuilding.Destroy();
                 RemoveInfoBox();
+                ClearPicked();
             })
             {
                 text = "Destroy"
@@ -427,6 +450,7 @@ public class Overlay : MonoBehaviour
     /// Displays InfoBox for the given DefensiveBuilding
     /// </summary>
     /// <param name="defensiveBuilding"></param>
+    /// <param name="showButtons"></param>
     public void DefensiveBuildingInfoBox(DefensiveBuilding defensiveBuilding, bool showButtons)
     {
         if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding), "PickedBuilding has to be set");
@@ -572,7 +596,7 @@ public class Overlay : MonoBehaviour
     /// <param name="showButtons"></param>
     public void HousingInfoBox(Housing housing, bool showButtons)
     {
-        if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding),"PickedBuilding has to be set");
+        if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding), "PickedBuilding has to be set");
 
         var (statsBox, buttonsBox) = CreateBuildingInfoBox(PickedBuilding);
 
@@ -605,7 +629,7 @@ public class Overlay : MonoBehaviour
     /// <param name="showButtons"></param>
     public void BarricadeInfoBox(Barricade barricade, bool showButtons)
     {
-        if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding),"PickedBuilding has to be set");
+        if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding), "PickedBuilding has to be set");
         var (statsBox, buttonsBox) = CreateBuildingInfoBox(PickedBuilding);
     }
 
@@ -639,7 +663,8 @@ public class Overlay : MonoBehaviour
             ObjectiveHandler.FailObjectives
         };
 
-        foreach (var objectives in listOfLists) {
+        foreach (var objectives in listOfLists)
+        {
             foreach (var objective in objectives)
             {
                 var box = new VisualElement();

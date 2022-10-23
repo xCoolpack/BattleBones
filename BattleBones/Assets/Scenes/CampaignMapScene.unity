@@ -169,7 +169,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MissionName: Mission1
   MissionDescription: First Mission
-  IsCompleted: 0
   PreviousMissions:
   - {fileID: 987341276}
   Objectives:
@@ -314,6 +313,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 129746073}
   m_CullTransparentMesh: 1
+--- !u!1 &171818830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 171818831}
+  - component: {fileID: 171818832}
+  m_Layer: 0
+  m_Name: Mission2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &171818831
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171818830}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 881572569}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &171818832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171818830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 988f5b66f13170f4eb0af7fab00f6848, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MissionName: Mission2
+  MissionDescription: Second Mission
+  PreviousMissions:
+  - {fileID: 61164393}
+  Objectives:
+  - ObjectiveId: 201
+    ObjectiveDescription: Gather 3600 gold, 2000 wood, 1600 stone
+  - ObjectiveId: 202
+    ObjectiveDescription: Build 6 farm
+  - ObjectiveId: 203
+    ObjectiveDescription: Lose less than or equal 8 units
 --- !u!1 &491713478
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,6 +635,8 @@ Transform:
   m_Children:
   - {fileID: 987341275}
   - {fileID: 61164392}
+  - {fileID: 171818831}
+  - {fileID: 947482391}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -664,6 +720,61 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &947482390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 947482391}
+  - component: {fileID: 947482392}
+  m_Layer: 0
+  m_Name: Mission3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &947482391
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947482390}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 881572569}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &947482392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947482390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 988f5b66f13170f4eb0af7fab00f6848, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MissionName: Mission3
+  MissionDescription: Third Mission
+  PreviousMissions:
+  - {fileID: 171818832}
+  Objectives:
+  - ObjectiveId: 201
+    ObjectiveDescription: Destroy enemy outpost
+  - ObjectiveId: 202
+    ObjectiveDescription: Complete mission in 30 or less turns
+  - ObjectiveId: 203
+    ObjectiveDescription: Destory enemy towers at entrance
 --- !u!1 &987341274
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,7 +821,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MissionName: Mission0
   MissionDescription: Tutorial Mission
-  IsCompleted: 0
   PreviousMissions: []
   Objectives: []
 --- !u!1 &1781349900
