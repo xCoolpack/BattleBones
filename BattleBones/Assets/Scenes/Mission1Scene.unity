@@ -987,7 +987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df2b2ca2959dca6409146212fa681cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerComponent: {fileID: 0}
+  playerComponent: {fileID: 55676344}
   evaluationEngine: {fileID: 968252338}
 --- !u!4 &58151246 stripped
 Transform:

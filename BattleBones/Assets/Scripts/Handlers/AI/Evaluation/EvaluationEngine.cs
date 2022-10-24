@@ -20,6 +20,20 @@ public class EvaluationEngine : MonoBehaviour
 
     public int Evaluate(string moveType, Object source, Object target)
     {
-        return 0;
+        int eval = 0;
+
+        switch (moveType)
+        {
+            case "unitAttack" or "move":
+                UnitRelatedEvaluation.Evaluate(moveType, source, target);
+                break;
+            case "recruitment" or "buildingAttack" or "construction":
+                BuildingRelatedEvaluation.Evaluate(moveType, source, target);
+                break;
+            default:
+                break;
+        }
+
+        return eval;
     }
 }

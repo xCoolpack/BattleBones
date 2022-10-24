@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
 
 public class UnitRelatedEvaluation : MonoBehaviour
 {
@@ -44,13 +45,21 @@ public class UnitRelatedEvaluation : MonoBehaviour
                 break;
         }
 
-        Debug.Log($"{moveType} - eval={eval}");
         return CustomEval.ProcessEvaluation(moveType, source, target, eval);
     }
 
     public double FieldEval(Field target)
     {
         return FieldStrategicValue.EvaluateField(target);
+    }
+
+    public Field GetEnemyBase(Player owner, Field defaultField)
+    {
+        Building enemyBase = owner.TurnHandler.HumanPlayer.Buildings.FirstOrDefault(b => b.BaseBuildingStats.BuildingName == "Outpost");
+
+        return enemyBase is not null
+            ? enemyBase.Field
+            : defaultField;
     }
 
     public int AttackEval(Unit source, Field target)
@@ -65,7 +74,7 @@ public class UnitRelatedEvaluation : MonoBehaviour
     public int MovementEval(Unit source, Field target)
     {
         double fieldEval = FieldEval(target);
-        fieldEval += PlayerBaseDistance.EvaluateDistance(target);
+        fieldEval += PlayerBaseDistance.EvaluateDistance(source.Field, GetEnemyBase(source.Player, source.Field));
         fieldEval *= 10;
 
         return (int) fieldEval;

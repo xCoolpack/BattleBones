@@ -68,6 +68,7 @@ public class ComputerPlayer : MonoBehaviour
         //TO-DO: consider defending/healing
 
         //units always attack if possible
+        //TO-DO: bug - units don't get attackable fields
         if (attackableFields.Count == 0)
         {
             List<Field> moveableFields = unit.MoveableFields;
