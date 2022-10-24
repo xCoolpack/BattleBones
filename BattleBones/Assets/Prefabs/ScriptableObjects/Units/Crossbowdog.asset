@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Crossbowdog
   m_EditorClassIdentifier: 
   UnitName: Crossbowdog
-  BaseHealth: 0
-  BaseDamage: 0
-  BaseDefense: 0
-  BaseMovementPoints: 0
-  BaseAttackRange: 0
-  BaseSightRange: 0
+  BaseHealth: 80
+  BaseDamage: 35
+  BaseDefense: 10
+  BaseMovementPoints: 3
+  BaseAttackRange: 2
+  BaseSightRange: 2
   BaseCost:
-    Gold: 0
+    Gold: 150
     Wood: 0
     Stone: 0
     Doggium: 0
