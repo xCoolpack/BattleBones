@@ -40,22 +40,22 @@ public class UnitsCounter : MonoBehaviour
             //Dog
             new List<bool>()
             {
-                false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, true, false, false, false, false, false, false
             },
             //Dog-at-arms
             new List<bool>()
             {
-                false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, true, true, false, false, false, false, false, false
             },
             //Crossbowdog
             new List<bool>()
             {
-                true, true, false, false, false, false, true, true, false, false, false, false, false
+                true, true, false, false, false, true, true, true, true, false, false, false, false
             },
             //Dog-a-copter
             new List<bool>()
             {
-                false, false, false, true, false, false, false, false, false, false, true, false, false
+                false, false, false, true, false, false, true, false, false, false, true, false, false
             },
             //Battering dog
             new List<bool>()
@@ -75,27 +75,27 @@ public class UnitsCounter : MonoBehaviour
             //Cat
             new List<bool>()
             {
-                false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, true, false, false, false, false, false, false
             },
             //Cat-at-arms
             new List<bool>()
             {
-                false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, true, true, false, false, false, false, false, false
             },
             //Crossbowcat
             new List<bool>()
             {
-                true, true, false, false, false, false, true, true, false, false, false, false, false
+                true, true, false, false, false, true, true, true, true, false, false, false, false
             },
             //Cat-a-copter
             new List<bool>()
             {
-                false, false, false, true, false, false, false, false, false, false, true, false, false
+                false, false, false, true, false, false, true, false, false, false, true, false, false
             },
             //Mountain cat
             new List<bool>()
             {
-                false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, true, true, false, false, false, false, false, false
             },
         };
     }

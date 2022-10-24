@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Battering dog
   m_EditorClassIdentifier: 
   UnitName: Battering dog
-  BaseHealth: 0
-  BaseDamage: 0
-  BaseDefense: 0
-  BaseMovementPoints: 0
-  BaseAttackRange: 0
-  BaseSightRange: 0
+  BaseHealth: 80
+  BaseDamage: 20
+  BaseDefense: 30
+  BaseMovementPoints: 2
+  BaseAttackRange: 1
+  BaseSightRange: 2
   BaseCost:
-    Gold: 0
+    Gold: 250
     Wood: 0
     Stone: 0
     Doggium: 0
