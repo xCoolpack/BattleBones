@@ -22,14 +22,4 @@ public class EvaluationEngine : MonoBehaviour
     {
         return 0;
     }
-
-    public int EvaluateRecruitment()
-    {
-        return 4;
-    }
-
-    public int EvaluateBuilding()
-    {
-        return 5;
-    }
 }

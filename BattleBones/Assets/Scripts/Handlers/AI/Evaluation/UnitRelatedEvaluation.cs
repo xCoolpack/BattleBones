@@ -44,29 +44,30 @@ public class UnitRelatedEvaluation : MonoBehaviour
                 break;
         }
 
+        Debug.Log($"{moveType} - eval={eval}");
         return CustomEval.ProcessEvaluation(moveType, source, target, eval);
     }
 
-    public int FieldEval(Field target)
+    public double FieldEval(Field target)
     {
         return FieldStrategicValue.EvaluateField(target);
     }
 
     public int AttackEval(Unit source, Field target)
     {
-        int unitEval = UnitStrategicValue.EvaluateUnit(source);
-        int fieldEval = FieldEval(target);
-        int attackDanger = AttackDanger.EvaluateAttackDanger(source, target, unitEval, fieldEval);
-        int attackValuability = AttackValuability.EvaluateAttackValuability(source, target, unitEval, fieldEval);
+        double fieldEval = FieldEval(target);
+        int attackDanger = AttackDanger.EvaluateAttackDanger(source, target, fieldEval);
+        int attackValuability = AttackValuability.EvaluateAttackValuability(source, target, fieldEval);
         
         return attackValuability - attackDanger;
     }
 
     public int MovementEval(Unit source, Field target)
     {
-        int fieldEval = FieldEval(target);
+        double fieldEval = FieldEval(target);
         fieldEval += PlayerBaseDistance.EvaluateDistance(target);
+        fieldEval *= 10;
 
-        return fieldEval;
+        return (int) fieldEval;
     }
 }

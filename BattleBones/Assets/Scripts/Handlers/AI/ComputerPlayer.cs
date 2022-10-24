@@ -67,8 +67,7 @@ public class ComputerPlayer : MonoBehaviour
         List<Field> attackableFields = unit.AttackableFields;
         //TO-DO: consider defending/healing
 
-        //for now units always attack if possible (this might become permanent)
-        //TO-DO: consider retreating (but probably ignore it)
+        //units always attack if possible
         if (attackableFields.Count == 0)
         {
             List<Field> moveableFields = unit.MoveableFields;
@@ -100,7 +99,7 @@ public class ComputerPlayer : MonoBehaviour
         }
 
         //TO-DO: somehow attack and recruit with outpost
-
+        //TO-DO: repairing buildings and construction
         if (building.BaseBuildingStats.BuildingName != "Outpost")
         {
             //TO-DO: recruitment

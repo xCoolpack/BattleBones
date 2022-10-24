@@ -5,15 +5,31 @@ using UnityEngine;
 public class AttackValuability
 {
     public UnitStrategicValue UnitStrategicValue;
+    public static int defaultAttackEval = 60;
 
     public AttackValuability(UnitStrategicValue unitStrategicValue)
     {
         UnitStrategicValue = unitStrategicValue;
     }
 
-    public int EvaluateAttackValuability(Unit source, Field target, int unitValue, int fieldValue)
+    public int EvaluateAttackValuability(Unit source, Field target, double fieldMod)
     {
-        //TO-DO (field might not have a unit)
-        return 0;
+        if (target.Unit is null)
+            return defaultAttackEval;
+
+        int sourceEval = (int) (UnitStrategicValue.EvaluateUnit(source) * 0.1);
+        int targetEval = UnitStrategicValue.EvaluateUnit(target.Unit);
+        int predictedDamage = source.PredictDamage(target.Unit);
+        double damageMod = 1;
+
+        if (predictedDamage / target.Unit.CurrentHealth > 0.30)
+            damageMod = 1.5;
+
+        if (predictedDamage / target.Unit.CurrentHealth > 1)
+            damageMod = 2;
+
+        targetEval = (int)(targetEval * damageMod);
+
+        return (int)((targetEval - sourceEval) * fieldMod);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,9 @@ public class UnitStrategicValue
 
     public int EvaluateUnit(Unit source)
     {
-        //TO-DO
-        return 0;
+        int typeValue = UnitTypeValue.EvaluateUnitType(source.BaseUnitStats.UnitName);
+        double healthModifier = Math.Max(0.5, source.CurrentHealth / source.BaseUnitStats.BaseHealth);
+
+        return (int)(typeValue * healthModifier);
     }
 }

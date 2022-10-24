@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FieldTypeStrategicValue
 {
     public FieldValues Values;
+    public static int defaultEval = 1;
 
     public FieldTypeStrategicValue(FieldValues values)
     {
         Values = values;
     }
 
-    public int EvaluateFieldType(string fieldType)
+    public double EvaluateFieldType(string fieldType)
     {
-        return Values.fieldValues.Find(a => a.fieldName == fieldType).fieldValue;
+        FieldValueRecord queriedValue = Values.fieldValues.SingleOrDefault(a => a.fieldName == fieldType);
+
+        return queriedValue.fieldValue is not 0
+            ? queriedValue.fieldValue
+            : defaultEval;
     }
 }

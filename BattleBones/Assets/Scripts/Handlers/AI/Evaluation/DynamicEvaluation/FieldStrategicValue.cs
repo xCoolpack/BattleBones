@@ -11,20 +11,21 @@ public class FieldStrategicValue
         FieldTypeStrategicValue = fieldTypeStrategicValue;
     }
 
-    public int EvaluateFieldType(Field target)
+    public double EvaluateFieldType(Field target)
     {
         return FieldTypeStrategicValue.EvaluateFieldType(target.Type.FieldName);
     }
 
-    public int EvaluateField(Field target)
+    public double EvaluateField(Field target)
     {
-        int fieldStrategicEval = EvaluateFieldType(target);
+        double fieldStrategicEval = EvaluateFieldType(target);
 
         if (target.Building != null
-            && (target.Building.BaseBuildingStats.BuildingName == "Defensive tower"
-            ||  target.Building.BaseBuildingStats.BuildingName == "Barricade"))
+            && ((target.Building.BaseBuildingStats.BuildingName == "Defensive tower"
+                ||  target.Building.BaseBuildingStats.BuildingName == "Barricade")
+            && target.Building.GetBuildingStateName() == "Fine"))
         {
-            fieldStrategicEval = (int)(1.2 * fieldStrategicEval);
+            fieldStrategicEval += 0.5;
         }
 
         return fieldStrategicEval;

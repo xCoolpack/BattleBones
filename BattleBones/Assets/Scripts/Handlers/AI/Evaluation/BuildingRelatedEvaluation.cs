@@ -4,15 +4,65 @@ using UnityEngine;
 
 public class BuildingRelatedEvaluation : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    public FieldEconomicValue FieldEconomicValue;
+    public UnitStrategicValue UnitStrategicValue;
 
+    public CustomEvaluationCharacteristics CustomEval;
+
+    void Awake()
+    {
+        UnitStrategicValues usv = EvaluationEngine.LoadAssetByName<UnitStrategicValues>("UnitTypeValues");
+        FieldValues fev = EvaluationEngine.LoadAssetByName<FieldValues>("FieldEconomicValues");
+
+        UnitStrategicValue = new UnitStrategicValue(new UnitTypeValue(usv));
+        FieldEconomicValue = new FieldEconomicValue(fev);
     }
 
-    // Update is called once per frame
-    void Update()
+    public int EvaluateBuildingAttack(Field target)
     {
-        
+        return 0;
+    }
+
+    public int Evaluate(string moveType, Object source, Object target)
+    {
+        int eval = 0;
+
+        switch (moveType)
+        {
+            case "buildingAttack":
+                eval = AttackEval(target as Field);
+                break;
+
+            case "recruitment":
+                eval = RecruitmentEval(target as Unit);
+                break;
+
+            case "construction":
+                eval = ConstructionEval(source as Building, target as Field);
+                break;
+
+            default:
+                break;
+        }
+
+        return CustomEval.ProcessEvaluation(moveType, source, target, eval);
+    }
+
+    public int AttackEval(Field target)
+    {
+        //TO-DO
+        return 0;
+    }
+
+    public int RecruitmentEval(Unit target)
+    {
+        //TO-DO
+        return 0;
+    }
+
+    public int ConstructionEval(Building source, Field target)
+    {
+        //TO-DO
+        return 0;
     }
 }
