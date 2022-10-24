@@ -308,19 +308,6 @@ public class Unit : MonoBehaviour
 
     #region Move
     /// <summary>
-    /// Methods calculating distance between Fields coordinates
-    /// </summary>
-    /// <param name="startingField"></param>
-    /// <param name="targetField"></param>
-    /// <returns></returns>
-    public int GetDistance(Field startingField, Field targetField)
-    {
-        return Math.Abs(startingField.ThreeAxisCoordinates.x - targetField.ThreeAxisCoordinates.x) +
-               Math.Abs(startingField.ThreeAxisCoordinates.y - targetField.ThreeAxisCoordinates.y) +
-               Math.Abs(startingField.ThreeAxisCoordinates.z - targetField.ThreeAxisCoordinates.z);
-    } 
-
-    /// <summary>
     /// Generating path to target field
     /// </summary>
     /// <param name="graph"></param>
@@ -355,7 +342,7 @@ public class Unit : MonoBehaviour
             return false;
         (Dictionary<Field, Field> graph, _) = GraphSearch.AStarSearch(Field, targetField, 
             (currentField, startingField) => MovementScript.CanMoveAll(this, currentField), 
-            (field) => MovementScript.GetMovementPointsCostAll(this, field), GetDistance, targetField => false);
+            (field) => MovementScript.GetMovementPointsCostAll(this, field), GraphSearch.GetDistance, targetField => false);
         
         MoveUnit(graph, targetField);
 
@@ -486,7 +473,7 @@ public class Unit : MonoBehaviour
         {
             (Dictionary<Field, Field> graph, Field attackingField) = GraphSearch.AStarSearch(Field, targetField,
                 (currentField, startingField) => MovementScript.CanMoveAll(this, currentField),
-                (field) => MovementScript.GetMovementPointsCostAll(this, field), GetDistance,
+                (field) => MovementScript.GetMovementPointsCostAll(this, field), GraphSearch.GetDistance,
                 (currentField) => possibleFieldsForAttack.Contains(currentField));
             //Move unit to that field
             MoveUnit(graph, attackingField);

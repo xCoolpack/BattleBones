@@ -62,6 +62,19 @@ public static class GraphSearch
     }
 
     /// <summary>
+    /// Methods calculating distance between Fields coordinates
+    /// </summary>
+    /// <param name="startingField"></param>
+    /// <param name="targetField"></param>
+    /// <returns></returns>
+    public static int GetDistance(Field startingField, Field targetField)
+    {
+        return Math.Abs(startingField.ThreeAxisCoordinates.x - targetField.ThreeAxisCoordinates.x) +
+               Math.Abs(startingField.ThreeAxisCoordinates.y - targetField.ThreeAxisCoordinates.y) +
+               Math.Abs(startingField.ThreeAxisCoordinates.z - targetField.ThreeAxisCoordinates.z);
+    }
+
+    /// <summary>
     /// A* graph search for fields
     /// </summary>
     /// <param name="startingField"></param>
