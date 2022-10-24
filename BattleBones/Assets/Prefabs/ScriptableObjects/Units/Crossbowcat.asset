@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 433d66bf2d8e9134193be299a4bebb31, type: 3}
-  m_Name: Test 1
+  m_Name: Crossbowcat
   m_EditorClassIdentifier: 
-  UnitName: Test unit
-  BaseHealth: 100
-  BaseDamage: 35
-  BaseDefense: 20
-  BaseMovementPoints: 5
-  BaseAttackRange: 1
-  BaseSightRange: 3
+  UnitName: Crossbowcat
+  BaseHealth: 0
+  BaseDamage: 0
+  BaseDefense: 0
+  BaseMovementPoints: 0
+  BaseAttackRange: 0
+  BaseSightRange: 0
   BaseCost:
     Gold: 0
     Wood: 0
