@@ -63,8 +63,10 @@ public class ComputerPlayer : MonoBehaviour
     public List<Move> GenerateUnitMoves(Unit unit)
     {
         List<Move> moves = new List<Move>();
+        // v this is sus v
         unit.UpdateFieldSets();
         List<Field> attackableFields = unit.AttackableFields;
+        Debug.Log(attackableFields.Count);
         //TO-DO: consider defending/healing
 
         //units always attack if possible
