@@ -45,7 +45,8 @@ public class BuildingRelatedEvaluation : MonoBehaviour
                 break;
         }
 
-        return CustomEval.ProcessEvaluation(moveType, source, target, eval);
+        //TO-DO: customEval
+        return eval;
     }
 
     public int AttackEval(Field target)

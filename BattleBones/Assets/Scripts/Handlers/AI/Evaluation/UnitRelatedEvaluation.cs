@@ -45,7 +45,8 @@ public class UnitRelatedEvaluation : MonoBehaviour
                 break;
         }
 
-        return CustomEval.ProcessEvaluation(moveType, source, target, eval);
+        //TO-DO: customEval
+        return eval;
     }
 
     public double FieldEval(Field target)
@@ -74,8 +75,8 @@ public class UnitRelatedEvaluation : MonoBehaviour
     public int MovementEval(Unit source, Field target)
     {
         double fieldEval = FieldEval(target);
-        fieldEval += PlayerBaseDistance.EvaluateDistance(source.Field, GetEnemyBase(source.Player, source.Field));
-        fieldEval *= 10;
+        fieldEval += PlayerBaseDistance.EvaluateDistance(target, GetEnemyBase(source.Player, target));
+        fieldEval *= 2;
 
         return (int) fieldEval;
     }

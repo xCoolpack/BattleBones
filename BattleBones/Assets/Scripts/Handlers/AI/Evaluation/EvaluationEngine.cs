@@ -25,10 +25,10 @@ public class EvaluationEngine : MonoBehaviour
         switch (moveType)
         {
             case "unitAttack" or "move":
-                UnitRelatedEvaluation.Evaluate(moveType, source, target);
+                eval = UnitRelatedEvaluation.Evaluate(moveType, source, target);
                 break;
             case "recruitment" or "buildingAttack" or "construction":
-                BuildingRelatedEvaluation.Evaluate(moveType, source, target);
+                eval = BuildingRelatedEvaluation.Evaluate(moveType, source, target);
                 break;
             default:
                 break;

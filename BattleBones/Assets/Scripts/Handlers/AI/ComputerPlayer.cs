@@ -17,13 +17,13 @@ public class ComputerPlayer : MonoBehaviour
     {
         SortPlayersEntities();
 
-        foreach (Building building in playerComponent.Buildings)
+        foreach (Building building in playerComponent.Buildings.ToList())
         {
             List<Move> moves = GenerateMoves(building);
             SelectAndRunMoves(moves);
         }
 
-        foreach (Unit unit in playerComponent.Units)
+        foreach (Unit unit in playerComponent.Units.ToList())
         {
             List<Move> moves = GenerateMoves(unit);
             SelectAndRunMoves(moves);
@@ -63,14 +63,10 @@ public class ComputerPlayer : MonoBehaviour
     public List<Move> GenerateUnitMoves(Unit unit)
     {
         List<Move> moves = new List<Move>();
-        // v this is sus v
         unit.UpdateFieldSets();
         List<Field> attackableFields = unit.AttackableFields;
-        Debug.Log(attackableFields.Count);
-        //TO-DO: consider defending/healing
 
         //units always attack if possible
-        //TO-DO: bug - units don't get attackable fields
         if (attackableFields.Count == 0)
         {
             List<Field> moveableFields = unit.MoveableFields;
@@ -117,9 +113,9 @@ public class ComputerPlayer : MonoBehaviour
         if (moves.Count == 0)
             return;
 
-        moves.OrderByDescending(move => move.EvalValue);
+        Move toExecute = moves.OrderByDescending(move => move.EvalValue).First();
 
         //TO-DO: introduce randomisation
-        moves[0].Execute();
+        toExecute.Execute();
     }
 }
