@@ -507,10 +507,11 @@ public class Unit : MonoBehaviour
             UnitModifiers unitModifiers = building.Field.Unit.CurrentModifiers 
                                           + new UnitModifiers(damage: building.Field.Unit.AttackScript.GetCounterAttackModifier());
             (_, damage, _) = unitModifiers.CalculateModifiers(0, building.Field.Unit.CurrentDamage, 0);
-            (_, thisDamage, _) = 
-                GetCounterModifier(building.Field.Unit.BaseUnitStats.UnitName).CalculateModifiers(0, CurrentDamage, 0);
+            
         }
-        
+
+        if (BaseUnitStats.UnitName is "Battering dog" or "Dog-a-pult")
+            (_, thisDamage, _) = (CurrentModifiers + new UnitModifiers(damage: 150)).CalculateModifiers(0, CurrentDamage, 0);
         building.TakeDamage(thisDamage);
         if (AttackScript.IsProvokingCounterAttack() && building.Field.HasUnit())
             TakeDamage(damage);

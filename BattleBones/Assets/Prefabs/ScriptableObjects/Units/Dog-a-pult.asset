@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Dog-a-pult
   m_EditorClassIdentifier: 
   UnitName: Dog-a-pult
-  BaseHealth: 0
-  BaseDamage: 0
+  BaseHealth: 50
+  BaseDamage: 20
   BaseDefense: 0
-  BaseMovementPoints: 0
-  BaseAttackRange: 0
-  BaseSightRange: 0
+  BaseMovementPoints: 2
+  BaseAttackRange: 2
+  BaseSightRange: 2
   BaseCost:
-    Gold: 0
+    Gold: 300
     Wood: 0
     Stone: 0
     Doggium: 0
