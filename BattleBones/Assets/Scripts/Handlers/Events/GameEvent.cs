@@ -1,4 +1,6 @@
-﻿public class GameEvent
+﻿using System.Collections.Generic;
+
+public class GameEvent
 {
     public int Timer { get; set; }
 
@@ -19,12 +21,16 @@
     /// Decrements timer and calls Action if Timer hits 0
     /// </summary>
     /// <param name="count">Defaults to 1</param>
-    public void DecrementTimer(int count = 1)
+    /// <returns>if event called action</returns>
+    public bool DecrementTimer(int count = 1)
     {
         Timer -= count;
         if (Timer <= 0)
         {
             Action_();
+            return true;
         }
+
+        return false;
     }
 }

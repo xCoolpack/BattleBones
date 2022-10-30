@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Dog scout
   m_EditorClassIdentifier: 
   UnitName: Dog scout
-  BaseHealth: 0
-  BaseDamage: 0
-  BaseDefense: 0
-  BaseMovementPoints: 0
-  BaseAttackRange: 0
-  BaseSightRange: 0
+  BaseHealth: 60
+  BaseDamage: 15
+  BaseDefense: 5
+  BaseMovementPoints: 4
+  BaseAttackRange: 1
+  BaseSightRange: 3
   BaseCost:
-    Gold: 0
+    Gold: 50
     Wood: 0
     Stone: 0
     Doggium: 0

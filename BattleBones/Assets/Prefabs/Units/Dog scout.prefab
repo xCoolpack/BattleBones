@@ -124,9 +124,9 @@ MonoBehaviour:
   CurrentHealth: 0
   CurrentDamage: 0
   CurrentDefense: 0
-  CurrentMovementPoints: 0
-  AttackRange: 0
-  SightRange: 0
+  CurrentMovementPoints: 4
+  AttackRange: 1
+  SightRange: 3
   BaseUnitStats: {fileID: 11400000, guid: 890b4cdc0c810994592103c201f8d351, type: 2}
   Player: {fileID: 0}
   Field: {fileID: 0}

@@ -13,10 +13,10 @@ public class EventHandler : MonoBehaviour
     /// <param name="e"></param>
     public void AddStartTurnEvent(GameEvent e)
     {
-        if (e.Timer <= 0)
-            e.Action_();
-        else
-            _startTurnEvents.Add(e);
+        //if (e.Timer <= 0)
+        //    e.Action_();
+        //else
+        _startTurnEvents.Add(e);
     }
 
     public void RemoveStartTurnEvent(GameEvent e)
@@ -30,10 +30,10 @@ public class EventHandler : MonoBehaviour
     /// <param name="e"></param>
     public void AddEndTurnEvent(GameEvent e)
     {
-        if (e.Timer <= 0)
-            e.Action_();
-        else
-            _endTurnEvents.Add(e);
+        //if (e.Timer < 0)
+        //    e.Action_();
+        //else
+        _endTurnEvents.Add(e);
     }
 
     /// <summary>
@@ -41,7 +41,12 @@ public class EventHandler : MonoBehaviour
     /// </summary>
     public void TurnEnd()
     {
-        _endTurnEvents.ForEach(e => e.DecrementTimer());
+        for (var i = 0; i < _endTurnEvents.Count; i++)
+        {
+            if (!_endTurnEvents[i].DecrementTimer()) continue;
+            _endTurnEvents.RemoveAt(i);
+            i--;
+        }
     }
 
 
@@ -50,6 +55,11 @@ public class EventHandler : MonoBehaviour
     /// </summary>
     public void TurnStart()
     {
-        _startTurnEvents.ForEach(e => e.DecrementTimer());
+        for (var i = 0; i < _startTurnEvents.Count; i++)
+        {
+            if (!_startTurnEvents[i].DecrementTimer()) continue;
+            _startTurnEvents.RemoveAt(i);
+            i--;
+        }
     }
 }

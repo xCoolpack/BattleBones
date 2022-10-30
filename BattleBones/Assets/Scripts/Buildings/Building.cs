@@ -59,6 +59,13 @@ public class Building : MonoBehaviour
         }
 
         ShowFields();
+
+        // Building defined in scene
+        if (BuildingState == BuildingState.Fine)
+        {
+            Construct();
+            PreviousBuildingState = BuildingState.UnderConstruction;
+        }
     }
 
     /// <summary>

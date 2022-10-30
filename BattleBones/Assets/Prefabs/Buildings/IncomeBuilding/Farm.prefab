@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4676323450524676282}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6809266, y: -0.93338186, z: 0}
+  m_LocalPosition: {x: 0, y: 1.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -105,6 +105,7 @@ MonoBehaviour:
   Player: {fileID: 0}
   Field: {fileID: 0}
   BuildingState: 0
+  PreviousBuildingState: 0
   VisibleFields: []
 --- !u!114 &5856949143772316663
 MonoBehaviour:
@@ -119,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ResourcesIncome:
-    Gold: 0
+    Gold: 25
     Wood: 0
     Stone: 0
     Doggium: 0

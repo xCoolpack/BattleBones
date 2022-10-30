@@ -9,27 +9,29 @@ public class FlyingMovement : Movement
 
     public override int GetMovementPointsCost(Unit unit, Field field)
     {
-        switch (field.Type.FieldName)
+        return field.Type.FieldName switch
         {
-            case "Forest":
-                return ForestCost;
-            case "Hills":
-                return HillsCost;
-            default:
-                return field.GetMovementPointsCost();
-        }
+            "Forest" => ForestCost,
+            "Wood" => ForestCost,
+            "Hills" => HillsCost,
+            "StoneHills" => HillsCost,
+            "GoldHills" => HillsCost,
+            "DoggiumHills" => HillsCost,
+            _ => field.GetMovementPointsCost()
+        };
     }
 
     public override bool IsBlockingSight(Field field)
     {
-        switch (field.Type.FieldName)
+        return field.Type.FieldName switch
         {
-            case "Forest":
-                return false;
-            case "Hills":
-                return false;
-            default:
-                return field.Type.IsBlockingSight;
-        }
+            "Forest" => false,
+            "Wood" => false,
+            "Hills" => false,
+            "StoneHills" => false,
+            "GoldHills" => false,
+            "DoggiumHills" => false,
+            _ => field.Type.IsBlockingSight
+        };
     }
 }

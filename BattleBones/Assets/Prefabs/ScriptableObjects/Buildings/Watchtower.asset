@@ -20,7 +20,7 @@ MonoBehaviour:
   IsPassable: 0
   BaseCost:
     Gold: 0
-    Wood: 75
-    Stone: 50
+    Wood: 100
+    Stone: 0
     Doggium: 0
     Bone: 0

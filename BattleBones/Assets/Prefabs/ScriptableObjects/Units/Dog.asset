@@ -20,7 +20,7 @@ MonoBehaviour:
   BaseAttackRange: 1
   BaseSightRange: 2
   BaseCost:
-    Gold: 100
+    Gold: 75
     Wood: 0
     Stone: 0
     Doggium: 0

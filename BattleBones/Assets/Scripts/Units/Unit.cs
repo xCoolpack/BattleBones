@@ -585,7 +585,7 @@ public class Unit : MonoBehaviour
     public void BeginHealing()
     {
         CurrentMovementPoints = 0;
-        Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, Heal));
+        Player.PlayerEventHandler.AddEndTurnEvent(new GameEvent(1, Heal));
     }
 
     public void Heal()
