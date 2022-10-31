@@ -56,10 +56,22 @@ public class UnitRelatedEvaluation : MonoBehaviour
 
     public Field GetEnemyBase(Player owner, Field defaultField)
     {
-        Building enemyBase = owner.TurnHandler.HumanPlayer.Buildings.FirstOrDefault(b => b.BaseBuildingStats.BuildingName == "Outpost");
+        Player enemy = owner.TurnHandler.HumanPlayer;
+        Field targetField = null;
 
-        return enemyBase is not null
-            ? enemyBase.Field
+        if (enemy.Buildings.Count > 0)
+        {
+            Building enemyBase = enemy.Buildings.FirstOrDefault(b => b.BaseBuildingStats.BuildingName == "Outpost");
+            targetField = enemyBase.Field;
+        }
+        else if (enemy.Units.Count > 0)
+        {
+            Unit enemyUnit = enemy.Units[0];
+            targetField = enemyUnit.Field;
+        }
+        
+        return targetField is not null
+            ? targetField
             : defaultField;
     }
 

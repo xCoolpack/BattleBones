@@ -364,7 +364,7 @@ public class Unit : MonoBehaviour
         foreach (var field in movementPath)
         {
             nextMovementPointCost += MovementScript.GetMovementPointsCost(this, field);
-            if (CurrentMovementPoints < nextMovementPointCost && MovementScript.CanMoveVisible(this, field))
+            if (CurrentMovementPoints < nextMovementPointCost || !MovementScript.CanMoveVisible(this, field))
                 break;
 
             accessibleMovementPath.Add(field);
