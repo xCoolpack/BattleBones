@@ -17,17 +17,17 @@ public class ComputerPlayer : MonoBehaviour
     {
         SortPlayersEntities();
 
-        //foreach (Building building in playerComponent.Buildings.ToList())
-        //{
-        //    List<Move> moves = GenerateMoves(building);
-        //    SelectAndRunMoves(moves);
-        //}
+        foreach (Building building in playerComponent.Buildings.ToList())
+        {
+            List<Move> moves = GenerateMoves(building);
+            SelectAndRunMoves(moves);
+        }
 
-        //foreach (Unit unit in playerComponent.Units.ToList())
-        //{
-        //    List<Move> moves = GenerateMoves(unit);
-        //    SelectAndRunMoves(moves);
-        //}
+        foreach (Unit unit in playerComponent.Units.ToList())
+        {
+            List<Move> moves = GenerateMoves(unit);
+            SelectAndRunMoves(moves);
+        }
 
         playerComponent.TurnHandler.NextTurn();
     }
