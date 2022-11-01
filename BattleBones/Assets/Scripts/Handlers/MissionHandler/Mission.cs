@@ -23,7 +23,7 @@ public class Mission : MonoBehaviour
 
     private void Start()
     {
-        Objectives.ForEach(x => Debug.Log($"{x.ObjectiveId} - {PlayerPrefs.GetInt(x.ObjectiveId.ToString())}"));
+        //Objectives.ForEach(x => Debug.Log($"{x.ObjectiveId} - {PlayerPrefs.GetInt(x.ObjectiveId.ToString())}"));
     }
 
     public bool CanStartMission()
