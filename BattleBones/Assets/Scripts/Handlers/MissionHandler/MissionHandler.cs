@@ -16,8 +16,6 @@ public class MissionHandler : MonoBehaviour
         {
             _missionList.Add(transform.GetChild(i).gameObject.GetComponent<Mission>());
         }
-
-        Debug.Log(new Resources(100,100,100,100,100) >= new Resources(wood: 50));
     }
 
     private int GetCollectedTrophies()

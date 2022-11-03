@@ -30,14 +30,12 @@ public class GameMap : MonoBehaviour
     /// </summary>
     private void PopulateGrid()
     {
-        Debug.Log(FieldGrid.Count);
         FieldGrid.Clear();
         foreach (var field in FindObjectsOfType<Field>())
         {
             if (!FieldGrid.ContainsKey(field.Coordinates))
                 FieldGrid.Add(field.Coordinates, field);
         }
-        Debug.Log(FieldGrid.Count);
     }
 
     /// <summary>

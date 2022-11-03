@@ -55,6 +55,8 @@ public class Unit : MonoBehaviour
         GameMap = GameObject.Find("GameMap").GetComponent<GameMap>();
         _unitsCounter = GameObject.Find("UnitsCounter").GetComponent<UnitsCounter>();
         Hide(Player.HumanPlayer);
+
+        CurrentHealth -= 25;
     } 
 
     private void Update()
@@ -585,12 +587,12 @@ public class Unit : MonoBehaviour
     public void BeginHealing()
     {
         CurrentMovementPoints = 0;
-        Player.PlayerEventHandler.AddEndTurnEvent(new GameEvent(1, Heal));
+        Player.PlayerEventHandler.AddEndTurnEvent(new GameEvent(1, () => Heal(HealRatio)));
     }
 
-    public void Heal()
+    public void Heal(double healRatio)
     {
-        CurrentHealth = Math.Min(CurrentHealth + (int)Math.Ceiling(HealRatio*MaxHealth), MaxHealth);
+        CurrentHealth = Math.Min(CurrentHealth + (int)Math.Ceiling(healRatio * MaxHealth), MaxHealth);
         ChangeModifiersFromHealth();
     }
 
