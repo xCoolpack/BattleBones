@@ -1,6 +1,7 @@
 using Microsoft.Cci;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Outpost : MonoBehaviour
@@ -36,6 +37,8 @@ public class Outpost : MonoBehaviour
         EventHandler eventHandler = Building.Player.PlayerEventHandler;
         RecruitingUnit = new GameEvent(1, () => RecruitUnit(unitName));
         eventHandler.AddStartTurnEvent(RecruitingUnit);
+
+        Logger.Log($"{Building.Player.name} has begun recruitment of {unitName} at {Building.Field.ThreeAxisCoordinates}");
     }
 
     /// <summary>
@@ -62,6 +65,8 @@ public class Outpost : MonoBehaviour
             unit.Show(key);
         }
 
+        Logger.Log($"{Building.Player.name} has finished recruitment of {unitName} at {Building.Field.ThreeAxisCoordinates}");
+
         unit.ShowFields();
     }
 
@@ -72,6 +77,8 @@ public class Outpost : MonoBehaviour
 
     public void CancelRecruitment()
     {
+        Logger.Log($"{Building.Player.name} has cancel recruitment at {Building.Field.ThreeAxisCoordinates}");
+
         EventHandler eventHandler = Building.Player.PlayerEventHandler;
         eventHandler.RemoveStartTurnEvent(RecruitingUnit);
         Building.Player.ResourceManager.AddAmount(_unitCost);

@@ -385,6 +385,8 @@ public class Field : MonoBehaviour
 
         building.BuildingGameEvent = new GameEvent(1, building.Construct);
         player.PlayerEventHandler.AddStartTurnEvent(building.BuildingGameEvent);
+
+        Logger.Log($"{player.name} has begun construction of {buildingName} at {ThreeAxisCoordinates}");
     }
 
     public override string ToString()

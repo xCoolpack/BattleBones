@@ -19,6 +19,10 @@ public class TurnHandler : MonoBehaviour
     {
         _humanTurn = true;
         CurrentPlayer = HumanPlayer;
+        Logger.Log(@$"- - - - - - -
+- Turn: {TurnCounter} -
+- - - - - - -");
+        Logger.Log("Human turn");
     }
 
     public void NextTurn(){
@@ -49,12 +53,17 @@ public class TurnHandler : MonoBehaviour
         if (_humanTurn)
         {
             CurrentPlayer = ComputerPlayerObj.playerComponent;
+            Logger.Log("Bot turn");
         }
         else
         {
             CurrentPlayer = HumanPlayer;
             TurnCounter++;
             GlobalEventHandler.TurnEnd();
+            Logger.Log(@$"- - - - - - -
+- Turn: {TurnCounter} -
+- - - - - - -");
+            Logger.Log("Human turn");
             GlobalEventHandler.TurnStart();
         }
 
@@ -78,7 +87,7 @@ public class TurnHandler : MonoBehaviour
     /// </summary>
     private void GameWon()
     {
-        Debug.Log("Game won");
+        Logger.Log("Game won");
         ObjectiveHandler.Objectives.ForEach(objective => 
             PlayerPrefs.SetInt(objective.ObjectiveId.ToString(), objective.IsCompleted ? 1 : 0));
         var name = SceneManager.GetActiveScene().name;
@@ -91,7 +100,7 @@ public class TurnHandler : MonoBehaviour
     /// </summary>
     private void GameOver()
     {
-        Debug.Log("Game over");
+        Logger.Log("Game over");
     }
 
     public bool IsPlayersTurn(Player player)

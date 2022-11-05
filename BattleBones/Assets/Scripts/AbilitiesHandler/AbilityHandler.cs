@@ -22,11 +22,6 @@ public class AbilityHandler : MonoBehaviour
     {
         _player = GetComponentInParent<Player>();
 
-        if (_player == Player.HumanPlayer)
-        {
-            SelectAbility(2, "Ability0");
-        }
-
         LoadAllAbilities();
         if (_player != null)
         {
@@ -34,14 +29,6 @@ public class AbilityHandler : MonoBehaviour
                 LoadSelectedAbilitiesForHuman();
             else if (_player != Player.HumanPlayer)
                 LoadSelectedAbilitiesForBot();
-        }
-
-        if (_player == Player.HumanPlayer)
-        {
-            SelectedAbilities.ForEach(Debug.Log);
-            Debug.Log(CanUseAbility(1, null, null, Player.HumanPlayer));
-            Debug.Log(CanUseAbility(2, null, null, Player.HumanPlayer));
-            UseAbility(2, null, null, Player.HumanPlayer);
         }
     }
 

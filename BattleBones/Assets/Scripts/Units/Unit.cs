@@ -55,8 +55,6 @@ public class Unit : MonoBehaviour
         GameMap = GameObject.Find("GameMap").GetComponent<GameMap>();
         _unitsCounter = GameObject.Find("UnitsCounter").GetComponent<UnitsCounter>();
         Hide(Player.HumanPlayer);
-
-        CurrentHealth -= 25;
     } 
 
     private void Update()
@@ -340,8 +338,15 @@ public class Unit : MonoBehaviour
     /// <returns></returns>
     public bool Move(Field targetField)
     {
+        Logger.Log($"{Player.name} has ordered {BaseUnitStats.UnitName} " +
+                   $"at {Field.ThreeAxisCoordinates} to move to {targetField.ThreeAxisCoordinates}");
+
         if (targetField == Field)
+        {
+            Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} is already at {targetField.ThreeAxisCoordinates}");
             return false;
+        }
+
         (Dictionary<Field, Field> graph, _) = GraphSearch.AStarSearch(Field, targetField, 
             (currentField, startingField) => MovementScript.CanMoveAll(this, currentField), 
             (field) => MovementScript.GetMovementPointsCostAll(this, field), GraphSearch.GetDistance, targetField => false);
@@ -388,7 +393,7 @@ public class Unit : MonoBehaviour
         // Rethink - apply show and hide methods for every position in movement path
         // Hide fields that unit no longer see
         SetVisibleFields();
-        List<Field> temp = VisibleFields;
+        List<Field> visibleFieldsAtStartPoint = VisibleFields;
 
         // Remove modifiers from starting field
         RemoveUnitModifiers(Field.Type.FieldUnitModifiers);
@@ -400,13 +405,14 @@ public class Unit : MonoBehaviour
 
 
         // Move references between fields
+        Field startingField = Field;
         Field.Unit = null;
         Field = targetField;
         targetField.Unit = this;
         CurrentMovementPoints -= movementPointCost;
 
         // Show fields that unit now see
-        ChangeFieldsVisibility(temp);
+        ChangeFieldsVisibility(visibleFieldsAtStartPoint);
 
         // Show unit to every player that see this field
         foreach (var pair in Field.SeenBy)
@@ -414,6 +420,8 @@ public class Unit : MonoBehaviour
                 Show(pair.Key);
             else if (pair.Value <= 0)
                 Hide(pair.Key);
+
+        Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} has moved from {startingField.ThreeAxisCoordinates} to {Field.ThreeAxisCoordinates}");
 
         MoveGraphicModel(accessibleMovementPath);
     }
@@ -460,15 +468,25 @@ public class Unit : MonoBehaviour
 
     public void Attack(Field targetField)
     {
+        Logger.Log($"{Player.name} has ordered {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} " +
+                   $"to attack {targetField.Unit?.BaseUnitStats.UnitName} " +
+                   $"at {targetField.ThreeAxisCoordinates}");
+
         if (targetField == Field)
-            return ;
+        {
+            Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} is already at {targetField.ThreeAxisCoordinates}");
+            return;
+        }
 
         //Find path to field from unit can attack
         List<Field> possibleFieldsForAttack = GetFieldsFromUnitCanAttack(targetField);
         
         // If unit cannot access attacked unit return false
         if (possibleFieldsForAttack.Count == 0)
-            return ;
+        {
+            Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} cannot reach at {targetField.ThreeAxisCoordinates}");
+            return;
+        }
 
         //If unit cannot attack from current field, move it
         if (!possibleFieldsForAttack.Contains(Field))
@@ -497,6 +515,10 @@ public class Unit : MonoBehaviour
 
             CurrentMovementPoints = 0;
         }
+
+        Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} " +
+                    $"has attacked {targetField.Unit?.BaseUnitStats.UnitName} " +
+                    $"at {targetField.ThreeAxisCoordinates}");
     }
 
     public void DealDamage(Building building)
@@ -516,7 +538,12 @@ public class Unit : MonoBehaviour
             (_, thisDamage, _) = (CurrentModifiers + new UnitModifiers(damage: 150)).CalculateModifiers(0, CurrentDamage, 0);
         building.TakeDamage(thisDamage);
         if (AttackScript.IsProvokingCounterAttack() && building.Field.HasUnit())
+        {
+            var temp = building.Field.Unit;
+            Logger.Log($"{temp.Player.name}'s {temp.BaseUnitStats.UnitName} at {temp.Field.ThreeAxisCoordinates} " +
+                       $"has counterattacked {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates}");
             TakeDamage(damage);
+        }
     }
 
     public void DealDamage(Unit unit)
@@ -527,11 +554,14 @@ public class Unit : MonoBehaviour
         var (_, thisDamage, _) =
             GetCounterModifier(unit.BaseUnitStats.UnitName).CalculateModifiers(0, CurrentDamage, 0);
 
-
         unit.TakeDamage(thisDamage);
         if (AttackScript.IsProvokingCounterAttack())
+        {
+            Logger.Log($"{unit.Player.name}'s {unit.BaseUnitStats.UnitName} at {unit.Field.ThreeAxisCoordinates} " +
+                       $"has counterattacked {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates}");
             if (TakeDamage(damage))
                 Player.UnitsKilled++;
+        }
     }
 
     /// <summary>
@@ -541,10 +571,14 @@ public class Unit : MonoBehaviour
     /// <returns></returns>
     public bool TakeDamage(int damage)
     {
-        CurrentHealth -= UnitCalculation.CalculateDealtDamage(damage, CurrentDefense);
+        damage = UnitCalculation.CalculateDealtDamage(damage, CurrentDefense);
+        CurrentHealth -= damage;
+
+        Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} has taken {damage} damage");
 
         if (CurrentHealth <= 0)
         {
+            Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} has been killed");
             Delete();
             return true;
         }
@@ -573,6 +607,7 @@ public class Unit : MonoBehaviour
 
     public void Plunder()
     {
+        Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} has plundered {Field.Building}");
         Field.Building.TakeDamage(CurrentDamage);
         CurrentMovementPoints -= 1;
     }
@@ -586,13 +621,16 @@ public class Unit : MonoBehaviour
 
     public void BeginHealing()
     {
+        Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} has begun healing");
         CurrentMovementPoints = 0;
         Player.PlayerEventHandler.AddEndTurnEvent(new GameEvent(1, () => Heal(HealRatio)));
     }
 
     public void Heal(double healRatio)
     {
-        CurrentHealth = Math.Min(CurrentHealth + (int)Math.Ceiling(healRatio * MaxHealth), MaxHealth);
+        var healValue = Math.Min(CurrentHealth + (int)Math.Ceiling(healRatio * MaxHealth), MaxHealth);
+        Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} has healed for {healValue}");
+        CurrentHealth = healValue;
         ChangeModifiersFromHealth();
     }
 
@@ -603,6 +641,8 @@ public class Unit : MonoBehaviour
 
     public void BeginDefending()
     {
+        Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} " +
+                   $"has begun defending increasing defense by {DefenseRatio*100}%");
         CurrentMovementPoints = 0;
         AddUnitModifiers(new UnitModifiers(defense: DefenseRatio));
         Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, Defend));
@@ -647,12 +687,9 @@ public class Unit : MonoBehaviour
     /// </summary>
     public void UpdateAndDisplayMarks()
     {
-        //ShowFields();
-
         SetMoveableFields();
         SetAttackableFields();
         SetVisibleFields();
-        //ToggleVisibleFields();
         ToggleOnMoveableFields();
         ToggleOnAttackableFields();
     }

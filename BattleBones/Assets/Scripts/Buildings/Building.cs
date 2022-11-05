@@ -182,6 +182,8 @@ public class Building : MonoBehaviour
 
         PreviousBuildingState = BuildingState;
         BuildingState = BuildingState.Fine;
+
+        Logger.Log($"{Player.name} has finished construction of {BaseBuildingStats.BuildingName} at {Field.ThreeAxisCoordinates}");
     }
 
 
@@ -197,6 +199,7 @@ public class Building : MonoBehaviour
         {
             Player.PlayerEventHandler.RemoveStartTurnEvent(BuildingGameEvent);
             BuildingGameEvent = null;
+            Logger.Log($"Repair of {Player.name}'s {BaseBuildingStats.BuildingName} at {Field.ThreeAxisCoordinates} has been stopped ");
             return;
         }
 
@@ -208,6 +211,8 @@ public class Building : MonoBehaviour
 
     public void Plunder()
     {
+        Logger.Log($"{Player.name}'s {BaseBuildingStats.BuildingName} at {Field.ThreeAxisCoordinates} has been plundered");
+
         Field.Unit?.RemoveUnitModifiers(Field.Building.GetUnitModifiers());
         CurrentHealth = 0;
 
@@ -226,6 +231,8 @@ public class Building : MonoBehaviour
 
     public void BeginRepair()
     {
+        Logger.Log($"{Player.name} has begun repair of {BaseBuildingStats.BuildingName} at {Field.ThreeAxisCoordinates}");
+
         Player.ResourceManager.RemoveAmount(BaseBuildingStats.BaseCost/2);
         BuildingGameEvent = new GameEvent(BaseRepairCooldown, Repair);
 
@@ -237,6 +244,8 @@ public class Building : MonoBehaviour
 
     public void Repair()
     {
+        Logger.Log($"Repair of {Player.name}'s {BaseBuildingStats.BuildingName} at {Field.ThreeAxisCoordinates} has been finished ");
+
         CurrentHealth = MaxHealth;
 
         if (PreviousBuildingState == BuildingState.Plundered)
@@ -254,6 +263,8 @@ public class Building : MonoBehaviour
 
     public void Destroy()
     {
+        Logger.Log($"{Player.name}'s {BaseBuildingStats.BuildingName} at {Field.ThreeAxisCoordinates} has been destroyed");
+        
         HideFields();
 
         // Methods in "derived" scripts

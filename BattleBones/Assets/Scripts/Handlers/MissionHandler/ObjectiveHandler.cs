@@ -25,7 +25,7 @@ public class ObjectiveHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks if all primary objectives are complited
+    /// Checks if all primary objectives are completed
     /// </summary>
     /// <returns></returns>
     public bool CheckPrimaryObjectives()
@@ -34,7 +34,7 @@ public class ObjectiveHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks if all objectives are complited
+    /// Checks if all objectives are completed
     /// </summary>
     /// <returns></returns>
     public bool CheckAllObjectives()
@@ -43,7 +43,7 @@ public class ObjectiveHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks if any fail objectives are complited
+    /// Checks if any fail objectives are completed
     /// </summary>
     /// <returns></returns>
     public bool CheckFailObjectives()
