@@ -505,9 +505,20 @@ public class Unit : MonoBehaviour
         {
             //Deal damage to unit
             if (AttackScript.CanTargetBuilding(this, targetField))
+            {
                 DealDamage(targetField.Building);
+                Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} " +
+                           $"has attacked {targetField.Building?.BaseBuildingStats.BuildingName} " +
+                           $"at {targetField.ThreeAxisCoordinates}");
+            }
             else
+            {
                 DealDamage(targetField.Unit);
+                Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} " +
+                           $"has attacked {targetField.Unit?.BaseUnitStats.UnitName} " +
+                           $"at {targetField.ThreeAxisCoordinates}");
+            }
+
             //If unit is melee and destroy enemy unit, move unit to new position 
             if (AttackRange == 1 && MovementScript.CanMove(this, targetField))
                 MoveReferences(targetField, MovementScript.GetMovementPointsCost(this, targetField),
@@ -516,9 +527,7 @@ public class Unit : MonoBehaviour
             CurrentMovementPoints = 0;
         }
 
-        Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} " +
-                    $"has attacked {targetField.Unit?.BaseUnitStats.UnitName} " +
-                    $"at {targetField.ThreeAxisCoordinates}");
+        
     }
 
     public void DealDamage(Building building)

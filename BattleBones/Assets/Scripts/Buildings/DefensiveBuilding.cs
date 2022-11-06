@@ -62,12 +62,46 @@ public class DefensiveBuilding : MonoBehaviour
         return (fieldsWithinAttackRange, attackableFields);
     }
 
-    public void DealDamage(Building building)
+    public void Attack(Field targetField)
+    {
+        Logger.Log($"{_building.Player.name} has ordered {_building.BaseBuildingStats.BuildingName} " +
+                   $"at {_building.Field.ThreeAxisCoordinates} " +
+                   $"to attack {targetField.Unit?.BaseUnitStats.UnitName} " +
+                   $"at {targetField.ThreeAxisCoordinates}");
+
+        if (targetField == _building.Field)
+        {
+            Logger.Log($"{_building.Player.name}'s {_building.BaseBuildingStats.BuildingName} is built at {targetField.ThreeAxisCoordinates}");
+            return;
+        }
+
+        if (AttackableFields.Contains(targetField))
+        {
+            if (_attack.CanTargetBuilding(_building, targetField))
+            {
+                DealDamage(targetField.Building);
+                Logger.Log($"{_building.Player.name} has ordered {_building.BaseBuildingStats.BuildingName} " +
+                           $"at {_building.Field.ThreeAxisCoordinates} " +
+                           $"to attack {targetField.Building.BaseBuildingStats.BuildingName} " +
+                           $"at {targetField.ThreeAxisCoordinates}");
+            }
+            else
+            {
+                DealDamage(targetField.Unit);
+                Logger.Log($"{_building.Player.name} has ordered {_building.BaseBuildingStats.BuildingName} " +
+                           $"at {_building.Field.ThreeAxisCoordinates} " +
+                           $"to attack {targetField.Unit.BaseUnitStats.UnitName} " +
+                           $"at {targetField.ThreeAxisCoordinates}");
+            }
+        }
+    }
+
+    private void DealDamage(Building building)
     {
         building.TakeDamage(CurrentDamage);
     }
 
-    public void DealDamage(Unit unit)
+    private void DealDamage(Unit unit)
     {
         unit.TakeDamage(CurrentDamage);
     }
