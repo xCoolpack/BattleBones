@@ -506,17 +506,17 @@ public class Unit : MonoBehaviour
             //Deal damage to unit
             if (AttackScript.CanTargetBuilding(this, targetField))
             {
-                DealDamage(targetField.Building);
                 Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} " +
-                           $"has attacked {targetField.Building?.BaseBuildingStats.BuildingName} " +
+                           $"has attacked {targetField.Building.BaseBuildingStats.BuildingName} " +
                            $"at {targetField.ThreeAxisCoordinates}");
+                DealDamage(targetField.Building);
             }
             else
             {
-                DealDamage(targetField.Unit);
                 Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} " +
-                           $"has attacked {targetField.Unit?.BaseUnitStats.UnitName} " +
+                           $"has attacked {targetField.Unit.BaseUnitStats.UnitName} " +
                            $"at {targetField.ThreeAxisCoordinates}");
+                DealDamage(targetField.Unit);
             }
 
             //If unit is melee and destroy enemy unit, move unit to new position 

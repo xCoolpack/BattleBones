@@ -64,11 +64,6 @@ public class DefensiveBuilding : MonoBehaviour
 
     public void Attack(Field targetField)
     {
-        Logger.Log($"{_building.Player.name} has ordered {_building.BaseBuildingStats.BuildingName} " +
-                   $"at {_building.Field.ThreeAxisCoordinates} " +
-                   $"to attack {targetField.Unit?.BaseUnitStats.UnitName} " +
-                   $"at {targetField.ThreeAxisCoordinates}");
-
         if (targetField == _building.Field)
         {
             Logger.Log($"{_building.Player.name}'s {_building.BaseBuildingStats.BuildingName} is built at {targetField.ThreeAxisCoordinates}");
