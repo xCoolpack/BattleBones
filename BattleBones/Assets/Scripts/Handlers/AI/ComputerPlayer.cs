@@ -21,6 +21,7 @@ public class ComputerPlayer : MonoBehaviour
         {
             List<Move> moves = GenerateMoves(building);
             SelectAndRunMoves(moves);
+            //TO-DO: recruitment and repair
         }
 
         foreach (Unit unit in playerComponent.Units.ToList())
@@ -90,22 +91,31 @@ public class ComputerPlayer : MonoBehaviour
     public List<Move> GenerateBuildingMoves(Building building)
     {
         List<Move> moves = new List<Move>();
+        string buildingName = building.BaseBuildingStats.BuildingName;
+
 
         if (building.BaseBuildingStats.BuildingName == "Defensive tower")
         {
-            //TO-DO: how to get defensive building (getComponent?)
+            DefensiveBuilding defensiveBuilding = GetComponent<DefensiveBuilding>();
+            defensiveBuilding.SetAttackableFields();
             // moveName = buildingAttack
+            foreach (Field field in defensiveBuilding.AttackableFields)
+            {
+                //TO-DO: add atacking when defBuilding has Attack method
+            }
+            
         }
 
-        //TO-DO: somehow attack and recruit with outpost
         //TO-DO: repairing buildings and construction
-        if (building.BaseBuildingStats.BuildingName != "Outpost")
-        {
-            //TO-DO: recruitment
-            // moveName = recruitment
-        }
 
         return moves;
+    }
+
+    public List<Move> GenerateRecruitment(Building building)
+    {
+        //TO-DO
+        // moveName = recruitment
+        return null;
     }
 
     public void SelectAndRunMoves(List<Move> moves)

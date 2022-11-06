@@ -52,6 +52,7 @@ public class BuildingRelatedEvaluation : MonoBehaviour
     public int AttackEval(Field target)
     {
         //TO-DO
+        // remember that you might be attacking a building, not unit
         return 0;
     }
 
