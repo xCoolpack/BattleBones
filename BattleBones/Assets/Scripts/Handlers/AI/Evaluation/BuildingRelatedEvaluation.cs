@@ -18,11 +18,6 @@ public class BuildingRelatedEvaluation : MonoBehaviour
         FieldEconomicValue = new FieldEconomicValue(fev);
     }
 
-    public int EvaluateBuildingAttack(Field target)
-    {
-        return 0;
-    }
-
     public int Evaluate(string moveType, Object source, Object target)
     {
         int eval = 0;
@@ -51,9 +46,12 @@ public class BuildingRelatedEvaluation : MonoBehaviour
 
     public int AttackEval(Field target)
     {
-        //TO-DO
-        // remember that you might be attacking a building, not unit
-        return 0;
+        if (target.Building is not null)
+        {
+            return 0;
+        }
+
+        return UnitStrategicValue.EvaluateUnit(target.Unit);
     }
 
     public int RecruitmentEval(Unit target)

@@ -79,19 +79,20 @@ public class DefensiveBuilding : MonoBehaviour
         {
             if (_attack.CanTargetBuilding(_building, targetField))
             {
-                DealDamage(targetField.Building);
                 Logger.Log($"{_building.Player.name} has ordered {_building.BaseBuildingStats.BuildingName} " +
                            $"at {_building.Field.ThreeAxisCoordinates} " +
                            $"to attack {targetField.Building.BaseBuildingStats.BuildingName} " +
                            $"at {targetField.ThreeAxisCoordinates}");
+                DealDamage(targetField.Building);
+                
             }
             else
             {
-                DealDamage(targetField.Unit);
                 Logger.Log($"{_building.Player.name} has ordered {_building.BaseBuildingStats.BuildingName} " +
                            $"at {_building.Field.ThreeAxisCoordinates} " +
                            $"to attack {targetField.Unit.BaseUnitStats.UnitName} " +
                            $"at {targetField.ThreeAxisCoordinates}");
+                DealDamage(targetField.Unit);
             }
         }
     }

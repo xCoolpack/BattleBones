@@ -92,16 +92,17 @@ public class ComputerPlayer : MonoBehaviour
     {
         List<Move> moves = new List<Move>();
         string buildingName = building.BaseBuildingStats.BuildingName;
+        string[] defensiveNames = { "Defensive tower", "Outpost" };
 
-
-        if (building.BaseBuildingStats.BuildingName == "Defensive tower")
+        if (defensiveNames.Contains(buildingName))
         {
-            DefensiveBuilding defensiveBuilding = GetComponent<DefensiveBuilding>();
+            DefensiveBuilding defensiveBuilding = building.GetComponent<DefensiveBuilding>();
             defensiveBuilding.SetAttackableFields();
-            // moveName = buildingAttack
+
             foreach (Field field in defensiveBuilding.AttackableFields)
             {
-                //TO-DO: add atacking when defBuilding has Attack method
+                moves.Add(new Move(evaluationEngine.Evaluate("buildingAttack", building, field),
+                    () => { defensiveBuilding.Attack(field); }));
             }
             
         }
@@ -124,7 +125,6 @@ public class ComputerPlayer : MonoBehaviour
             return;
 
         Move toExecute = moves.OrderByDescending(move => move.EvalValue).First();
-
         //TO-DO: introduce randomisation
         toExecute.Execute();
     }

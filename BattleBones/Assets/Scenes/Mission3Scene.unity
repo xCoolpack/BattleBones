@@ -10167,6 +10167,7 @@ GameObject:
   - component: {fileID: 968252337}
   - component: {fileID: 968252338}
   - component: {fileID: 968252339}
+  - component: {fileID: 968252340}
   m_Layer: 0
   m_Name: EvaluationEngine
   m_TagString: Untagged
@@ -10202,7 +10203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UnitRelatedEvaluation: {fileID: 968252339}
-  BuildingRelatedEvaluation: {fileID: 0}
+  BuildingRelatedEvaluation: {fileID: 968252340}
 --- !u!114 &968252339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10213,6 +10214,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 12250931acb37784e820d55357d864b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &968252340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968252336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d6034ed7cec81b439b6bc13b53670a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &974691869
