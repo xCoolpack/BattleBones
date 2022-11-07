@@ -28604,6 +28604,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: AbilityHandler
       objectReference: {fileID: 0}
+    - target: {fileID: 5436087821082353957, guid: db486186b1c876d409d5861b3d373bf2, type: 3}
+      propertyPath: <Name>k__BackingField
+      value: Mass Heal
+      objectReference: {fileID: 0}
+    - target: {fileID: 5436087821082353957, guid: db486186b1c876d409d5861b3d373bf2, type: 3}
+      propertyPath: <Sprite>k__BackingField
+      value: 
+      objectReference: {fileID: 21300000, guid: 4b4b2f9f17e3d65469e1008d0c7ebc6b, type: 3}
     - target: {fileID: 6112645606833896048, guid: db486186b1c876d409d5861b3d373bf2, type: 3}
       propertyPath: m_RootOrder
       value: 2

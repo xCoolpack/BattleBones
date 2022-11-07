@@ -1,11 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MassHeal : MonoBehaviour, IAbility
+public class Comet : MonoBehaviour, IAbility
 {
     [SerializeField]
-    private double _healRatio;
+    private int _damage;
 
     [field: SerializeField]
     public string Id { get; set; }
@@ -16,7 +17,7 @@ public class MassHeal : MonoBehaviour, IAbility
     [field: SerializeField]
     public Sprite Sprite { get; set; }
 
-    public string Description => $"Heal every owned unit for {_healRatio * Modifier * 100}% of itself health";
+    public string Description => $"Summon comet that deal {(int)Math.Ceiling(_damage * Modifier)} defense ignoring damage to unit at field";
 
     [field: SerializeField]
     public double Modifier { get; set; }
@@ -26,12 +27,12 @@ public class MassHeal : MonoBehaviour, IAbility
 
     public bool CanUse(Field targetField, Player targetPlayer, Player castingPlayer)
     {
-        return true;
+        return targetField.HasUnit() && targetField.Unit.IsEnemy(castingPlayer);
     }
 
     public void Use(Field targetField, Player targetPlayer, Player castingPlayer)
     {
-        castingPlayer.Units.ForEach(unit => unit.Heal(_healRatio * Modifier));
+        targetField.Unit.TakeDamageWithoutDef((int)Math.Ceiling(_damage * Modifier));
     }
 
 }

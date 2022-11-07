@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1449856519059874254}
-  - component: {fileID: 1449856519059874253}
+  - component: {fileID: 5436451230161520430}
   m_Layer: 0
-  m_Name: Mass Heal
+  m_Name: Bear Spirit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1449856519059874253
+--- !u!114 &5436451230161520430
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,17 +41,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1449856519059874252}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29fe57f9431e5c64b9ec7bdd780d0d3a, type: 3}
+  m_Script: {fileID: 11500000, guid: 82191c0a14edc804594c532c216cf4e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healRatio: 0.1
-  <Id>k__BackingField: Ability0
-  <Name>k__BackingField: Mass Heal
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 4b4b2f9f17e3d65469e1008d0c7ebc6b, type: 3}
+  _bonus: 0.2
+  _turnsDuration: 3
+  <Id>k__BackingField: Ability2
+  <Name>k__BackingField: Bear Spirirt
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 1df729797749c044fb3e8275503cd60d, type: 3}
   <Modifier>k__BackingField: 1
   <Cost>k__BackingField:
     Gold: 0
     Wood: 0
     Stone: 0
     Doggium: 0
-    Bone: 25
+    Bone: 50
