@@ -105,7 +105,10 @@ public class Unit : MonoBehaviour
 
     public void SetCurrentStats()
     {
+        var healthChange = MaxHealth;
         (MaxHealth, MaxDamage, MaxDefense) = CurrentModifiers.CalculateModifiers(this);
+        healthChange = MaxHealth - healthChange;
+        CurrentHealth = Math.Min(CurrentHealth + healthChange, MaxHealth);
         CurrentDamage = MaxDamage;
         CurrentDefense = MaxDefense;
     }
@@ -506,17 +509,20 @@ public class Unit : MonoBehaviour
             //Deal damage to unit
             if (AttackScript.CanTargetBuilding(this, targetField))
             {
-                Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} " +
-                           $"has attacked {targetField.Building.BaseBuildingStats.BuildingName} " +
-                           $"at {targetField.ThreeAxisCoordinates}");
+                var name = targetField.Building.BaseBuildingStats.BuildingName;
                 DealDamage(targetField.Building);
+                Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} " +
+                           $"has attacked {name} " +
+                           $"at {targetField.ThreeAxisCoordinates}");
             }
             else
             {
-                Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} " +
-                           $"has attacked {targetField.Unit.BaseUnitStats.UnitName} " +
-                           $"at {targetField.ThreeAxisCoordinates}");
+                var name = targetField.Unit.BaseUnitStats.UnitName;
+                
                 DealDamage(targetField.Unit);
+                Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} " +
+                           $"has attacked {name} " +
+                           $"at {targetField.ThreeAxisCoordinates}");
             }
 
             //If unit is melee and destroy enemy unit, move unit to new position 
@@ -577,10 +583,21 @@ public class Unit : MonoBehaviour
     /// Method applying dealt damage 
     /// </summary>
     /// <param name="damage"></param>
-    /// <returns></returns>
+    /// <returns>true if unit has been killed</returns>
     public bool TakeDamage(int damage)
     {
         damage = UnitCalculation.CalculateDealtDamage(damage, CurrentDefense);
+
+        return TakeDamageWithoutDef(damage);
+    }
+
+    /// <summary>
+    /// Method applying dealt damage without counting defense
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <returns>true if unit has been killed</returns>
+    public bool TakeDamageWithoutDef(int damage)
+    {
         CurrentHealth -= damage;
 
         Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} has taken {damage} damage");
