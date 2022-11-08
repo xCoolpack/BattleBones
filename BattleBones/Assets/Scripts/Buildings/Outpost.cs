@@ -67,7 +67,7 @@ public class Outpost : MonoBehaviour
 
         Logger.Log($"{Building.Player.name} has finished recruitment of {unitName} at {Building.Field.ThreeAxisCoordinates}");
 
-        unit.ShowFields();
+        unit.ShowFields(unit.Field);
     }
 
     public bool IsUnitBeingRecruited()
