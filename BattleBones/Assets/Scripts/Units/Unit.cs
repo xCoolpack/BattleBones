@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
+using static GameEvent;
 using static UnityEngine.RuleTile.TilingRuleOutput;
+using Action = System.Action;
 using Transform = UnityEngine.Transform;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -56,6 +59,9 @@ public class Unit : MonoBehaviour
     private Curves _curves;
     private bool _isInAnimation = false;
 
+    private Queue<(Action, MoveData)> _animationQueue;
+    private Action _action;
+
     private void Awake()
     {
         SetCurrentStats();
@@ -67,12 +73,21 @@ public class Unit : MonoBehaviour
         GameMap = GameObject.Find("GameMap").GetComponent<GameMap>();
         _unitsCounter = GameObject.Find("UnitsCounter").GetComponent<UnitsCounter>();
         _curves = GameObject.Find("Curves").GetComponent<Curves>();
+        _animationQueue = new();
+        _action = null;
         Hide(Player.HumanPlayer);
     } 
 
     private void Update()
     {
-        MoveTransform();
+        if (_animationQueue.Count > 0)
+        {
+            if (!_isInAnimation)
+            {
+                (_action, _moveData) = _animationQueue.Peek();
+            }
+            _action();
+        }
     }
 
     private void Start()
@@ -206,8 +221,21 @@ public class Unit : MonoBehaviour
         SetVisibleFields(targetField);
         foreach (var field in VisibleFields)
             field.Discover(Player);
+
         foreach (var field in list)
             field.Hide(Player);
+    }
+
+    public void ChangeFieldsVisibilityDuringMovement(Field targetField)
+    {
+        var visibleFieldsAtStartPoint = VisibleFields;
+        ChangeFieldsVisibility(targetField, visibleFieldsAtStartPoint);
+        // unit visibility for the others
+        foreach (var pair in targetField.SeenBy)
+            if (pair.Value > 0)
+                Show(pair.Key);
+            else if (pair.Value <= 0)
+                Hide(pair.Key);
     }
 
     #endregion 
@@ -414,7 +442,6 @@ public class Unit : MonoBehaviour
         AddUnitModifiers(targetField.Type.FieldUnitModifiers);
         AddUnitModifiers(targetField.GetUnitModifiersFromBuilding());
 
-
         // Move references between fields
         Field startingField = Field;
         Field.Unit = null;
@@ -422,17 +449,11 @@ public class Unit : MonoBehaviour
         targetField.Unit = this;
         CurrentMovementPoints -= movementPointCost;
 
-        // Show unit to every player that see this field
-        foreach (var pair in Field.SeenBy)
-            if (pair.Value > 0)
-                Show(pair.Key);
-            else if (pair.Value <= 0)
-                Hide(pair.Key);
-
         Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} has moved from {startingField.ThreeAxisCoordinates} to {Field.ThreeAxisCoordinates}");
 
         SetVisibleFields(startingField);
-        _moveData.SetAll(startingField, targetField, accessibleMovementPath, true);
+        var moveData = new MoveData(startingField, targetField, accessibleMovementPath, true);
+        _animationQueue.Enqueue((MoveTransform, moveData));
         //transform.SetParent(_moveData.Target, false);
     }
 
@@ -443,11 +464,25 @@ public class Unit : MonoBehaviour
     {
         if (!_moveData.IsMoving) return;
 
+        AnimationCurve curve;
         float offset = 0.6f;
         _isInAnimation = true;
 
-        if (!IsGoingUp(_moveData.CurrentStart.position, _moveData.CurrentTarget.position))
+        // check if at final target pos
+        if (transform.position == new Vector3(_moveData.Target.position.x, _moveData.Target.position.y + offset, 0))
+        {
+            _isInAnimation = false;
+            _moveData.IsMoving = false;
             transform.SetParent(_moveData.Target, true);
+            //ChangeFieldsVisibilityDuringMovement(Field);
+            _animationQueue.Dequeue();
+
+            ChangeFieldsVisibilityDuringMovement(_moveData.Target.gameObject.GetComponent<Field>());
+            UpdateAndDisplayMarks();
+            TurnOnChosenMark();
+
+            return;
+        }
 
         // change target
         if (transform.position == new Vector3(_moveData.CurrentTarget.position.x, _moveData.CurrentTarget.position.y + offset, 0))
@@ -455,26 +490,19 @@ public class Unit : MonoBehaviour
             _moveData.CurrentStart = _moveData.CurrentTarget;
             _moveData.CurrentTarget = _moveData.MovementPath.Dequeue();
             _moveData.CurrentFloat = 0;
-            //discover
-            var visibleFieldsAtStartPoint = VisibleFields;
-            ChangeFieldsVisibility(_moveData.CurrentStart.gameObject.GetComponent<Field>(), visibleFieldsAtStartPoint);
+            ChangeFieldsVisibilityDuringMovement(_moveData.CurrentStart.gameObject.GetComponent<Field>());
         }
+
+        if (!IsGoingUp(_moveData.CurrentStart.position, _moveData.CurrentTarget.position))
+            transform.SetParent(_moveData.CurrentTarget, true);
+
+        curve = _curves.CurveBetween;
 
         _moveData.CurrentFloat = Mathf.MoveTowards(_moveData.CurrentFloat, 1, _speed * Time.deltaTime);
 
         transform.position = Vector3.Lerp(new Vector3(_moveData.CurrentStart.position.x, _moveData.CurrentStart.position.y + offset, 0),
             new Vector3(_moveData.CurrentTarget.position.x, _moveData.CurrentTarget.position.y + offset, 0),
-            _curves.CurveBetween.Evaluate(_moveData.CurrentFloat));
-
-        if (transform.position == new Vector3(_moveData.Target.position.x, _moveData.Target.position.y + offset, 0))
-        {
-            Debug.Log("End");
-            _isInAnimation = false;
-            _moveData.IsMoving = false;
-            transform.SetParent(_moveData.Target, true);
-            var visibleFieldsAtStartPoint = VisibleFields;
-            ChangeFieldsVisibility(Field, visibleFieldsAtStartPoint);
-        }
+            curve.Evaluate(_moveData.CurrentFloat));
 
     }
 
@@ -815,12 +843,7 @@ public struct MoveData
         Start = startingField.transform;
         Target = targetField.transform;
         MovementPath = new Queue<Transform>(movementPath.Select(field => field.transform));
-
-        foreach (var transform in MovementPath)
-        {
-            Debug.Log(transform);
-        }
-
+        
         CurrentStart = Start;
         CurrentTarget = MovementPath.Dequeue();
 

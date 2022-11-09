@@ -66,8 +66,8 @@ public class Field : MonoBehaviour
                 _overlay.PickedUnit.Move(this);
                 _overlay.UnitInfoBox(true);
                 _overlay.PickedUnit.ToggleOffAllMarks();
-                _overlay.PickedUnit.UpdateAndDisplayMarks();
-                _overlay.PickedUnit.TurnOnChosenMark();
+                //_overlay.PickedUnit.UpdateAndDisplayMarks();
+                //_overlay.PickedUnit.TurnOnChosenMark();
             }
             else if (Mark_ == Mark.Attackable)
             {
@@ -75,8 +75,8 @@ public class Field : MonoBehaviour
                 _overlay.PickedUnit.Attack(this);
                 _overlay.UnitInfoBox(true);
                 _overlay.PickedUnit.ToggleOffAllMarks();
-                _overlay.PickedUnit.UpdateAndDisplayMarks();
-                _overlay.PickedUnit.TurnOnChosenMark();
+                //_overlay.PickedUnit.UpdateAndDisplayMarks();
+                //_overlay.PickedUnit.TurnOnChosenMark();
             }
         }
     }
@@ -225,9 +225,7 @@ public class Field : MonoBehaviour
     public void Hide(Player player)
     {
         if (SeenBy.Decrease(player))
-        {
             Unit?.Hide(player);
-        }
     }
 
     public bool IsSeenBy(Player player)
