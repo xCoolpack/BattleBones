@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -500,28 +501,73 @@ public class Overlay : MonoBehaviour
 
         if (showButtons)
         {
-            var recruitButton = new Button(() => CreateRecruitmentBox(outpost)) { text = "Recruit" };
+            var recruitButton = new Button(() => CreateRecruitmentBox(outpost, defensiveBuilding)) { text = "Recruit" };
             recruitButton.AddToClassList("InfoBoxButton");
             buttonsBox.Add(recruitButton);
         }
     }
 
-    private void CreateRecruitmentBox(Outpost outpost)
+    /// <summary>
+    /// Creates units recruitment box
+    /// </summary>
+    /// <param name="outpost"></param>
+    private void CreateRecruitmentBox(Outpost outpost, DefensiveBuilding defensiveBuilding)
     {
+        var recruitmentBox = _lowerContainer.Q<VisualElement>("RecruitmentBox");
+        if (recruitmentBox is not null)
+            _lowerContainer.Remove(recruitmentBox);
+
         var unlockedUnits = outpost.Building.Player.UnlockedUnits;
-        var recruitmentBox = new VisualElement() { name = "RecruitmentBox" };
+        recruitmentBox = new VisualElement() { name = "RecruitmentBox" };
 
         foreach (var unitObject in unlockedUnits)
         {
             var unit = unitObject.GetComponent<Unit>();
-            var unitBox = new VisualElement();
-            unitBox.AddToClassList("InnerRecruitmentBox");
+
             var name = new Label(unit.name);
-            var button = new Button() { text = "Buy" };
-            button.AddToClassList("InfoBoxButton");
-            unitBox.Add(name);
-            unitBox.Add(button);
-            recruitmentBox.Add(unitBox);
+
+            var buyBox = new VisualElement();
+            var costs = new List<Label>();
+
+            buyBox.AddToClassList("InnerRecruitmentBox");
+
+            var cost = unit.BaseUnitStats.BaseCost;
+
+            if (cost.Bone > 0)
+                costs.Add(new Label($"Bones: {cost.Bone}"));
+
+            if (cost.Doggium > 0)
+                costs.Add(new Label($"Doggium: {cost.Doggium}"));
+
+            if (cost.Gold > 0)
+                costs.Add(new Label($"Gold: {cost.Gold}"));
+
+            if (cost.Stone > 0)
+                costs.Add(new Label($"Stone: {cost.Stone}"));
+
+            if (cost.Wood > 0)
+                costs.Add(new Label($"Wood: {cost.Wood}"));
+
+            buyBox.Add(name);
+            costs.ForEach(c => buyBox.Add(c));
+
+            if (outpost.CanRecruit(unit.name))
+            {
+                var button = new Button(() =>
+                {
+                    outpost.BeginUnitRecruitment(unit.name);
+                    OutpostInfoBox(defensiveBuilding, outpost, true);
+                })
+                {
+                    text = "Buy"
+                };
+                button.AddToClassList("InfoBoxButton");
+                button.AddToClassList("BuildButton");
+                buyBox.Add(name);
+                buyBox.Add(button);
+            }
+
+            recruitmentBox.Add(buyBox);
         }
 
         recruitmentBox.AddToClassList("RecruitmentBox");

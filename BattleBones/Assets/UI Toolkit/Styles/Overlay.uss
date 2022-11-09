@@ -180,6 +180,7 @@
 .RecruitmentBox {
     height: 100%;
     width: auto;
+    flex-direction: row;
 }
 
 .InnerRecruitmentBox {
