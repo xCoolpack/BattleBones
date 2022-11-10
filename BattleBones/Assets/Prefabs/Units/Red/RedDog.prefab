@@ -10,12 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 9222216290263363291}
   - component: {fileID: 9222216290263363292}
+  - component: {fileID: 165749165490600942}
   - component: {fileID: 9222216290263363294}
   - component: {fileID: 9222216290263363295}
   - component: {fileID: 9222216290263363280}
   - component: {fileID: 9222216290263363281}
   m_Layer: 5
-  m_Name: Dog
+  m_Name: RedDog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,17 +78,37 @@ SpriteRenderer:
   m_SortingLayerID: -1440949289
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8793639957104055765, guid: 49474b33de6e480db7b7ca93642f0fdc, type: 3}
+  m_Sprite: {fileID: 942690117, guid: 7f24f4f22a150fe47b21ae7bf93770dc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 1.0548764, y: 1.3230768}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &165749165490600942
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9222216290263363282}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d436156829fca8b419e88c9c96fbc810, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &9222216290263363294
 MonoBehaviour:
   m_ObjectHideFlags: 0

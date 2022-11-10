@@ -9,6 +9,7 @@ using UnityEngine;
 using static GameEvent;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using Action = System.Action;
+using Quaternion = UnityEngine.Quaternion;
 using Transform = UnityEngine.Transform;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -53,6 +54,7 @@ public class Unit : MonoBehaviour
 
     private UnitsCounter _unitsCounter;
     private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
 
     [SerializeField] private float _speed = 2f;
     private MoveData _moveData;
@@ -72,6 +74,7 @@ public class Unit : MonoBehaviour
         AttackScript = GetComponent<Attack>(); // if null then it's hero
         GameMap = GameObject.Find("GameMap").GetComponent<GameMap>();
         _unitsCounter = GameObject.Find("UnitsCounter").GetComponent<UnitsCounter>();
+        _animator = GetComponent<Animator>();
         _curves = GameObject.Find("Curves").GetComponent<Curves>();
         _animationQueue = new();
         _action = null;
@@ -420,6 +423,8 @@ public class Unit : MonoBehaviour
             movementPointCost = nextMovementPointCost;
         }
 
+        if (accessibleMovementPath.Count <= 0) return;
+
         MoveReferences(previousField, movementPointCost, accessibleMovementPath);
     }
 
@@ -465,21 +470,34 @@ public class Unit : MonoBehaviour
         if (!_moveData.IsMoving) return;
 
         AnimationCurve curve;
-        float offset = 0.6f;
+        float offset = 0.4f;
         _isInAnimation = true;
+        if (_animator != null)
+            _animator.SetBool("IsRunning", true);
 
         // check if at final target pos
         if (transform.position == new Vector3(_moveData.Target.position.x, _moveData.Target.position.y + offset, 0))
         {
             _isInAnimation = false;
             _moveData.IsMoving = false;
+            if (_animator != null)
+                _animator.SetBool("IsRunning", false);
+            //transform.eulerAngles = new Vector3(0, 0, 0);
             transform.SetParent(_moveData.Target, true);
             //ChangeFieldsVisibilityDuringMovement(Field);
             _animationQueue.Dequeue();
 
             ChangeFieldsVisibilityDuringMovement(_moveData.Target.gameObject.GetComponent<Field>());
-            UpdateAndDisplayMarks();
-            TurnOnChosenMark();
+
+            if (Player == Player.HumanPlayer)
+            {
+                UpdateAndDisplayMarks();
+                TurnOnChosenMark();
+            }
+            else
+            {
+                UpdateFieldSets();
+            }
 
             return;
         }
@@ -492,6 +510,9 @@ public class Unit : MonoBehaviour
             _moveData.CurrentFloat = 0;
             ChangeFieldsVisibilityDuringMovement(_moveData.CurrentStart.gameObject.GetComponent<Field>());
         }
+
+        transform.eulerAngles = IsGoingRight(_moveData.CurrentStart.position, _moveData.CurrentTarget.position) 
+            ? new Vector3(0, 180,0) : new Vector3(0, 0, 0);
 
         if (!IsGoingUp(_moveData.CurrentStart.position, _moveData.CurrentTarget.position))
             transform.SetParent(_moveData.CurrentTarget, true);
@@ -515,6 +536,11 @@ public class Unit : MonoBehaviour
     private bool IsGoingUp(Vector3 start, Vector3 target)
     {
         return target.y > start.y;
+    }
+
+    private bool IsGoingRight(Vector3 start, Vector3 target)
+    {
+        return target.x > start.x;
     }
 
     #endregion
