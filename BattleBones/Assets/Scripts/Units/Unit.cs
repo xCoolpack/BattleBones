@@ -60,6 +60,7 @@ public class Unit : MonoBehaviour
     private MoveData _moveData;
     private Curves _curves;
     private bool _isInAnimation = false;
+    private bool _isContinuousAnimation = true;
 
     private Queue<(Action, MoveData)> _animationQueue;
     private Action _action;
@@ -89,7 +90,13 @@ public class Unit : MonoBehaviour
             {
                 (_action, _moveData) = _animationQueue.Peek();
             }
-            _action();
+            if (_isContinuousAnimation)
+                _action();
+        }
+
+        if (Input.GetKeyDown("p") && _animator != null)
+        {
+            _animator.SetTrigger("Attack");
         }
     }
 
@@ -168,6 +175,13 @@ public class Unit : MonoBehaviour
     public bool CanAffordRecruitment(Player player)
     {
         return player.ResourceManager.ResourcesAmount >= BaseUnitStats.BaseCost;
+    }
+
+    public void NextAnimation()
+    {
+        _animationQueue.Dequeue();
+        _isInAnimation = false;
+        _isContinuousAnimation = true;
     }
 
     #region VisibleFields
@@ -471,6 +485,7 @@ public class Unit : MonoBehaviour
 
         AnimationCurve curve;
         float offset = 0.4f;
+        _isContinuousAnimation = true;
         _isInAnimation = true;
         if (_animator != null)
             _animator.SetBool("IsRunning", true);
@@ -478,15 +493,12 @@ public class Unit : MonoBehaviour
         // check if at final target pos
         if (transform.position == new Vector3(_moveData.Target.position.x, _moveData.Target.position.y + offset, 0))
         {
-            _isInAnimation = false;
             _moveData.IsMoving = false;
             if (_animator != null)
                 _animator.SetBool("IsRunning", false);
             //transform.eulerAngles = new Vector3(0, 0, 0);
             transform.SetParent(_moveData.Target, true);
             //ChangeFieldsVisibilityDuringMovement(Field);
-            _animationQueue.Dequeue();
-
             ChangeFieldsVisibilityDuringMovement(_moveData.Target.gameObject.GetComponent<Field>());
 
             if (Player == Player.HumanPlayer)
@@ -498,6 +510,8 @@ public class Unit : MonoBehaviour
             {
                 UpdateFieldSets();
             }
+
+            NextAnimation();
 
             return;
         }
@@ -613,6 +627,9 @@ public class Unit : MonoBehaviour
         if (possibleFieldsForAttack.Contains(Field) 
             && AttackScript.HaveEnoughMovementPoints(CurrentMovementPoints, this, targetField))
         {
+
+            _animationQueue.Enqueue((AttackAnimation, new MoveData(Field, targetField, null)));
+
             //Deal damage to unit
             if (AttackScript.CanTargetBuilding(this, targetField))
             {
@@ -640,7 +657,16 @@ public class Unit : MonoBehaviour
             CurrentMovementPoints = 0;
         }
 
-        
+    }
+
+    public void AttackAnimation()
+    {
+        _isContinuousAnimation = false;
+
+        transform.eulerAngles = IsGoingRight(_moveData.Start.position, _moveData.Target.position)
+            ? new Vector3(0, 180, 0) : new Vector3(0, 0, 0);
+
+        _animator.SetTrigger("Attack");
     }
 
     public void DealDamage(Building building)
@@ -799,6 +825,14 @@ public class Unit : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void ToggleSprites()
+    {
+        foreach (Transform child in transform)
+        {
+            child.GetComponent<SpriteRenderer>().enabled = !child.GetComponent<SpriteRenderer>().enabled;
+        }
+    }
+
     public void HandleOnClick()
     {
         _overlay.ClearPicked();
@@ -868,11 +902,14 @@ public struct MoveData
         IsMoving = isMoving;
         Start = startingField.transform;
         Target = targetField.transform;
-        MovementPath = new Queue<Transform>(movementPath.Select(field => field.transform));
-        
-        CurrentStart = Start;
-        CurrentTarget = MovementPath.Dequeue();
+        if (movementPath != null)
+        {
+            MovementPath = new Queue<Transform>(movementPath.Select(field => field.transform));
 
-        CurrentFloat = 0;
+            CurrentStart = Start;
+            CurrentTarget = MovementPath.Dequeue();
+
+            CurrentFloat = 0;
+        }
     }
 } 
