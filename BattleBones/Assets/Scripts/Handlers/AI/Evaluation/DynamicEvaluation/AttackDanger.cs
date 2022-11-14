@@ -25,10 +25,10 @@ public class AttackDanger
         if (predictedDamage / target.Unit.CurrentHealth > 0.30)
             damageMod = 1.2;
 
-        if (predictedDamage / target.Unit.CurrentHealth > 1)
+        if (predictedDamage / target.Unit.CurrentHealth >= 1)
             damageMod = 1.7;
 
-        sourceEval = (int)(targetEval * damageMod);
+        sourceEval = (int)(sourceEval * damageMod);
 
         return (int)((targetEval + sourceEval) * fieldMod);
     }
