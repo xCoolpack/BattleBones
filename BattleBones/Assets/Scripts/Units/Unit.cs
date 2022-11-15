@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static GameEvent;
 using static UnityEngine.RuleTile.TilingRuleOutput;
+using static UnityEngine.UI.CanvasScaler;
 using Action = System.Action;
 using Quaternion = UnityEngine.Quaternion;
 using Transform = UnityEngine.Transform;
@@ -59,6 +60,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private float _speed = 2f;
     private MoveData _moveData;
     private Curves _curves;
+    public bool CanDoAnimation = true;
     private bool _isInAnimation = false;
     private bool _isContinuousAnimation = true;
 
@@ -90,7 +92,7 @@ public class Unit : MonoBehaviour
             {
                 (_action, _moveData) = _animationQueue.Peek();
             }
-            if (_isContinuousAnimation)
+            if (_isContinuousAnimation && CanDoAnimation)
                 _action();
         }
 
@@ -175,6 +177,12 @@ public class Unit : MonoBehaviour
     public bool CanAffordRecruitment(Player player)
     {
         return player.ResourceManager.ResourcesAmount >= BaseUnitStats.BaseCost;
+    }
+
+    public void AddAnimation(Action action, Field currentField = null, Field targetField = null, List<Field> path = null, bool isMoving = false)
+    {
+        _isContinuousAnimation = true;
+        _animationQueue.Enqueue((action, new MoveData(currentField, targetField, path, isMoving)));
     }
 
     public void NextAnimation()
@@ -418,7 +426,7 @@ public class Unit : MonoBehaviour
     /// Helper move method for unit - responsible for counting accessible path
     /// </summary>
     /// <param name="targetField"></param>
-    private void MoveUnit(Dictionary<Field, Field> graph, Field targetField)
+    private void MoveUnit(Dictionary<Field, Field> graph, Field targetField, Unit targetUnit = null)
     {
         List<Field> movementPath = GeneratePathTo(graph, Field, targetField);
         var accessibleMovementPath = new List<Field>();
@@ -439,7 +447,7 @@ public class Unit : MonoBehaviour
 
         if (accessibleMovementPath.Count <= 0) return;
 
-        MoveReferences(previousField, movementPointCost, accessibleMovementPath);
+        MoveReferences(previousField, movementPointCost, accessibleMovementPath, targetUnit);
     }
 
     /// <summary>
@@ -448,7 +456,7 @@ public class Unit : MonoBehaviour
     /// <param name="targetField"></param>
     /// <param name="movementPointCost"></param>
     /// <param name="accessibleMovementPath"></param>
-    private void MoveReferences(Field targetField, int movementPointCost, List<Field> accessibleMovementPath)
+    private void MoveReferences(Field targetField, int movementPointCost, List<Field> accessibleMovementPath, Unit targetUnit = null)
     {
         // Rethink - apply show and hide methods for every position in movement path
         // Hide fields that unit no longer see
@@ -471,15 +479,14 @@ public class Unit : MonoBehaviour
         Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} has moved from {startingField.ThreeAxisCoordinates} to {Field.ThreeAxisCoordinates}");
 
         SetVisibleFields(startingField);
-        var moveData = new MoveData(startingField, targetField, accessibleMovementPath, true);
-        _animationQueue.Enqueue((MoveTransform, moveData));
+        AddAnimation(() => MoveTransform(targetUnit), startingField, targetField, accessibleMovementPath, true);
         //transform.SetParent(_moveData.Target, false);
     }
 
     /// <summary>
     /// Method called in update method responsible for moving transform of unit
     /// </summary>
-    private void MoveTransform()
+    private void MoveTransform(Unit targetUnit = null)
     {
         if (!_moveData.IsMoving) return;
 
@@ -511,6 +518,7 @@ public class Unit : MonoBehaviour
                 UpdateFieldSets();
             }
 
+            if (targetUnit != null) targetUnit.CanDoAnimation = true;
             NextAnimation();
 
             return;
@@ -544,15 +552,15 @@ public class Unit : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="pos1"></param>
-    /// <param name="pos2"></param>
+    /// <param name="start"></param>
+    /// <param name="target"></param>
     /// <returns>True if going up</returns>
-    private bool IsGoingUp(Vector3 start, Vector3 target)
+    private static bool IsGoingUp(Vector3 start, Vector3 target)
     {
         return target.y > start.y;
     }
 
-    private bool IsGoingRight(Vector3 start, Vector3 target)
+    private static bool IsGoingRight(Vector3 start, Vector3 target)
     {
         return target.x > start.x;
     }
@@ -615,12 +623,13 @@ public class Unit : MonoBehaviour
         //If unit cannot attack from current field, move it
         if (!possibleFieldsForAttack.Contains(Field))
         {
+            targetField.Unit.CanDoAnimation = false;
             (Dictionary<Field, Field> graph, Field attackingField) = GraphSearch.AStarSearch(Field, targetField,
                 (currentField, startingField) => MovementScript.CanMoveAll(this, currentField),
                 (field) => MovementScript.GetMovementPointsCostAll(this, field), GraphSearch.GetDistance,
                 (currentField) => possibleFieldsForAttack.Contains(currentField));
             //Move unit to that field
-            MoveUnit(graph, attackingField);
+            MoveUnit(graph, attackingField, targetField.Unit);
         }
 
         //Check if unit can attack and have enough movement points to attack
@@ -628,7 +637,7 @@ public class Unit : MonoBehaviour
             && AttackScript.HaveEnoughMovementPoints(CurrentMovementPoints, this, targetField))
         {
 
-            _animationQueue.Enqueue((AttackAnimation, new MoveData(Field, targetField, null)));
+            AddAnimation(AttackAnimation, Field, targetField, null);
 
             //Deal damage to unit
             if (AttackScript.CanTargetBuilding(this, targetField))
@@ -666,7 +675,7 @@ public class Unit : MonoBehaviour
         transform.eulerAngles = IsGoingRight(_moveData.Start.position, _moveData.Target.position)
             ? new Vector3(0, 180, 0) : new Vector3(0, 0, 0);
 
-        _animator.SetTrigger("Attack");
+        _animator?.SetTrigger("Attack");
     }
 
     public void DealDamage(Building building)
@@ -674,6 +683,7 @@ public class Unit : MonoBehaviour
         // If building has a unit, it does counterattack
         var damage = 0;
         var thisDamage = CurrentDamage;
+        var unit = building.Field.Unit;
         if (building.Field.HasUnit())
         {
             UnitModifiers unitModifiers = building.Field.Unit.CurrentModifiers 
@@ -682,13 +692,15 @@ public class Unit : MonoBehaviour
             
         }
 
+        if (AttackScript.IsProvokingCounterAttack() && building.Field.HasUnit())
+            unit.AddAnimation(unit.AttackAnimation, building.Field, Field, null);
+
         if (BaseUnitStats.UnitName is "Battering dog" or "Dog-a-pult")
             (_, thisDamage, _) = (CurrentModifiers + new UnitModifiers(damage: 150)).CalculateModifiers(0, CurrentDamage, 0);
         building.TakeDamage(thisDamage);
         if (AttackScript.IsProvokingCounterAttack() && building.Field.HasUnit())
         {
-            var temp = building.Field.Unit;
-            Logger.Log($"{temp.Player.name}'s {temp.BaseUnitStats.UnitName} at {temp.Field.ThreeAxisCoordinates} " +
+            Logger.Log($"{unit.Player.name}'s {unit.BaseUnitStats.UnitName} at {unit.Field.ThreeAxisCoordinates} " +
                        $"has counterattacked {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates}");
             TakeDamage(damage);
         }
@@ -702,13 +714,16 @@ public class Unit : MonoBehaviour
         var (_, thisDamage, _) =
             GetCounterModifier(unit.BaseUnitStats.UnitName).CalculateModifiers(0, CurrentDamage, 0);
 
-        unit.TakeDamage(thisDamage);
+        if (AttackScript.IsProvokingCounterAttack())
+            unit.AddAnimation(unit.AttackAnimation, unit.Field, Field, null);
+
+        if (unit.TakeDamage(thisDamage))
+            Player.UnitsKilled++;
         if (AttackScript.IsProvokingCounterAttack())
         {
             Logger.Log($"{unit.Player.name}'s {unit.BaseUnitStats.UnitName} at {unit.Field.ThreeAxisCoordinates} " +
                        $"has counterattacked {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates}");
-            if (TakeDamage(damage))
-                Player.UnitsKilled++;
+            TakeDamage(damage);
         }
     }
 
@@ -738,7 +753,8 @@ public class Unit : MonoBehaviour
         if (CurrentHealth <= 0)
         {
             Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} has been killed");
-            Delete();
+            Field.Unit = null;
+            AddAnimation(Die);
             return true;
         }
 
@@ -815,6 +831,20 @@ public class Unit : MonoBehaviour
     public void RestoreMovementPoints()
     {
         CurrentMovementPoints = MaxMovementPoints;
+    }
+
+    public void Die()
+    {
+        _isContinuousAnimation = false;
+
+        _animator?.SetTrigger("Die");
+    }
+
+    public void DestroyUnit()
+    {
+        HideFields(Field);
+        Player.RemoveUnit(this);
+        Destroy(gameObject);
     }
 
     public void Delete()
@@ -900,8 +930,8 @@ public struct MoveData
     public void SetAll(Field startingField, Field targetField, List<Field> movementPath, bool isMoving = false)
     {
         IsMoving = isMoving;
-        Start = startingField.transform;
-        Target = targetField.transform;
+        Start = startingField?.transform;
+        Target = targetField?.transform;
         if (movementPath != null)
         {
             MovementPath = new Queue<Transform>(movementPath.Select(field => field.transform));
