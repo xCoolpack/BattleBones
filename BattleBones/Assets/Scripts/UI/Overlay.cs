@@ -524,7 +524,7 @@ public class Overlay : MonoBehaviour
         {
             var unit = unitObject.GetComponent<Unit>();
 
-            var name = new Label(unit.name);
+            var name = new Label(unit.BaseUnitStats.UnitName);
 
             var buyBox = new VisualElement();
             var costs = new List<Label>();
@@ -551,11 +551,11 @@ public class Overlay : MonoBehaviour
             buyBox.Add(name);
             costs.ForEach(c => buyBox.Add(c));
 
-            if (outpost.CanRecruit(unit.name))
+            if (outpost.CanRecruit(unit.BaseUnitStats.UnitName))
             {
                 var button = new Button(() =>
                 {
-                    outpost.BeginUnitRecruitment(unit.name);
+                    outpost.BeginUnitRecruitment(unit.BaseUnitStats.UnitName);
                     OutpostInfoBox(defensiveBuilding, outpost, true);
                 })
                 {

@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 9222216290263363280}
   - component: {fileID: 9222216290263363281}
   m_Layer: 5
-  m_Name: BlueDog
+  m_Name: Blue Dog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -248,7 +248,7 @@ SpriteRenderer:
   m_SortingLayerID: -1440949289
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -745609902, guid: bab51b9644582d04a9dccd82f2b54bcd, type: 3}
+  m_Sprite: {fileID: 557628070, guid: 0496f4536e5e12c4288b5b59b6d305d8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -316,6 +316,7 @@ MonoBehaviour:
   FieldsWithinAttackRange: []
   AttackableFields: []
   _speed: 3
+  CanDoAnimation: 1
 --- !u!114 &9222216290263363295
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -47,7 +47,7 @@ public class Outpost : MonoBehaviour
     /// <param name="unitName"></param>
     public void RecruitUnit(string unitName)
     {
-        GameObject unitPrefab = Building.Player.UnlockedUnits.FirstOrDefault(g => g.name == $"{Building.Player.Faction}{unitName}");
+        GameObject unitPrefab = Building.Player.UnlockedUnits.FirstOrDefault(g => g.name == $"{Building.Player.Faction} {unitName}");
         var tran = Building.Field.transform;
         Unit unit = Instantiate(unitPrefab, new Vector3(tran.position.x, tran.position.y + 0.4f, 0), Quaternion.identity, tran)
             .GetComponent<Unit>();
