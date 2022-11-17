@@ -1,10 +1,10 @@
 + scout atak
 + scout chodzenie
 
-- łucznik idle
-- łucznik atak
++ łucznik idle
++ łucznik atak
 
-- młot idla
+- młot idle
 - młot atak
 
 - bomba idle
