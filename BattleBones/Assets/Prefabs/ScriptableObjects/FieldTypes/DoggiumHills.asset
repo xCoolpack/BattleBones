@@ -21,4 +21,4 @@ MonoBehaviour:
     Damage: 0
     Defense: 0
   AllowableBuildings:
-  - {fileID: 3636441255636271323, guid: b29dc87981e4fc2469d25b7f74eaa6b3, type: 3}
+  - {fileID: 3636441255636271323, guid: ba88bbd48ffd52240a0edf78d9c58ba5, type: 3}

@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 9222216290263363280}
   - component: {fileID: 9222216290263363281}
   m_Layer: 5
-  m_Name: RedDog
+  m_Name: Red Dog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -248,7 +248,7 @@ SpriteRenderer:
   m_SortingLayerID: -1440949289
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 942690117, guid: 7f24f4f22a150fe47b21ae7bf93770dc, type: 3}
+  m_Sprite: {fileID: 2133948017, guid: 846510cda1dd930499ec1a037e4efebd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -316,6 +316,7 @@ MonoBehaviour:
   FieldsWithinAttackRange: []
   AttackableFields: []
   _speed: 3
+  CanDoAnimation: 1
 --- !u!114 &9222216290263363295
 MonoBehaviour:
   m_ObjectHideFlags: 0
