@@ -48,6 +48,10 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
+            <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0" name="Logger" vertical-scroller-visibility="AlwaysVisible" horizontal-scroller-visibility="Hidden" nested-interaction-kind="StopScrolling" focusable="false" style="position: absolute; left: 5px; bottom: 5px; width: 500px; height: 100px; -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgba(0, 0, 0, 0.3); flex-direction: column; justify-content: flex-end; align-items: auto;">
+                <ui:VisualElement name="LoggerBody" style="width: 100%; height: auto; flex-direction: column; justify-content: flex-end; min-height: 100px;" />
+                <ui:VisualElement name="LoggerEnd" style="height: 40px;" />
+            </ui:ScrollView>
         </AspectRatioPanel>
     </ui:VisualElement>
 </ui:UXML>

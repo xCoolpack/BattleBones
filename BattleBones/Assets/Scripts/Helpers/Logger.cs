@@ -14,7 +14,7 @@ public static class Logger
         }
         else
         {
-            //Debug.Log(msg);
+            Overlay.LogMessage(msg);
         }
     }
 }
