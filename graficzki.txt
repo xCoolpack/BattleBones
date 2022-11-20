@@ -5,7 +5,7 @@
 + łucznik atak
 
 - młot idle
-- młot atak
++ młot atak
 
 - bomba idle
 - bomba atak
