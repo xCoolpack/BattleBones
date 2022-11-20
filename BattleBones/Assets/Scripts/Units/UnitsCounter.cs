@@ -17,7 +17,7 @@ public class UnitsCounter : MonoBehaviour
             "Dog scout",
             "Dog",
             "Dog-at-arms",
-            "Crossbowdog",
+            "Archer dog",
             "Dog-a-copter", 
             "Battering dog",
             "Dog-a-pult",

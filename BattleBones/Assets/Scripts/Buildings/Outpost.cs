@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.UI.CanvasScaler;
 
 public class Outpost : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class Outpost : MonoBehaviour
 
     public bool CanRecruit(string unitName)
     {
-        GameObject unitPrefab = Building.Player.UnlockedUnits.FirstOrDefault(g => g.name == unitName);
+        GameObject unitPrefab = Building.Player.UnlockedUnits.FirstOrDefault(g => g.name == $"{Building.Player.Faction} {unitName}");
         if (unitPrefab is null)
             return false;
         return !IsUnitBeingRecruited() && unitPrefab.GetComponent<Unit>().CanAffordRecruitment(Building.Player) && 
@@ -35,7 +36,10 @@ public class Outpost : MonoBehaviour
     public void BeginUnitRecruitment(string unitName)
     {
         EventHandler eventHandler = Building.Player.PlayerEventHandler;
-        RecruitingUnit = new GameEvent(1, () => RecruitUnit(unitName));
+        GameObject unitPrefab = Building.Player.UnlockedUnits.FirstOrDefault(g => g.name == $"{Building.Player.Faction} {unitName}");
+        RecruitingUnit = new GameEvent(1, () => RecruitUnit(unitPrefab));
+        _unitCost = unitPrefab.GetComponent<Unit>().BaseUnitStats.BaseCost;
+        Building.Player.ResourceManager.RemoveAmount(_unitCost);
         eventHandler.AddStartTurnEvent(RecruitingUnit);
 
         Logger.Log($"{Building.Player.name} has begun recruitment of {unitName} at {Building.Field.ThreeAxisCoordinates}");
@@ -44,22 +48,20 @@ public class Outpost : MonoBehaviour
     /// <summary>
     /// Methods responsible for creating gameObject with unit script
     /// </summary>
-    /// <param name="unitName"></param>
-    public void RecruitUnit(string unitName)
+    /// <param name="unitPrefab"></param>
+    public void RecruitUnit(GameObject unitPrefab)
     {
-        GameObject unitPrefab = Building.Player.UnlockedUnits.FirstOrDefault(g => g.name == $"{Building.Player.Faction} {unitName}");
         var tran = Building.Field.transform;
         Unit unit = Instantiate(unitPrefab, new Vector3(tran.position.x, tran.position.y + 0.4f, 0), Quaternion.identity, tran)
             .GetComponent<Unit>();
         unit.Player = Building.Player;
         unit.Field = Building.Field;
-        unit.CurrentModifiers = Building.Player.UnitModifiersDictionary[unitName];
+        unit.CurrentModifiers = Building.Player.UnitModifiersDictionary[unit.BaseUnitStats.UnitName];
         unit.SetCurrentStats();
         unit.SetStartingStats();
         Building.Field.Unit = unit;
         Building.Player.AddUnit(unit);
-        _unitCost = unit.BaseUnitStats.BaseCost;
-        Building.Player.ResourceManager.RemoveAmount(_unitCost);
+        RecruitingUnit = null;
 
         // Set unit visibility
         foreach (Player key in Building.Field.SeenBy.Keys)
@@ -67,7 +69,7 @@ public class Outpost : MonoBehaviour
             unit.Show(key);
         }
 
-        Logger.Log($"{Building.Player.name} has finished recruitment of {unitName} at {Building.Field.ThreeAxisCoordinates}");
+        Logger.Log($"{Building.Player.name} has finished recruitment of {unit.BaseUnitStats.UnitName} at {Building.Field.ThreeAxisCoordinates}");
 
         unit.ShowFields(unit.Field);
     }

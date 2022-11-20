@@ -836,7 +836,6 @@ public class Unit : MonoBehaviour
     public void Die()
     {
         _isContinuousAnimation = false;
-
         _animator?.SetTrigger("Die");
     }
 
