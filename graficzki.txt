@@ -4,11 +4,12 @@
 + łucznik idle
 + łucznik atak
 
-- młot idle
++ młot idle
 + młot atak
 
-- bomba idle
-- bomba atak
++ bomba idle
++ bomba atak
++ bomba chodzenie
 
 - obrońca idle
 - obrońca atak
