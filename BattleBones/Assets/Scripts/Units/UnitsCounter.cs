@@ -19,7 +19,7 @@ public class UnitsCounter : MonoBehaviour
             "Dog-at-arms",
             "Archer dog",
             "Dog-a-copter", 
-            "Battering dog",
+            "Hammer dog",
             "Dog-a-pult",
             //cats
             "Cat scout",
@@ -47,7 +47,7 @@ public class UnitsCounter : MonoBehaviour
             {
                 false, false, false, false, false, true, true, false, false, false, false, false, false
             },
-            //Crossbowdog
+            //Archer dog
             new List<bool>()
             {
                 true, true, false, false, false, true, true, true, true, false, false, false, false
@@ -57,7 +57,7 @@ public class UnitsCounter : MonoBehaviour
             {
                 false, false, false, true, false, false, true, false, false, false, true, false, false
             },
-            //Battering dog
+            //Hammer dog
             new List<bool>()
             {
                 false, false, false, false, false, false, false, false, false, false, false, false, false
