@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 433d66bf2d8e9134193be299a4bebb31, type: 3}
-  m_Name: Crossbowdog
+  m_Name: Archer dog
   m_EditorClassIdentifier: 
-  UnitName: Crossbowdog
+  UnitName: Archer dog
   BaseHealth: 80
   BaseDamage: 35
   BaseDefense: 10
