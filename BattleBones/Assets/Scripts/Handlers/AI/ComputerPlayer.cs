@@ -140,11 +140,10 @@ public class ComputerPlayer : MonoBehaviour
             if (unit.CanAffordRecruitment(player))
             {
                 moves.Add(new Move(evaluationEngine.Evaluate("recruitment", player, unit),
-                    () => { outpost.RecruitUnit(unit.BaseUnitStats.UnitName); } ));
+                    () => { outpost.RecruitUnit(obj as GameObject); } ));
             }
         }
 
-        //TO-DO: enable when all unit names are fixed
         return moves;
     }
 
@@ -175,8 +174,6 @@ public class ComputerPlayer : MonoBehaviour
 
         Move toExecute = toRandomise.First();
 
-        Debug.Log("gonna");
         toExecute.Execute();
-        Debug.Log("done");
     }
 }
