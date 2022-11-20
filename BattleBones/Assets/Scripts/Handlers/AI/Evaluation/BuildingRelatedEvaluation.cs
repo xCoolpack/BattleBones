@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ public class BuildingRelatedEvaluation : MonoBehaviour
 {
     public FieldEconomicValue FieldEconomicValue;
     public UnitStrategicValue UnitStrategicValue;
+    public UnitCostValue UnitCostValue;
+    public UnitRoleValue UnitRoleValue;
 
     public CustomEvaluationCharacteristics CustomEval;
 
@@ -16,9 +19,11 @@ public class BuildingRelatedEvaluation : MonoBehaviour
 
         UnitStrategicValue = new UnitStrategicValue(new UnitTypeValue(usv));
         FieldEconomicValue = new FieldEconomicValue(fev);
+        UnitCostValue = new UnitCostValue();
+        UnitRoleValue = new UnitRoleValue();
     }
 
-    public int Evaluate(string moveType, Object source, Object target)
+    public int Evaluate(string moveType, UnityEngine.Object source, UnityEngine.Object target)
     {
         int eval = 0;
 
@@ -29,7 +34,7 @@ public class BuildingRelatedEvaluation : MonoBehaviour
                 break;
 
             case "recruitment":
-                eval = RecruitmentEval(target as Unit);
+                eval = RecruitmentEval(source as Player, target as Unit);
                 break;
 
             case "construction":
@@ -54,10 +59,13 @@ public class BuildingRelatedEvaluation : MonoBehaviour
         return UnitStrategicValue.EvaluateUnit(target.Unit);
     }
 
-    public int RecruitmentEval(Unit target)
+    public int RecruitmentEval(Player source, Unit target)
     {
-        //TO-DO
-        return 0;
+        double usv = UnitStrategicValue.EvaluateUnit(target) * 0.5;
+        double urv = UnitRoleValue.EvaluateUnitRoleValue(target, source);
+        double ucv = UnitCostValue.EvaluateUnitCostValue(target);
+
+        return (int) Math.Ceiling(usv * urv / ucv);
     }
 
     public int ConstructionEval(Building source, Field target)

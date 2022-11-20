@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ComputerPlayer : MonoBehaviour
 {
     public Player playerComponent;
     public EvaluationEngine evaluationEngine;
+    public int unitRecruitmentCooldown;
 
     void Awake()
     {
         playerComponent = GetComponent<Player>();
+        unitRecruitmentCooldown = 3;
     }
 
     public void ProcessTurn()
@@ -21,7 +24,22 @@ public class ComputerPlayer : MonoBehaviour
         {
             List<Move> moves = GenerateMoves(building);
             SelectAndRunMoves(moves);
-            //TO-DO: recruitment and repair
+
+            if (building.BaseBuildingStats.BuildingName == "Outpost")
+            {
+                if (unitRecruitmentCooldown == 0)
+                {
+                    Outpost outpost = building.GetComponent<Outpost>();
+                    moves = GenerateRecruitment(outpost, building.Player);
+                    SelectAndRunMoves(moves, false);
+                    unitRecruitmentCooldown = 3;
+                }
+                else
+                {
+                    unitRecruitmentCooldown--;
+                }
+            }
+            //TO-DO: repair
         }
 
         foreach (Unit unit in playerComponent.Units.ToList())
@@ -55,7 +73,6 @@ public class ComputerPlayer : MonoBehaviour
 
     public List<Move> GenerateMoves(Object entity)
     {
-        //TO-DO: building construction
         return entity is Unit ? 
             GenerateUnitMoves((Unit) entity) 
             : GenerateBuildingMoves((Building) entity);
@@ -107,25 +124,59 @@ public class ComputerPlayer : MonoBehaviour
             
         }
 
-        //TO-DO: repairing buildings and construction
+        //TO-DO: repairing buildings
 
         return moves;
     }
 
-    public List<Move> GenerateRecruitment(Building building)
+    public List<Move> GenerateRecruitment(Outpost outpost, Player player)
     {
-        //TO-DO
-        // moveName = recruitment
-        return null;
+        List<Move> moves = new List<Move>();
+
+        foreach (Object obj in player.UnlockedUnits)
+        {
+            Unit unit = obj.GetComponent<Unit>();
+            
+            if (unit.CanAffordRecruitment(player))
+            {
+                moves.Add(new Move(evaluationEngine.Evaluate("recruitment", player, unit),
+                    () => { outpost.RecruitUnit(unit.BaseUnitStats.UnitName); } ));
+            }
+        }
+
+        //TO-DO: enable when all unit names are fixed
+        return moves;
     }
 
-    public void SelectAndRunMoves(List<Move> moves)
+    public void SelectAndRunMoves(List<Move> moves, bool randomise = true)
     {
         if (moves.Count == 0)
             return;
 
-        Move toExecute = moves.OrderByDescending(move => move.EvalValue).First();
-        //TO-DO: introduce randomisation
+        List<Move> toRandomise = moves.OrderByDescending(move => move.EvalValue).Take(3).ToList();
+        
+        if (randomise)
+        {
+            int sumEval = 0;
+
+            foreach (Move move in toRandomise)
+            {
+                sumEval += System.Math.Abs(move.EvalValue);
+            }
+
+            int chosenEvalLevel = new System.Random().Next(0, sumEval - 1);
+            while (chosenEvalLevel > 0)
+            {
+                chosenEvalLevel -= System.Math.Abs(toRandomise.First().EvalValue);
+                if (chosenEvalLevel > 0)
+                    toRandomise.RemoveAt(0);
+            }
+        }
+
+        Move toExecute = toRandomise.First();
+
+        Debug.Log("gonna");
         toExecute.Execute();
+        Debug.Log("done");
     }
 }
