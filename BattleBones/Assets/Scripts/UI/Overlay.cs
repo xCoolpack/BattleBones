@@ -31,6 +31,10 @@ public class Overlay : MonoBehaviour
     private VisualElement _objectivesMenu;
     private VisualElement _aspectRatioPanel;
 
+    private static VisualElement _loggerBody;
+    private static ScrollView _logger;
+    private static VisualElement _loggerEnd;
+
     public Building PickedBuilding;
     public Unit PickedUnit;
     public Field PickedField;
@@ -62,6 +66,10 @@ public class Overlay : MonoBehaviour
         _objectivesMenu = UiDocument.rootVisualElement.Q<VisualElement>("ObjectivesMenu");
 
         _aspectRatioPanel = UiDocument.rootVisualElement.Q<VisualElement>("AspectRatioPanel");
+
+        _loggerBody = UiDocument.rootVisualElement.Q<VisualElement>("LoggerBody");
+        _loggerEnd = UiDocument.rootVisualElement.Q<VisualElement>("LoggerEnd");
+        _logger = UiDocument.rootVisualElement.Q<ScrollView>("Logger");
 
         // Binding turn handler
         var tunHandlerSerializedObject = new SerializedObject(TurnHandler);
@@ -563,8 +571,13 @@ public class Overlay : MonoBehaviour
                 };
                 button.AddToClassList("InfoBoxButton");
                 button.AddToClassList("BuildButton");
-                buyBox.Add(name);
                 buyBox.Add(button);
+            }
+            else
+            {
+                var cantAffordLabel = new Label("Can't afford");
+                cantAffordLabel.AddToClassList("BuildButton");
+                buyBox.Add(cantAffordLabel);
             }
 
             recruitmentBox.Add(buyBox);
@@ -734,5 +747,17 @@ public class Overlay : MonoBehaviour
     private void ToggleOffObjectives()
     {
         _objectivesMenu.RemoveAt(1);
+    }
+
+    /// <summary>
+    /// Logs message on the on screen logger for the player
+    /// </summary>
+    /// <param name="message"></param>
+    public static void LogMessage(string message)
+    {
+        var label = new Label(message);
+        label.AddToClassList("LogMessage");
+        _loggerBody.Add(label);
+        _logger.ScrollTo(_loggerEnd);
     }
 }
