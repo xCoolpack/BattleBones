@@ -42,14 +42,14 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 130
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -66,6 +66,42 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -78,7 +114,259 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: attack_with_hat_red_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f14f4121b19cfb34eab3a870469a812e
+      internalID: -1598607254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_with_hat_red_1
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5240b17b5c023b47b984e3ad3a507e1
+      internalID: -1008246709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_with_hat_red_2
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de2a9d294865660448e40a76d1735505
+      internalID: -1137445292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_with_hat_red_3
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 648ee38d6ff160547b45a929725d4091
+      internalID: 1121484100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_with_hat_red_4
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c25c74554da55814f9bf763afaef9e4e
+      internalID: -1942426300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_with_hat_red_5
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44a5a07f79ae5d74e856586f822bd079
+      internalID: -2048885155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_with_hat_red_6
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54b89108fc6dd63439b050aebb0b2f97
+      internalID: 309896090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_with_hat_red_7
+      rect:
+        serializedVersion: 2
+        x: 2520
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7442a4bbd8c7014bbef94a32b2ddbf4
+      internalID: 1095564168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_with_hat_red_8
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c76a316cfa45fbb40a3e9dcba5861a04
+      internalID: 199251873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_with_hat_red_9
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 406959a9a271a87408e619e3b511318d
+      internalID: 1550919957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_with_hat_red_10
+      rect:
+        serializedVersion: 2
+        x: 3600
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e973d12dcd7e6e54e9a8ade660ceb13a
+      internalID: -511207398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_with_hat_red_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 600
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a876b2f0038444849899cb95e0ce34d7
+      internalID: 3719081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -89,7 +377,43 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      attack_with_hat_red_8: 199251873
+      attack_with_hat_red_29: -1565450152
+      attack_with_hat_red_25: -96833743
+      attack_with_hat_red_19: 1029854568
+      attack_with_hat_red_23: -1685634373
+      attack_with_hat_red_33: -658397257
+      attack_with_hat_red_12: -541859865
+      attack_with_hat_red_0: -1598607254
+      attack_with_hat_red_14: -504047118
+      attack_with_hat_red_5: -2048885155
+      attack_with_hat_red_21: -314322195
+      attack_with_hat_red_4: -1942426300
+      attack_with_hat_red_1: -1008246709
+      attack_with_hat_red_27: -1104732452
+      attack_with_hat_red_30: 1519450964
+      attack_with_hat_red_22: 2018272138
+      attack_with_hat_red_17: -1687732935
+      attack_with_hat_red_16: -1221958417
+      attack_with_hat_red_28: 624684000
+      attack_with_hat_red_9: 1550919957
+      attack_with_hat_red_7: 1095564168
+      attack_with_hat_red_3: 1121484100
+      attack_with_hat_red_10: -511207398
+      attack_with_hat_red_13: 953008804
+      attack_with_hat_red_15: -331328009
+      attack_with_hat_red_34: -1066325227
+      attack_with_hat_red_32: -1935625793
+      attack_with_hat_red_24: 796541767
+      attack_with_hat_red_35: 14043377
+      attack_with_hat_red_20: -882877203
+      attack_with_hat_red_6: 309896090
+      attack_with_hat_red_31: 1520717572
+      attack_with_hat_red_11: 3719081
+      attack_with_hat_red_18: -1699127597
+      attack_with_hat_red_26: -913109346
+      attack_with_hat_red_2: -1137445292
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

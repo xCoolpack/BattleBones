@@ -946,9 +946,10 @@ MonoBehaviour:
   MissionHandler: {fileID: 0}
   PlayerEventHandler: {fileID: 803453024}
   UnlockedUnits:
-  - {fileID: 4579975757466703736, guid: 585ebcd8ec2644641bdfeafaa3c87305, type: 3}
-  - {fileID: 5788435357326360568, guid: 1c902ec3f97a9b148b4a1b5ef0af9616, type: 3}
-  - {fileID: 5788435357326360568, guid: 1c902ec3f97a9b148b4a1b5ef0af9616, type: 3}
+  - {fileID: 2362969366302567471, guid: 1cf3f4caee944374b8e152c035b2067c, type: 3}
+  - {fileID: 9222216290263363282, guid: 883fe854bf6c2df47a2135fe09b3f205, type: 3}
+  - {fileID: 7013552555508632316, guid: 1a30d764d0da5344aaeb3f0262d336d7, type: 3}
+  - {fileID: 1252091422495087647, guid: f418018a0bec8244c9c8edf8f1064165, type: 3}
   AvailableBuildings:
   - {fileID: 4676323450524676282, guid: ba88bbd48ffd52240a0edf78d9c58ba5, type: 3}
   - {fileID: 4676323450524676282, guid: c67cf3a2a1c79504d8e2014d5a444d3b, type: 3}
@@ -1003,6 +1004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerComponent: {fileID: 55676344}
   evaluationEngine: {fileID: 968252338}
+  unitRecruitmentCooldown: 0
 --- !u!4 &58151246 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4881552863685125914, guid: 90bad53b184cbd94fa05177e22429de6, type: 3}

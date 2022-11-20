@@ -1,0 +1,1146 @@
+fileFormatVersion: 2
+guid: 408098557c46bf44485104a52daf298e
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 130
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: attack_hammer_red_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1200
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c67f9314ca3722c40bb0e32d9f4ffc5c
+      internalID: -1093725863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_1
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 1200
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8108eb3d0245f7844a37ec11315e8e44
+      internalID: -1166857217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_2
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 1200
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e82521c23c856a540a60e70b0e0405bd
+      internalID: -115615619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_3
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 1200
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0a15c85995f1cb4b8610699de996239
+      internalID: 669412517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_4
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 1200
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 151e600f78ddbbe458f6ba455c072060
+      internalID: 2133936558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_5
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 1200
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cc78250e196dd54e87707638a0d1ab5
+      internalID: -614298002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_6
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 1200
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9024206601bc96d4d9151af751543945
+      internalID: -1951834983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_7
+      rect:
+        serializedVersion: 2
+        x: 2520
+        y: 1200
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34034c4f6ad78004783de0f51a0dcdd7
+      internalID: 799937379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_8
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 1200
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6b190fe4b6d3f94c86decc4558a46f6
+      internalID: 1141332910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_9
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 1200
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0db8c6cd770a34d4188ff3e8b727081f
+      internalID: 656559369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_10
+      rect:
+        serializedVersion: 2
+        x: 3600
+        y: 1200
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d907f78c7db1deb4a99dece758f04ac3
+      internalID: 527175257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64aaecf189e16934c9cc2ba73fa03343
+      internalID: -591796887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_12
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0bffd76d55a08c4496556ea19de109d
+      internalID: 798554423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_13
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cb1fa908c54b28479e56d438e3c84ae
+      internalID: 1903391715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_14
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb1f1c24b39ab734682652ff3e53eeb2
+      internalID: -199281526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_15
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 629ae6fcf5bb20947bd9ffa20a9a71b3
+      internalID: -1731984926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_16
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe238d83ec80cef4d9021cc2620e7430
+      internalID: 758468258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_17
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42dc05ac70c498243a0b4529b57b0dd1
+      internalID: -1920037921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_18
+      rect:
+        serializedVersion: 2
+        x: 2520
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74d0f27fd438ab944abb77d6732d31e6
+      internalID: -1311645819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_19
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 829edb9bc96ce214cbd972128c29cc85
+      internalID: -1020094704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_20
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cfe46723eeb32a43b513df924bc72b6
+      internalID: -1359942898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_21
+      rect:
+        serializedVersion: 2
+        x: 3600
+        y: 900
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b696ad53ed8ff74ca2de22812e553c9
+      internalID: 1947948527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 600
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61bf1703eeaf1d045b137ab370143cb8
+      internalID: 1218513222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_23
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 600
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0408395a85a0b6447ad4dc5ea66c82fb
+      internalID: -1234139143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_24
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 600
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7aaf6df728d6a7b4f88a650c0293368d
+      internalID: -1806159870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_25
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 600
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d69239732274e941a197da1e0503bed
+      internalID: -1751278609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_26
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 600
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22110bf7282a9e443a2791ad4379106c
+      internalID: 1790068363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_27
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 600
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00626c95ed77ba245b0899723a043c81
+      internalID: 1080635764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_28
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 600
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b488380ae29f46f4d92031f225478119
+      internalID: 1398772066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_29
+      rect:
+        serializedVersion: 2
+        x: 2520
+        y: 600
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7e6b6e1792420d4abf94a9d2332d371
+      internalID: 1802042089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_30
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 600
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 131c32e0bdc062e40b41f9d357785c78
+      internalID: 562279603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_31
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 600
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8ed71ee99ba79e4aba3e4db4d03a773
+      internalID: 930627829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_32
+      rect:
+        serializedVersion: 2
+        x: 3600
+        y: 600
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c46ef58ec36c12a41948e26c3e9f217c
+      internalID: -741346210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_33
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 300
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54fbb1688b6939842b10227a878654eb
+      internalID: 690850195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_34
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 300
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55c1d86177b1cce45822d98b223ecebd
+      internalID: -1473682355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_35
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 300
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e944df6503a550f48aa2cb3721ff25e5
+      internalID: -2113757940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_36
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 300
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8106276f3082ea243b1ed484af550c90
+      internalID: -857151322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_37
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 300
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac756ddb6ab4fdb4399d4a34bd3dd1f4
+      internalID: 1565757440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_38
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 300
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 367e18cf79e6c5240b5b583718216dcb
+      internalID: 1659262305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_39
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 300
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5050eb948c550a64fbe17ff8768f633d
+      internalID: -1452420443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_40
+      rect:
+        serializedVersion: 2
+        x: 2520
+        y: 300
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b200eff632cee4943bab82e80beda9de
+      internalID: 1130200787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_41
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 300
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba0009befbb0f5444873c40d138d2d68
+      internalID: 518219509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_42
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 300
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5217fadf1215224298f8f7e8fc07cba
+      internalID: -1723339886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_43
+      rect:
+        serializedVersion: 2
+        x: 3600
+        y: 300
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce2b1a1951b44f64ba9a9e528f384961
+      internalID: -1747765730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_44
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77c5869c3fadea042a9cc00c9155365a
+      internalID: -643538837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack_hammer_red_45
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 0
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45b08f2d1a297b04280177c7eee6882a
+      internalID: 601890857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      attack_hammer_red_29: 1802042089
+      attack_hammer_red_28: 1398772066
+      attack_hammer_red_42: -1723339886
+      attack_hammer_red_38: 1659262305
+      attack_hammer_red_34: -1473682355
+      attack_hammer_red_41: 518219509
+      attack_hammer_red_24: -1806159870
+      attack_hammer_red_6: -1951834983
+      attack_hammer_red_21: 1947948527
+      attack_hammer_red_39: -1452420443
+      attack_hammer_red_19: -1020094704
+      attack_hammer_red_43: -1747765730
+      attack_hammer_red_4: 2133936558
+      attack_hammer_red_2: -115615619
+      attack_hammer_red_7: 799937379
+      attack_hammer_red_0: -1093725863
+      attack_hammer_red_26: 1790068363
+      attack_hammer_red_22: 1218513222
+      attack_hammer_red_30: 562279603
+      attack_hammer_red_32: -741346210
+      attack_hammer_red_40: 1130200787
+      attack_hammer_red_36: -857151322
+      attack_hammer_red_13: 1903391715
+      attack_hammer_red_8: 1141332910
+      attack_hammer_red_44: -643538837
+      attack_hammer_red_20: -1359942898
+      attack_hammer_red_9: 656559369
+      attack_hammer_red_17: -1920037921
+      attack_hammer_red_18: -1311645819
+      attack_hammer_red_3: 669412517
+      attack_hammer_red_45: 601890857
+      attack_hammer_red_27: 1080635764
+      attack_hammer_red_1: -1166857217
+      attack_hammer_red_33: 690850195
+      attack_hammer_red_23: -1234139143
+      attack_hammer_red_10: 527175257
+      attack_hammer_red_15: -1731984926
+      attack_hammer_red_5: -614298002
+      attack_hammer_red_11: -591796887
+      attack_hammer_red_14: -199281526
+      attack_hammer_red_12: 798554423
+      attack_hammer_red_35: -2113757940
+      attack_hammer_red_16: 758468258
+      attack_hammer_red_25: -1751278609
+      attack_hammer_red_31: 930627829
+      attack_hammer_red_37: 1565757440
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
