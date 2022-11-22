@@ -1092,9 +1092,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      attack_hammer_red_29: 1802042089
-      attack_hammer_red_28: 1398772066
       attack_hammer_red_42: -1723339886
+      attack_hammer_red_28: 1398772066
+      attack_hammer_red_29: 1802042089
       attack_hammer_red_38: 1659262305
       attack_hammer_red_34: -1473682355
       attack_hammer_red_41: 518219509

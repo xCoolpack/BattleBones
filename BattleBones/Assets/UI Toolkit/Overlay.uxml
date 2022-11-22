@@ -8,26 +8,31 @@
             </ui:VisualElement>
             <ui:GroupBox name="Resources" style="position: absolute; left: 5px; top: 5px; flex-direction: row; align-items: auto; justify-content: flex-start; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
                 <ui:VisualElement class="OverlayResourceBox" style="flex-direction: row;">
+                    <ui:Label text="Gold " display-tooltip-when-elided="true" class="OverlayResourcesText" />
                     <ui:Label text="123" display-tooltip-when-elided="true" name="GoldLabel" class="OverlayResourcesText mr-5" />
                     <ui:Label text="+" display-tooltip-when-elided="true" name="PlusLabel" class="OverlayResourcesText" />
                     <ui:Label text="123" display-tooltip-when-elided="true" name="GoldIncomeLabel" class="OverlayResourcesText" />
                 </ui:VisualElement>
                 <ui:VisualElement class="OverlayResourceBox" style="flex-direction: row;">
+                    <ui:Label text="Wood" display-tooltip-when-elided="true" class="OverlayResourcesText" />
                     <ui:Label text="123" display-tooltip-when-elided="true" name="WoodLabel" class="OverlayResourcesText mr-5" />
                     <ui:Label text="+" display-tooltip-when-elided="true" name="PlusLabel" class="OverlayResourcesText" />
                     <ui:Label text="123" display-tooltip-when-elided="true" name="WoodIncomeLabel" class="OverlayResourcesText" />
                 </ui:VisualElement>
                 <ui:VisualElement class="OverlayResourceBox" style="flex-direction: row;">
+                    <ui:Label text="Stone" display-tooltip-when-elided="true" class="OverlayResourcesText" />
                     <ui:Label text="123" display-tooltip-when-elided="true" name="StoneLabel" class="OverlayResourcesText mr-5" />
                     <ui:Label text="+" display-tooltip-when-elided="true" name="PlusLabel" class="OverlayResourcesText" />
                     <ui:Label text="123" display-tooltip-when-elided="true" name="StoneIncomeLabel" class="OverlayResourcesText" />
                 </ui:VisualElement>
                 <ui:VisualElement class="OverlayResourceBox" style="flex-direction: row;">
+                    <ui:Label text="Doggium" display-tooltip-when-elided="true" class="OverlayResourcesText" />
                     <ui:Label text="123" display-tooltip-when-elided="true" name="DoggiumLabel" class="OverlayResourcesText mr-5" />
                     <ui:Label text="+" display-tooltip-when-elided="true" name="PlusLabel" class="OverlayResourcesText" />
                     <ui:Label text="123" display-tooltip-when-elided="true" name="DoggiumIncomeLabel" class="OverlayResourcesText" />
                 </ui:VisualElement>
                 <ui:VisualElement class="OverlayResourceBox" style="flex-direction: row;">
+                    <ui:Label text="Bone" display-tooltip-when-elided="true" class="OverlayResourcesText" />
                     <ui:Label text="123" display-tooltip-when-elided="true" name="BoneLabel" class="OverlayResourcesText mr-5" />
                     <ui:Label text="+" display-tooltip-when-elided="true" name="PlusLabel" class="OverlayResourcesText" />
                     <ui:Label text="123" display-tooltip-when-elided="true" name="BoneIncomeLabel" class="OverlayResourcesText" />
