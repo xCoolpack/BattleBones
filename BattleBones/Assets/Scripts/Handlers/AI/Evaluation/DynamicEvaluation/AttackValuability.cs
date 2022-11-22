@@ -5,7 +5,7 @@ using UnityEngine;
 public class AttackValuability
 {
     public UnitStrategicValue UnitStrategicValue;
-    public static int defaultAttackEval = 60;
+    public static int defaultAttackEval = 15;
 
     public AttackValuability(UnitStrategicValue unitStrategicValue)
     {

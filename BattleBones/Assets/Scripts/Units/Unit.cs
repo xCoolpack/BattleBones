@@ -623,7 +623,7 @@ public class Unit : MonoBehaviour
         //If unit cannot attack from current field, move it
         if (!possibleFieldsForAttack.Contains(Field))
         {
-            targetField.Unit.CanDoAnimation = false;
+            if (targetField.Unit != null) targetField.Unit.CanDoAnimation = false;
             (Dictionary<Field, Field> graph, Field attackingField) = GraphSearch.AStarSearch(Field, targetField,
                 (currentField, startingField) => MovementScript.CanMoveAll(this, currentField),
                 (field) => MovementScript.GetMovementPointsCostAll(this, field), GraphSearch.GetDistance,
