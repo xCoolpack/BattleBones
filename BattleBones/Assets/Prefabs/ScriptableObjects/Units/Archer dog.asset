@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitName: Archer dog
   BaseHealth: 80
-  BaseDamage: 35
+  BaseDamage: 25
   BaseDefense: 10
   BaseMovementPoints: 3
   BaseAttackRange: 2
   BaseSightRange: 2
   BaseCost:
-    Gold: 100
+    Gold: 175
     Wood: 0
     Stone: 0
     Doggium: 0

@@ -949,8 +949,6 @@ MonoBehaviour:
   - {fileID: 625067414}
   - {fileID: 475698531}
   Overlay: {fileID: 0}
-  test: {fileID: 0}
-  test2: {fileID: 0}
 --- !u!4 &55676345
 Transform:
   m_ObjectHideFlags: 0
@@ -2490,6 +2488,18 @@ PrefabInstance:
     - target: {fileID: 65629987104253305, guid: f6ae945f094939f429dc15fd7142f95a, type: 3}
       propertyPath: m_Name
       value: ForestField (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5536509540290845529, guid: f6ae945f094939f429dc15fd7142f95a, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5536509540290845529, guid: f6ae945f094939f429dc15fd7142f95a, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5536509540290845529, guid: f6ae945f094939f429dc15fd7142f95a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5801692695271579817, guid: f6ae945f094939f429dc15fd7142f95a, type: 3}
       propertyPath: m_RootOrder
@@ -6917,13 +6927,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ResourcesAmount:
     Gold: 100
-    Wood: 150
-    Stone: 50
+    Wood: 0
+    Stone: 0
     Doggium: 0
     Bone: 0
   ResourcesIncome:
-    Gold: 35
-    Wood: 25
+    Gold: 15
+    Wood: 0
     Stone: 0
     Doggium: 0
     Bone: 0
@@ -18920,8 +18930,6 @@ MonoBehaviour:
   Buildings:
   - {fileID: 108808770}
   Overlay: {fileID: 1609666542}
-  test: {fileID: 0}
-  test2: {fileID: 0}
 --- !u!4 &1354927225
 Transform:
   m_ObjectHideFlags: 0

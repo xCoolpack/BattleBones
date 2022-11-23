@@ -404,12 +404,8 @@ public class Unit : MonoBehaviour
     {
         if (_isInAnimation) return false;
 
-        Logger.Log($"{Player.name} has ordered {BaseUnitStats.UnitName} " +
-                   $"at {Field.ThreeAxisCoordinates} to move to {targetField.ThreeAxisCoordinates}");
-
         if (targetField == Field)
         {
-            Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} is already at {targetField.ThreeAxisCoordinates}");
             return false;
         }
 
@@ -600,25 +596,13 @@ public class Unit : MonoBehaviour
     {
         if (_isInAnimation) return;
 
-        Logger.Log($"{Player.name} has ordered {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} " +
-                   $"to attack {targetField.Unit?.BaseUnitStats.UnitName} " +
-                   $"at {targetField.ThreeAxisCoordinates}");
-
-        if (targetField == Field)
-        {
-            Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} is already at {targetField.ThreeAxisCoordinates}");
-            return;
-        }
+        if (targetField == Field) return;
 
         //Find path to field from unit can attack
         List<Field> possibleFieldsForAttack = GetFieldsFromUnitCanAttack(targetField);
         
         // If unit cannot access attacked unit return false
-        if (possibleFieldsForAttack.Count == 0)
-        {
-            Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} cannot reach at {targetField.ThreeAxisCoordinates}");
-            return;
-        }
+        if (possibleFieldsForAttack.Count == 0) return;
 
         //If unit cannot attack from current field, move it
         if (!possibleFieldsForAttack.Contains(Field))
@@ -804,7 +788,7 @@ public class Unit : MonoBehaviour
     public void Heal(double healRatio)
     {
         var healValue = Math.Min(CurrentHealth + (int)Math.Ceiling(healRatio * MaxHealth), MaxHealth);
-        Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} has healed for {healValue}");
+        Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} has healed for {CurrentHealth - healValue}");
         CurrentHealth = healValue;
         ChangeModifiersFromHealth();
     }
@@ -816,8 +800,6 @@ public class Unit : MonoBehaviour
 
     public void BeginDefending()
     {
-        Logger.Log($"{Player.name}'s {BaseUnitStats.UnitName} at {Field.ThreeAxisCoordinates} " +
-                   $"has begun defending increasing defense by {DefenseRatio*100}%");
         CurrentMovementPoints = 0;
         AddUnitModifiers(new UnitModifiers(defense: DefenseRatio));
         Player.PlayerEventHandler.AddStartTurnEvent(new GameEvent(1, Defend));

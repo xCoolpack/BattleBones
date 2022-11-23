@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitName: Dog
   BaseHealth: 100
-  BaseDamage: 25
+  BaseDamage: 35
   BaseDefense: 20
   BaseMovementPoints: 3
   BaseAttackRange: 1
   BaseSightRange: 2
   BaseCost:
-    Gold: 75
+    Gold: 125
     Wood: 0
     Stone: 0
     Doggium: 0

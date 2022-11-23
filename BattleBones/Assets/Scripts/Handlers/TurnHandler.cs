@@ -19,9 +19,7 @@ public class TurnHandler : MonoBehaviour
     {
         _humanTurn = true;
         CurrentPlayer = HumanPlayer;
-        Logger.Log(@$"- - - - - - -
-- Turn: {TurnCounter} -
-- - - - - - -");
+        Logger.Log($"Turn: {TurnCounter}");
         Logger.Log("Human turn");
     }
 
@@ -37,15 +35,6 @@ public class TurnHandler : MonoBehaviour
         {
             ComputerPlayerObj.ProcessTurn();
         }
-
-         /*Players[_playerIndex].PlayerEventHandler.TurnEnd();
-         NextPlayer();
-         Players[_playerIndex].PlayerEventHandler.TurnStart();
-         Players[_playerIndex].ResourceManager.GenerateIncome();
-         Players[_playerIndex].RestoreUnitsMovementPoints();
-         Players[_playerIndex].ApplyUnitsModifiers();*/
-
-         
     }
 
     private void NextPlayer()
@@ -60,9 +49,7 @@ public class TurnHandler : MonoBehaviour
             CurrentPlayer = HumanPlayer;
             TurnCounter++;
             GlobalEventHandler.TurnEnd();
-            Logger.Log(@$"- - - - - - -
-- Turn: {TurnCounter} -
-- - - - - - -");
+            Logger.Log($"Turn: {TurnCounter}");
             Logger.Log("Human turn");
             GlobalEventHandler.TurnStart();
         }

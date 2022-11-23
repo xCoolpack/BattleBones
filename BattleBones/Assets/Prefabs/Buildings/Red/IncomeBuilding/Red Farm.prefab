@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ResourcesIncome:
-    Gold: 25
+    Gold: 15
     Wood: 0
     Stone: 0
     Doggium: 0
