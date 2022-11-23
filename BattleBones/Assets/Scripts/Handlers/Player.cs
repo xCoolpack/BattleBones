@@ -37,17 +37,10 @@ public class Player : MonoBehaviour
             {"Dog scout", new ()},
             {"Dog", new ()},
             {"Dog-at-arms", new ()},
-            {"Crossbowdog", new ()},
+            {"Archer dog", new ()},
             {"Dog-a-copter", new ()},
-            {"Battering dog", new ()},
-            {"Dog-a-pult", new ()},
-            //cats
-            {"Cat scout", new ()},
-            {"Cat", new ()},
-            {"Cat-at-arms", new ()},
-            {"Crossbowcat", new ()},
-            {"Cat-a-copter", new ()},
-            {"Mountain cat", new ()},
+            {"Hammer dog", new ()},
+            
         };
     }
 

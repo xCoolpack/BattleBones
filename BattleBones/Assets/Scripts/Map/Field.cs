@@ -245,11 +245,6 @@ public class Field : MonoBehaviour
         return Type.MovementPointsCost;
     }
 
-    public List<Building> GetAllowableBuildings()
-    {
-        return Type.AllowableBuildings;
-    }
-
     public UnitModifiers GetUnitModifiersFromBuilding()
     {
         return Building?.GetUnitModifiers() ?? new UnitModifiers();
@@ -352,7 +347,7 @@ public class Field : MonoBehaviour
 
     public bool CanConstruct(Player player, string buildingName)
     {
-        GameObject buildingPrefab = player.AvailableBuildings.FirstOrDefault(g => g.name == buildingName);
+        GameObject buildingPrefab = player.AvailableBuildings.FirstOrDefault(g => g.name == $"{player.Faction} {buildingName}");
         return buildingPrefab != null 
                && IsSeenBy(player) 
                && !HasBuilding() 
@@ -362,8 +357,8 @@ public class Field : MonoBehaviour
 
     public void BeginBuildingConstruction(Player player, string buildingName)
     {
-        GameObject buildingPrefab = player.AvailableBuildings.FirstOrDefault(g => g.name == buildingName);
-        Building building = Instantiate(buildingPrefab, this.transform).GetComponent<Building>();
+        GameObject buildingPrefab = player.AvailableBuildings.FirstOrDefault(g => g.name == $"{player.Faction} {buildingName}");
+        Building building = Instantiate(buildingPrefab, transform).GetComponent<Building>();
         building.Player = player;
         building.Field = this;
         building.CurrentHealth = 0;

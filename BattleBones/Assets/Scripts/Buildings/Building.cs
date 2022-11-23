@@ -173,6 +173,8 @@ public class Building : MonoBehaviour
 
     public void Construct()
     {
+        if (this == null) return;
+
         CurrentHealth = MaxHealth;
         Field.Unit?.AddUnitModifiers(Field.Building.GetUnitModifiers());
 

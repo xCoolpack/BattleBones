@@ -10,5 +10,5 @@ public class FieldType : ScriptableObject
     public bool IsBlockingSight;
 
     public UnitModifiers FieldUnitModifiers;
-    public List<Building> AllowableBuildings;
+    public List<BaseBuildingStats> AllowableBuildings;
 }

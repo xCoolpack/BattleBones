@@ -214,10 +214,10 @@ public class Overlay : MonoBehaviour
         foreach (var building in buildings)
         {
             var buyBox = new VisualElement();
-            var buildingName = new Label(building.BaseBuildingStats.BuildingName);
+            var buildingName = new Label(building.BuildingName);
             var costs = new List<Label>();
 
-            var cost = building.BaseBuildingStats.BaseCost;
+            var cost = building.BaseCost;
 
             if (cost.Bone > 0)
                 costs.Add(new Label($"Bones: {cost.Bone}"));
@@ -237,11 +237,11 @@ public class Overlay : MonoBehaviour
             buyBox.Add(buildingName);
             costs.ForEach(c => buyBox.Add(c));
 
-            if (PickedField.CanConstruct(TurnHandler.CurrentPlayer, building.name))
+            if (PickedField.CanConstruct(TurnHandler.CurrentPlayer, building.BuildingName))
             {
                 var buyButton = new Button(() =>
                 {
-                    PickedField.BeginBuildingConstruction(TurnHandler.CurrentPlayer, building.name);
+                    PickedField.BeginBuildingConstruction(TurnHandler.CurrentPlayer, building.BuildingName);
                     RemoveInfoBox();
                     ClearPicked();
                 })
