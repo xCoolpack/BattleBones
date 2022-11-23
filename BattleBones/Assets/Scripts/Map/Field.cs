@@ -220,7 +220,7 @@ public class Field : MonoBehaviour
 
         if (SeenBy.Increase(player))
         {
-            _spriteRenderer.color = Color.white;
+            if (player == Player.HumanPlayer) _spriteRenderer.color = Color.white;
             Unit?.Show(player);
         }
     }
@@ -229,7 +229,7 @@ public class Field : MonoBehaviour
     {
         if (SeenBy.Decrease(player))
         {
-            _spriteRenderer.color = Color.grey;
+            if (player == Player.HumanPlayer) _spriteRenderer.color = Color.grey;
             Unit?.Hide(player);
         }
     }
