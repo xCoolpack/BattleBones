@@ -1,12 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/Styles/MenuButton.uss?fileID=7433441132597879392&amp;guid=5abeec742217d304db05592804682f38&amp;type=3#MenuButton" />
-    <ui:VisualElement style="align-items: center; justify-content: center; width: 100%; height: 100%; min-width: 100%; min-height: 100%; opacity: 1; background-color: rgb(127, 202, 212);">
-        <ui:VisualElement style="background-color: rgb(162, 244, 255); height: 59px; width: 577px; align-items: center; justify-content: center; top: 0; left: 0; border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; margin-bottom: 5%;">
-            <ui:Label text="Battle Bones" display-tooltip-when-elided="true" style="font-size: 35px; -unity-font-style: bold;" />
+    <ui:VisualElement style="align-items: center; justify-content: center; width: 100%; height: 100%; min-width: 100%; min-height: 100%; opacity: 1; background-color: rgba(0, 0, 0, 0);">
+        <ui:VisualElement style="margin-bottom: 60px; background-color: rgba(0, 0, 0, 0.31); border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+            <ui:Label text="Battle Bones" display-tooltip-when-elided="true" style="font-size: 70px; -unity-font-style: bold; color: rgb(212, 212, 212);" />
         </ui:VisualElement>
-        <ui:VisualElement style="background-color: rgb(162, 244, 255); height: 257px; width: 513px; align-items: center; justify-content: center; top: 0; left: 0; border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px;">
-            <ui:Button text="Start" display-tooltip-when-elided="true" class="MenuButton" style="height: 53px; width: 238px; margin-top: 0; margin-bottom: 10px; font-size: 20px;" />
-            <ui:Button text="Quit" display-tooltip-when-elided="true" class="MenuButton" style="height: 53px; width: 238px; font-size: 20px;" />
-        </ui:VisualElement>
+        <ui:Button text="New game" display-tooltip-when-elided="true" name="NewGameButton" class="MenuButton" style="height: 53px; width: 238px; margin-top: 0; margin-bottom: 10px; font-size: 20px;" />
+        <ui:Button text="Load game" display-tooltip-when-elided="true" name="LoadGameButton" class="MenuButton" style="height: 53px; width: 238px; margin-top: 0; margin-bottom: 10px; font-size: 20px;" />
+        <ui:Button text="Quit" display-tooltip-when-elided="true" name="QuitButton" class="MenuButton" style="height: 53px; width: 238px; font-size: 20px;" />
     </ui:VisualElement>
 </ui:UXML>

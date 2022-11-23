@@ -326,6 +326,6 @@ public class Building : MonoBehaviour
             return;
         }
 
-        throw new System.Exception("Unknown building was clicked"); 
+        _overlay.WatchtowerInfobox(showButtons);
     }
 }

@@ -429,9 +429,9 @@ public class Overlay : MonoBehaviour
         return (statsBox, buttonsBox);
     }
 
-    private (VisualElement, VisualElement) CreateDefensiveBuildingInfoBox(DefensiveBuilding defensiveBuilding)
+    private (VisualElement, VisualElement) CreateDefensiveBuildingInfoBox(DefensiveBuilding defensiveBuilding, bool showButtons)
     {
-        var (statsBox, buttonsBox) = CreateBuildingInfoBox(PickedBuilding);
+        var (statsBox, buttonsBox) = CreateBuildingInfoBox(showButtons);
         var damageLabel = new Label($"Damage: {defensiveBuilding.CurrentDamage}");
         var attackRangeLabel = new Label($"Attack range: {defensiveBuilding.AttackRange}");
         //var defenseLabel = new Label($"Defense: {building.CurrentDefense}/{building.MaxDefense}");
@@ -464,7 +464,7 @@ public class Overlay : MonoBehaviour
     {
         if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding), "PickedBuilding has to be set");
 
-        var (statsBox, buttonsBox) = CreateDefensiveBuildingInfoBox(defensiveBuilding);
+        var (statsBox, buttonsBox) = CreateDefensiveBuildingInfoBox(defensiveBuilding, showButtons);
 
         if (showButtons && PickedBuilding.CanRepair())
         {
@@ -491,7 +491,7 @@ public class Overlay : MonoBehaviour
     {
         if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding), "PickedBuilding has to be set");
 
-        var (_, buttonsBox) = CreateDefensiveBuildingInfoBox(defensiveBuilding);
+        var (_, buttonsBox) = CreateDefensiveBuildingInfoBox(defensiveBuilding, showButtons);
 
         if (showButtons && PickedBuilding.CanRepair())
         {
@@ -513,6 +513,11 @@ public class Overlay : MonoBehaviour
             recruitButton.AddToClassList("InfoBoxButton");
             buttonsBox.Add(recruitButton);
         }
+    }
+
+    public void WatchtowerInfobox(bool showButtons)
+    {
+        CreateBuildingInfoBox(showButtons);
     }
 
     /// <summary>
@@ -631,7 +636,6 @@ public class Overlay : MonoBehaviour
                 statsBoxRight.Add(label);
             }
         }
-
 
         if (showButtons && PickedBuilding.CanRepair())
         {

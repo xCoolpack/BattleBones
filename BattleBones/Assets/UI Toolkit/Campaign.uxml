@@ -1,0 +1,26 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Styles/Campaign.uss?fileID=7433441132597879392&amp;guid=79c93d30ace8a5a4dada0fda2d542aa0&amp;type=3#Campaign" />
+    <ui:VisualElement style="align-items: center; justify-content: center; width: 100%; height: 100%; min-width: 100%; min-height: 100%; opacity: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+        <ui:VisualElement class="MultiMissionConatiner">
+            <ui:VisualElement name="Mission1" class="MissionButtonConatiner">
+                <ui:Button text="Button" display-tooltip-when-elided="true" name="Mission1Button" class="MissionButton" />
+                <ui:Label text="Label" display-tooltip-when-elided="true" name="Mission1Label" class="MissionLabel" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Mission2" class="MissionButtonConatiner">
+                <ui:Button text="Button" display-tooltip-when-elided="true" name="Mission2Button" class="MissionButton" />
+                <ui:Label text="Label" display-tooltip-when-elided="true" name="Mission2Label" class="MissionLabel" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="MultiMissionConatiner">
+            <ui:VisualElement name="Mission3" class="MissionButtonConatiner">
+                <ui:Button text="Button" display-tooltip-when-elided="true" name="Mission3Button" class="MissionButton" />
+                <ui:Label text="Label" display-tooltip-when-elided="true" name="Mission3Label" class="MissionLabel" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Mission4" class="MissionButtonConatiner">
+                <ui:Button text="Button" display-tooltip-when-elided="true" name="Mission4Button" class="MissionButton" />
+                <ui:Label text="Label" display-tooltip-when-elided="true" name="Mission4Label" class="MissionLabel" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Label text="Label" display-tooltip-when-elided="true" name="TrophiesLabel" style="left: auto; top: 5px; position: absolute; right: 5px; font-size: 40px; color: rgb(255, 255, 255);" />
+    </ui:VisualElement>
+</ui:UXML>
