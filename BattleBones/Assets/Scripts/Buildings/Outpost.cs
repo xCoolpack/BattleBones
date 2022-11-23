@@ -41,8 +41,6 @@ public class Outpost : MonoBehaviour
         _unitCost = unitPrefab.GetComponent<Unit>().BaseUnitStats.BaseCost;
         Building.Player.ResourceManager.RemoveAmount(_unitCost);
         eventHandler.AddStartTurnEvent(RecruitingUnit);
-
-        Logger.Log($"{Building.Player.name} has begun recruitment of {unitName} at {Building.Field.ThreeAxisCoordinates}");
     }
 
     /// <summary>
@@ -81,8 +79,6 @@ public class Outpost : MonoBehaviour
 
     public void CancelRecruitment()
     {
-        Logger.Log($"{Building.Player.name} has cancel recruitment at {Building.Field.ThreeAxisCoordinates}");
-
         EventHandler eventHandler = Building.Player.PlayerEventHandler;
         eventHandler.RemoveStartTurnEvent(RecruitingUnit);
         Building.Player.ResourceManager.AddAmount(_unitCost);

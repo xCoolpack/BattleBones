@@ -19,8 +19,8 @@ MonoBehaviour:
   BaseSightRange: 3
   IsPassable: 0
   BaseCost:
-    Gold: 0
-    Wood: 0
-    Stone: 0
+    Gold: 150
+    Wood: 150
+    Stone: 100
     Doggium: 0
     Bone: 0

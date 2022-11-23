@@ -219,13 +219,19 @@ public class Field : MonoBehaviour
         Building?.Discover(player);
 
         if (SeenBy.Increase(player))
+        {
+            if (player == Player.HumanPlayer) _spriteRenderer.color = Color.white;
             Unit?.Show(player);
+        }
     }
 
     public void Hide(Player player)
     {
         if (SeenBy.Decrease(player))
+        {
+            if (player == Player.HumanPlayer) _spriteRenderer.color = Color.grey;
             Unit?.Hide(player);
+        }
     }
 
     public bool IsSeenBy(Player player)
@@ -348,6 +354,16 @@ public class Field : MonoBehaviour
     public bool CanConstruct(Player player, string buildingName)
     {
         GameObject buildingPrefab = player.AvailableBuildings.FirstOrDefault(g => g.name == $"{player.Faction} {buildingName}");
+        //if (buildingName == "Defensive tower")
+        //{
+        //    Debug.Log(buildingName);
+        //    Debug.Log(buildingPrefab != null);
+        //    Debug.Log(IsSeenBy(player));
+        //    Debug.Log(!HasBuilding());
+        //    Debug.Log(buildingPrefab.GetComponent<Building>().CanAffordConstruction(player));
+        //    Debug.Log((buildingName != "Farm" || !GetNeighbors().Any(field => field.HasBuilding() && field.Building.BaseBuildingStats.BuildingName == "Farm")));
+        //}
+
         return buildingPrefab != null 
                && IsSeenBy(player) 
                && !HasBuilding() 
@@ -367,14 +383,6 @@ public class Field : MonoBehaviour
         building.BuildingState = BuildingState.UnderConstruction;
         player.AddBuilding(Building);
         player.ResourceManager.RemoveAmount(building.BaseBuildingStats.BaseCost);
-
-        // Set building visibility
-        foreach (Player key in SeenBy.Keys)
-        {
-            building.Discover(key);
-        }
-
-        building.ShowFields();
 
         building.BuildingGameEvent = new GameEvent(1, building.Construct);
         player.PlayerEventHandler.AddStartTurnEvent(building.BuildingGameEvent);

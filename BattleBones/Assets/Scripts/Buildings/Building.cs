@@ -45,24 +45,26 @@ public class Building : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.enabled = false;
         SetStats();
-        Hide(Player.HumanPlayer);
+        if (Player != Player.HumanPlayer) Hide(Player.HumanPlayer);
+        
     }
 
     private void Start()
     {
         _overlay = GameObject.Find("Overlay").GetComponent<Overlay>();
         // Set building visibility
+
         foreach (var pair in Field.SeenBy)
         {
             if (pair.Value > 0)
                 Discover(pair.Key);
         }
 
-        ShowFields();
-
         // Building defined in scene
         if (BuildingState == BuildingState.Fine)
         {
+            ShowFields();
+
             Construct();
             PreviousBuildingState = BuildingState.UnderConstruction;
         }
@@ -178,6 +180,8 @@ public class Building : MonoBehaviour
         CurrentHealth = MaxHealth;
         Field.Unit?.AddUnitModifiers(Field.Building.GetUnitModifiers());
 
+        ShowFields();
+
         // Methods in "derived" scripts
         GetComponent<IncomeBuilding>()?.Construct();
         GetComponent<Housing>()?.Construct();
@@ -200,6 +204,8 @@ public class Building : MonoBehaviour
         else if (BuildingState == BuildingState.UnderRepair)
         {
             Player.PlayerEventHandler.RemoveStartTurnEvent(BuildingGameEvent);
+            BuildingState = PreviousBuildingState;
+            
             BuildingGameEvent = null;
             Logger.Log($"Repair of {Player.name}'s {BaseBuildingStats.BuildingName} at {Field.ThreeAxisCoordinates} has been stopped ");
             return;
@@ -218,6 +224,8 @@ public class Building : MonoBehaviour
         Field.Unit?.RemoveUnitModifiers(Field.Building.GetUnitModifiers());
         CurrentHealth = 0;
 
+        HideFields();
+
         // Methods in "derived" scripts
         GetComponent<IncomeBuilding>()?.Plunder();
         GetComponent<Housing>()?.Plunder();
@@ -228,13 +236,11 @@ public class Building : MonoBehaviour
 
     public bool CanRepair()
     {
-        return CurrentHealth < MaxHealth && CanAffordRepair();
+        return CurrentHealth < MaxHealth && CanAffordRepair() && BuildingState != BuildingState.UnderRepair;
     }
 
     public void BeginRepair()
     {
-        Logger.Log($"{Player.name} has begun repair of {BaseBuildingStats.BuildingName} at {Field.ThreeAxisCoordinates}");
-
         Player.ResourceManager.RemoveAmount(BaseBuildingStats.BaseCost/2);
         BuildingGameEvent = new GameEvent(BaseRepairCooldown, Repair);
 
@@ -252,6 +258,8 @@ public class Building : MonoBehaviour
 
         if (PreviousBuildingState == BuildingState.Plundered)
         {
+            ShowFields();
+
             Field.Unit?.AddUnitModifiers(Field.Building.GetUnitModifiers());
 
             // Methods in "derived" scripts

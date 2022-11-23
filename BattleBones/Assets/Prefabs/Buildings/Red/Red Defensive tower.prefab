@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5565982200717348815}
   - component: {fileID: 5565982200717348814}
   m_Layer: 0
-  m_Name: Red DefensiveTower
+  m_Name: Red Defensive tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

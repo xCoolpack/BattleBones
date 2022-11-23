@@ -23,9 +23,6 @@ public class Player : MonoBehaviour
     public List<Building> Buildings;
 
     public Overlay Overlay;
-
-    public Building test;
-    public Building test2;
     private void Awake()
     {
         HumanPlayer = GameObject.Find("Player1").GetComponent<Player>();
@@ -44,17 +41,6 @@ public class Player : MonoBehaviour
         };
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown("1"))
-        {
-            test.Destroy();
-        }
-        if (Input.GetKeyDown("2"))
-        {
-            test2.Destroy();
-        }
-    }
 
     public void AddUnit(Unit unit)
     {
