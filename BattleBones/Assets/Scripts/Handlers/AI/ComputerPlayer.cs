@@ -31,8 +31,11 @@ public class ComputerPlayer : MonoBehaviour
                 {
                     Outpost outpost = building.GetComponent<Outpost>();
                     moves = GenerateRecruitment(outpost, building.Player);
-                    SelectAndRunMoves(moves, false);
-                    unitRecruitmentCooldown = 3;
+                    if (moves.Count != 0)
+                    {
+                        SelectAndRunMoves(moves, false);
+                        unitRecruitmentCooldown = 1;
+                    }
                 }
                 else
                 {
