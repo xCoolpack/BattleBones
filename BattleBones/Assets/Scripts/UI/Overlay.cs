@@ -30,6 +30,11 @@ public class Overlay : MonoBehaviour
     private VisualElement _lowerContainer;
     private VisualElement _objectivesMenu;
     private VisualElement _aspectRatioPanel;
+    private VisualElement _goldConatiner;
+    private VisualElement _woodConatiner;
+    private VisualElement _stoneConatiner;
+    private VisualElement _doggiumConatiner;
+    private VisualElement _boneConatiner;
 
     private static VisualElement _loggerBody;
     private static ScrollView _logger;
@@ -62,6 +67,12 @@ public class Overlay : MonoBehaviour
         _doggiumIncomeLabel = UiDocument.rootVisualElement.Q<Label>("DoggiumIncomeLabel");
         _boneIncomeLabel = UiDocument.rootVisualElement.Q<Label>("BoneIncomeLabel");
 
+        _goldConatiner = UiDocument.rootVisualElement.Q<VisualElement>("GoldContainer");
+        _stoneConatiner = UiDocument.rootVisualElement.Q<VisualElement>("StoneContainer");
+        _woodConatiner = UiDocument.rootVisualElement.Q<VisualElement>("WoodContainer");
+        _doggiumConatiner = UiDocument.rootVisualElement.Q<VisualElement>("DoggiumContainer");
+        _boneConatiner = UiDocument.rootVisualElement.Q<VisualElement>("BoneContainer");
+
         _lowerContainer = UiDocument.rootVisualElement.Q<VisualElement>("LowerContainer");
         _objectivesMenu = UiDocument.rootVisualElement.Q<VisualElement>("ObjectivesMenu");
 
@@ -90,6 +101,13 @@ public class Overlay : MonoBehaviour
         _boneIncomeLabel.bindingPath = "ResourcesIncome.Bone";
         UiDocument.rootVisualElement.Bind(resourcesAmount);
 
+        // Add images to recources
+        _goldConatiner.Insert(0, Icon.Gold);
+        _stoneConatiner.Insert(0, Icon.Stone);
+        _woodConatiner.Insert(0, Icon.Wood);
+        _doggiumConatiner.Insert(0, Icon.Doggium);
+        _boneConatiner.Insert(0, Icon.Bone);
+
         // Registering callbacks
         _nextTurnButton.RegisterCallback<ClickEvent>(_ =>
         {
@@ -110,6 +128,11 @@ public class Overlay : MonoBehaviour
         }
 
         RemoveInfoBox();
+    }
+
+    private void Update()
+    {
+        _logger.ScrollTo(_loggerEnd);
     }
 
     /// <summary>
@@ -215,27 +238,31 @@ public class Overlay : MonoBehaviour
         {
             var buyBox = new VisualElement();
             var buildingName = new Label(building.BuildingName);
-            var costs = new List<Label>();
+            var costs = new List<VisualElement>();
 
             var cost = building.BaseCost;
 
             if (cost.Bone > 0)
-                costs.Add(new Label($"Bones: {cost.Bone}"));
+                costs.Add(Combine(Icon.Bone, new Label(cost.Bone.ToString())));
 
             if (cost.Doggium > 0)
-                costs.Add(new Label($"Doggium: {cost.Doggium}"));
+                costs.Add(Combine(Icon.Doggium, new Label(cost.Doggium.ToString())));
 
             if (cost.Gold > 0)
-                costs.Add(new Label($"Gold: {cost.Gold}"));
+                costs.Add(Combine(Icon.Gold, new Label(cost.Gold.ToString())));
 
             if (cost.Stone > 0)
-                costs.Add(new Label($"Stone: {cost.Stone}"));
+                costs.Add(Combine(Icon.Stone, new Label(cost.Stone.ToString())));
 
             if (cost.Wood > 0)
-                costs.Add(new Label($"Wood: {cost.Wood}"));
+                costs.Add(Combine(Icon.Wood, new Label(cost.Wood.ToString())));
 
             buyBox.Add(buildingName);
-            costs.ForEach(c => buyBox.Add(c));
+            costs.ForEach(c => 
+            {
+                c.AddToClassList("CostContainer");
+                buyBox.Add(c);
+            });
 
             if (PickedField.CanConstruct(TurnHandler.CurrentPlayer, building.BuildingName))
             {
@@ -279,11 +306,24 @@ public class Overlay : MonoBehaviour
         var statsBoxLeft = new VisualElement();
         var statsBoxRight = new VisualElement();
         var buttonsBox = new VisualElement();
-        var movePointsLabel = new Label($"Movement points: {PickedUnit.CurrentMovementPoints}/{PickedUnit.MaxMovementPoints}");
-        var damageLabel = new Label($"Damage: {PickedUnit.CurrentDamage}");
-        var defenseLabel = new Label($"Defense: {PickedUnit.CurrentDefense}");
-        var attackRangeLabel = new Label($"Attack range: {PickedUnit.AttackRange}");
-        var sightRangeLabel = new Label($"Sight range: {PickedUnit.SightRange}");
+
+        var movePointsLabel = new Label($"{PickedUnit.CurrentMovementPoints}/{PickedUnit.MaxMovementPoints}");
+        var damageLabel = new Label(PickedUnit.CurrentDamage.ToString());
+        var defenseLabel = new Label(PickedUnit.CurrentDefense.ToString());
+        var attackRangeLabel = new Label(PickedUnit.AttackRange.ToString());
+        var sightRangeLabel = new Label(PickedUnit.SightRange.ToString());
+
+        var movePoints = Combine(Icon.Boot, movePointsLabel);
+        var damage = Combine(Icon.Sword, damageLabel);
+        var defense = Combine(Icon.Shield, defenseLabel);
+        var attackRange = Combine(Icon.Target, attackRangeLabel);
+        var sightRange = Combine(Icon.Eye, sightRangeLabel);
+
+        movePoints.AddToClassList("CostContainer");
+        damage.AddToClassList("CostContainer");
+        defense.AddToClassList("CostContainer");
+        attackRange.AddToClassList("CostContainer");
+        sightRange.AddToClassList("CostContainer");
 
         if (showButtons)
         {
@@ -344,11 +384,11 @@ public class Overlay : MonoBehaviour
         var hpBar = new HpBar(PickedUnit.CurrentHealth, PickedUnit.MaxHealth);
         hpBar.AddToClassList("InnerInfoBox");
 
-        statsBoxLeft.Add(damageLabel);
-        statsBoxLeft.Add(defenseLabel);
-        statsBoxLeft.Add(movePointsLabel);
-        statsBoxRight.Add(attackRangeLabel);
-        statsBoxRight.Add(sightRangeLabel);
+        statsBoxLeft.Add(damage);
+        statsBoxLeft.Add(defense);
+        statsBoxLeft.Add(movePoints);
+        statsBoxRight.Add(attackRange);
+        statsBoxRight.Add(sightRange);
 
         foreach (var label in statsBoxLeft.Children())
         {
@@ -382,8 +422,9 @@ public class Overlay : MonoBehaviour
     private (VisualElement, VisualElement) CreateBuildingInfoBox(bool showButtons)
     {
         var infoBox = CreateBasicInfoBox($"{PickedBuilding.BaseBuildingStats.BuildingName} {PickedBuilding.Field.ThreeAxisCoordinates}-{PickedBuilding.GetBuildingStateName()}");
-        var sightRangeLabel = new Label($"Sight range: {PickedBuilding.SightRange}");
-        var repairLabel = new Label($"Repair cooldown: {PickedBuilding.BaseRepairCooldown}");
+        var sightRangeLabel = new Label(PickedBuilding.SightRange.ToString());
+        var sightRange = Combine(Icon.Eye, sightRangeLabel);
+        sightRange.AddToClassList("CostContainer");
         var statsBox = new VisualElement();
         var buttonsBox = new VisualElement();
         var statsBoxLeft = new VisualElement();
@@ -394,8 +435,7 @@ public class Overlay : MonoBehaviour
         buttonsBox.AddToClassList("InnerInfoBox");
         buttonsBox.AddToClassList("ButtonsInfoBox");
 
-        statsBoxLeft.Add(sightRangeLabel);
-        statsBoxLeft.Add(repairLabel);
+        statsBoxLeft.Add(sightRange);
 
         if (showButtons)
         {
@@ -432,19 +472,20 @@ public class Overlay : MonoBehaviour
     private (VisualElement, VisualElement) CreateDefensiveBuildingInfoBox(DefensiveBuilding defensiveBuilding, bool showButtons)
     {
         var (statsBox, buttonsBox) = CreateBuildingInfoBox(showButtons);
-        var damageLabel = new Label($"Damage: {defensiveBuilding.CurrentDamage}");
-        var attackRangeLabel = new Label($"Attack range: {defensiveBuilding.AttackRange}");
-        //var defenseLabel = new Label($"Defense: {building.CurrentDefense}/{building.MaxDefense}");
+        var damageLabel = new Label(defensiveBuilding.CurrentDamage.ToString());
+        var attackRangeLabel = new Label(defensiveBuilding.AttackRange.ToString());
+        var damage = Combine(Icon.Sword, damageLabel);
+        var attackRange = Combine(Icon.Target, attackRangeLabel);
+        damage.AddToClassList("CostContainer");
+        attackRange.AddToClassList("CostContainer");
         var hpBar = new HpBar(PickedBuilding.CurrentHealth, PickedBuilding.MaxHealth);
 
         statsBox.parent.Insert(1, hpBar);
         VisualElement statsBoxLeft = ((List<VisualElement>)statsBox.Children())[0];
         VisualElement statsBoxRight = ((List<VisualElement>)statsBox.Children())[1];
 
-        //defenseLabel.AddToClassList("StatsLabel");
-        //statsBoxLeft.Add(defenseLabel);
-        statsBoxRight.Add(damageLabel);
-        statsBoxRight.Add(attackRangeLabel);
+        statsBoxRight.Add(damage);
+        statsBoxRight.Add(attackRange);
 
         foreach (var label in statsBoxRight.Children())
         {
@@ -540,29 +581,33 @@ public class Overlay : MonoBehaviour
             var name = new Label(unit.BaseUnitStats.UnitName);
 
             var buyBox = new VisualElement();
-            var costs = new List<Label>();
+            var costs = new List<VisualElement>();
 
             buyBox.AddToClassList("InnerRecruitmentBox");
 
             var cost = unit.BaseUnitStats.BaseCost;
 
             if (cost.Bone > 0)
-                costs.Add(new Label($"Bones: {cost.Bone}"));
+                costs.Add(Combine(Icon.Bone, new Label(cost.Bone.ToString())));
 
             if (cost.Doggium > 0)
-                costs.Add(new Label($"Doggium: {cost.Doggium}"));
+                costs.Add(Combine(Icon.Doggium, new Label(cost.Doggium.ToString())));
 
             if (cost.Gold > 0)
-                costs.Add(new Label($"Gold: {cost.Gold}"));
+                costs.Add(Combine(Icon.Gold, new Label(cost.Gold.ToString())));
 
             if (cost.Stone > 0)
-                costs.Add(new Label($"Stone: {cost.Stone}"));
+                costs.Add(Combine(Icon.Stone, new Label(cost.Stone.ToString())));
 
             if (cost.Wood > 0)
-                costs.Add(new Label($"Wood: {cost.Wood}"));
+                costs.Add(Combine(Icon.Wood, new Label(cost.Wood.ToString())));
 
             buyBox.Add(name);
-            costs.ForEach(c => buyBox.Add(c));
+            costs.ForEach(c =>
+            {
+                c.AddToClassList("CostContainer");
+                buyBox.Add(c);
+            });
 
             if (outpost.CanRecruit(unit.BaseUnitStats.UnitName))
             {
@@ -762,6 +807,14 @@ public class Overlay : MonoBehaviour
         var label = new Label(message);
         label.AddToClassList("LogMessage");
         _loggerBody.Add(label);
-        _logger.ScrollTo(_loggerEnd);
+    }
+
+    private VisualElement Combine(VisualElement v1, VisualElement v2)
+    {
+        var v = new VisualElement();
+        v.Add(v1);
+        v.Add(v2);
+        v.AddToClassList("FlexRow");
+        return v;
     }
 }

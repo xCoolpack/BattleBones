@@ -238,3 +238,11 @@
 .LogMessage {
     color: rgb(255, 255, 255);
 }
+
+.FlexRow {
+    flex-direction: row;
+}
+
+.CostContainer{
+    height: 20px;
+}
