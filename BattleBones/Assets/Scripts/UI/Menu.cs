@@ -41,12 +41,19 @@ public class Menu : MonoBehaviour
 
     private void StartNewGame()
     {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetInt("HasSave", 1);
         SceneManager.LoadScene("CampaignMapScene");
     }
 
     private void LoadGame()
     {
         SceneManager.LoadScene("CampaignMapScene");
+    }
+
+    private bool CanLoadGame()
+    {
+        return PlayerPrefs.GetInt("HasSave") == 1;
     }
 
     private void Quit()

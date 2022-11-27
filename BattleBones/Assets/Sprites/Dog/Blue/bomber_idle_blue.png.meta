@@ -42,14 +42,14 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 130
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -66,6 +66,42 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -78,7 +114,448 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: bomber_idle_blue_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2100
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb57379a71486f845840b61fdec0bad8
+      internalID: -405927243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_1
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 2100
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b28365a53610a048866b3d89aee9c32
+      internalID: 597970249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_2
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 2100
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e92d8556a9dd23647a9e18c3394ee026
+      internalID: -863858715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_3
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 2100
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb460fa94aa1811428be7a015fb1c64a
+      internalID: -209113672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_4
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 2100
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99060673d50221b4984172428590b1cd
+      internalID: 2034847738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_5
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 2100
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd13515beb847c44d96642c44dca2a6f
+      internalID: -567548094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_6
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 2100
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c49350e7830f5c4fb4d75ce5b478030
+      internalID: 1709608027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_7
+      rect:
+        serializedVersion: 2
+        x: 2520
+        y: 2100
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e054e9073cf38ab4fba4a5d823c60a3f
+      internalID: 1809992880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_8
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 2100
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 577d031748d1ce348a1bc8842b590fcd
+      internalID: 502107047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_9
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 2100
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 223016bc2cf38fb4d9afd462547532d5
+      internalID: 1341172791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_10
+      rect:
+        serializedVersion: 2
+        x: 3600
+        y: 2100
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f70560b6a8a81c46bad5eb89b0f714a
+      internalID: -841654928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1849759a58ba02442a6355b1d3409ed6
+      internalID: 1158224226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_12
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 1800
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b98cf5edbe965124a80f9fa62cdf24c7
+      internalID: -1752302530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_13
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 1800
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0601dc3ea3575d47960a1b60b42666c
+      internalID: -512124614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_14
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 1800
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46c3ffef28b0d9b45b691d109c93343e
+      internalID: -290271812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_15
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 1800
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a92884ec5dc23c40bf238b6cbc18c74
+      internalID: 1981945834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_16
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 1800
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8284daeac8902ba4fbd39e3ec9425b5b
+      internalID: -1381234645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_17
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 1800
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 270c350413790394d9fbbea64e57b1b9
+      internalID: 867930787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_18
+      rect:
+        serializedVersion: 2
+        x: 2520
+        y: 1800
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 303e81e2d85e3974abd57622eb6947f4
+      internalID: 110695989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_19
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 1800
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a78b7a6d3d909eb41a6ea8cfb2cb49bd
+      internalID: -1862700489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bomber_idle_blue_20
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 1800
+        width: 360
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cf4f18e92e30744986b4494d197cf5e
+      internalID: 1557458101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -89,7 +566,91 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bomber_idle_blue_5: -567548094
+      bomber_idle_blue_18: 110695989
+      bomber_idle_blue_38: 1055169985
+      bomber_idle_blue_40: -1716459931
+      bomber_idle_blue_61: -1427272021
+      bomber_idle_blue_69: -1025524169
+      bomber_idle_blue_35: -11107439
+      bomber_idle_blue_46: 98027671
+      bomber_idle_blue_55: 1771041981
+      bomber_idle_blue_12: -1752302530
+      bomber_idle_blue_28: -18151696
+      bomber_idle_blue_24: -193857275
+      bomber_idle_blue_22: 755603491
+      bomber_idle_blue_25: -1348210619
+      bomber_idle_blue_81: 2003203881
+      bomber_idle_blue_53: -1962193699
+      bomber_idle_blue_43: -643026555
+      bomber_idle_blue_15: 1981945834
+      bomber_idle_blue_9: 1341172791
+      bomber_idle_blue_11: 1158224226
+      bomber_idle_blue_44: -865578513
+      bomber_idle_blue_1: 597970249
+      bomber_idle_blue_14: -290271812
+      bomber_idle_blue_79: -976613528
+      bomber_idle_blue_50: 74293145
+      bomber_idle_blue_75: -997696990
+      bomber_idle_blue_80: 1314873849
+      bomber_idle_blue_45: -172382248
+      bomber_idle_blue_3: -209113672
+      bomber_idle_blue_7: 1809992880
+      bomber_idle_blue_10: -841654928
+      bomber_idle_blue_65: -248089140
+      bomber_idle_blue_56: 1443804759
+      bomber_idle_blue_68: -1605888318
+      bomber_idle_blue_27: -577345883
+      bomber_idle_blue_34: -465215472
+      bomber_idle_blue_71: 567582360
+      bomber_idle_blue_67: -1293496461
+      bomber_idle_blue_0: -405927243
+      bomber_idle_blue_23: -1460966496
+      bomber_idle_blue_58: -465211639
+      bomber_idle_blue_26: 1501697498
+      bomber_idle_blue_54: -932228718
+      bomber_idle_blue_59: 1569515789
+      bomber_idle_blue_13: -512124614
+      bomber_idle_blue_39: -1377682841
+      bomber_idle_blue_52: 957685818
+      bomber_idle_blue_32: 176212229
+      bomber_idle_blue_36: 1357852612
+      bomber_idle_blue_57: -155867399
+      bomber_idle_blue_82: -853745466
+      bomber_idle_blue_64: 1902177488
+      bomber_idle_blue_30: -2015974554
+      bomber_idle_blue_76: -1097052682
+      bomber_idle_blue_2: -863858715
+      bomber_idle_blue_17: 867930787
+      bomber_idle_blue_42: -2125103345
+      bomber_idle_blue_4: 2034847738
+      bomber_idle_blue_16: -1381234645
+      bomber_idle_blue_62: 1622016011
+      bomber_idle_blue_70: -2070667601
+      bomber_idle_blue_6: 1709608027
+      bomber_idle_blue_33: -1504715671
+      bomber_idle_blue_51: -635272697
+      bomber_idle_blue_74: 72696709
+      bomber_idle_blue_66: 1284502976
+      bomber_idle_blue_47: 1847149353
+      bomber_idle_blue_73: 706676333
+      bomber_idle_blue_19: -1862700489
+      bomber_idle_blue_63: -1268969966
+      bomber_idle_blue_31: -1804457736
+      bomber_idle_blue_83: 921865794
+      bomber_idle_blue_29: 1973714036
+      bomber_idle_blue_77: -1277284395
+      bomber_idle_blue_20: 1557458101
+      bomber_idle_blue_72: 1781761889
+      bomber_idle_blue_60: -1112775414
+      bomber_idle_blue_78: 2117255638
+      bomber_idle_blue_48: -1623654656
+      bomber_idle_blue_37: 846158466
+      bomber_idle_blue_49: -163725608
+      bomber_idle_blue_8: 502107047
+      bomber_idle_blue_41: -1825023061
+      bomber_idle_blue_21: -1245004242
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

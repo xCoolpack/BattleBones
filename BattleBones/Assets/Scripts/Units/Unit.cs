@@ -197,13 +197,19 @@ public class Unit : MonoBehaviour
     public void Show(Player player)
     {
         if (player == Player.HumanPlayer)
+        {
             _spriteRenderer.enabled = true;
+            transform.Find("Shadow").GetComponent<SpriteRenderer>().enabled = true;
+        }
     }
 
     public void Hide(Player player)
     {
         if (player == Player.HumanPlayer)
+        {
             _spriteRenderer.enabled = false;
+            transform.Find("Shadow").GetComponent<SpriteRenderer>().enabled = false;
+        }
     }
 
     private void SetVisibleFields(Field targetField)
@@ -840,7 +846,7 @@ public class Unit : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            child.GetComponent<SpriteRenderer>().enabled = !child.GetComponent<SpriteRenderer>().enabled;
+            if (child.name != "Shadow") child.GetComponent<SpriteRenderer>().enabled = !child.GetComponent<SpriteRenderer>().enabled;
         }
     }
 

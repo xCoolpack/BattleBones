@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 433d66bf2d8e9134193be299a4bebb31, type: 3}
-  m_Name: Dog-at-arms
+  m_Name: Bomber dog
   m_EditorClassIdentifier: 
-  UnitName: Dog-at-arms
-  BaseHealth: 120
-  BaseDamage: 30
-  BaseDefense: 35
-  BaseMovementPoints: 3
-  BaseAttackRange: 1
+  UnitName: Dog-a-pult
+  BaseHealth: 50
+  BaseDamage: 20
+  BaseDefense: 0
+  BaseMovementPoints: 2
+  BaseAttackRange: 2
   BaseSightRange: 2
   BaseCost:
-    Gold: 175
+    Gold: 300
     Wood: 0
     Stone: 0
-    Doggium: 10
+    Doggium: 0
     Bone: 0

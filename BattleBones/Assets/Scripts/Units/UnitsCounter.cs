@@ -20,7 +20,7 @@ public class UnitsCounter : MonoBehaviour
             "Archer dog",
             "Dog-a-copter", 
             "Hammer dog",
-            "Dog-a-pult",
+            "Bomber dog",
             //cats
             "Cat scout",
             "Cat",
@@ -62,7 +62,7 @@ public class UnitsCounter : MonoBehaviour
             {
                 false, false, false, false, false, false, false, false, false, false, false, false, false
             },
-            //Dog-a-pult
+            //Bomber dog
             new List<bool>()
             {
                 false, false, false, false, false, false, false, false, false, false, false, false, false
