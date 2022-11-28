@@ -101,7 +101,7 @@ public class Overlay : MonoBehaviour
         _boneIncomeLabel.bindingPath = "ResourcesIncome.Bone";
         UiDocument.rootVisualElement.Bind(resourcesAmount);
 
-        // Add images to recources
+        // Add images to resources
         _goldConatiner.Insert(0, Icon.Gold);
         _stoneConatiner.Insert(0, Icon.Stone);
         _woodConatiner.Insert(0, Icon.Wood);
@@ -646,7 +646,7 @@ public class Overlay : MonoBehaviour
     {
         if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding), "PickedBuilding has to be set");
 
-        var (statsBox, buttonsBox) = CreateBuildingInfoBox(PickedBuilding);
+        var (statsBox, buttonsBox) = CreateBuildingInfoBox(showButtons);
         VisualElement statsBoxLeft = ((List<VisualElement>)statsBox.Children())[0];
         VisualElement statsBoxRight = ((List<VisualElement>)statsBox.Children())[1];
 
@@ -706,7 +706,7 @@ public class Overlay : MonoBehaviour
     {
         if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding), "PickedBuilding has to be set");
 
-        var (statsBox, buttonsBox) = CreateBuildingInfoBox(PickedBuilding);
+        var (statsBox, buttonsBox) = CreateBuildingInfoBox(showButtons);
 
         if (showButtons && PickedBuilding.CanRepair())
         {
@@ -738,7 +738,7 @@ public class Overlay : MonoBehaviour
     public void BarricadeInfoBox(Barricade barricade, bool showButtons)
     {
         if (PickedBuilding is null) throw new ArgumentNullException(nameof(PickedBuilding), "PickedBuilding has to be set");
-        var (statsBox, buttonsBox) = CreateBuildingInfoBox(PickedBuilding);
+        var (statsBox, buttonsBox) = CreateBuildingInfoBox(showButtons);
     }
 
     private void HandleObjectivesMenuClick()

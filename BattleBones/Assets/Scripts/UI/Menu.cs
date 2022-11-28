@@ -41,6 +41,7 @@ public class Menu : MonoBehaviour
 
     private void StartNewGame()
     {
+        PlayerPrefs.DeleteAll();
         SceneManager.LoadScene("CampaignMapScene");
     }
 
