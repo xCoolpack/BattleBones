@@ -13981,6 +13981,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitRelatedEvaluation: {fileID: 968252339}
   BuildingRelatedEvaluation: {fileID: 968252340}
+  aiName: Default
 --- !u!114 &968252339
 MonoBehaviour:
   m_ObjectHideFlags: 0

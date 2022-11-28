@@ -586,7 +586,7 @@ MonoBehaviour:
   MaxUnitCap: 0
   UnitsKilled: 0
   TradeBuildingCounter: 0
-  Faction: 
+  Faction: Red
   ResourceManager: {fileID: 1840569381}
   MissionHandler: {fileID: 0}
   PlayerEventHandler: {fileID: 803453024}
@@ -8861,6 +8861,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitRelatedEvaluation: {fileID: 968252339}
   BuildingRelatedEvaluation: {fileID: 968252340}
+  aiName: Default
 --- !u!114 &968252339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11437,7 +11438,7 @@ MonoBehaviour:
   MaxUnitCap: 5
   UnitsKilled: 0
   TradeBuildingCounter: 0
-  Faction: 
+  Faction: Blue
   ResourceManager: {fileID: 459017981}
   MissionHandler: {fileID: 0}
   PlayerEventHandler: {fileID: 701459166}

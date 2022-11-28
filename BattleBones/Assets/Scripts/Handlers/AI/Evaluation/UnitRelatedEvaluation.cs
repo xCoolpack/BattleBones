@@ -39,6 +39,7 @@ public class UnitRelatedEvaluation : MonoBehaviour
 
             case "move":
                 eval = MovementEval(source as Unit, target as Field);
+                eval = CustomEval.ProcessMovement(source as Unit, target as Field, eval);
                 break;
 
             default:
@@ -54,7 +55,7 @@ public class UnitRelatedEvaluation : MonoBehaviour
         return FieldStrategicValue.EvaluateField(target);
     }
 
-    public Field GetEnemyBase(Player owner, Field defaultField)
+    public static Field GetHumanBase(Player owner, Field defaultField)
     {
         Player enemy = owner.TurnHandler.HumanPlayer;
         Field targetField = null;
@@ -75,6 +76,27 @@ public class UnitRelatedEvaluation : MonoBehaviour
             : defaultField;
     }
 
+    public static Field GetAiBase(Player owner, Field defaultField)
+    {
+        Player enemy = owner.TurnHandler.ComputerPlayerObj.playerComponent;
+        Field targetField = null;
+
+        if (enemy.Buildings.Count > 0)
+        {
+            Building enemyBase = enemy.Buildings.FirstOrDefault(b => b.BaseBuildingStats.BuildingName == "Outpost");
+            targetField = enemyBase.Field;
+        }
+        else if (enemy.Units.Count > 0)
+        {
+            Unit enemyUnit = enemy.Units[0];
+            targetField = enemyUnit.Field;
+        }
+
+        return targetField is not null
+            ? targetField
+            : defaultField;
+    }
+
     public int AttackEval(Unit source, Field target)
     {
         double fieldEval = FieldEval(target);
@@ -87,7 +109,7 @@ public class UnitRelatedEvaluation : MonoBehaviour
     public int MovementEval(Unit source, Field target)
     {
         double fieldEval = FieldEval(target);
-        fieldEval += PlayerBaseDistance.EvaluateDistance(target, GetEnemyBase(source.Player, target));
+        fieldEval += PlayerBaseDistance.EvaluateDistance(target, GetHumanBase(source.Player, target));
         fieldEval *= 2;
 
         return (int) fieldEval;

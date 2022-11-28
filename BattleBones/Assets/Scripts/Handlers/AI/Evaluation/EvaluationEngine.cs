@@ -7,6 +7,20 @@ public class EvaluationEngine : MonoBehaviour
 {
     public UnitRelatedEvaluation UnitRelatedEvaluation;
     public BuildingRelatedEvaluation BuildingRelatedEvaluation;
+    public string aiName;
+
+    void Awake()
+    {
+        switch(aiName)
+        {
+            case "DefensiveCharacter":
+                UnitRelatedEvaluation.CustomEval = new DefensiveCharacter();
+                break;
+            default:
+                UnitRelatedEvaluation.CustomEval = new AggressiveCharacter();
+                break;
+        }
+    }
 
     public static T LoadAssetByName<T>(string assetName) where T : class
     {

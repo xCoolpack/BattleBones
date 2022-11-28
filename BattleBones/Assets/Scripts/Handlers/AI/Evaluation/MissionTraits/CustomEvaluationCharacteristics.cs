@@ -13,23 +13,23 @@ public interface CustomEvaluationCharacteristics
         switch (moveType)
         {
             case "unitAttack":
-                processedEval = ProcessUnitAttack(source as Unit, target as Field);
+                processedEval = ProcessUnitAttack(source as Unit, target as Field, eval);
                 break;
 
             case "move":
-                processedEval = ProcessMovement(target as Field);
+                processedEval = ProcessMovement(source as Unit, target as Field, eval);
                 break;
 
             case "buildingAttack":
-                processedEval = ProcessBuildingAttack(target as Field);
+                processedEval = ProcessBuildingAttack(target as Field, eval);
                 break;
 
             case "recruitment":
-                processedEval = ProcessRecruitment(target as Unit);
+                processedEval = ProcessRecruitment(target as Unit, eval);
                 break;
 
             case "building":
-                processedEval = ProcessBuilding(source as Building, target as Field);
+                processedEval = ProcessBuilding(source as Building, target as Field, eval);
                 break;
 
             default:
@@ -39,13 +39,25 @@ public interface CustomEvaluationCharacteristics
         return processedEval;
     }
 
-    public int ProcessUnitAttack(Unit source, Field target);
+    public int ProcessUnitAttack(Unit source, Field target, int eval)
+    {
+        return eval;
+    }
 
-    public int ProcessMovement(Field target);
+    public int ProcessMovement(Unit source, Field target, int eval);
 
-    public int ProcessBuildingAttack(Field target);
+    public int ProcessBuildingAttack(Field target, int eval)
+    {
+        return eval;
+    }
 
-    public int ProcessRecruitment(Unit target);
+    public int ProcessRecruitment(Unit target, int eval)
+    {
+        return eval;
+    }
 
-    public int ProcessBuilding(Building source, Field target);
+    public int ProcessBuilding(Building source, Field target, int eval)
+    {
+        return eval;
+    }
 }

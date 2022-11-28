@@ -520,8 +520,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   Overlay: {fileID: 0}
-  test: {fileID: 0}
-  test2: {fileID: 0}
 --- !u!4 &55676345
 Transform:
   m_ObjectHideFlags: 0
@@ -554,6 +552,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerComponent: {fileID: 55676344}
   evaluationEngine: {fileID: 968252338}
+  unitRecruitmentCooldown: 0
 --- !u!4 &58138129 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5801692695271579817, guid: f6ae945f094939f429dc15fd7142f95a, type: 3}
@@ -9886,6 +9885,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitRelatedEvaluation: {fileID: 968252339}
   BuildingRelatedEvaluation: {fileID: 968252340}
+  aiName: Default
 --- !u!114 &968252339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13906,8 +13906,6 @@ MonoBehaviour:
   Buildings:
   - {fileID: 0}
   Overlay: {fileID: 1609666542}
-  test: {fileID: 0}
-  test2: {fileID: 0}
 --- !u!4 &1354927225
 Transform:
   m_ObjectHideFlags: 0
