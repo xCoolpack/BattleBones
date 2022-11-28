@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Dog-at-arms
   m_EditorClassIdentifier: 
   UnitName: Dog-at-arms
-  BaseHealth: 0
-  BaseDamage: 0
-  BaseDefense: 0
-  BaseMovementPoints: 0
-  BaseAttackRange: 0
-  BaseSightRange: 0
+  BaseHealth: 120
+  BaseDamage: 30
+  BaseDefense: 35
+  BaseMovementPoints: 3
+  BaseAttackRange: 1
+  BaseSightRange: 2
   BaseCost:
-    Gold: 0
+    Gold: 175
     Wood: 0
     Stone: 0
-    Doggium: 0
+    Doggium: 10
     Bone: 0

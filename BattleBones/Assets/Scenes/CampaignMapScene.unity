@@ -296,6 +296,61 @@ MonoBehaviour:
     ObjectiveDescription: Build 6 farm
   - ObjectiveId: 203
     ObjectiveDescription: Lose less than or equal 8 units
+--- !u!1 &555028336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 555028337}
+  - component: {fileID: 555028338}
+  m_Layer: 0
+  m_Name: Mission4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &555028337
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555028336}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 881572569}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &555028338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555028336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 988f5b66f13170f4eb0af7fab00f6848, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MissionName: Mission4
+  MissionDescription: Fourth Mission
+  PreviousMissions:
+  - {fileID: 947482392}
+  Objectives:
+  - ObjectiveId: 401
+    ObjectiveDescription: Move your army through forest
+  - ObjectiveId: 402
+    ObjectiveDescription: Have more than 10 units
+  - ObjectiveId: 403
+    ObjectiveDescription: Complete mission in 30 or less turns
 --- !u!1 &836712489
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,6 +467,7 @@ Transform:
   - {fileID: 61164392}
   - {fileID: 171818831}
   - {fileID: 947482391}
+  - {fileID: 555028337}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -545,11 +601,11 @@ MonoBehaviour:
   PreviousMissions:
   - {fileID: 171818832}
   Objectives:
-  - ObjectiveId: 201
+  - ObjectiveId: 301
     ObjectiveDescription: Destroy enemy outpost
-  - ObjectiveId: 202
+  - ObjectiveId: 302
     ObjectiveDescription: Complete mission in 30 or less turns
-  - ObjectiveId: 203
+  - ObjectiveId: 303
     ObjectiveDescription: Destory enemy towers at entrance
 --- !u!1 &1781349900
 GameObject:

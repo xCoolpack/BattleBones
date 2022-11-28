@@ -928,6 +928,7 @@ MonoBehaviour:
   - {fileID: 9222216290263363282, guid: 883fe854bf6c2df47a2135fe09b3f205, type: 3}
   - {fileID: 7013552555508632316, guid: 1a30d764d0da5344aaeb3f0262d336d7, type: 3}
   - {fileID: 1252091422495087647, guid: f418018a0bec8244c9c8edf8f1064165, type: 3}
+  - {fileID: 979450245371530694, guid: 290851c133d954d409b5283eeb505850, type: 3}
   AvailableBuildings:
   - {fileID: 4676323450524676282, guid: e567dc8e213e7b546971ed0ebe96069b, type: 3}
   - {fileID: 4676323450524676282, guid: 0dee9864c160850449329e5b502a88db, type: 3}
@@ -6926,10 +6927,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ResourcesAmount:
-    Gold: 100
+    Gold: 100000
     Wood: 0
-    Stone: 0
-    Doggium: 0
+    Stone: 1000000
+    Doggium: 10000
     Bone: 0
   ResourcesIncome:
     Gold: 15
@@ -13980,6 +13981,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitRelatedEvaluation: {fileID: 968252339}
   BuildingRelatedEvaluation: {fileID: 968252340}
+  aiName: Default
 --- !u!114 &968252339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18914,6 +18916,7 @@ MonoBehaviour:
   - {fileID: 9222216290263363282, guid: ffdd8842a9bd18343b510b338c505ab5, type: 3}
   - {fileID: 7013552555508632316, guid: db1324b686ed91c41865ba12ae9967ba, type: 3}
   - {fileID: 1252091422495087647, guid: a3bf45c7922b5294693728ac2c55de4a, type: 3}
+  - {fileID: 979450245371530694, guid: 5c1ab8d7fb51f9d4db85af853b4bc163, type: 3}
   AvailableBuildings:
   - {fileID: 4676323450524676282, guid: d3c5ba6dec470ac46b711486c562e937, type: 3}
   - {fileID: 4676323450524676282, guid: 8e7b0006a8618a3448e5f04663166fac, type: 3}

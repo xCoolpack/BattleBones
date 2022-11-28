@@ -795,8 +795,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   Overlay: {fileID: 0}
-  test: {fileID: 0}
-  test2: {fileID: 0}
 --- !u!4 &55676345
 Transform:
   m_ObjectHideFlags: 0
@@ -829,6 +827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerComponent: {fileID: 55676344}
   evaluationEngine: {fileID: 968252338}
+  unitRecruitmentCooldown: 0
 --- !u!1001 &57321058
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10204,6 +10203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitRelatedEvaluation: {fileID: 968252339}
   BuildingRelatedEvaluation: {fileID: 968252340}
+  aiName: DefensiveCharacter
 --- !u!114 &968252339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13404,8 +13404,6 @@ MonoBehaviour:
   Buildings:
   - {fileID: 0}
   Overlay: {fileID: 1609666542}
-  test: {fileID: 0}
-  test2: {fileID: 0}
 --- !u!4 &1354927225
 Transform:
   m_ObjectHideFlags: 0
