@@ -22,6 +22,8 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:Label text="Label" display-tooltip-when-elided="true" name="TrophiesLabel" style="left: auto; top: 5px; position: absolute; right: 5px; font-size: 40px; color: rgb(255, 255, 255);" />
-        <ui:Button text="Back" display-tooltip-when-elided="true" name="BackButton" style="position: absolute; bottom: 12px; font-size: 20px; left: 490px; width: 120px;" />
+        <ui:VisualElement style="width: 100%; position: absolute; bottom: 5px; align-items: center; justify-content: center;">
+            <ui:Button text="Back" display-tooltip-when-elided="true" name="BackButton" style="font-size: 20px; width: 120px;" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

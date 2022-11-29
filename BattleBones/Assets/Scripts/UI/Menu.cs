@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 
 public class Menu : MonoBehaviour
 {
-    public UIDocument UiDocument;
+    private UIDocument UiDocument;
 
     private Button _newGameButton;
     private Button _loadButton;
@@ -37,6 +37,8 @@ public class Menu : MonoBehaviour
         {
             Quit();
         });
+
+        _loadButton.SetEnabled(CanLoadGame());
     }
 
     private void StartNewGame()

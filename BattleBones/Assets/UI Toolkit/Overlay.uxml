@@ -48,10 +48,13 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0" name="Logger" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" nested-interaction-kind="StopScrolling" focusable="false" style="position: absolute; left: 5px; bottom: 5px; width: 500px; height: 100px; -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgba(0, 0, 0, 0.3); flex-direction: column; justify-content: flex-end; align-items: auto;">
-                <ui:VisualElement name="LoggerBody" style="width: 100%; height: auto; flex-direction: column; justify-content: flex-end; min-height: 100px;" />
-                <ui:VisualElement name="LoggerEnd" style="height: 0;" />
-            </ui:ScrollView>
+            <ui:VisualElement name="LoggerContainer" style="position: absolute; bottom: 5px; left: 5px;">
+                <ui:Button text="▲" display-tooltip-when-elided="true" enable-rich-text="true" name="LoggerButton" style="height: 13px; background-color: rgba(0, 0, 0, 0.3); border-left-color: rgba(0, 0, 0, 0.8); border-right-color: rgba(0, 0, 0, 0.8); border-top-color: rgba(0, 0, 0, 0.8); border-bottom-color: rgba(0, 0, 0, 0.8); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 1px;" />
+                <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0" name="Logger" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" nested-interaction-kind="StopScrolling" focusable="false" style="width: 500px; height: 100px; -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgba(0, 0, 0, 0.3); flex-direction: column; justify-content: flex-end; align-items: auto;">
+                    <ui:VisualElement name="LoggerBody" style="width: 100%; height: auto; flex-direction: column; justify-content: flex-end; min-height: 100px;" />
+                    <ui:VisualElement name="LoggerEnd" style="height: 0;" />
+                </ui:ScrollView>
+            </ui:VisualElement>
         </AspectRatioPanel>
     </ui:VisualElement>
 </ui:UXML>

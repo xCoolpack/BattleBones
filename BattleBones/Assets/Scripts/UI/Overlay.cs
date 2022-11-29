@@ -39,6 +39,7 @@ public class Overlay : MonoBehaviour
     private static VisualElement _loggerBody;
     private static ScrollView _logger;
     private static VisualElement _loggerEnd;
+    private Button _loggerButton;
 
     public Building PickedBuilding;
     public Unit PickedUnit;
@@ -47,6 +48,8 @@ public class Overlay : MonoBehaviour
 
     private bool _isOnObjectivesMenu;
     public bool IsPointerOverUI { get; private set; }
+
+    private bool _isLoggerBig = false;
 
     private void OnEnable()
     {
@@ -81,6 +84,7 @@ public class Overlay : MonoBehaviour
         _loggerBody = UiDocument.rootVisualElement.Q<VisualElement>("LoggerBody");
         _loggerEnd = UiDocument.rootVisualElement.Q<VisualElement>("LoggerEnd");
         _logger = UiDocument.rootVisualElement.Q<ScrollView>("Logger");
+        _loggerButton = UiDocument.rootVisualElement.Q<Button>("LoggerButton");
 
         // Binding turn handler
         var tunHandlerSerializedObject = new SerializedObject(TurnHandler);
@@ -119,6 +123,11 @@ public class Overlay : MonoBehaviour
         _objectivesMenu.Q<VisualElement>("OpenButton").RegisterCallback<ClickEvent>(_ =>
         {
             HandleObjectivesMenuClick();
+        });
+
+        _loggerButton.RegisterCallback<ClickEvent>(_ =>
+        {
+            HandleLoggerButtonClick();
         });
 
         foreach (var child in _aspectRatioPanel.Children())
@@ -816,5 +825,21 @@ public class Overlay : MonoBehaviour
         v.Add(v2);
         v.AddToClassList("FlexRow");
         return v;
+    }
+
+    private void HandleLoggerButtonClick()
+    {
+        if (_isLoggerBig)
+        {
+            _logger.style.height = new StyleLength(100);
+            _loggerButton.text = "expand";
+            _isLoggerBig = false;
+        }
+        else
+        {
+            _logger.style.height = new StyleLength(500);
+            _loggerButton.text = "narrow";
+            _isLoggerBig = true;
+        }
     }
 }

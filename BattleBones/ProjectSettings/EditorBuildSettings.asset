@@ -11,10 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CampaignMapScene.unity
     guid: 9a67782ca7ff7d94ba6679fe5219079d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Mission0Scene.unity
     guid: 4dc32a1f534bf8b43b4587beddf80c9b
   - enabled: 1
     path: Assets/Scenes/Mission1Scene.unity
     guid: 2356d2f45c088924f932b21378691e56
+  - enabled: 1
+    path: Assets/Scenes/MissionWinScene.unity
+    guid: f409a70ddf8136d4e8a66afb6054bbca
   m_configObjects: {}

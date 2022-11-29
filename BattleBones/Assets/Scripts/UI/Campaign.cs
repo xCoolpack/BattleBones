@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 
 public class Campaign : MonoBehaviour
 {
-    public UIDocument UiDocument;
+    private UIDocument UiDocument;
     public MissionHandler MissionHandler;
 
     private void Start()
