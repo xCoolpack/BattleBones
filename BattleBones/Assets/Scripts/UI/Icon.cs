@@ -14,6 +14,7 @@ public static class Icon
     public static Image Target => GetImage("Target");
     public static Image Eye => GetImage("Eye");
     public static Image Boot => GetImage("Boot");
+    public static Image Hourglass => GetImage("hourglass");
 
     private static Image GetImage(string name)
     {

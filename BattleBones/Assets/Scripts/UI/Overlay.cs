@@ -112,6 +112,8 @@ public class Overlay : MonoBehaviour
         _doggiumConatiner.Insert(0, Icon.Doggium);
         _boneConatiner.Insert(0, Icon.Bone);
 
+        _nextTurnButton.Add(Icon.Hourglass);
+
         // Registering callbacks
         _nextTurnButton.RegisterCallback<ClickEvent>(_ =>
         {
@@ -838,7 +840,7 @@ public class Overlay : MonoBehaviour
         else
         {
             _logger.style.height = new StyleLength(500);
-            _loggerButton.text = "narrow";
+            _loggerButton.text = "shrink";
             _isLoggerBig = true;
         }
     }
