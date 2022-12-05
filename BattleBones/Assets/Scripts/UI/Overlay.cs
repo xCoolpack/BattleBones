@@ -832,13 +832,13 @@ public class Overlay : MonoBehaviour
         if (_isLoggerBig)
         {
             _logger.style.height = new StyleLength(100);
-            _loggerButton.text = "expand";
+            _loggerButton.text = "^";
             _isLoggerBig = false;
         }
         else
         {
             _logger.style.height = new StyleLength(500);
-            _loggerButton.text = "narrow";
+            _loggerButton.text = "v";
             _isLoggerBig = true;
         }
     }

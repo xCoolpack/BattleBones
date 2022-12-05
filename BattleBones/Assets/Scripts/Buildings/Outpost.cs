@@ -52,6 +52,7 @@ public class Outpost : MonoBehaviour
         var tran = Building.Field.transform;
         Unit unit = Instantiate(unitPrefab, new Vector3(tran.position.x, tran.position.y + 0.4f, 0), Quaternion.identity, tran)
             .GetComponent<Unit>();
+        unit.Hide(Player.HumanPlayer);
         unit.Player = Building.Player;
         unit.Field = Building.Field;
         unit.CurrentModifiers = Building.Player.UnitModifiersDictionary[unit.BaseUnitStats.UnitName];

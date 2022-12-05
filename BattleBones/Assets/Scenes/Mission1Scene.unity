@@ -6927,10 +6927,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ResourcesAmount:
-    Gold: 100000
+    Gold: 100
     Wood: 0
-    Stone: 1000000
-    Doggium: 10000
+    Stone: 0
+    Doggium: 0
     Bone: 0
   ResourcesIncome:
     Gold: 15

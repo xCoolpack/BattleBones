@@ -69,10 +69,11 @@ public class Unit : MonoBehaviour
 
     private void Awake()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        Hide(Player.HumanPlayer);
         SetCurrentStats();
         SetStartingStats();
         // Temp
-        _spriteRenderer = GetComponent<SpriteRenderer>();
         MovementScript = GetComponent<Movement>(); // if null then it's hero
         AttackScript = GetComponent<Attack>(); // if null then it's hero
         GameMap = GameObject.Find("GameMap").GetComponent<GameMap>();
@@ -81,7 +82,6 @@ public class Unit : MonoBehaviour
         _curves = GameObject.Find("Curves").GetComponent<Curves>();
         _animationQueue = new();
         _action = null;
-        Hide(Player.HumanPlayer);
     } 
 
     private void Update()
