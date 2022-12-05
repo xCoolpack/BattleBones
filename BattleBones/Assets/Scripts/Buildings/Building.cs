@@ -294,8 +294,6 @@ public class Building : MonoBehaviour
         var defensiveBuilding = GetComponent<DefensiveBuilding>();
         var showButtons = Player.IsPlayersTurn();
 
-        Debug.Log($"Player turn{showButtons}");
-        
         if (defensiveBuilding is not null)
         {
             defensiveBuilding.SetAttackableFields();

@@ -79,7 +79,7 @@ public class TurnHandler : MonoBehaviour
             PlayerPrefs.SetInt(objective.ObjectiveId.ToString(), objective.IsCompleted ? 1 : 0));
         var name = SceneManager.GetActiveScene().name;
         PlayerPrefs.SetInt(name.Substring(0, name.Length - 5), 1);
-        SceneManager.LoadScene("CampaignMapScene");
+        SceneManager.LoadScene("MissionWinScene");
     }
 
     /// <summary>
@@ -88,6 +88,7 @@ public class TurnHandler : MonoBehaviour
     private void GameOver()
     {
         Logger.Log("Game over");
+        SceneManager.LoadScene("MissionLoseScene");
     }
 
     public bool IsPlayersTurn(Player player)

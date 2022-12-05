@@ -7,6 +7,7 @@
     margin-right: 0;
     margin-top: 0;
     margin-bottom: 0;
+    color: rgb(255, 255, 255);
 }
 
 .unity-button {
@@ -73,7 +74,7 @@
     position: relative;
     bottom: auto;
     right: auto;
-    background-color: rgba(255, 123, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.3);
     flex-wrap: nowrap;
     border-top-width: 1px;
     border-left-width: 1px;
@@ -93,7 +94,7 @@
 }
 
 .InfoBoxButton {
-    background-color: rgb(173, 97, 27);
+    background-color: rgba(0, 0, 0, 0.1);
     font-size: 14px;
     margin-left: 10px;
     margin-right: 10px;
@@ -104,6 +105,7 @@
     align-items: center;
     justify-content: center;
     width: 70px;
+    color: rgb(255, 255, 255);
 }
 
 .InnerInfoBox {
@@ -137,10 +139,11 @@
     width: 24px;
     position: absolute;
     right: 0;
-    background-color: rgb(173, 97, 27);
+    background-color: rgba(0, 0, 0, 0.1);
     font-size: 14px;
     align-items: center;
     justify-content: center;
+    color: rgb(255, 255, 255);
 }
 
 .ButtonsInfoBox {
@@ -194,7 +197,7 @@
     border-right-color: rgb(0, 0, 0);
     border-top-color: rgb(0, 0, 0);
     border-bottom-color: rgb(0, 0, 0);
-    background-color: rgba(255, 123, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .ObjectiveInfoBox {
@@ -206,7 +209,7 @@
     border-right-color: rgb(0, 0, 0);
     border-top-color: rgb(0, 0, 0);
     border-bottom-color: rgb(0, 0, 0);
-    background-color: rgba(255, 123, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.3);
     width: 300px;
 }
 
@@ -243,6 +246,7 @@
     flex-direction: row;
 }
 
-.CostContainer{
+.CostContainer {
     height: 20px;
 }
+

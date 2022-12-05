@@ -112,6 +112,8 @@ public class Overlay : MonoBehaviour
         _doggiumConatiner.Insert(0, Icon.Doggium);
         _boneConatiner.Insert(0, Icon.Bone);
 
+        _nextTurnButton.Add(Icon.Hourglass);
+
         // Registering callbacks
         _nextTurnButton.RegisterCallback<ClickEvent>(_ =>
         {
