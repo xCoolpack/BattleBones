@@ -13,10 +13,19 @@ EditorBuildSettings:
     guid: 9a67782ca7ff7d94ba6679fe5219079d
   - enabled: 0
     path: 
-    guid: 4dc32a1f534bf8b43b4587beddf80c9b
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Mission1Scene.unity
     guid: 2356d2f45c088924f932b21378691e56
+  - enabled: 1
+    path: Assets/Scenes/Mission2Scene.unity
+    guid: 5fbfc6ecfc0226043990bf07fa3ff887
+  - enabled: 1
+    path: Assets/Scenes/Mission3Scene.unity
+    guid: afc9a61b4161b4146ba0a39a25d9d08b
+  - enabled: 1
+    path: Assets/Scenes/Mission4Scene.unity
+    guid: a2aae963c7f6aa94cbda0087bad3e2b4
   - enabled: 1
     path: Assets/Scenes/MissionWinScene.unity
     guid: f409a70ddf8136d4e8a66afb6054bbca
