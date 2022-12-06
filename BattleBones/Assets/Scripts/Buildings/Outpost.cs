@@ -16,14 +16,6 @@ public class Outpost : MonoBehaviour
         Building = GetComponent<Building>();
     }
 
-    private void OnMouseDown()
-    {
-        //if (IsUnitBeingRecruited())
-        //    CancelRecruitment();
-        //else
-        //    BeginUnitRecruitment("TestUnit");
-    }
-
     public bool CanRecruit(string unitName)
     {
         GameObject unitPrefab = Building.Player.UnlockedUnits.FirstOrDefault(g => g.name == $"{Building.Player.Faction} {unitName}");

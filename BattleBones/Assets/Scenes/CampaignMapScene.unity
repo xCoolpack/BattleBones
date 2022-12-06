@@ -239,7 +239,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2df698a0da2e7c46970aee6a2dcf423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UiDocument: {fileID: 0}
   MissionHandler: {fileID: 881572570}
 --- !u!1 &171818830
 GameObject:
@@ -618,7 +617,6 @@ GameObject:
   - component: {fileID: 1781349904}
   - component: {fileID: 1781349903}
   - component: {fileID: 1781349902}
-  - component: {fileID: 1781349901}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -626,30 +624,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1781349901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1781349900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8522dbf724545fd45bf59188ffa9f997, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CameraSpeed: 10
-  ScrollSpeed: 10
-  BorderThickness: 20
-  XLimit:
-    Min: 0
-    Max: 50
-  YLimit:
-    Min: -20
-    Max: 0
-  ZLimit:
-    Min: -40
-    Max: -10
 --- !u!81 &1781349902
 AudioListener:
   m_ObjectHideFlags: 0

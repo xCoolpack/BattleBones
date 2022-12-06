@@ -60,23 +60,25 @@ public class Field : MonoBehaviour
                 return;
             }
 
-            if (Mark_ == Mark.Movable)
+            switch (Mark_)
             {
-                _overlay.PickedUnit.TurnOffChosenMark();
-                _overlay.PickedUnit.Move(this);
-                _overlay.UnitInfoBox(true);
-                _overlay.PickedUnit.ToggleOffAllMarks();
-                //_overlay.PickedUnit.UpdateAndDisplayMarks();
-                //_overlay.PickedUnit.TurnOnChosenMark();
-            }
-            else if (Mark_ == Mark.Attackable)
-            {
-                _overlay.PickedUnit.TurnOffChosenMark();
-                _overlay.PickedUnit.Attack(this);
-                _overlay.UnitInfoBox(true);
-                _overlay.PickedUnit.ToggleOffAllMarks();
-                //_overlay.PickedUnit.UpdateAndDisplayMarks();
-                //_overlay.PickedUnit.TurnOnChosenMark();
+                case Mark.Movable:
+                    _overlay.PickedUnit.TurnOffChosenMark();
+                    _overlay.PickedUnit.Move(this);
+                    _overlay.UnitInfoBox(true);
+                    _overlay.PickedUnit.ToggleOffAllMarks();
+                    break;
+                case Mark.Attackable:
+                    _overlay.PickedUnit.TurnOffChosenMark();
+                    _overlay.PickedUnit.Attack(this);
+                    _overlay.UnitInfoBox(true);
+                    _overlay.PickedUnit.ToggleOffAllMarks();
+                    break;
+                case Mark.AttackableByBuilding:
+                    var building = _overlay.PickedBuilding.GetComponent<DefensiveBuilding>();
+                    building.ToggleOffAttackableFields();
+                    building.Attack(this);
+                    break;
             }
         }
     }
@@ -390,7 +392,8 @@ public class Field : MonoBehaviour
         Unmarked,
         Attackable,
         Movable,
-        Chosen
+        Chosen,
+        AttackableByBuilding
     }
 }
 

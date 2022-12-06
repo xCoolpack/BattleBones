@@ -6,13 +6,13 @@
 
 .MissionButton {
     font-size: 30px;
-    color: rgba(0, 0, 0, 255);
+    color: rgb(0, 0, 0);
     width: 200px;
 }
 
 .MissionLabel {
     font-size: 20px;
-    color: rgba(0, 0, 0, 255);
+    color: rgb(255, 255, 255);
 }
 
 .MissionButtonConatiner {
@@ -40,5 +40,3 @@
     margin-top: 70px;
     margin-bottom: 70px;
 }
-
-
