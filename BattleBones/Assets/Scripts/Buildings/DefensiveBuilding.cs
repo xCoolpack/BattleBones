@@ -26,12 +26,6 @@ public class DefensiveBuilding : MonoBehaviour
         SetStats();
     }
 
-    private void OnMouseDown()
-    {
-        //SetAttackableFields();
-        //ToggleAttackableFields();
-    }
-
     /// <summary>
     /// Methods setting unit stats from BaseUnitStats object
     /// </summary>
@@ -119,12 +113,23 @@ public class DefensiveBuilding : MonoBehaviour
         }
     }
 
-    private void ToggleAttackableFields()
+    public void ToggleOnAttackableFields()
     {
         foreach (var field in AttackableFields)
         {
-            var mark = field.transform.Find("Mark").gameObject;
-            mark.SetActive(!mark.activeSelf);
+            var mark = field.transform.Find("AttackMark").gameObject;
+            mark.SetActive(true);
+            field.Mark_ = Field.Mark.AttackableByBuilding;
+        }
+    }
+
+    public void ToggleOffAttackableFields()
+    {
+        foreach (var field in AttackableFields)
+        {
+            var mark = field.transform.Find("AttackMark").gameObject;
+            mark.SetActive(false);
+            field.Mark_ = Field.Mark.Unmarked;
         }
     }
 }

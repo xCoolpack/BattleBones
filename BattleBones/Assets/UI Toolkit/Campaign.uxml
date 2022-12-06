@@ -21,7 +21,7 @@
                 <ui:Label text="Label" display-tooltip-when-elided="true" name="Mission4Label" class="MissionLabel" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:Label text="Label" display-tooltip-when-elided="true" name="TrophiesLabel" style="left: auto; top: 5px; position: absolute; right: 5px; font-size: 40px; color: rgb(255, 255, 255);" />
+        <ui:Label text="Label" display-tooltip-when-elided="true" name="TrophiesLabel" style="left: auto; top: 5px; position: absolute; right: 5px; font-size: 40px; color: rgb(255, 255, 255); border-top-left-radius: 1px; border-bottom-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; padding-left: 6px; padding-right: 6px; padding-top: 6px; padding-bottom: 6px; background-color: rgba(204, 204, 204, 0.38);" />
         <ui:VisualElement style="width: 100%; position: absolute; bottom: 5px; align-items: center; justify-content: center;">
             <ui:Button text="Back" display-tooltip-when-elided="true" name="BackButton" style="font-size: 20px; width: 120px;" />
         </ui:VisualElement>

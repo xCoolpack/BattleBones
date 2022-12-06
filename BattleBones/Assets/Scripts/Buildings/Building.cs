@@ -318,6 +318,7 @@ public class Building : MonoBehaviour
         if (defensiveBuilding is not null)
         {
             defensiveBuilding.SetAttackableFields();
+            defensiveBuilding.ToggleOnAttackableFields();
 
             var outpost = GetComponent<Outpost>();
 
