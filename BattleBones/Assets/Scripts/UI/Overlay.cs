@@ -30,11 +30,11 @@ public class Overlay : MonoBehaviour
     private VisualElement _lowerContainer;
     private VisualElement _objectivesMenu;
     private VisualElement _aspectRatioPanel;
-    private VisualElement _goldConatiner;
-    private VisualElement _woodConatiner;
-    private VisualElement _stoneConatiner;
-    private VisualElement _doggiumConatiner;
-    private VisualElement _boneConatiner;
+    private VisualElement _goldContainer;
+    private VisualElement _woodContainer;
+    private VisualElement _stoneContainer;
+    private VisualElement _doggiumContainer;
+    private VisualElement _boneContainer;
 
     private static VisualElement _loggerBody;
     private static ScrollView _logger;
@@ -70,11 +70,11 @@ public class Overlay : MonoBehaviour
         _doggiumIncomeLabel = UiDocument.rootVisualElement.Q<Label>("DoggiumIncomeLabel");
         _boneIncomeLabel = UiDocument.rootVisualElement.Q<Label>("BoneIncomeLabel");
 
-        _goldConatiner = UiDocument.rootVisualElement.Q<VisualElement>("GoldContainer");
-        _stoneConatiner = UiDocument.rootVisualElement.Q<VisualElement>("StoneContainer");
-        _woodConatiner = UiDocument.rootVisualElement.Q<VisualElement>("WoodContainer");
-        _doggiumConatiner = UiDocument.rootVisualElement.Q<VisualElement>("DoggiumContainer");
-        _boneConatiner = UiDocument.rootVisualElement.Q<VisualElement>("BoneContainer");
+        _goldContainer = UiDocument.rootVisualElement.Q<VisualElement>("GoldContainer");
+        _stoneContainer = UiDocument.rootVisualElement.Q<VisualElement>("StoneContainer");
+        _woodContainer = UiDocument.rootVisualElement.Q<VisualElement>("WoodContainer");
+        _doggiumContainer = UiDocument.rootVisualElement.Q<VisualElement>("DoggiumContainer");
+        _boneContainer = UiDocument.rootVisualElement.Q<VisualElement>("BoneContainer");
 
         _lowerContainer = UiDocument.rootVisualElement.Q<VisualElement>("LowerContainer");
         _objectivesMenu = UiDocument.rootVisualElement.Q<VisualElement>("ObjectivesMenu");
@@ -106,11 +106,11 @@ public class Overlay : MonoBehaviour
         UiDocument.rootVisualElement.Bind(resourcesAmount);
 
         // Add images to resources
-        _goldConatiner.Insert(0, Icon.Gold);
-        _stoneConatiner.Insert(0, Icon.Stone);
-        _woodConatiner.Insert(0, Icon.Wood);
-        _doggiumConatiner.Insert(0, Icon.Doggium);
-        _boneConatiner.Insert(0, Icon.Bone);
+        _goldContainer.Insert(0, Icon.Gold);
+        _stoneContainer.Insert(0, Icon.Stone);
+        _woodContainer.Insert(0, Icon.Wood);
+        _doggiumContainer.Insert(0, Icon.Doggium);
+        _boneContainer.Insert(0, Icon.Bone);
 
         _nextTurnButton.Add(Icon.Hourglass);
 
@@ -372,7 +372,10 @@ public class Overlay : MonoBehaviour
                 {
                     PickedUnit.Plunder();
                     UnitInfoBox(showButtons);
-                });
+                })
+                {
+                    text = "Plunder"
+                };
                 plunderButton.AddToClassList("InfoBoxButton");
                 buttonsBox.Add(plunderButton);
             }
