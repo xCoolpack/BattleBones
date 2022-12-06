@@ -70,6 +70,7 @@ public class Player : MonoBehaviour
     public void RestoreUnitsMovementPoints()
     {
         Units.ForEach(u => u.RestoreMovementPoints());
+        Buildings.ForEach(b => b.RestoreAttacks());
     }
 
     public void ApplyUnitsModifiers()

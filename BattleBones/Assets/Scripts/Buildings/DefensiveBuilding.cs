@@ -11,6 +11,8 @@ public class DefensiveBuilding : MonoBehaviour
     public int CurrentDamage;
     public int AttackRange;
 
+    public bool CanAttack;
+
     public List<Field> FieldsWithinAttackRange;
     public List<Field> AttackableFields;
 
@@ -38,11 +40,13 @@ public class DefensiveBuilding : MonoBehaviour
         MaxDamage = _building.BaseBuildingStats.BaseDamage;
         CurrentDamage = MaxDamage;
         AttackRange = _building.BaseBuildingStats.BaseAttackRange;
+        CanAttack = true;
     }
 
     public void SetAttackableFields()
     {
-        (FieldsWithinAttackRange, AttackableFields) = GetAttackableFields();
+        if (CanAttack)
+            (FieldsWithinAttackRange, AttackableFields) = GetAttackableFields();
     }
 
     private (List<Field> FieldsWithinAttackRange, List<Field> AttackableFields) GetAttackableFields()
@@ -70,7 +74,7 @@ public class DefensiveBuilding : MonoBehaviour
             return;
         }
 
-        if (AttackableFields.Contains(targetField))
+        if (AttackableFields.Contains(targetField) && CanAttack)
         {
             if (_attack.CanTargetBuilding(_building, targetField))
             {
@@ -91,6 +95,8 @@ public class DefensiveBuilding : MonoBehaviour
                            $"to attack {name} " +
                            $"at {targetField.ThreeAxisCoordinates}");
             }
+
+            CanAttack = false;
         }
     }
 

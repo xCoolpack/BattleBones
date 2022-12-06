@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -166,6 +167,15 @@ public class Building : MonoBehaviour
         }
     }
 
+    public void RestoreAttacks()
+    {
+        var defensiveBuilding = GetComponent<DefensiveBuilding>();
+        if (defensiveBuilding != null)
+        {
+            defensiveBuilding.CanAttack = true;
+        }
+    }
+
     public UnitModifiers GetUnitModifiers()
     {
         if (BuildingState != BuildingState.Fine)
@@ -176,6 +186,8 @@ public class Building : MonoBehaviour
     public void Construct()
     {
         if (this == null) return;
+
+        if (Field.HasUnit() && Field.Unit.IsEnemy(Player)) Destroy();
 
         CurrentHealth = MaxHealth;
         Field.Unit?.AddUnitModifiers(Field.Building.GetUnitModifiers());
@@ -236,7 +248,10 @@ public class Building : MonoBehaviour
 
     public bool CanRepair()
     {
-        return CurrentHealth < MaxHealth && CanAffordRepair() && BuildingState != BuildingState.UnderRepair;
+        return ( CurrentHealth < MaxHealth || BuildingState == BuildingState.Plundered) 
+            && CanAffordRepair()
+            && !(Field.HasUnit() && Field.Unit.IsEnemy(Player))
+            && BuildingState != BuildingState.UnderRepair;
     }
 
     public void BeginRepair()
@@ -252,6 +267,12 @@ public class Building : MonoBehaviour
 
     public void Repair()
     {
+        if (Field.HasUnit() && Field.Unit.IsEnemy(Player))
+        {
+            BuildingState = BuildingState.Plundered;
+            return;
+        }
+
         Logger.Log($"Repair of {Player.name}'s {BaseBuildingStats.BuildingName} at {Field.ThreeAxisCoordinates} has been finished ");
 
         CurrentHealth = MaxHealth;

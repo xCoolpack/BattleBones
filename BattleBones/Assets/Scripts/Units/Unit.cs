@@ -767,7 +767,11 @@ public class Unit : MonoBehaviour
 
     public bool CanPlunder()
     {
-        return !_isInAnimation && CurrentMovementPoints >= 1 && Field.HasBuilding() && Field.Building.IsEnemy(Player);
+        return !_isInAnimation 
+            && CurrentMovementPoints >= 1 
+            && Field.HasBuilding() 
+            && Field.Building.IsEnemy(Player)
+            && Field.Building.BuildingState != BuildingState.Plundered;
     }
 
     public void Plunder()
