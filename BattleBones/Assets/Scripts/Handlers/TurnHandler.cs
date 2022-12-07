@@ -79,6 +79,7 @@ public class TurnHandler : MonoBehaviour
             PlayerPrefs.SetInt(objective.ObjectiveId.ToString(), objective.IsCompleted ? 1 : 0));
         var name = SceneManager.GetActiveScene().name;
         PlayerPrefs.SetInt(name.Substring(0, name.Length - 5), 1);
+        PlayerPrefs.Save();
         SceneManager.LoadScene("MissionWinScene");
     }
 

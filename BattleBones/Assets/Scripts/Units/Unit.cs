@@ -106,13 +106,19 @@ public class Unit : MonoBehaviour
     {
         _overlay = GameObject.Find("Overlay").GetComponent<Overlay>();
         // Set unit visibility
+
+        //Logger.Log();
+    }
+
+    public void AtStart()
+    {
         ShowFields(Field);
 
         foreach (var pair in Field.SeenBy)
         {
             if (pair.Value > 0)
                 Show(pair.Key);
-        }   
+        }
     }
 
     public void UpdateFieldSets()

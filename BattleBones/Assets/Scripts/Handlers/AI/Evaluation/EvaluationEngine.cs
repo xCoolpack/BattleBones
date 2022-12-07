@@ -22,15 +22,15 @@ public class EvaluationEngine : MonoBehaviour
         }
     }
 
-    public static T LoadAssetByName<T>(string assetName) where T : class
-    {
-        string[] guids = AssetDatabase.FindAssets(assetName, null);
-        string assetPath = AssetDatabase.GUIDToAssetPath(guids[0]);
-        T asset = AssetDatabase.LoadAssetAtPath
-            (assetPath, typeof(T)) as T;
+    //public static T LoadAssetByName<T>(string assetName) where T : class
+    //{
+    //    string[] guids = AssetDatabase.FindAssets(assetName, null);
+    //    string assetPath = AssetDatabase.GUIDToAssetPath(guids[0]);
+    //    T asset = AssetDatabase.LoadAssetAtPath
+    //        (assetPath, typeof(T)) as T;
 
-        return asset;
-    }
+    //    return asset;
+    //}
 
     public int Evaluate(string moveType, Object source, Object target)
     {

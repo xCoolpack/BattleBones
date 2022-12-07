@@ -11,14 +11,15 @@ public class UnitRelatedEvaluation : MonoBehaviour
     public PlayerBaseDistance PlayerBaseDistance;
     public AttackDanger AttackDanger;
     public AttackValuability AttackValuability;
+    public FieldValues fv;
+    public UnitStrategicValues usv;
 
     public CustomEvaluationCharacteristics CustomEval;
 
     void Awake()
     {
-        FieldTypeStrategicValue ftsv = new FieldTypeStrategicValue
-            (EvaluationEngine.LoadAssetByName<FieldValues>("FieldTypeStrategicValues"));
-        UnitStrategicValues usv = EvaluationEngine.LoadAssetByName<UnitStrategicValues>("UnitTypeValues");
+        FieldTypeStrategicValue ftsv = new FieldTypeStrategicValue(fv);
+        //UnitStrategicValues usv = EvaluationEngine.LoadAssetByName<UnitStrategicValues>("UnitTypeValues");
 
         FieldStrategicValue = new FieldStrategicValue(ftsv);
         UnitStrategicValue = new UnitStrategicValue(new UnitTypeValue(usv));

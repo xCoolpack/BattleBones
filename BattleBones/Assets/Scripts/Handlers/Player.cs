@@ -1,5 +1,6 @@
-using System.Collections.Generic;
 using Unity.VisualScripting;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -41,6 +42,10 @@ public class Player : MonoBehaviour
         };
     }
 
+    private void Start()
+    {
+        HumanPlayer = GameObject.Find("Player1").GetComponent<Player>();
+    }
 
     public void AddUnit(Unit unit)
     {

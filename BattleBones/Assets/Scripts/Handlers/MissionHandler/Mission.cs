@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,6 +20,7 @@ public class Mission : MonoBehaviour
         {
             PlayerPrefs.SetInt(objective.ObjectiveId.ToString(), 0);
         }
+        PlayerPrefs.Save();
     }
 
     private void Start()

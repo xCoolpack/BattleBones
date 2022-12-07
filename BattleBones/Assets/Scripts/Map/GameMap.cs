@@ -1,6 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameMap : MonoBehaviour
@@ -17,12 +18,17 @@ public class GameMap : MonoBehaviour
 
     private void OnEnable()
     {
-        PopulateGrid();
+        
     }
 
     private void Start()
     {
-        //PopulateGrid();
+        PopulateGrid();
+        foreach (var player in FindObjectsOfType<Player>())
+        {
+            player.Units.ForEach(u => u.AtStart());
+            player.Buildings.ForEach(b => b.AtStart());
+        }
     }
 
     /// <summary>
@@ -33,6 +39,7 @@ public class GameMap : MonoBehaviour
         FieldGrid.Clear();
         foreach (var field in FindObjectsOfType<Field>())
         {
+            Logger.Log($"{field.Type.FieldName} {field.ThreeAxisCoordinates}");
             if (!FieldGrid.ContainsKey(field.Coordinates))
                 FieldGrid.Add(field.Coordinates, field);
         }

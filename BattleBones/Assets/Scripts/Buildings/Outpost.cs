@@ -50,6 +50,7 @@ public class Outpost : MonoBehaviour
         unit.CurrentModifiers = Building.Player.UnitModifiersDictionary[unit.BaseUnitStats.UnitName];
         unit.SetCurrentStats();
         unit.SetStartingStats();
+        unit.AtStart();
         Building.Field.Unit = unit;
         Building.Player.AddUnit(unit);
         RecruitingUnit = null;

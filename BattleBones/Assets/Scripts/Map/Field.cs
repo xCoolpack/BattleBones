@@ -1,7 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Field : MonoBehaviour
@@ -86,6 +87,11 @@ public class Field : MonoBehaviour
     // Left click
     private void OnMouseDown()
     {
+        //foreach (var (key, elem) in SeenBy)
+        //{
+        //    Logger.Log($"{key} - {elem}");
+        //}
+        
         if (_overlay.IsPointerOverUI || !IsSeenByCurrentPlayer())
         {
             return;
@@ -265,9 +271,10 @@ public class Field : MonoBehaviour
     public List<Field> GetNeighbors()
     {
         List<Field> neighbors = new();
-
+        
         foreach (var direction in Direction.GetDirectionList(Coordinates.y))
         {
+            //Logger.Log($"{GameMap.FieldGrid.ContainsKey(Coordinates + direction)}");
             if (GameMap.FieldGrid.ContainsKey(Coordinates + direction))
             {
                 neighbors.Add(GameMap.FieldGrid[Coordinates + direction]);
@@ -374,11 +381,14 @@ public class Field : MonoBehaviour
         Building = building;
         building.PreviousBuildingState = BuildingState.None;
         building.BuildingState = BuildingState.UnderConstruction;
+        building.AtStart();
         player.AddBuilding(Building);
         player.ResourceManager.RemoveAmount(building.BaseBuildingStats.BaseCost);
 
         building.BuildingGameEvent = new GameEvent(1, building.Construct);
         player.PlayerEventHandler.AddStartTurnEvent(building.BuildingGameEvent);
+
+        building.Show(player);
 
         Logger.Log($"{player.name} has begun construction of {buildingName} at {ThreeAxisCoordinates}");
     }

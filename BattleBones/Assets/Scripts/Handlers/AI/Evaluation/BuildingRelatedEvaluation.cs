@@ -9,13 +9,15 @@ public class BuildingRelatedEvaluation : MonoBehaviour
     public UnitStrategicValue UnitStrategicValue;
     public UnitCostValue UnitCostValue;
     public UnitRoleValue UnitRoleValue;
+    public UnitStrategicValues usv;
+    public FieldValues fev;
 
     public CustomEvaluationCharacteristics CustomEval;
 
     void Awake()
     {
-        UnitStrategicValues usv = EvaluationEngine.LoadAssetByName<UnitStrategicValues>("UnitTypeValues");
-        FieldValues fev = EvaluationEngine.LoadAssetByName<FieldValues>("FieldEconomicValues");
+    //    UnitStrategicValues usv = EvaluationEngine.LoadAssetByName<UnitStrategicValues>("UnitTypeValues");
+    //    FieldValues fev = EvaluationEngine.LoadAssetByName<FieldValues>("FieldEconomicValues");
 
         UnitStrategicValue = new UnitStrategicValue(new UnitTypeValue(usv));
         FieldEconomicValue = new FieldEconomicValue(fev);
