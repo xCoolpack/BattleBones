@@ -193,6 +193,7 @@ public class Overlay : MonoBehaviour
             field.ChosenMark.SetActive(false);
         }
 
+        PickedBuilding?.GetComponent<DefensiveBuilding>()?.ToggleOffAttackableFields();
         PickedUnit?.ToggleOffAllMarks();
         PickedBuilding = null;
         PickedField = null;
