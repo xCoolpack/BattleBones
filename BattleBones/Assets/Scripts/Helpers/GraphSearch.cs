@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using static Unit;
 
 public static class GraphSearch
 {
@@ -33,8 +32,10 @@ public static class GraphSearch
         while (fieldsToVisit.Count > 0)
         {
             Field currentField = fieldsToVisit.Dequeue();
+            //Logger.Log($"{currentField.ThreeAxisCoordinates}");
             foreach (var field in currentField.GetNeighbors())
             {
+                //Logger.Log($"{field.ThreeAxisCoordinates} - {canDoAction(field, startingField)}");
                 if (canDoAction(field, startingField))
                 {
                     sumCost = costOfFields[currentField] + cost(field);

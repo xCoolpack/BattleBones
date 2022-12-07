@@ -54,13 +54,13 @@ public class Building : MonoBehaviour
     {
         _overlay = GameObject.Find("Overlay").GetComponent<Overlay>();
         // Set building visibility
+        
 
-        foreach (var pair in Field.SeenBy)
-        {
-            if (pair.Value > 0)
-                Discover(pair.Key);
-        }
+        
+    }
 
+    public void AtStart()
+    {
         // Building defined in scene
         if (BuildingState == BuildingState.Fine)
         {

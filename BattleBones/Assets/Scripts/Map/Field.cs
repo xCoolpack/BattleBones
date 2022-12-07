@@ -87,6 +87,10 @@ public class Field : MonoBehaviour
     // Left click
     private void OnMouseDown()
     {
+        //foreach (var (key, elem) in SeenBy)
+        //{
+        //    Logger.Log($"{key} - {elem}");
+        //}
         
         if (_overlay.IsPointerOverUI || !IsSeenByCurrentPlayer())
         {
@@ -267,9 +271,10 @@ public class Field : MonoBehaviour
     public List<Field> GetNeighbors()
     {
         List<Field> neighbors = new();
-
+        
         foreach (var direction in Direction.GetDirectionList(Coordinates.y))
         {
+            //Logger.Log($"{GameMap.FieldGrid.ContainsKey(Coordinates + direction)}");
             if (GameMap.FieldGrid.ContainsKey(Coordinates + direction))
             {
                 neighbors.Add(GameMap.FieldGrid[Coordinates + direction]);
