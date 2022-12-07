@@ -19,6 +19,7 @@ public class Mission : MonoBehaviour
         {
             PlayerPrefs.SetInt(objective.ObjectiveId.ToString(), 0);
         }
+        PlayerPrefs.Save();
     }
 
     private void Start()
