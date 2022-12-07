@@ -11,9 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CampaignMapScene.unity
     guid: 9a67782ca7ff7d94ba6679fe5219079d
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Mission1Scene.unity
     guid: 2356d2f45c088924f932b21378691e56

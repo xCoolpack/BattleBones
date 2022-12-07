@@ -7,6 +7,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class Overlay : MonoBehaviour
@@ -35,6 +36,7 @@ public class Overlay : MonoBehaviour
     private VisualElement _stoneContainer;
     private VisualElement _doggiumContainer;
     private VisualElement _boneContainer;
+    private Button _exitButton;
 
     private static VisualElement _loggerBody;
     private static ScrollView _logger;
@@ -86,6 +88,8 @@ public class Overlay : MonoBehaviour
         _logger = UiDocument.rootVisualElement.Q<ScrollView>("Logger");
         _loggerButton = UiDocument.rootVisualElement.Q<Button>("LoggerButton");
 
+        _exitButton = UiDocument.rootVisualElement.Q<Button>("ExitButton");
+
         // Binding turn handler
         var tunHandlerSerializedObject = new SerializedObject(TurnHandler);
         _turnCounterLabel.bindingPath = "TurnCounter";
@@ -130,6 +134,11 @@ public class Overlay : MonoBehaviour
         _loggerButton.RegisterCallback<ClickEvent>(_ =>
         {
             HandleLoggerButtonClick();
+        });
+
+        _exitButton.RegisterCallback<ClickEvent>(_ =>
+        {
+            SceneManager.LoadScene("CampaignMapScene");
         });
 
         foreach (var child in _aspectRatioPanel.Children())
