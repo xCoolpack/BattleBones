@@ -1,12 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using JetBrains.Annotations;
-//using UnityEditor;
-//using UnityEditor.UIElements;
 using UnityEngine;
-using UnityEngine.Accessibility;
-using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
 public class Overlay : MonoBehaviour
@@ -50,6 +44,7 @@ public class Overlay : MonoBehaviour
     public bool IsPointerOverUI { get; private set; }
 
     private bool _isLoggerBig = false;
+    private Icon _icon;
 
     private void OnEnable()
     {
@@ -86,6 +81,8 @@ public class Overlay : MonoBehaviour
         _logger = UiDocument.rootVisualElement.Q<ScrollView>("Logger");
         _loggerButton = UiDocument.rootVisualElement.Q<Button>("LoggerButton");
 
+        _icon = GameObject.Find("Icons").GetComponent<Icon>();
+
         // Binding turn handler
         //var tunHandlerSerializedObject = new SerializedObject(TurnHandler);
         //_turnCounterLabel.bindingPath = "TurnCounter";
@@ -106,13 +103,13 @@ public class Overlay : MonoBehaviour
         //UiDocument.rootVisualElement.Bind(resourcesAmount);
 
         // Add images to resources
-        _goldContainer.Insert(0, Icon.Gold);
-        _stoneContainer.Insert(0, Icon.Stone);
-        _woodContainer.Insert(0, Icon.Wood);
-        _doggiumContainer.Insert(0, Icon.Doggium);
-        _boneContainer.Insert(0, Icon.Bone);
+        _goldContainer.Insert(0, _icon.Gold);
+        _stoneContainer.Insert(0, _icon.Stone);
+        _woodContainer.Insert(0, _icon.Wood);
+        _doggiumContainer.Insert(0, _icon.Doggium);
+        _boneContainer.Insert(0, _icon.Bone);
 
-        _nextTurnButton.Add(Icon.Hourglass);
+        _nextTurnButton.Add(_icon.Hourglass);
 
         // Registering callbacks
         _nextTurnButton.RegisterCallback<ClickEvent>(_ =>
@@ -144,6 +141,21 @@ public class Overlay : MonoBehaviour
     private void Update()
     {
         _logger.ScrollTo(_loggerEnd);
+
+        _turnCounterLabel.text = TurnHandler.TurnCounter.ToString();
+
+        var ra = ResourceManager.ResourcesAmount;
+        var ri = ResourceManager.ResourcesIncome;
+        _goldLabel.text = ra.Gold.ToString();
+        _goldIncomeLabel.text = ri.Gold.ToString();
+        _woodLabel.text = ra.Wood.ToString();
+        _woodIncomeLabel.text = ri.Wood.ToString();
+        _stoneLabel.text = ra.Stone.ToString();
+        _stoneIncomeLabel.text = ri.Stone.ToString();
+        _doggiumLabel.text = ra.Doggium.ToString();
+        _doggiumIncomeLabel.text = ri.Doggium.ToString();
+        _boneLabel.text = ra.Bone.ToString();
+        _boneIncomeLabel.text = ri.Bone.ToString();
     }
 
     /// <summary>
@@ -254,19 +266,19 @@ public class Overlay : MonoBehaviour
             var cost = building.BaseCost;
 
             if (cost.Bone > 0)
-                costs.Add(Combine(Icon.Bone, new Label(cost.Bone.ToString())));
+                costs.Add(Combine(_icon.Bone, new Label(cost.Bone.ToString())));
 
             if (cost.Doggium > 0)
-                costs.Add(Combine(Icon.Doggium, new Label(cost.Doggium.ToString())));
+                costs.Add(Combine(_icon.Doggium, new Label(cost.Doggium.ToString())));
 
             if (cost.Gold > 0)
-                costs.Add(Combine(Icon.Gold, new Label(cost.Gold.ToString())));
+                costs.Add(Combine(_icon.Gold, new Label(cost.Gold.ToString())));
 
             if (cost.Stone > 0)
-                costs.Add(Combine(Icon.Stone, new Label(cost.Stone.ToString())));
+                costs.Add(Combine(_icon.Stone, new Label(cost.Stone.ToString())));
 
             if (cost.Wood > 0)
-                costs.Add(Combine(Icon.Wood, new Label(cost.Wood.ToString())));
+                costs.Add(Combine(_icon.Wood, new Label(cost.Wood.ToString())));
 
             buyBox.Add(buildingName);
             costs.ForEach(c => 
@@ -324,11 +336,11 @@ public class Overlay : MonoBehaviour
         var attackRangeLabel = new Label(PickedUnit.AttackRange.ToString());
         var sightRangeLabel = new Label(PickedUnit.SightRange.ToString());
 
-        var movePoints = Combine(Icon.Boot, movePointsLabel);
-        var damage = Combine(Icon.Sword, damageLabel);
-        var defense = Combine(Icon.Shield, defenseLabel);
-        var attackRange = Combine(Icon.Target, attackRangeLabel);
-        var sightRange = Combine(Icon.Eye, sightRangeLabel);
+        var movePoints = Combine(_icon.Boot, movePointsLabel);
+        var damage = Combine(_icon.Sword, damageLabel);
+        var defense = Combine(_icon.Shield, defenseLabel);
+        var attackRange = Combine(_icon.Target, attackRangeLabel);
+        var sightRange = Combine(_icon.Eye, sightRangeLabel);
 
         movePoints.AddToClassList("CostContainer");
         damage.AddToClassList("CostContainer");
@@ -437,7 +449,7 @@ public class Overlay : MonoBehaviour
     {
         var infoBox = CreateBasicInfoBox($"{PickedBuilding.BaseBuildingStats.BuildingName} {PickedBuilding.Field.ThreeAxisCoordinates}-{PickedBuilding.GetBuildingStateName()}");
         var sightRangeLabel = new Label(PickedBuilding.SightRange.ToString());
-        var sightRange = Combine(Icon.Eye, sightRangeLabel);
+        var sightRange = Combine(_icon.Eye, sightRangeLabel);
         sightRange.AddToClassList("CostContainer");
         var statsBox = new VisualElement();
         var buttonsBox = new VisualElement();
@@ -488,8 +500,8 @@ public class Overlay : MonoBehaviour
         var (statsBox, buttonsBox) = CreateBuildingInfoBox(showButtons);
         var damageLabel = new Label(defensiveBuilding.CurrentDamage.ToString());
         var attackRangeLabel = new Label(defensiveBuilding.AttackRange.ToString());
-        var damage = Combine(Icon.Sword, damageLabel);
-        var attackRange = Combine(Icon.Target, attackRangeLabel);
+        var damage = Combine(_icon.Sword, damageLabel);
+        var attackRange = Combine(_icon.Target, attackRangeLabel);
         damage.AddToClassList("CostContainer");
         attackRange.AddToClassList("CostContainer");
         var hpBar = new HpBar(PickedBuilding.CurrentHealth, PickedBuilding.MaxHealth);
@@ -602,19 +614,19 @@ public class Overlay : MonoBehaviour
             var cost = unit.BaseUnitStats.BaseCost;
 
             if (cost.Bone > 0)
-                costs.Add(Combine(Icon.Bone, new Label(cost.Bone.ToString())));
+                costs.Add(Combine(_icon.Bone, new Label(cost.Bone.ToString())));
 
             if (cost.Doggium > 0)
-                costs.Add(Combine(Icon.Doggium, new Label(cost.Doggium.ToString())));
+                costs.Add(Combine(_icon.Doggium, new Label(cost.Doggium.ToString())));
 
             if (cost.Gold > 0)
-                costs.Add(Combine(Icon.Gold, new Label(cost.Gold.ToString())));
+                costs.Add(Combine(_icon.Gold, new Label(cost.Gold.ToString())));
 
             if (cost.Stone > 0)
-                costs.Add(Combine(Icon.Stone, new Label(cost.Stone.ToString())));
+                costs.Add(Combine(_icon.Stone, new Label(cost.Stone.ToString())));
 
             if (cost.Wood > 0)
-                costs.Add(Combine(Icon.Wood, new Label(cost.Wood.ToString())));
+                costs.Add(Combine(_icon.Wood, new Label(cost.Wood.ToString())));
 
             buyBox.Add(name);
             costs.ForEach(c =>
