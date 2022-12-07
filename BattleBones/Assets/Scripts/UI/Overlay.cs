@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using JetBrains.Annotations;
-using UnityEditor;
-using UnityEditor.UIElements;
+//using UnityEditor;
+//using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.EventSystems;
@@ -87,23 +87,23 @@ public class Overlay : MonoBehaviour
         _loggerButton = UiDocument.rootVisualElement.Q<Button>("LoggerButton");
 
         // Binding turn handler
-        var tunHandlerSerializedObject = new SerializedObject(TurnHandler);
-        _turnCounterLabel.bindingPath = "TurnCounter";
-        UiDocument.rootVisualElement.Bind(tunHandlerSerializedObject);
+        //var tunHandlerSerializedObject = new SerializedObject(TurnHandler);
+        //_turnCounterLabel.bindingPath = "TurnCounter";
+        //UiDocument.rootVisualElement.Bind(tunHandlerSerializedObject);
 
-        // Binding resource manager
-        var resourcesAmount = new SerializedObject(ResourceManager);
-        _goldLabel.bindingPath = "ResourcesAmount.Gold";
-        _goldIncomeLabel.bindingPath = "ResourcesIncome.Gold";
-        _woodLabel.bindingPath = "ResourcesAmount.Wood";
-        _woodIncomeLabel.bindingPath = "ResourcesIncome.Wood";
-        _stoneLabel.bindingPath = "ResourcesAmount.Stone";
-        _stoneIncomeLabel.bindingPath = "ResourcesIncome.Stone";
-        _doggiumLabel.bindingPath = "ResourcesAmount.Doggium";
-        _doggiumIncomeLabel.bindingPath = "ResourcesIncome.Doggium";
-        _boneLabel.bindingPath = "ResourcesAmount.Bone";
-        _boneIncomeLabel.bindingPath = "ResourcesIncome.Bone";
-        UiDocument.rootVisualElement.Bind(resourcesAmount);
+        //// Binding resource manager
+        //var resourcesAmount = new SerializedObject(ResourceManager);
+        //_goldLabel.bindingPath = "ResourcesAmount.Gold";
+        //_goldIncomeLabel.bindingPath = "ResourcesIncome.Gold";
+        //_woodLabel.bindingPath = "ResourcesAmount.Wood";
+        //_woodIncomeLabel.bindingPath = "ResourcesIncome.Wood";
+        //_stoneLabel.bindingPath = "ResourcesAmount.Stone";
+        //_stoneIncomeLabel.bindingPath = "ResourcesIncome.Stone";
+        //_doggiumLabel.bindingPath = "ResourcesAmount.Doggium";
+        //_doggiumIncomeLabel.bindingPath = "ResourcesIncome.Doggium";
+        //_boneLabel.bindingPath = "ResourcesAmount.Bone";
+        //_boneIncomeLabel.bindingPath = "ResourcesIncome.Bone";
+        //UiDocument.rootVisualElement.Bind(resourcesAmount);
 
         // Add images to resources
         _goldContainer.Insert(0, Icon.Gold);
