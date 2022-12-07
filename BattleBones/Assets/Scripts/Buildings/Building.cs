@@ -149,6 +149,12 @@ public class Building : MonoBehaviour
             _spriteRenderer.enabled = false;
     }
 
+    public void Show(Player player)
+    {
+        if (player == Player.HumanPlayer)
+            _spriteRenderer.enabled = true;
+    }
+
     public void ShowFields()
     {
         SetVisibleFields();

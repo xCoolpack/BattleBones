@@ -42,6 +42,10 @@ public class Player : MonoBehaviour
         };
     }
 
+    private void Start()
+    {
+        HumanPlayer = GameObject.Find("Player1").GetComponent<Player>();
+    }
 
     public void AddUnit(Unit unit)
     {

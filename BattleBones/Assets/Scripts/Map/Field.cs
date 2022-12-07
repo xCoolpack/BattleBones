@@ -381,11 +381,14 @@ public class Field : MonoBehaviour
         Building = building;
         building.PreviousBuildingState = BuildingState.None;
         building.BuildingState = BuildingState.UnderConstruction;
+        building.AtStart();
         player.AddBuilding(Building);
         player.ResourceManager.RemoveAmount(building.BaseBuildingStats.BaseCost);
 
         building.BuildingGameEvent = new GameEvent(1, building.Construct);
         player.PlayerEventHandler.AddStartTurnEvent(building.BuildingGameEvent);
+
+        building.Show(player);
 
         Logger.Log($"{player.name} has begun construction of {buildingName} at {ThreeAxisCoordinates}");
     }
