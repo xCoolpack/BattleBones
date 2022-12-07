@@ -82,6 +82,7 @@ public class Overlay : MonoBehaviour
         _loggerButton = UiDocument.rootVisualElement.Q<Button>("LoggerButton");
 
         _icon = GameObject.Find("Icons").GetComponent<Icon>();
+
         // Binding turn handler
         //var tunHandlerSerializedObject = new SerializedObject(TurnHandler);
         //_turnCounterLabel.bindingPath = "TurnCounter";
@@ -140,6 +141,21 @@ public class Overlay : MonoBehaviour
     private void Update()
     {
         _logger.ScrollTo(_loggerEnd);
+
+        _turnCounterLabel.text = TurnHandler.TurnCounter.ToString();
+
+        var ra = ResourceManager.ResourcesAmount;
+        var ri = ResourceManager.ResourcesIncome;
+        _goldLabel.text = ra.Gold.ToString();
+        _goldIncomeLabel.text = ri.Gold.ToString();
+        _woodLabel.text = ra.Wood.ToString();
+        _woodIncomeLabel.text = ri.Wood.ToString();
+        _stoneLabel.text = ra.Stone.ToString();
+        _stoneIncomeLabel.text = ri.Stone.ToString();
+        _doggiumLabel.text = ra.Doggium.ToString();
+        _doggiumIncomeLabel.text = ri.Doggium.ToString();
+        _boneLabel.text = ra.Bone.ToString();
+        _boneIncomeLabel.text = ri.Bone.ToString();
     }
 
     /// <summary>
