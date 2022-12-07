@@ -24633,6 +24633,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5801692695271579817, guid: f6ae945f094939f429dc15fd7142f95a, type: 3}
   m_PrefabInstance: {fileID: 1847951723}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1851587800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1851587802}
+  - component: {fileID: 1851587801}
+  m_Layer: 0
+  m_Name: Icons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1851587801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851587800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b7c6516ba815a14dbedd9ccc7795266, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Sprites:
+  - {fileID: 21300000, guid: bb6844ec796237d49bf0e277aba44bd8, type: 3}
+  - {fileID: 21300000, guid: 91fe75a96b73cb2409b79ca114175c0c, type: 3}
+  - {fileID: 21300000, guid: db7a408010b256849919a9d7cdeffdc1, type: 3}
+  - {fileID: 21300000, guid: c0ef7de6156f57b478888e94e1c5b91f, type: 3}
+  - {fileID: 21300000, guid: aaf53fdd3d26b11438ed50a7aea3634f, type: 3}
+  - {fileID: 21300000, guid: 5e4da7899f286c94080fe0949653f209, type: 3}
+  - {fileID: 21300000, guid: 30d85ca38949bca4fa06149ab01e6114, type: 3}
+  - {fileID: 21300000, guid: 6a6718e6d912262408e730dab8e4624a, type: 3}
+  - {fileID: 21300000, guid: b4964c295b73ee14da7adf4450c8a8ee, type: 3}
+  - {fileID: 21300000, guid: d37359aae9f896c48983db50fbbe8095, type: 3}
+  - {fileID: 21300000, guid: 974067ef5c3f968488126f0a96dba650, type: 3}
+--- !u!4 &1851587802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851587800}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.6202335, y: -0.22423528, z: 0.031752713}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1860763076
 PrefabInstance:
   m_ObjectHideFlags: 0
