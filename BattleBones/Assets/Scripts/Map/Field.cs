@@ -87,6 +87,7 @@ public class Field : MonoBehaviour
     // Left click
     private void OnMouseDown()
     {
+        
         if (_overlay.IsPointerOverUI || !IsSeenByCurrentPlayer())
         {
             return;

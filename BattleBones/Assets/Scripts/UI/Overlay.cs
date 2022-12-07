@@ -83,12 +83,12 @@ public class Overlay : MonoBehaviour
 
         _icon = GameObject.Find("Icons").GetComponent<Icon>();
         // Binding turn handler
-        //var tunHandlerSerializedObject = new UnityEditor.SerializedObject(TurnHandler);
+        //var tunHandlerSerializedObject = new SerializedObject(TurnHandler);
         //_turnCounterLabel.bindingPath = "TurnCounter";
         //UiDocument.rootVisualElement.Bind(tunHandlerSerializedObject);
 
         //// Binding resource manager
-        //var resourcesAmount = new UnityEditor.SerializedObject(ResourceManager);
+        //var resourcesAmount = new SerializedObject(ResourceManager);
         //_goldLabel.bindingPath = "ResourcesAmount.Gold";
         //_goldIncomeLabel.bindingPath = "ResourcesIncome.Gold";
         //_woodLabel.bindingPath = "ResourcesAmount.Wood";
